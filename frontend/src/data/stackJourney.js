@@ -24,7 +24,7 @@ export const STACK_CHAPTERS = [
     tagline: 'Give every interaction its logic.',
     description: 'APIs, authentication, validation, and business rules that turn an interface into a working product.',
     groups: [
-      { label: 'Languages', items: ['C#', 'Python', 'JavaScript'] },
+      { label: 'Languages', items: ['C#', 'Python', 'JavaScript', 'Java'] },
       { label: 'Frameworks & logic', items: ['ASP.NET Core', 'FastAPI', 'Django', 'Entity Framework Core', 'JWT & RBAC'] }
     ],
     highlights: [

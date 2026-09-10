@@ -4,8 +4,9 @@ import { PROJECTS_DATA as projects } from '../data/projectsData.js';
 import { SKILLS_CATEGORIES as categories } from '../data/skillsData.js';
 import { RAGService } from '../services/ragService.js';
 import { escapeHtml as html, formatMarkdown } from '../utils/helpers.js';
+import { technologyIcons } from './TechnologyIcons.js';
 
-const tags = values => `<div class="detail-tags">${values.map(value => `<span>${html(value)}</span>`).join('')}</div>`;
+const tags = values => `<div class="detail-tags">${values.map(value => `<span class="detail-tag">${technologyIcons(value)}${html(value)}</span>`).join('')}</div>`;
 const bullets = values => `<ul class="detail-list">${values.map(value => `<li>${html(value)}</li>`).join('')}</ul>`;
 
 /** Native dialogs provide focus containment, Escape dismissal and focus restoration. */
@@ -92,7 +93,7 @@ export class PortfolioDialogs {
         const matches = category.skills.filter(skill => [skill.name, skill.tag, skill.level, category.name].filter(Boolean).join(' ').toLocaleLowerCase().includes(query));
         count += matches.length;
         if (!matches.length) return '';
-        return `<section class="skill-group"><h3>${html(category.name)}</h3><p>${html(category.description)}</p><div class="skill-grid">${matches.map(skill => `<article><strong>${html(skill.name)}</strong><span>${html(skill.level)}</span><p>${html(skill.tag || '')}</p></article>`).join('')}</div></section>`;
+        return `<section class="skill-group"><h3>${html(category.name)}</h3><p>${html(category.description)}</p><div class="skill-grid">${matches.map(skill => `<article><div class="skill-heading">${technologyIcons(skill.name)}<strong>${html(skill.name)}</strong></div><span class="skill-level">${html(skill.level)}</span><p>${html(skill.tag || '')}</p></article>`).join('')}</div></section>`;
       }).join('');
       this.body.querySelector('#skill-count').textContent = `${count} ${count === 1 ? 'skill' : 'skills'} found`;
       this.body.querySelector('#skills-results').innerHTML = content || '<p class="empty-result">No matching skills. Try another term or choose a different category.</p>';

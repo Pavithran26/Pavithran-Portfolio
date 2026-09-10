@@ -1,5 +1,6 @@
 import { STACK_CHAPTERS, clamp, smoothstep, positionForProgress, progressForChapter } from '../data/stackJourney.js';
 import { escapeHtml as html } from '../utils/helpers.js';
+import { technologyIcons } from './TechnologyIcons.js';
 
 export class StackJourney {
   constructor(root, { onInspect, onTechnology, motion = true } = {}) {
@@ -38,12 +39,12 @@ export class StackJourney {
                 <h2 id="chapter-title-${index}">${html(chapter.heading[0])}<br><span>${html(chapter.heading[1])}</span></h2>
                 <p class="chapter-tagline">${html(chapter.tagline)}</p>
                 <p class="chapter-description">${html(chapter.description)}</p>
-                <div class="chapter-specs">${chapter.groups.map(group => `<div><h3>${html(group.label)}</h3><p>${group.items.map(item => html(item)).join('<span aria-hidden="true"> · </span>')}</p></div>`).join('')}</div>
+                <div class="chapter-specs">${chapter.groups.map(group => `<div><h3>${html(group.label)}</h3><ul class="chapter-tool-list">${group.items.map(item => `<li>${technologyIcons(item, { eager: true })}<span>${html(item)}</span></li>`).join('')}</ul></div>`).join('')}</div>
                 <button class="chapter-inspect text-link" type="button" data-inspect-chapter="${index}">${html(chapter.detail)} <span aria-hidden="true">↗</span></button>
               </div>
               <div class="chapter-technologies" aria-label="${html(chapter.name)} technologies">
                 <div class="chapter-scene-label eyebrow" aria-hidden="true">${chapter.number} / ${html(chapter.sceneLabel)}</div>
-                ${chapter.highlights.map((tech, techIndex) => `<button class="technology-callout tech-slot-${techIndex}" type="button" data-technology="${html(tech.search)}" style="--card-order:${techIndex}" aria-label="Explore ${html(tech.name)}"><span class="technology-mark" aria-hidden="true">${html(tech.mark)}</span><span class="technology-copy"><strong>${html(tech.name)}</strong><small>${html(tech.role)}</small></span><span class="technology-arrow" aria-hidden="true">↗</span></button>`).join('')}
+                ${chapter.highlights.map((tech, techIndex) => `<button class="technology-callout tech-slot-${techIndex}" type="button" data-technology="${html(tech.search)}" style="--card-order:${techIndex}" aria-label="Explore ${html(tech.name)}"><span class="technology-mark">${technologyIcons(tech.name, { eager: true })}</span><span class="technology-copy"><strong>${html(tech.name)}</strong><small>${html(tech.role)}</small></span><span class="technology-arrow" aria-hidden="true">↗</span></button>`).join('')}
                 <p class="chapter-application"><span class="eyebrow">IN PRACTICE</span>${html(chapter.application)}</p>
               </div>
             </article>`).join('')}
