@@ -1,0 +1,104 @@
+/**
+ * responsive.css
+ * Mobile and tablet adaptations for the 3D portfolio experience.
+ */
+
+@media (max-width: 1024px) {
+  .hero-main-title {
+    font-size: 2.75rem;
+  }
+
+  .experience-3d-wrapper {
+    height: 540px;
+  }
+
+  .three-hud-controls {
+    bottom: 16px;
+    padding: 0.6rem 1.15rem;
+    gap: 1rem;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --nav-height: 64px;
+  }
+
+  .nav-menu {
+    display: none; /* Keep clean on small screens; CTA button remains accessible */
+  }
+
+  .hero-main-title {
+    font-size: 2.2rem;
+  }
+
+  .hero-lead-text {
+    font-size: 1rem;
+  }
+
+  .hero-stats-strip {
+    gap: 1.5rem;
+  }
+
+  .hero-stat-number {
+    font-size: 1.3rem;
+  }
+
+  .experience-3d-wrapper {
+    height: 460px;
+  }
+
+  .three-hud-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+    border-radius: 20px;
+    padding: 0.75rem 1rem;
+    width: 90%;
+  }
+
+  .hud-divider {
+    display: none;
+  }
+
+  .hud-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .three-hint-banner {
+    font-size: 0.68rem;
+    width: 90%;
+    text-align: center;
+  }
+
+  .layer-drawer-sheet {
+    max-width: 100%;
+    border-radius: 24px 24px 0 0;
+    height: 85vh;
+    align-self: flex-end;
+    transform: translateY(100%);
+  }
+
+  .layer-drawer-backdrop.open .layer-drawer-sheet {
+    transform: translateY(0);
+  }
+
+  .drawer-metrics-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .rag-modal-window {
+    padding: 1.25rem;
+    border-radius: 18px;
+    max-height: 90vh;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

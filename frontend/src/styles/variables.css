@@ -1,0 +1,67 @@
+/**
+ * variables.css
+ * High-End Cyber Glassmorphism — Green Family (Emerald, Jade, Mint & Cyber Neon)
+ */
+:root {
+  /* Core Backgrounds */
+  --bg-primary: #040906;
+  --bg-secondary: #07120a;
+  
+  /* Glassmorphism System Tokens */
+  --glass-bg: rgba(7, 18, 12, 0.6);
+  --glass-bg-subtle: rgba(255, 255, 255, 0.04);
+  --glass-bg-card: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(7, 24, 15, 0.65) 100%);
+  --glass-bg-hover: linear-gradient(135deg, rgba(255, 255, 255, 0.12) 0%, rgba(12, 38, 24, 0.8) 100%);
+  --glass-border: rgba(52, 211, 153, 0.18);
+  --glass-border-light: rgba(52, 211, 153, 0.35);
+  --glass-border-hover: rgba(16, 185, 129, 0.65);
+  --glass-bevel: inset 0 1px 0 0 rgba(255, 255, 255, 0.22);
+  --glass-blur: blur(24px) saturate(190%);
+  --glass-blur-sm: blur(14px) saturate(160%);
+  --glass-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.8), inset 0 1px 0 0 rgba(255, 255, 255, 0.16);
+  --glass-shadow-glow: 0 0 35px rgba(16, 185, 129, 0.3), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+  
+  --bg-card: var(--glass-bg-card);
+  --bg-card-hover: var(--glass-bg-hover);
+  --border-subtle: var(--glass-border);
+  --border-highlight: rgba(16, 185, 129, 0.5);
+  --border-glow: rgba(52, 211, 153, 0.75);
+
+  /* Primary Green Family Accents */
+  --primary-green: #10b981;
+  --green-neon: #00ff88;
+  --green-mint: #34d399;
+  --green-jade: #059669;
+  --green-light: #6ee7b7;
+  --green-dark: #064e3b;
+  --green-glow: rgba(16, 185, 129, 0.45);
+  --green-neon-glow: rgba(0, 255, 136, 0.4);
+
+  /* Legacy Accent Aliases remapped to Green Family */
+  --cyan-accent: var(--green-mint);
+  --cyan-glow: var(--green-glow);
+  --emerald-accent: var(--primary-green);
+  --emerald-glow: var(--green-neon-glow);
+  --purple-accent: var(--green-neon);
+  --purple-glow: var(--green-glow);
+  --amber-accent: #fbbf24;
+  --amber-glow: rgba(251, 191, 36, 0.4);
+  --rose-accent: #34d399;
+  --rose-glow: var(--green-glow);
+  --blue-accent: var(--primary-green);
+
+  /* Text Colors */
+  --text-primary: #ffffff;
+  --text-secondary: #cbd5e1;
+  --text-muted: #86efac;
+  --text-dim: #6ee7b7;
+
+  /* Typography */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  --font-mono: 'Fira Code', monospace;
+
+  /* Layout */
+  --nav-height: 72px;
+  --max-content-width: 1240px;
+}
