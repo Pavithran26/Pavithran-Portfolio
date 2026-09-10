@@ -1,4 +1,5 @@
 import { PORTFOLIO_DATA as profile } from '../data/portfolioData.js';
+import { TECH_STACK_LAYERS as layers } from '../data/techStackLayers.js';
 import { PROJECTS_DATA as projects } from '../data/projectsData.js';
 import { SKILLS_CATEGORIES as categories } from '../data/skillsData.js';
 import { RAGService } from '../services/ragService.js';
@@ -66,11 +67,23 @@ export class PortfolioDialogs {
     `);
   }
 
-  openSkills() {
+  openChapter(chapter) {
+    const details = chapter.layerIndexes.map(index => layers[index]);
+    this.show('THE STACK / ' + chapter.number, chapter.name + '.', `
+      <p class="detail-lead">${html(chapter.tagline)}</p><p>${html(chapter.description)}</p>
+      ${chapter.groups.map(group => `<h3>${html(group.label)}</h3>${tags(group.items)}`).join('')}
+      <h3>In practice</h3>${details.flatMap(layer => layer.projects).map(project => `<article class="detail-entry"><h4>${html(project.name)}</h4><span class="eyebrow">${html(project.role)}</span><p>${html(project.details)}</p></article>`).join('')}
+      ${details.filter(layer => layer.codeSnippet).map(layer => `<details class="code-detail"><summary>${html(layer.title)} — code example</summary><pre><code>${html(layer.codeSnippet)}</code></pre></details>`).join('')}
+      ${chapter.id === 'ai' ? '<div class="detail-actions"><button class="button button-light" type="button" data-dialog="dawn">Try DAWN AI ↗</button></div>' : ''}
+    `);
+  }
+
+  openSkills(initialQuery = '') {
     this.show('CAPABILITIES / TECHNICAL SKILLS', 'The tools behind the work.', `
-      <div class="skill-controls"><div><label for="skill-search">Search skills</label><input id="skill-search" type="search" placeholder="React, FastAPI, Docker…" autocomplete="off"></div><div><label for="skill-category">Category</label><select id="skill-category"><option value="all">All categories</option>${categories.map(category => `<option value="${category.id}">${html(category.name)}</option>`).join('')}</select></div></div><p id="skill-count" class="eyebrow" role="status"></p><div id="skills-results"></div>
+      <div class="skill-controls"><div><label for="skill-search">Search skills</label><input id="skill-search" type="search" placeholder="React, FastAPI, Docker…" autocomplete="off"></div><div><label for="skill-category">Category</label><select id="skill-category"><option value="all" selected>All categories</option>${categories.map(category => `<option value="${category.id}">${html(category.name)}</option>`).join('')}</select></div></div><p id="skill-count" class="eyebrow" role="status"></p><div id="skills-results"></div>
     `, 'skills');
     const search = this.body.querySelector('#skill-search');
+    search.value = initialQuery;
     const categoryInput = this.body.querySelector('#skill-category');
     const render = () => {
       const query = search.value.toLocaleLowerCase().trim();

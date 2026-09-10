@@ -2,21 +2,22 @@
 
 A modern full-stack portfolio and enterprise **Retrieval-Augmented Generation (RAG)** platform built with **Three.js (WebGL)**, **FastAPI**, **LangChain**, and **PostgreSQL (pgvector)** powered by **Google Gemini**.
 
-## Cinematic portfolio experience
+## Scroll through the stack
 
-The frontend now uses a scrolling, editorial layout inspired by the visual direction of [USAvionix](https://www.usavionix.com/): large typography, a graphite and silver palette, a restrained red accent, and an original metallic hero image.
+The opening experience is a four-chapter journey inspired by the immersive feel of [The State of the Gallery](https://mesh3d.gallery/the-state-of-the-gallery) and the cinematic direction of [USAvionix](https://www.usavionix.com/). A near-black canvas, large typography, luminous wireframes, and a field of particles connect **Frontend → Backend & Logic → Databases → Applied AI**.
 
-- `frontend/index.html` supplies the opening content before JavaScript loads.
-- `frontend/src/main.js` renders the profile, projects, experience and contact sections from the existing portfolio data.
-- `frontend/src/components/SystemStackScene.js` loads on approach to the architecture section. Scroll separates the six software layers; each layer also has a keyboard-accessible selection button and detail view. Its renderer runs on demand and stops when hidden. A text fallback remains available when WebGL cannot start.
-- `frontend/src/components/PortfolioDialogs.js` provides native dialogs for project details, searchable skills, the full profile, DAWN AI, and the existing developer terminal. The backtick shortcut opens the terminal outside editable fields.
-- `frontend/src/styles/cinematic.css` contains the new responsive theme. The previous components and styles remain in the repository, but the workstation is no longer the entry point.
-- The motion control respects the system preference by default and saves explicit changes on the visitor’s device. Reduced motion removes parallax, reveal animations and the pinned scroll section.
-- DAWN still calls `POST /api/v1/rag/query`. Requests cancel when its dialog closes and time out after 25 seconds. If the backend is unavailable, the interface reports it without fabricating an answer or showing a false online status.
+- Native page scrolling moves the camera through four distinct scenes: component planes, connected services, data stores, and a retrieval network. Each chapter holds still for reading before transitioning forward or backward with the scroll position.
+- Every stage displays its languages, frameworks, and tools. Sixteen technology callouts open the existing searchable skill details; chapter inspection shows real project applications and code examples from the portfolio data.
+- The chapter dock supports clicking and Left/Right/Home/End keys. Direct anchors (`#stack-frontend`, `#stack-backend`, `#stack-databases`, `#stack-ai`) jump into the journey. Visitors can skip directly to selected work.
+- The motion control follows the system preference initially and saves an explicit choice. Motion off, short viewports, and narrow zoomed layouts display all four chapters in normal document flow.
+- `StackJourney.js` handles the chapter interface and scroll position. `stackJourney.js` contains the chapter content and scroll mapping. `JourneyScene.js` loads the graphics when the section approaches; `journeyGeometry.js` supplies the shared shapes and camera model. The optional `WebGLJourneyRenderer.js` uses Three.js. Canvas 2D preserves the moving diagrams when WebGL cannot initialize or its context is lost. Rendering stops when the scene or page is hidden.
+- The original four projects, full profile, experience, contact links, skill explorer, DAWN AI, and developer terminal remain available. The backtick shortcut opens the terminal outside editable fields.
+- `journey.css` extends the base `cinematic.css` with the scrolling layout, chapter colors, and responsive reading mode. The earlier workstation and six-layer scene components remain in the repository but are not the entry point.
+- DAWN still calls `POST /api/v1/rag/query`. Closing its dialog cancels the request; requests time out after 25 seconds. Live answers require the existing backend.
 
-The generated hero artwork is decorative, rather than an architecture diagram. Optimized WebP versions are included in `frontend/public/images/` (approximately 44 KB desktop and 18 KB mobile). No USAvionix code, brand assets, or drone imagery is included. The actual architecture diagram uses six selectable layers.
+The scene geometry is original code. The existing metallic artwork supplies a faint decorative fallback. No code or brand assets from the reference sites are included. The chapter order tells a skills story; it is not a literal request flow for every project.
 
-The frontend keeps the existing Vite scripts, lockfile and API proxy. Run `npm ci` and `npm run build` in `frontend/` for a production build. The existing backend setup below is still required for live AI responses. The architecture reference and folder inventory below describe the earlier components that remain available alongside the new entry point.
+The frontend retains its existing Vite scripts, lockfile, and API proxy. Run `npm ci` then `npm run build` in `frontend/` for production. Run `node --test tests/stackJourney.test.js` for the chapter order, tool targets, scroll continuity, and fallback geometry checks. The backend setup and legacy component inventory below still apply.
 
 ---
 
