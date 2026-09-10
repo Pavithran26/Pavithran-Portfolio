@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pavithran S. | Software Engineer · Full-stack & AI</title>
-  <meta name="theme-color" content="#080b08" />
+  <title>Pavithran S. | Cyberpunk Workstation & Interactive 3D Portfolio</title>
   
   <!-- SEO Metadata -->
   <meta name="description" content="Portfolio of Pavithran S. - Multi-Stack Software Engineer at OWLSure (ValueMomentum) specializing in ASP.NET Core, FastAPI, React, LangChain, PostgreSQL pgvector, Three.js 3D WebGL, and DevOps." />
@@ -17,26 +16,35 @@
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="preload" as="image" href="/images/engineering-core.webp" />
+  <link rel="stylesheet" href="/src/style.css" />
 </head>
-<body>
-  <a class="skip-link" href="#main-content">Skip to content</a>
-  <div class="reading-progress" aria-hidden="true"></div>
-  <header class="site-header">
-    <a href="#top" class="wordmark" aria-label="Pavithran S. home">PAVITHRAN<span> / S.</span></a>
-    <nav class="desktop-nav" aria-label="Main navigation"><a href="#architecture">The stack</a><a href="#work">Work</a><a href="#about">About</a><a href="#experience">Experience</a></nav>
-    <div class="header-actions"><a class="header-contact" href="#contact">Let’s talk <span aria-hidden="true">↗</span></a><button id="menu-toggle" type="button" aria-label="Open navigation menu" aria-controls="mobile-menu" aria-expanded="false">Menu <span aria-hidden="true">≡</span></button></div>
-  </header>
-  <dialog id="mobile-menu" class="mobile-menu" aria-labelledby="menu-title"><div class="menu-heading"><span class="eyebrow" id="menu-title">EXPLORE</span><button type="button" data-close-menu aria-label="Close navigation menu">Close ×</button></div><nav aria-label="Mobile navigation"><a href="#architecture"><small>01</small> The stack</a><a href="#work"><small>02</small> Work</a><a href="#about"><small>03</small> About</a><a href="#experience"><small>04</small> Experience</a><a href="#contact"><small>05</small> Contact</a></nav></dialog>
+<body class="station-fullscreen-body">
   <div id="app">
-    <main id="main-content">
-      <div id="top"></div>
-      <section class="stack-journey" id="architecture" aria-labelledby="stack-title">
-        <div class="journey-loading"><p class="eyebrow">PAVITHRAN S. / SOFTWARE ENGINEER</p><h1 id="stack-title">FROM INTERFACE<br>TO INTELLIGENCE.</h1><p>Frontend. Backend. Databases. AI.</p><a class="text-link" href="mailto:pavithran2004cs@gmail.com">Let’s build something ↗</a></div>
-      </section>
-      <div id="portfolio-content"></div>
-      <noscript><div class="noscript-message"><p>This portfolio’s project explorer uses JavaScript. You can still reach Pavithran at <a href="mailto:pavithran2004cs@gmail.com">pavithran2004cs@gmail.com</a> or visit <a href="https://github.com/Pavithran26">GitHub</a>.</p></div></noscript>
-    </main>
+    <!-- Pavithran's Cyberpunk Workstation (100% Fullscreen Primary Interactive Universe) -->
+    <main id="cyber-station-root"></main>
+
+    <!-- Floating Quick Action Bar (Bottom-Right) -->
+    <div class="floating-quick-bar" style="position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; gap: 12px; align-items: center;">
+      <!-- Meet DAWN AI Assistant Floating Pill Button -->
+      <button id="fab-rag-btn" class="clara-ai-pill-btn" aria-label="Meet DAWN AI Assistant" type="button">
+        <div class="clara-eye-wrapper">
+          <div class="clara-eye-sclera">
+            <div class="clara-eye-iris">
+              <div class="clara-eye-pupil"></div>
+              <div class="clara-eye-glint"></div>
+            </div>
+          </div>
+        </div>
+        <div class="clara-text-group">
+          <span class="clara-eyebrow">MEET DAWN</span>
+          <span class="clara-title">AI Assistant</span>
+        </div>
+        <div class="clara-status-pulse" title="Online & Ready">
+          <span class="clara-status-dot"></span>
+        </div>
+        <div class="clara-tooltip">DAWN AI Assistant</div>
+      </button>
+    </div>
   </div>
 
   <script type="module" src="/src/main.js"></script>
