@@ -216,7 +216,7 @@ svg { display: block; }
 .detail-list { padding-left: 22px; color: #afb5bc; line-height: 1.75; }
 .detail-list li + li { margin-top: 10px; }
 .detail-tags { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 18px; }
-.detail-tags span { font-size: .875rem; padding: 7px 11px; border: 1px solid #434950; }
+.detail-tags > span { font-size: .875rem; padding: 7px 11px; border: 1px solid #434950; }
 .detail-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; margin-top: 30px; }
 .detail-entry { padding: 24px 0; border-bottom: 1px solid var(--line); }
 .detail-entry .eyebrow { color: #989fa7; }
