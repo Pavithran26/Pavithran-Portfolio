@@ -2,6 +2,22 @@
 
 A modern full-stack portfolio and enterprise **Retrieval-Augmented Generation (RAG)** platform built with **Three.js (WebGL)**, **FastAPI**, **LangChain**, and **PostgreSQL (pgvector)** powered by **Google Gemini**.
 
+## Cinematic portfolio experience
+
+The frontend now uses a scrolling, editorial layout inspired by the visual direction of [USAvionix](https://www.usavionix.com/): large typography, a graphite and silver palette, a restrained red accent, and an original metallic hero image.
+
+- `frontend/index.html` supplies the opening content before JavaScript loads.
+- `frontend/src/main.js` renders the profile, projects, experience and contact sections from the existing portfolio data.
+- `frontend/src/components/SystemStackScene.js` loads on approach to the architecture section. Scroll separates the six software layers; each layer also has a keyboard-accessible selection button and detail view. Its renderer runs on demand and stops when hidden. A text fallback remains available when WebGL cannot start.
+- `frontend/src/components/PortfolioDialogs.js` provides native dialogs for project details, searchable skills, the full profile, DAWN AI, and the existing developer terminal. The backtick shortcut opens the terminal outside editable fields.
+- `frontend/src/styles/cinematic.css` contains the new responsive theme. The previous components and styles remain in the repository, but the workstation is no longer the entry point.
+- The motion control respects the system preference by default and saves explicit changes on the visitor’s device. Reduced motion removes parallax, reveal animations and the pinned scroll section.
+- DAWN still calls `POST /api/v1/rag/query`. Requests cancel when its dialog closes and time out after 25 seconds. If the backend is unavailable, the interface reports it without fabricating an answer or showing a false online status.
+
+The generated hero artwork is decorative, rather than an architecture diagram. Optimized WebP versions are included in `frontend/public/images/` (approximately 44 KB desktop and 18 KB mobile). No USAvionix code, brand assets, or drone imagery is included. The actual architecture diagram uses six selectable layers.
+
+The frontend keeps the existing Vite scripts, lockfile and API proxy. Run `npm ci` and `npm run build` in `frontend/` for a production build. The existing backend setup below is still required for live AI responses. The architecture reference and folder inventory below describe the earlier components that remain available alongside the new entry point.
+
 ---
 
 ## 🏗️ System Architecture
