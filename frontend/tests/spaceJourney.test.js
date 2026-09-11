@@ -1,7 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
-import { SPACE_CHAPTERS, FLIGHT_STOPS, flightPosition, interpolateFlight } from '../src/data/spaceJourneyData.js';
+import { SPACE_CHAPTERS, FLIGHT_STOPS, flightPosition, interpolateFlight, createPortfolioRoute, destinationIndex } from '../src/data/spaceJourneyData.js';
+import { PROJECTS_DATA } from '../src/data/projectsData.js';
+import { PORTFOLIO_DATA } from '../src/data/portfolioData.js';
 import { SKILLS_CATEGORIES } from '../src/data/skillsData.js';
 import { getTechnologyIcons } from '../src/components/TechnologyIcons.js';
 import { RAGService } from '../src/services/ragService.js';
@@ -43,6 +45,31 @@ test('every visible technology has a local logo and a matching searchable skill'
   }
   assert.deepEqual(getTechnologyIcons('Java').map(icon => icon.id), ['java']);
   assert.deepEqual(getTechnologyIcons('JavaScript').map(icon => icon.id), ['javascript']);
+});
+
+test('camera continues through every project, job, education record and final contact arrival', () => {
+  const route = createPortfolioRoute(PROJECTS_DATA, PORTFOLIO_DATA);
+  for (const project of PROJECTS_DATA) assert.ok(route.some(stop => stop.selector === '#project-' + project.id));
+  assert.equal(route.filter(stop => stop.selector.startsWith('#experience-')).length, PORTFOLIO_DATA.experience.length);
+  assert.equal(route.filter(stop => stop.selector.startsWith('#education-')).length, PORTFOLIO_DATA.education.length);
+  assert.equal(route.at(-1).nav, '#contact');
+  assert.ok(route.some(stop => stop.nav === '#dawn' && stop.neural === 1));
+  const anchors = route.map((_, i) => i * 900);
+  let previousStars = 0;
+  for (let scroll = 0; scroll <= anchors.at(-1); scroll += 50) {
+    const position = flightPosition(scroll, anchors);
+    for (const compact of [false, true]) {
+      const pose = interpolateFlight(position, compact, route);
+      assert.ok(pose.worlds.flat().every(Number.isFinite));
+      assert.ok(pose.worlds.every(world => world[2] > 0 && world[3] >= 0 && world[3] <= 1));
+      assert.ok(pose.stars >= previousStars - 1e-8);
+      previousStars = pose.stars;
+    }
+  }
+  for (let i = 6; i < route.length; i++) assert.notDeepEqual(route[i].worlds, route[i - 1].worlds);
+  assert.equal(destinationIndex(anchors.at(-1), anchors), route.length - 1);
+  assert.equal(destinationIndex(-1, anchors), 0);
+  assert.equal(destinationIndex(100, [0, 100, 100]), 2);
 });
 
 test('closing DAWN cancels its network request and keeps the API contract', async t => {

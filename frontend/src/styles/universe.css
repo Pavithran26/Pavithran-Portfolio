@@ -221,3 +221,46 @@ html[data-appearance='light'] .orbit-tool-name { color: #172333; text-shadow: 0 
   .story-motion .space-content > h2 { translate: none; }
   .space-project-title > span:first-child { transform: none; }
 }
+
+/* Full-page destinations share the opening journey's viewport scale. */
+.space-work .space-content { max-width: none; }
+.space-work .section-intro { max-width: 620px; }
+.space-projects .project-destination { width: min(45%, 680px); min-height: 110svh; display: flex; flex-direction: column; justify-content: center; padding: 20svh 0; }
+.space-projects .project-destination:nth-child(even) { margin-left: auto; }
+.space-project-title { font-size: clamp(2.4rem, 3.5vw, 4.3rem); }
+.space-projects .project-summary { line-height: 1.85; margin-top: 24px; max-width: 580px; }
+.project-destination .project-logos { margin-top: 30px; }
+.project-destination .project-logos .tech-icon-frame { width: 36px; height: 36px; padding: 6px; }
+.space-about .space-content, .space-learning .space-content, .space-dawn .space-content { max-width: min(44vw, 680px); margin-left: 0; }
+.space-about, .space-learning { padding-top: 25svh; }
+.space-experience article, .space-education article { min-height: 85svh; padding: 24svh 0 18svh; }
+.space-experience article::before, .space-education article::before { top: calc(24svh + 6px); }
+.space-experience h3, .space-education h3 { font-size: clamp(2rem, 2.7vw, 3.3rem); }
+.space-recognition article { min-height: 50svh; padding: 14svh 0; }
+.space-dawn { min-height: 135svh; padding-top: 28svh; }
+.space-contact { min-height: 180svh; padding-top: 25svh; }
+.space-contact h2 { max-width: 850px; }
+.flight-location { min-width: 0; max-width: 65%; }
+#flight-location { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.space-motion { flex-shrink: 0; }
+.flight-nav { max-height: calc(100svh - 180px); }
+.flight-nav a { height: clamp(25px, 4.5svh, 44px); }
+.space-reading .space-projects .project-destination { min-height: 0; width: min(100%, 700px); margin-left: 0; padding: 35px 0; }
+.space-reading .space-about .space-content, .space-reading .space-learning .space-content, .space-reading .space-dawn .space-content { max-width: 700px; }
+.space-reading .space-experience article, .space-reading .space-education article, .space-reading .space-recognition article { min-height: 0; padding: 28px 0; }
+.space-reading .space-experience article::before, .space-reading .space-education article::before { top: 34px; }
+.space-reading .space-dawn, .space-reading .space-contact { min-height: 0; padding-top: 110px; }
+@media (max-width: 759px) {
+  .space-projects .project-destination, .space-about .space-content, .space-learning .space-content, .space-dawn .space-content { width: 100%; max-width: none; margin-left: 0; }
+  .space-projects .project-destination { min-height: 125svh; justify-content: flex-start; padding: 18svh 0 38svh; }
+  .space-project-title { font-size: clamp(2.1rem, 8vw, 3rem); }
+  .space-projects .project-summary { margin-top: 16px; }
+  .space-experience article, .space-education article { min-height: 105svh; padding: 18svh 0 35svh; }
+  .space-experience article::before, .space-education article::before { top: calc(18svh + 6px); }
+  .space-recognition article { min-height: 65svh; padding: 14svh 0; }
+  .space-about, .space-learning, .space-dawn { padding-top: 18svh; }
+  .space-contact { min-height: 180svh; padding-top: 22svh; }
+  .universe-darkness { background: linear-gradient(180deg, #05080e80 0%, #05080eb0 42%, #05080e35 70%, #05080e90 100%); }
+  .flight-location { max-width: 64%; }
+  .space-reading .space-dawn, .space-reading .space-contact { padding-top: 80px; }
+}
