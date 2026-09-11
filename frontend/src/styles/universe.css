@@ -264,3 +264,96 @@ html[data-appearance='light'] .orbit-tool-name { color: #172333; text-shadow: 0 
   .flight-location { max-width: 64%; }
   .space-reading .space-dawn, .space-reading .space-contact { padding-top: 80px; }
 }
+
+.clara-eye-avatar-wrapper {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.clara-eye-sclera {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #ffffff 0%, #f1f5f9 65%, #cbd5e1 100%);
+  box-shadow: inset -2px -2px 5px rgba(0, 0, 0, 0.28),
+              inset 1.5px 1.5px 3px rgba(255, 255, 255, 0.95),
+              0 3px 8px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.clara-eye-iris {
+  width: 58%;
+  height: 58%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #38bdf8 0%, #2563eb 55%, #1d4ed8 100%);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.9), inset 0 0 4px rgba(0, 0, 0, 0.4);
+  position: absolute;
+  transition: transform 0.14s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.clara-eye-pupil {
+  width: 50%;
+  height: 50%;
+  border-radius: 50%;
+  background: #090d16;
+}
+
+.clara-eye-glint {
+  width: 28%;
+  height: 28%;
+  border-radius: 50%;
+  background: #ffffff;
+  position: absolute;
+  top: 15%;
+  left: 20%;
+  box-shadow: 0 0 4px #ffffff;
+}
+
+
+/* Persistent tools and readable cinematic scenes. */
+.dawn-eye { display: flex; align-items: center; gap: 10px; flex-shrink: 0; min-height: 48px; padding: 5px 12px 5px 6px; border: 1px solid #98c8fa50; border-radius: 40px; background: linear-gradient(115deg, #292348e8, #102d3de8); color: #eef5ff; }
+.eye-label { display: grid; gap: 2px; font: 500 12px/1.3 var(--font-mono); text-align: left; }
+.eye-label small { color: #a6c3d5; font-size: 10px; }
+.dawn-eye:hover { border-color: #a5d8ff; box-shadow: 0 0 24px #6cbaff26; }
+.terminal-launch { position: fixed; z-index: 45; right: 4.3vw; top: 100px; display: flex; gap: 9px; align-items: center; min-height: 44px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 24px; background: var(--ink); color: var(--white); font: 400 12px/1.4 var(--font-mono); }
+.terminal-launch > span:first-child { color: var(--accent); font-size: 17px; }
+.universe-darkness { background: linear-gradient(90deg, #05080ee8, #05080e65 40%, transparent 70%), linear-gradient(180deg, #05080e65, transparent 25%, transparent 80%, #05080e80); }
+.universe-darkness::after { content: ''; position: absolute; inset: 0; opacity: var(--scene-shade, 0); background: linear-gradient(90deg, transparent 30%, #05080e99 65%, #05080ef2); }
+.world-art { opacity: 0; }
+.procedural-world { aspect-ratio: 1; filter: drop-shadow(0 0 16px #87baff18); }
+.space-intro { height: 120svh; }
+.intro-identity { padding-top: 29svh; }
+.space-nav { gap: 22px; }
+.space-header { gap: 24px; }
+.space-projects .project-destination { min-height: 100svh; }
+.space-experience article, .space-education article { min-height: 75svh; }
+html[data-appearance='light'] .universe-darkness { background: linear-gradient(90deg, #e7e9edef, #e7e9ed55 45%, #e7e9ed20); }
+html[data-appearance='light'] .universe-darkness::after { background: linear-gradient(90deg, transparent, #e7e9dee8); }
+@media (max-width: 1100px) { .space-nav { gap: 16px; } .space-header { gap: 18px; } .space-nav a { font-size: 12px; letter-spacing: .05em; } }
+@media (max-width: 759px) {
+  .space-header { gap: 8px; padding: 12px 4vw; }
+  .space-signature { font-size: 1.45rem; }
+  .dawn-eye { padding: 4px; min-width: 46px; justify-content: center; }
+  .eye-label { display: none; }
+  .space-header-actions { margin-left: auto; gap: 10px; }
+  #appearance-toggle { font-size: 11px; letter-spacing: 0; }
+  #appearance-toggle > span { display: none; }
+  #menu-toggle { font-size: 12px; }
+  .terminal-launch { top: 77px; right: 4vw; font-size: 11px; }
+  .universe-darkness { background: linear-gradient(180deg, #05080ee8, #05080edb 40%, #05080e30 75%, #05080e70); }
+  .universe-darkness::after { display: none; }
+  .space-projects .project-destination { min-height: 120svh; }
+  .space-experience article, .space-education article { min-height: 105svh; }
+  .intro-identity { padding-top: 27svh; }
+}
+@media (prefers-reduced-motion: reduce) { .clara-eye-iris { transition: none; } }
+.space-reading .clara-eye-iris { transform: none !important; transition: none; }
+
+@media (min-width: 760px) and (max-width: 950px) { .space-nav { display: none; } .space-header-actions { margin-left: auto; } #menu-toggle { display: block; } }

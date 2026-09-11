@@ -53,29 +53,36 @@ export function interpolateFlight(position, compact = false, route = FLIGHT_STOP
     worlds.forEach(world => { world[0] = .5 + (world[0] - .5) * .28; world[1] = .67 + (world[1] - .5) * .55; world[2] *= .67; });
     if (value < 1) worlds[0][1] += (1 - value) * .12;
   }
-  return { worlds, stars: lerp(from.stars, to.stars, amount), neural: lerp(from.neural, to.neural, amount), roll: lerp(from.roll || 0, to.roll || 0, amount) };
+  const effects = Object.fromEntries(['galaxy', 'blackhole', 'orbits', 'starMap', 'shade'].map(key => [key, lerp(from[key] || 0, to[key] || 0, amount)]));
+  return { ...effects, worlds, stars: lerp(from.stars, to.stars, amount), neural: lerp(from.neural, to.neural, amount), roll: lerp(from.roll || 0, to.roll || 0, amount) };
 }
 
 /** One camera itinerary for the entire document, including individual records. */
 export function createPortfolioRoute(projects, profile) {
-  const introLabels = ['THE BEGINNING', '01 / FRONTEND', '02 / BACKEND', '03 / DATABASES', '04 / APPLIED AI'];
-  const introSelectors = ['#top', ...SPACE_CHAPTERS.map(chapter => '#stack-' + chapter.id)];
-  const route = FLIGHT_STOPS.slice(0, 5).map((pose, index) => ({ ...pose, selector: introSelectors[index], nav: introSelectors[index], label: introLabels[index] }));
-  const destination = (selector, label, nav, world, side, size, y = .52, neural = 0) => {
-    const worlds = [[.92, .13, .035, .35], [.07, .78, .035, .3], [1.3, .3, .08, 0]];
-    worlds[world] = [side === 'left' ? .26 : .76, y, size, .9];
-    route.push({ selector, label, nav, worlds, stars: 13 + (route.length - 5) * 2.2, neural, roll: (route.length % 3 - 1) * 7 });
+  const emptyWorlds = () => Array.from({ length: 7 }, () => [1.2, .6, .05, 0]);
+  const route = [];
+  const destination = (selector, label, nav, world = -1, side = 'right', scene = {}) => {
+    const worlds = emptyWorlds();
+    if (world >= 0) worlds[world] = [side === 'left' ? .25 : .76, .55, world === 2 ? 1.05 : .78, .9];
+    route.push({ selector, label, nav, worlds, stars: route.length * 2.2, neural: 0, roll: 0,
+      galaxy: 0, blackhole: 0, orbits: 0, starMap: 0, shade: side === 'left' ? 1 : 0, ...scene });
   };
-  destination('#work', 'SELECTED WORK', '#work', 2, 'right', 1.05);
-  projects.forEach((project, index) => destination(`#project-${project.id}`, 'WORK / ' + project.title.toUpperCase(), '#work', index % 3, index % 2 ? 'left' : 'right', index % 3 === 2 ? 1.12 : .83));
-  destination('#about', 'ABOUT / PAVITHRAN', '#about', 0, 'right', 1.05, .66);
-  profile.experience.forEach((job, index) => destination(`#experience-${index}`, 'EXPERIENCE / ' + job.company.split(',')[0].toUpperCase(), '#about', index % 3, 'right', index % 3 === 2 ? 1.1 : .88, .47 + index % 2 * .15));
-  destination('#education', 'EDUCATION', '#education', 1, 'right', .72, .5);
-  profile.education.forEach((education, index) => destination(`#education-${index}`, 'EDUCATION / ' + education.badge.toUpperCase(), '#education', index % 3, 'right', index % 3 === 2 ? 1.12 : .8, .43 + index % 2 * .17));
-  destination('#recognition', 'TRAINING & RECOGNITION', '#education', 2, 'right', 1.2, .6);
-  destination('#dawn', 'DAWN / A CONVERSATION', '#dawn', 1, 'right', .07, .17, 1);
-  destination('#contact', 'CONTACT / THE NEXT CHAPTER', '#contact', 0, 'right', 1.5, 1.03);
-  route.push({ selector: '#contact', offset: .7, nav: '#contact', label: 'CONTACT / LET’S BUILD', worlds: [[.84, 1.5, 2.5, 1], [-.2, .2, .02, 0], [1.4, .5, .08, 0]], stars: route.at(-1).stars + 3, neural: 0, roll: 0 });
+  destination('#top', 'THE BEGINNING / MILKY WAY', '#top', -1, 'right', { galaxy: 1 });
+  destination('#work', 'SELECTED WORK / NEW WORLDS', '#work', -1, 'right', { galaxy: .65 });
+  const projectWorlds = [0, 3, 4, 5, 6, 2];
+  const names = ['EARTH', 'MARS', 'JUPITER', 'NEPTUNE', 'VENUS', 'SATURN'];
+  projects.forEach((project, index) => destination(`#project-${project.id}`, 'WORK / ' + project.title.toUpperCase() + ' / ' + names[index % names.length], '#work', projectWorlds[index % projectWorlds.length], index % 2 ? 'left' : 'right'));
+  destination('#about', 'EXPERIENCE / ORBITAL PATHS', '#about', -1, 'right', { orbits: 1 });
+  profile.experience.forEach((job, index) => destination(`#experience-${index}`, 'EXPERIENCE / ' + job.company.split(',')[0].toUpperCase(), '#about', -1, 'right', { orbits: 1, roll: index * 12 }));
+  SPACE_CHAPTERS.forEach((chapter, index) => destination('#stack-' + chapter.id, chapter.orbit, '#stack-' + chapter.id, [0, 3, 2, -1][index], index === 1 ? 'left' : 'right', { neural: index === 3 ? 1 : 0, galaxy: index === 3 ? .2 : 0 }));
+  destination('#education', 'EDUCATION / A CONSTELLATION OF MILESTONES', '#education', -1, 'right', { starMap: 1 });
+  profile.education.forEach((education, index) => destination(`#education-${index}`, 'EDUCATION / ' + education.badge.toUpperCase(), '#education', -1, 'right', { starMap: 1, roll: index * 9 }));
+  destination('#recognition', 'TRAINING & RECOGNITION', '#education', -1, 'right', { starMap: .6, galaxy: .6 });
+  destination('#dawn', 'DAWN / BEYOND THE EVENT HORIZON', '#dawn', -1, 'right', { blackhole: 1, neural: .15 });
+  destination('#contact', 'CONTACT / A NEW HORIZON', '#contact', 0, 'right', { galaxy: .35 });
+  route.at(-1).worlds[0] = [.8, 1.1, 1.7, .85];
+  destination('#contact', 'CONTACT / LET’S BUILD', '#contact', 0, 'right', { galaxy: .65, offset: .7 });
+  route.at(-1).worlds[0] = [.8, 1.5, 2.5, .8];
   return route;
 }
 
