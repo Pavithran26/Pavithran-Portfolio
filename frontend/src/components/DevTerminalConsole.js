@@ -445,14 +445,14 @@ Core Expertise: ASP.NET Core, FastAPI, React, TypeScript, LangChain, PostgreSQL 
 
   cmdProjectDetail(id) {
     if (!id) {
-      this.appendOutput(`<div class="term-line">Usage: <code>project &lt;clansure | gt-companion | adhoc-erp | 3d-rag-platform&gt;</code></div>`);
+      this.appendOutput(`<div class="term-line">Usage: <code>project &lt;${PROJECTS_DATA.map(project => project.id).join(' | ')}&gt;</code></div>`);
       return;
     }
     const cleanId = id.toLowerCase();
     const proj = PROJECTS_DATA.find(p => p.id.includes(cleanId) || cleanId.includes(p.id));
 
     if (!proj) {
-      this.appendOutput(`<div class="term-error">Project not found: ${id}. Available: clansure, gt-companion, adhoc-erp, 3d-rag-platform</div>`);
+      this.appendOutput(`<div class="term-error">Project not found: ${id}. Available: ${PROJECTS_DATA.map(project => project.id).join(', ')}</div>`);
       return;
     }
 
