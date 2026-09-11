@@ -188,3 +188,36 @@ html[data-appearance='light'] .orbit-tool-name { color: #172333; text-shadow: 0 
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
+
+/* The same quiet movement continues through work, experience and education. */
+.story-motion [data-reveal] { opacity: 0; transform: translate3d(0, 32px, 0); transition: opacity .8s ease var(--reveal-delay, 0ms), transform .9s cubic-bezier(.2,.65,.2,1) var(--reveal-delay, 0ms); }
+.story-motion [data-reveal].is-revealed, .story-motion [data-reveal]:focus-within { opacity: 1; transform: none; }
+.story-motion .space-content > h2 { translate: 0 var(--heading-drift, 0px); }
+.space-projects article { transition: border-color .3s ease; }
+.space-projects article:hover, .space-projects article:focus-within { border-color: var(--accent); }
+.space-project-title > span:first-child { transition: transform .35s ease; }
+.space-project-title:hover > span:first-child, .space-project-title:focus-visible > span:first-child { transform: translateX(8px); }
+.story-motion .project-logos > span { opacity: 0; transform: translateY(8px); transition: opacity .5s ease, transform .5s ease; }
+.story-motion .is-revealed .project-logos > span { opacity: 1; transform: none; transition-delay: .25s; }
+.story-motion .is-revealed .project-logos > span:nth-child(2) { transition-delay: .32s; }
+.story-motion .is-revealed .project-logos > span:nth-child(3) { transition-delay: .39s; }
+.story-motion .is-revealed .project-logos > span:nth-child(4) { transition-delay: .46s; }
+.story-motion .is-revealed .project-logos > span:nth-child(5) { transition-delay: .53s; }
+.space-experience, .space-education { position: relative; padding-left: 30px; }
+.space-experience::before, .space-education::before, .space-experience::after, .space-education::after { content: ''; position: absolute; left: 3px; top: 0; bottom: 0; width: 1px; background: var(--line); }
+.space-experience::after, .space-education::after { background: var(--accent); transform-origin: top; transform: scaleY(var(--timeline-progress, 1)); }
+.space-experience article::before, .space-education article::before { content: ''; position: absolute; left: -30px; top: 34px; width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px #b9d1f060; }
+.space-experience article, .space-education article { position: relative; }
+.space-education { margin-top: 55px; }
+.space-education article, .space-recognition article { padding: 28px 0; border-top: 1px solid var(--line); }
+.space-education h3, .space-recognition h3, .story-subheading { font-family: var(--font-display); font-size: 2rem; font-weight: 400; line-height: 1.2; margin: 14px 0; }
+.space-education article > p:last-child, .space-recognition article > p:not(.space-kicker) { font-size: 1rem; line-height: 1.85; color: var(--muted); }
+.story-subheading { margin-top: 70px; margin-bottom: 28px; }
+.space-recognition .training-certificate { font: .75rem/1.8 var(--font-mono); margin-top: 12px; }
+.project-scope-note { padding: 18px; border-left: 2px solid var(--accent); background: #ffffff06; margin-top: 22px; }
+.space-reading .space-project-title > span:first-child { transform: none; transition: none; }
+@media (prefers-reduced-motion: reduce) {
+  .story-motion [data-reveal], .story-motion .project-logos > span { opacity: 1; transform: none; }
+  .story-motion .space-content > h2 { translate: none; }
+  .space-project-title > span:first-child { transform: none; }
+}
