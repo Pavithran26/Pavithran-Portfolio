@@ -1,4 +1,5 @@
 import { SPACE_CHAPTERS, clamp, flightPosition, interpolateFlight, createPortfolioRoute, destinationIndex, ambientFlight } from '../data/spaceJourneyData.js';
+import { CosmicScenes, createPlanet } from './CosmicScenes.js';
 import { PROJECTS_DATA } from '../data/projectsData.js';
 import { PORTFOLIO_DATA } from '../data/portfolioData.js';
 import { technologyIcons } from './TechnologyIcons.js';
@@ -31,11 +32,14 @@ export class SpaceJourney {
     this.root.innerHTML = `<canvas class="universe-stars"></canvas>${WORLD_NAMES.map((name, index) => `<img class="world-art world-art-${index}" src="/images/space/${name}.webp" alt="" width="${index === 2 ? 1536 : 1254}" height="${index === 2 ? 1024 : 1254}" decoding="async" ${index === 0 ? 'fetchpriority="high"' : ''} draggable="false">`).join('')}<div class="universe-darkness"></div>`;
     this.canvas = root.querySelector('canvas');
     this.context = this.canvas.getContext('2d', { alpha: true });
+    for (let index = 0; index < 4; index++) root.insertBefore(createPlanet(index), root.querySelector('.universe-darkness'));
     this.worlds = [...root.querySelectorAll('.world-art')];
+    this.cosmic = new CosmicScenes();
     this.overlay = document.querySelector('#orbit-interface');
     this.overlay.innerHTML = SPACE_CHAPTERS.map((chapter, index) => `<div class="orbit-group" data-orbit="${index + 1}" role="group" aria-label="${chapter.name} technologies" aria-hidden="true" inert>${chapter.tools.map(tool => `<button class="orbit-tool" type="button" data-technology="${html(tool.search)}" aria-label="Explore ${html(tool.name)} skills">${technologyIcons(tool.name, { eager: true })}<span class="orbit-tool-name">${html(tool.name)}</span></button>`).join('')}</div>`).join('');
     this.groups = [...this.overlay.children].map(element => ({ element, buttons: [...element.children] }));
     this.route = createPortfolioRoute(PROJECTS_DATA, PORTFOLIO_DATA);
+    this.chapterPositions = SPACE_CHAPTERS.map(chapter => this.route.findIndex(stop => stop.selector === '#stack-' + chapter.id));
     this.sections = this.route.map(stop => document.querySelector(stop.selector));
     this.nav = [...document.querySelectorAll('.flight-nav a')];
     this.location = document.querySelector('#flight-location');
@@ -123,8 +127,9 @@ export class SpaceJourney {
     if (Math.abs(target - this.position) < .001) this.position = target;
     const modalOpen = Boolean(document.querySelector('dialog[open]'));
     if (this.motion && !modalOpen) this.animationTime += elapsed;
-    const basePose = this.motion ? interpolateFlight(this.position, this.compact, this.route) : interpolateFlight(5, this.compact);
+    const basePose = interpolateFlight(this.motion ? this.position : 0, this.compact, this.route);
     const pose = ambientFlight(basePose, this.animationTime, this.motion);
+    this.root.style.setProperty('--scene-shade', pose.shade);
     const pointer = this.motion ? this.pointer : { x: 0, y: 0 };
     this.worlds.forEach((world, index) => {
       const [x, y, size, opacity] = pose.worlds[index];
@@ -138,7 +143,7 @@ export class SpaceJourney {
       this.location.textContent = this.route[active].label;
       this.location.title = this.route[active].label;
       this.nav.forEach(link => { if (link.getAttribute('href') === this.route[active].nav) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current'); });
-      document.body.classList.toggle('beyond-journey', active >= 5);
+      document.body.classList.toggle('beyond-journey', active > this.chapterPositions.at(-1));
     }
     this.positionTools();
     this.drawSky(pose, this.motion ? this.animationTime : 0);
@@ -148,7 +153,7 @@ export class SpaceJourney {
 
   positionTools() {
     this.groups.forEach(({ element, buttons }, index) => {
-      const distance = Math.abs(this.position - (index + 1));
+      const distance = Math.abs(this.position - this.chapterPositions[index]);
       const opacity = this.motion ? clamp((.48 - distance) / .25) : 0;
       const interactive = opacity > .65;
       element.style.opacity = opacity;
@@ -160,7 +165,7 @@ export class SpaceJourney {
         const [x, y] = this.compact ? [.18 + toolIndex % 3 * .32, .68 + Math.floor(toolIndex / 3) * .14] : positions[toolIndex];
         button.style.left = `${x * 100}%`;
         button.style.top = `${y * 100}%`;
-        button.style.setProperty('--orbit-drift', `${(this.position - index - 1) * 50}px`);
+        button.style.setProperty('--orbit-drift', `${(this.position - this.chapterPositions[index]) * 50}px`);
       });
     });
   }
@@ -183,6 +188,7 @@ export class SpaceJourney {
       ctx.globalAlpha = star.brightness * Math.min(1, depth * 7) * (.83 + Math.sin(time * .0002 + i) * .17);
       ctx.beginPath(); ctx.arc(x, y, Math.max(.35, star.size / projection), 0, Math.PI * 2); ctx.fill();
     }
+    this.cosmic.draw(ctx, pose, time, w, h, this.compact, light);
     if (pose.neural > .01) {
       const angle = time * .000028 + pose.stars * .08;
       const radius = Math.min(w * (this.compact ? .31 : .19), h * .32);

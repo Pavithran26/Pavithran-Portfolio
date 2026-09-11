@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { SPACE_CHAPTERS, FLIGHT_STOPS, flightPosition, interpolateFlight, createPortfolioRoute, destinationIndex, ambientFlight } from '../src/data/spaceJourneyData.js';
 import { PROJECTS_DATA } from '../src/data/projectsData.js';
 import { PORTFOLIO_DATA } from '../src/data/portfolioData.js';
@@ -53,7 +53,7 @@ test('camera continues through every project, job, education record and final co
   assert.equal(route.filter(stop => stop.selector.startsWith('#experience-')).length, PORTFOLIO_DATA.experience.length);
   assert.equal(route.filter(stop => stop.selector.startsWith('#education-')).length, PORTFOLIO_DATA.education.length);
   assert.equal(route.at(-1).nav, '#contact');
-  assert.ok(route.some(stop => stop.nav === '#dawn' && stop.neural === 1));
+  assert.ok(route.some(stop => stop.nav === '#dawn' && stop.blackhole === 1));
   const anchors = route.map((_, i) => i * 900);
   let previousStars = 0;
   for (let scroll = 0; scroll <= anchors.at(-1); scroll += 50) {
@@ -66,7 +66,22 @@ test('camera continues through every project, job, education record and final co
       previousStars = pose.stars;
     }
   }
-  for (let i = 6; i < route.length; i++) assert.notDeepEqual(route[i].worlds, route[i - 1].worlds);
+  const projectStops = route.filter(stop => stop.selector.startsWith('#project-'));
+  assert.equal(new Set(projectStops.map(stop => stop.worlds.findIndex(world => world[3] > 0))).size, PROJECTS_DATA.length);
+  assert.equal(route[0].galaxy, 1);
+  assert.ok(route.some(stop => stop.orbits === 1));
+  assert.ok(route.some(stop => stop.starMap === 1));
+  const order = ['#top', '#work', '#about', '#stack-frontend', '#stack-backend', '#stack-databases', '#stack-ai', '#education', '#dawn', '#contact'];
+  const indices = order.map(selector => route.findIndex(stop => stop.selector === selector));
+  assert.deepEqual([...indices].sort((a, b) => a - b), indices);
+  for (const index of indices) assert.ok(index >= 0);
+  const source = readFileSync(new URL('../src/main.js', import.meta.url), 'utf8');
+  assert.ok(source.indexOf('id="work"') < source.indexOf('id="about"'));
+  assert.ok(source.indexOf('id="about"') < source.indexOf('${chapters.map'));
+  assert.ok(source.indexOf('${chapters.map') < source.indexOf('id="education"'));
+  const page = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+  assert.match(page, /id="dawn-eye" data-dialog="dawn"/);
+  assert.match(page, /class="terminal-launch" data-dialog="terminal"/);
   assert.equal(destinationIndex(anchors.at(-1), anchors), route.length - 1);
   assert.equal(destinationIndex(-1, anchors), 0);
   assert.equal(destinationIndex(100, [0, 100, 100]), 2);
