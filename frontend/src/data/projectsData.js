@@ -147,7 +147,7 @@ export const PROJECTS_DATA = [
       "Implemented authenticated list APIs for seven Firestore-backed modules."
     ],
     "implementationNote": "The reviewed repository includes the app screens and authenticated read APIs. Save actions and dashboard/report endpoints are not present in the reviewed backend version.",
-    "liveUrl": null,
+    "liveUrl": "https://ranjithkumars.vercel.app/",
     "githubUrl": "https://github.com/Pavithran26/SRK-ERP-app-Frontend"
   }
 ];
