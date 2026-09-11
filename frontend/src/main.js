@@ -3,6 +3,7 @@ import { PORTFOLIO_DATA as profile } from './data/portfolioData.js';
 import { PROJECTS_DATA as projects } from './data/projectsData.js';
 import { SPACE_CHAPTERS as chapters } from './data/spaceJourneyData.js';
 import { PortfolioDialogs } from './components/PortfolioDialogs.js';
+import { projectVisual } from './components/ProjectVisuals.js';
 import { technologyIcons } from './components/TechnologyIcons.js';
 import { SectionMotion } from './components/SectionMotion.js';
 import { getClaraEyeAvatarHtml } from './components/ClaraWidget.js';
@@ -17,7 +18,15 @@ root.innerHTML = `
   </section>
   <section class="space-work space-section" id="work" aria-labelledby="work-title"><div class="space-content">
     <p class="space-kicker">IDEAS, BUILT INTO REAL THINGS</p><h2 id="work-title">Selected <em>work.</em></h2><p class="section-intro">Different problems. The same curiosity.</p>
-    <div class="space-projects">${projects.map((project, index) => `<article id="project-${project.id}" class="project-destination"><p class="project-overline">0${index + 1} / ${html(project.category)}</p><button class="space-project-title" type="button" data-project="${project.id}"><span>${html(project.title)}</span><span aria-hidden="true">↗</span></button><p>${html(project.tagline)}</p><p class="project-summary">${html(project.overview)}</p><div class="project-logos" aria-label="${html(project.title)} technologies">${project.technologies.slice(0, 5).map(technology => `<span title="${html(technology)}"><span class="visually-hidden">${html(technology)}</span>${technologyIcons(technology)}</span>`).join('')}</div></article>`).join('')}</div>
+    <nav class="project-index" aria-label="Browse projects">${projects.map(project => `<a href="#project-${project.id}">${html(project.title)}</a>`).join('')}</nav>
+    <div class="space-projects">${projects.map((project, index) => `<article id="project-${project.id}" class="project-destination">
+      <div class="project-copy"><p class="project-overline">${String(index + 1).padStart(2, '0')} / ${html(project.category)}</p>
+      <button class="space-project-title" type="button" data-project="${project.id}"><span>${html(project.title)}</span><span aria-hidden="true">↗</span></button>
+      <p>${html(project.tagline)}</p><p class="project-summary">${html(project.overview)}</p>
+      <div class="project-logos" aria-label="${html(project.title)} technologies">${project.technologies.slice(0, 5).map(technology => `<span title="${html(technology)}"><span class="visually-hidden">${html(technology)}</span>${technologyIcons(technology)}</span>`).join('')}</div>
+      <div class="project-links"><button class="space-text-link" type="button" data-project="${project.id}">Explore project ↗</button>${project.liveUrl ? `<a class="space-text-link" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit project ↗</a>` : ''}</div></div>
+      ${projectVisual(project)}
+    </article>`).join('')}</div>
   </div></section>
   <section class="space-about space-section" id="about" aria-labelledby="about-title"><div class="space-content">
     <p class="space-kicker">THE PERSON BEHIND THE WORK</p><h2 id="about-title">Always curious.<br><em>Still building.</em></h2><p class="section-intro">I'm Pavithran, a software engineer from Tamil Nadu. I like making complicated things feel simple, from the first interaction to the systems underneath.</p>

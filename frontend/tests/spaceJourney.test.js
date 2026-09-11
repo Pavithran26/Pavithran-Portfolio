@@ -6,6 +6,7 @@ import { PROJECTS_DATA } from '../src/data/projectsData.js';
 import { PORTFOLIO_DATA } from '../src/data/portfolioData.js';
 import { SKILLS_CATEGORIES } from '../src/data/skillsData.js';
 import { getTechnologyIcons } from '../src/components/TechnologyIcons.js';
+import { PROJECT_VISUALS, projectVisual } from '../src/components/ProjectVisuals.js';
 import { RAGService } from '../src/services/ragService.js';
 
 test('native scroll visits every chapter in order, including reverse travel', () => {
@@ -67,7 +68,13 @@ test('camera continues through every project, job, education record and final co
     }
   }
   const projectStops = route.filter(stop => stop.selector.startsWith('#project-'));
-  assert.equal(new Set(projectStops.map(stop => stop.worlds.findIndex(world => world[3] > 0))).size, PROJECTS_DATA.length);
+  assert.equal(projectStops.length, PROJECTS_DATA.length);
+  for (const stop of projectStops) assert.ok(stop.worlds.every(world => world[3] === 0));
+  const workStart = route.findIndex(stop => stop.selector === '#work');
+  const workEnd = route.findIndex(stop => stop.selector === '#about');
+  for (let position = workStart; position <= workEnd; position += .1) {
+    assert.ok(interpolateFlight(position, false, route).worlds.every(world => world[3] === 0));
+  }
   assert.equal(route[0].galaxy, 1);
   assert.ok(route.some(stop => stop.orbits === 1));
   assert.ok(route.some(stop => stop.starMap === 1));
@@ -175,4 +182,24 @@ test('initial applyMotion does not treat false as a DOM anchor; toggling preserv
   assert.equal(measurements, 1);
   journey.sections = [];
   assert.doesNotThrow(() => SpaceJourney.prototype.applyMotion.call(journey, true));
+});
+
+
+test('all sixteen projects have complete details and domain visuals, retaining live links', () => {
+  assert.equal(PROJECTS_DATA.length, 16);
+  assert.equal(new Set(PROJECTS_DATA.map(project => project.id)).size, 16);
+  for (const project of PROJECTS_DATA) {
+    for (const field of ['id', 'title', 'category', 'badge', 'overview', 'challenge', 'solution']) assert.ok(project[field], `${project.id}: ${field}`);
+    assert.ok(project.technologies.length && project.highlights.length);
+    assert.ok(PROJECT_VISUALS[project.id], `${project.id}: missing domain visual`);
+    assert.match(projectVisual(project), /<svg /);
+    assert.match(projectVisual(project), /<figcaption>/);
+    assert.equal(PROJECT_VISUALS[project.id].steps.length, 3);
+    for (const url of [project.githubUrl, project.liveUrl].filter(Boolean)) assert.equal(new URL(url).protocol, 'https:');
+  }
+  assert.equal(PROJECTS_DATA.find(p => p.id === 'srk-erp').liveUrl, 'https://ranjithkumars.vercel.app/');
+  assert.ok(PROJECTS_DATA.find(p => p.id === 'clansure').liveUrl);
+  assert.ok(PROJECTS_DATA.find(p => p.id === 'gt-companion').liveUrl);
+  for (const id of ['upi-fraud-detection', 'heart-disease-prediction', 'pneumonia-detection', 'healthsurance']) assert.ok(PROJECTS_DATA.find(p => p.id === id).implementationNote);
+  assert.ok(!PROJECTS_DATA.some(p => ['adhoc-erp', '3d-rag-platform'].includes(p.id)));
 });
