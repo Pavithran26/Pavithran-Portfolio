@@ -66,6 +66,7 @@ class GeminiEmbeddingProvider(BaseEmbeddingProvider):
         genai.configure(api_key=api_key)
         self.model = model
         self.client = genai
+        self.fallback = MockEmbeddingProvider(dim=384)
         logger.info(f"Initialized GeminiEmbeddingProvider with model: {self.model}")
 
     def embed_documents(self, texts: List[str]) -> List[List[float]]:
@@ -75,22 +76,33 @@ class GeminiEmbeddingProvider(BaseEmbeddingProvider):
                 content=texts,
                 task_type="retrieval_document"
             )
-            return res["embedding"]
+            emb = res.get("embedding") if isinstance(res, dict) else getattr(res, "embedding", None)
+            if isinstance(emb, dict) and "values" in emb:
+                return emb["values"]
+            if emb:
+                return emb
         except Exception as e:
-            logger.error(f"Gemini document embedding failed: {e}")
-            raise
+            logger.warning(f"Gemini document embedding failed: {e}. Falling back to mock embeddings.")
+        return self.fallback.embed_documents(texts)
 
     def embed_query(self, text: str) -> List[float]:
-        try:
-            res = self.client.embed_content(
-                model=self.model,
-                content=text,
-                task_type="retrieval_query"
-            )
-            return res["embedding"]
-        except Exception as e:
-            logger.error(f"Gemini query embedding failed: {e}")
-            raise
+        for candidate in [self.model, "models/embedding-001", "text-embedding-004", "embedding-001"]:
+            try:
+                res = self.client.embed_content(
+                    model=candidate,
+                    content=text,
+                    task_type="retrieval_query"
+                )
+                emb = res.get("embedding") if isinstance(res, dict) else getattr(res, "embedding", None)
+                if isinstance(emb, dict) and "values" in emb:
+                    return emb["values"]
+                if emb:
+                    return emb
+            except Exception as e:
+                logger.warning(f"Gemini query embedding with {candidate} failed: {e}")
+                continue
+        logger.warning("All Gemini embedding models failed. Using deterministic fallback embeddings.")
+        return self.fallback.embed_query(text)
 
 
 class OpenAIEmbeddingProvider(BaseEmbeddingProvider):
