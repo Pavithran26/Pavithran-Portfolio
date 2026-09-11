@@ -18,7 +18,6 @@ export const SPACE_CHAPTERS = [
 ];
 
 export const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
-const ease = value => { const t = clamp(value); return t * t * (3 - 2 * t); };
 const lerp = (a, b, t) => a + (b - a) * t;
 
 // World poses: viewport x, viewport y, width in viewport heights, opacity.
@@ -37,7 +36,8 @@ export function flightPosition(scrollY, stops) {
   for (let index = 0; index < stops.length - 1; index++) {
     if (scrollY < stops[index + 1]) {
       const amount = (scrollY - stops[index]) / Math.max(1, stops[index + 1] - stops[index]);
-      return index + ease(index === 0 ? amount : (amount - .3) / .7);
+      // Scroll smoothing happens in the renderer; every scroll pixel advances the camera.
+      return index + clamp(amount);
     }
   }
   return stops.length - 1;
@@ -83,4 +83,20 @@ export function destinationIndex(scrollY, anchors) {
   let index = 0;
   while (index + 1 < anchors.length && scrollY >= anchors[index + 1]) index++;
   return index;
+}
+
+/** Small continuous camera drift, independent of document progress. */
+export function ambientFlight(pose, time, enabled = true) {
+  if (!enabled) return pose;
+  const seconds = time / 1000;
+  return {
+    ...pose,
+    worlds: pose.worlds.map(([x, y, size, opacity], index) => [
+      x + Math.sin(seconds * .16 + index * 2) * .018,
+      y + Math.sin(seconds * .12 + index * 1.7) * .014,
+      size, opacity
+    ]),
+    roll: pose.roll + Math.sin(seconds * .1) * 2,
+    stars: pose.stars + seconds * .45
+  };
 }
