@@ -43,15 +43,44 @@ export function flightPosition(scrollY, stops) {
   return stops.length - 1;
 }
 
-export function interpolateFlight(position, compact = false) {
-  const value = clamp(position, 0, FLIGHT_STOPS.length - 1);
-  const index = Math.min(FLIGHT_STOPS.length - 2, Math.floor(value));
+export function interpolateFlight(position, compact = false, route = FLIGHT_STOPS) {
+  const value = clamp(position, 0, route.length - 1);
+  const index = Math.min(route.length - 2, Math.floor(value));
   const amount = value - index;
-  const from = FLIGHT_STOPS[index], to = FLIGHT_STOPS[index + 1];
+  const from = route[index], to = route[index + 1];
   const worlds = from.worlds.map((world, i) => world.map((axis, j) => lerp(axis, to.worlds[i][j], amount)));
   if (compact) {
     worlds.forEach(world => { world[0] = .5 + (world[0] - .5) * .28; world[1] = .67 + (world[1] - .5) * .55; world[2] *= .67; });
     if (value < 1) worlds[0][1] += (1 - value) * .12;
   }
-  return { worlds, stars: lerp(from.stars, to.stars, amount), neural: lerp(from.neural, to.neural, amount) };
+  return { worlds, stars: lerp(from.stars, to.stars, amount), neural: lerp(from.neural, to.neural, amount), roll: lerp(from.roll || 0, to.roll || 0, amount) };
+}
+
+/** One camera itinerary for the entire document, including individual records. */
+export function createPortfolioRoute(projects, profile) {
+  const introLabels = ['THE BEGINNING', '01 / FRONTEND', '02 / BACKEND', '03 / DATABASES', '04 / APPLIED AI'];
+  const introSelectors = ['#top', ...SPACE_CHAPTERS.map(chapter => '#stack-' + chapter.id)];
+  const route = FLIGHT_STOPS.slice(0, 5).map((pose, index) => ({ ...pose, selector: introSelectors[index], nav: introSelectors[index], label: introLabels[index] }));
+  const destination = (selector, label, nav, world, side, size, y = .52, neural = 0) => {
+    const worlds = [[.92, .13, .035, .35], [.07, .78, .035, .3], [1.3, .3, .08, 0]];
+    worlds[world] = [side === 'left' ? .26 : .76, y, size, .9];
+    route.push({ selector, label, nav, worlds, stars: 13 + (route.length - 5) * 2.2, neural, roll: (route.length % 3 - 1) * 7 });
+  };
+  destination('#work', 'SELECTED WORK', '#work', 2, 'right', 1.05);
+  projects.forEach((project, index) => destination(`#project-${project.id}`, 'WORK / ' + project.title.toUpperCase(), '#work', index % 3, index % 2 ? 'left' : 'right', index % 3 === 2 ? 1.12 : .83));
+  destination('#about', 'ABOUT / PAVITHRAN', '#about', 0, 'right', 1.05, .66);
+  profile.experience.forEach((job, index) => destination(`#experience-${index}`, 'EXPERIENCE / ' + job.company.split(',')[0].toUpperCase(), '#about', index % 3, 'right', index % 3 === 2 ? 1.1 : .88, .47 + index % 2 * .15));
+  destination('#education', 'EDUCATION', '#education', 1, 'right', .72, .5);
+  profile.education.forEach((education, index) => destination(`#education-${index}`, 'EDUCATION / ' + education.badge.toUpperCase(), '#education', index % 3, 'right', index % 3 === 2 ? 1.12 : .8, .43 + index % 2 * .17));
+  destination('#recognition', 'TRAINING & RECOGNITION', '#education', 2, 'right', 1.2, .6);
+  destination('#dawn', 'DAWN / A CONVERSATION', '#dawn', 1, 'right', .07, .17, 1);
+  destination('#contact', 'CONTACT / THE NEXT CHAPTER', '#contact', 0, 'right', 1.5, 1.03);
+  route.push({ selector: '#contact', offset: .7, nav: '#contact', label: 'CONTACT / LET’S BUILD', worlds: [[.84, 1.5, 2.5, 1], [-.2, .2, .02, 0], [1.4, .5, .08, 0]], stars: route.at(-1).stars + 3, neural: 0, roll: 0 });
+  return route;
+}
+
+export function destinationIndex(scrollY, anchors) {
+  let index = 0;
+  while (index + 1 < anchors.length && scrollY >= anchors[index + 1]) index++;
+  return index;
 }
