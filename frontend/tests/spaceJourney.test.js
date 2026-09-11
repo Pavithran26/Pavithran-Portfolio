@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync } from 'node:fs';
-import { SPACE_CHAPTERS, FLIGHT_STOPS, flightPosition, interpolateFlight, createPortfolioRoute, destinationIndex } from '../src/data/spaceJourneyData.js';
+import { SPACE_CHAPTERS, FLIGHT_STOPS, flightPosition, interpolateFlight, createPortfolioRoute, destinationIndex, ambientFlight } from '../src/data/spaceJourneyData.js';
 import { PROJECTS_DATA } from '../src/data/projectsData.js';
 import { PORTFOLIO_DATA } from '../src/data/portfolioData.js';
 import { SKILLS_CATEGORIES } from '../src/data/skillsData.js';
@@ -88,4 +88,39 @@ test('closing DAWN cancels its network request and keeps the API contract', asyn
   assert.equal(received.url, '/api/v1/rag/query');
   assert.deepEqual(JSON.parse(received.options.body), { query: 'Tell me about ClanSure', top_k: 4 });
   assert.ok(received.options.signal.aborted);
+});
+
+
+test('camera responds immediately throughout each section without a scroll hold', () => {
+  const anchors = [0, 1000, 2200, 4000];
+  for (let i = 0; i < anchors.length - 1; i++) {
+    const distance = anchors[i + 1] - anchors[i];
+    for (const fraction of [.01, .1, .2, .3, .5, .9]) {
+      assert.ok(Math.abs(flightPosition(anchors[i] + distance * fraction, anchors) - (i + fraction)) < 1e-10);
+    }
+  }
+});
+
+test('background keeps moving at rest across the whole route, with a static motion-off mode', () => {
+  const route = createPortfolioRoute(PROJECTS_DATA, PORTFOLIO_DATA);
+  for (const compact of [false, true]) for (let i = 0; i < route.length; i++) {
+    const pose = interpolateFlight(i, compact, route);
+    const initial = structuredClone(pose);
+    const start = ambientFlight(pose, 0);
+    const later = ambientFlight(pose, 5000);
+    assert.notDeepEqual(start.worlds, later.worlds);
+    assert.notEqual(start.roll, later.roll);
+    assert.ok(later.stars > start.stars);
+    assert.deepEqual(ambientFlight(pose, 0, false), ambientFlight(pose, 5000, false));
+    assert.deepEqual(pose, initial);
+    for (let time = 0; time <= 120000; time += 1000) {
+      const frame = ambientFlight(pose, time);
+      frame.worlds.forEach((world, index) => {
+        assert.ok(world.every(Number.isFinite));
+        assert.ok(Math.abs(world[0] - pose.worlds[index][0]) <= .01800001);
+        assert.ok(Math.abs(world[1] - pose.worlds[index][1]) <= .01400001);
+        assert.deepEqual(world.slice(2), pose.worlds[index].slice(2));
+      });
+    }
+  }
 });

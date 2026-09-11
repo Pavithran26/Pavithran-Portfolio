@@ -1,4 +1,4 @@
-import { SPACE_CHAPTERS, clamp, flightPosition, interpolateFlight, createPortfolioRoute, destinationIndex } from '../data/spaceJourneyData.js';
+import { SPACE_CHAPTERS, clamp, flightPosition, interpolateFlight, createPortfolioRoute, destinationIndex, ambientFlight } from '../data/spaceJourneyData.js';
 import { PROJECTS_DATA } from '../data/projectsData.js';
 import { PORTFOLIO_DATA } from '../data/portfolioData.js';
 import { technologyIcons } from './TechnologyIcons.js';
@@ -26,6 +26,7 @@ export class SpaceJourney {
     this.motion = readPreference('portfolio-space-motion') !== 'off' && !this.reducedMotion.matches;
     this.appearance = readPreference('portfolio-universe-theme') === 'light' ? 'light' : 'dark';
     this.position = 0;
+    this.animationTime = 0;
     this.pointer = { x: 0, y: 0 };
     this.root.innerHTML = `<canvas class="universe-stars"></canvas>${WORLD_NAMES.map((name, index) => `<img class="world-art world-art-${index}" src="/images/space/${name}.webp" alt="" width="${index === 2 ? 1536 : 1254}" height="${index === 2 ? 1024 : 1254}" decoding="async" ${index === 0 ? 'fetchpriority="high"' : ''} draggable="false">`).join('')}<div class="universe-darkness"></div>`;
     this.canvas = root.querySelector('canvas');
@@ -58,8 +59,8 @@ export class SpaceJourney {
       this.pointer.y = (event.clientY / this.height - .5) * 2;
       this.requestFrame();
     }, { passive: true });
-    on(document, 'visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(this.frame); this.frame = null; } else this.requestFrame(); });
-    on(document, 'close', () => this.requestFrame(), { capture: true });
+    on(document, 'visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(this.frame); this.frame = null; this.lastTime = null; } else this.requestFrame(); });
+    on(document, 'close', () => { this.lastTime = null; this.requestFrame(); }, { capture: true });
     on(this.reducedMotion, 'change', () => { this.motion = !this.reducedMotion.matches && readPreference('portfolio-space-motion') !== 'off'; this.applyMotion(true); });
     on(this.motionButton, 'click', () => { this.motion = !this.motion; savePreference('portfolio-space-motion', this.motion ? 'on' : 'off'); this.applyMotion(true); });
     on(this.appearanceButton, 'click', () => { this.appearance = this.appearance === 'dark' ? 'light' : 'dark'; savePreference('portfolio-universe-theme', this.appearance); this.applyAppearance(); this.requestFrame(); });
@@ -118,7 +119,10 @@ export class SpaceJourney {
     const target = flightPosition(window.scrollY, this.stops);
     this.position = this.motion ? this.position + (target - this.position) * (1 - Math.exp(-elapsed / 125)) : target;
     if (Math.abs(target - this.position) < .001) this.position = target;
-    const pose = this.motion ? interpolateFlight(this.position, this.compact, this.route) : interpolateFlight(5, this.compact);
+    const modalOpen = Boolean(document.querySelector('dialog[open]'));
+    if (this.motion && !modalOpen) this.animationTime += elapsed;
+    const basePose = this.motion ? interpolateFlight(this.position, this.compact, this.route) : interpolateFlight(5, this.compact);
+    const pose = ambientFlight(basePose, this.animationTime, this.motion);
     const pointer = this.motion ? this.pointer : { x: 0, y: 0 };
     this.worlds.forEach((world, index) => {
       const [x, y, size, opacity] = pose.worlds[index];
@@ -135,9 +139,9 @@ export class SpaceJourney {
       document.body.classList.toggle('beyond-journey', active >= 5);
     }
     this.positionTools();
-    this.drawSky(pose, this.motion ? time : 0);
+    this.drawSky(pose, this.motion ? this.animationTime : 0);
     // Idle during modal reading and in hidden tabs. Native close resumes the sky.
-    if (this.motion && !document.querySelector('dialog[open]')) this.requestFrame();
+    if (this.motion && !modalOpen) this.requestFrame();
   }
 
   positionTools() {
@@ -163,6 +167,7 @@ export class SpaceJourney {
     const ctx = this.context;
     if (!ctx) return;
     const { width: w, height: h } = this;
+    const pointer = this.motion ? this.pointer : { x: 0, y: 0 };
     const light = this.appearance === 'light';
     ctx.clearRect(0, 0, w, h);
     ctx.fillStyle = light ? '#29364b' : '#d9e8ff';
@@ -170,8 +175,8 @@ export class SpaceJourney {
       const star = this.stars[i];
       const depth = ((star.z - pose.stars * .014) % 1 + 1) % 1;
       const projection = .35 + depth * 1.7;
-      const x = w * .5 + star.x * w / projection + this.pointer.x * depth * 7;
-      const y = h * .5 + star.y * h / projection + this.pointer.y * depth * 7;
+      const x = w * .5 + star.x * w / projection + pointer.x * depth * 7;
+      const y = h * .5 + star.y * h / projection + pointer.y * depth * 7;
       if (x < 0 || x > w || y < 0 || y > h) continue;
       ctx.globalAlpha = star.brightness * Math.min(1, depth * 7) * (.83 + Math.sin(time * .0002 + i) * .17);
       ctx.beginPath(); ctx.arc(x, y, Math.max(.35, star.size / projection), 0, Math.PI * 2); ctx.fill();
