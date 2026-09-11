@@ -124,3 +124,40 @@ test('background keeps moving at rest across the whole route, with a static moti
     }
   }
 });
+
+
+test('initial applyMotion does not treat false as a DOM anchor; toggling preserves position', async t => {
+  const { SpaceJourney } = await import('../src/components/SpaceJourney.js');
+  const originalWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const originalDocument = Object.getOwnPropertyDescriptor(globalThis, 'document');
+  t.after(() => {
+    for (const [key, descriptor] of [['window', originalWindow], ['document', originalDocument]]) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
+      else delete globalThis[key];
+    }
+  });
+  let reading = false;
+  const scrolls = [];
+  globalThis.window = { scrollY: 500, scrollBy: options => scrolls.push(options) };
+  globalThis.document = { body: { classList: { toggle: (_, value) => { reading = value; } } } };
+  const section = { offsetTop: 200, offsetParent: null, getBoundingClientRect: () => ({ top: reading ? 80 : 120 }) };
+  let measurements = 0;
+  const journey = {
+    motion: true, sections: [section],
+    motionButton: { setAttribute() {} },
+    measure() { measurements++; }
+  };
+  // Constructor calls this before stops have been measured.
+  assert.doesNotThrow(() => SpaceJourney.prototype.applyMotion.call(journey));
+  assert.equal(journey.motionButton.textContent, 'Motion on');
+  assert.equal(scrolls.length, 0);
+  assert.equal(measurements, 0);
+  journey.stops = [0, 200];
+  journey.motion = false;
+  SpaceJourney.prototype.applyMotion.call(journey, true);
+  assert.deepEqual(scrolls, [{ top: -40, behavior: 'instant' }]);
+  assert.equal(journey.motionButton.textContent, 'Motion off');
+  assert.equal(measurements, 1);
+  journey.sections = [];
+  assert.doesNotThrow(() => SpaceJourney.prototype.applyMotion.call(journey, true));
+});
