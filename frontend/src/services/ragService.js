@@ -2,6 +2,11 @@
  * ragService.js
  * Client service to query the FastAPI LangChain RAG backend.
  */
+const getApiBase = () => {
+  const envUrl = import.meta.env?.VITE_API_BASE_URL;
+  return envUrl ? envUrl.replace(/\/$/, '') : '';
+};
+
 export class RAGService {
   static async query(question, topK = 4, { signal } = {}) {
     const request = new AbortController();
@@ -10,7 +15,8 @@ export class RAGService {
     else signal?.addEventListener('abort', abort, { once: true });
     const timeout = setTimeout(() => request.abort(new Error('DAWN request timed out')), 25000);
     try {
-      const res = await fetch('/api/v1/rag/query', {
+      const apiBase = getApiBase();
+      const res = await fetch(`${apiBase}/api/v1/rag/query`, {
         method: 'POST',
         signal: request.signal,
         headers: {
@@ -35,7 +41,8 @@ export class RAGService {
 
   static async checkHealth() {
     try {
-      const res = await fetch('/api/v1/health');
+      const apiBase = getApiBase();
+      const res = await fetch(`${apiBase}/api/v1/health`);
       if (res.ok) {
         return await res.json();
       }
@@ -45,3 +52,4 @@ export class RAGService {
     }
   }
 }
+
