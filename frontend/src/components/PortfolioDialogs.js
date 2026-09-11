@@ -55,8 +55,8 @@ export class PortfolioDialogs {
     this.show('SELECTED WORK / ' + project.category, project.title, `
       <p class="detail-lead">${html(project.tagline)}</p><p>${html(project.overview)}</p>
       <div class="detail-columns"><div><h3>The challenge</h3><p>${html(project.challenge)}</p></div><div><h3>The approach</h3><p>${html(project.solution)}</p></div></div>
-      <h3>Engineering contributions</h3>${bullets(project.highlights)}<h3>Technologies</h3>${tags(project.technologies)}
-      <div class="detail-actions">${project.liveUrl ? `<a class="button button-light" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit project ↗</a>` : '<span class="eyebrow">CLIENT PROJECT / NO PUBLIC DEMO</span>'}${project.githubUrl ? `<a class="text-link" href="${html(project.githubUrl)}" target="_blank" rel="noopener noreferrer">Source code ↗</a>` : ''}</div>
+      ${project.implementationNote ? `<p class="project-scope-note">${html(project.implementationNote)}</p>` : ''}<h3>Engineering contributions</h3>${bullets(project.highlights)}<h3>Technologies</h3>${tags(project.technologies)}
+      <div class="detail-actions">${project.liveUrl ? `<a class="button button-light" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit project ↗</a>` : (project.githubUrl ? '' : '<span class="eyebrow">CLIENT PROJECT / NO PUBLIC DEMO</span>')}${project.githubUrl ? `<a class="text-link" href="${html(project.githubUrl)}" target="_blank" rel="noopener noreferrer">Source code ↗</a>` : ''}</div>
     `);
   }
 
@@ -105,7 +105,7 @@ export class PortfolioDialogs {
     this.show('PROFILE / PAVITHRAN S.', 'A little more about me.', `
       <p class="detail-lead">${html(profile.summary)}</p><h3>Professional experience</h3>${profile.experience.map(job => `<article class="detail-entry"><span class="eyebrow">${html(job.period)}</span><h4>${html(job.role)} · ${html(job.company)}</h4><p>${html(job.location)}</p>${bullets(job.responsibilities)}</article>`).join('')}
       <h3>Education</h3>${profile.education.map(education => `<article class="detail-entry"><span class="eyebrow">${html(education.period)}</span><h4>${html(education.degree)}</h4><p>${html(education.institution)}</p><p>${html(education.highlights)}</p></article>`).join('')}
-      <h3>Recognition</h3>${profile.achievements.map(achievement => `<article class="detail-entry"><span class="eyebrow">${html(achievement.date)} · ${html(achievement.organization)}</span><h4>${html(achievement.title)}</h4><p>${html(achievement.description)}</p></article>`).join('')}
+      <h3>Training</h3>${profile.training.map(item => `<article class="detail-entry"><span class="eyebrow">${html(item.date)}</span><h4>${html(item.title)} · ${html(item.organization)}</h4><p>${html(item.description)}</p><p>Certificate: ${html(item.certificate)}</p></article>`).join('')}<h3>Recognition</h3>${profile.achievements.map(achievement => `<article class="detail-entry"><span class="eyebrow">${html(achievement.date)} · ${html(achievement.organization)}</span><h4>${html(achievement.title)}</h4><p>${html(achievement.description)}</p></article>`).join('')}
       <h3>What comes next</h3>${profile.careerAmbitions.roadmap.map(goal => `<article class="detail-entry"><span class="eyebrow">${html(goal.step)}</span><h4>${html(goal.title)}</h4><p>${html(goal.desc)}</p></article>`).join('')}
       <h3>Beyond the code</h3><p>${html(profile.interests.coding)}</p>${tags(profile.interests.gaming.map(game => game.name))}${bullets(profile.interests.passions)}
       <h3>Find me elsewhere</h3><div class="detail-actions">${Object.entries(profile.links).filter(([key]) => !['portfolio', 'hometownMaps'].includes(key)).map(([name, url]) => `<a class="text-link" href="${html(url)}" target="_blank" rel="noopener noreferrer">${html(name)} ↗</a>`).join('')}</div><p><a href="mailto:${profile.email}">${profile.email}</a></p>

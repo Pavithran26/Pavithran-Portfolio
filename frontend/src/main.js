@@ -4,6 +4,7 @@ import { PROJECTS_DATA as projects } from './data/projectsData.js';
 import { SPACE_CHAPTERS as chapters } from './data/spaceJourneyData.js';
 import { PortfolioDialogs } from './components/PortfolioDialogs.js';
 import { technologyIcons } from './components/TechnologyIcons.js';
+import { SectionMotion } from './components/SectionMotion.js';
 import { SpaceJourney } from './components/SpaceJourney.js';
 import { escapeHtml as html } from './utils/helpers.js';
 
@@ -28,16 +29,23 @@ root.innerHTML = `
   <section class="space-about space-section" id="about" aria-labelledby="about-title"><div class="space-content">
     <p class="space-kicker">THE PERSON BEHIND THE WORK</p><h2 id="about-title">Always curious.<br><em>Still building.</em></h2><p class="section-intro">I'm Pavithran, a software engineer from Tamil Nadu. I like making complicated things feel simple, from the first interaction to the systems underneath.</p>
     <div class="space-experience" id="experience">${profile.experience.map(job => `<article><p class="space-kicker">${html(job.period)}</p><h3>${html(job.role)}</h3><p class="experience-company">${html(job.company)}</p><p>${html(job.responsibilities[0])}</p></article>`).join('')}</div>
-    <div class="space-actions"><button class="space-text-link" type="button" data-dialog="dossier">The full story <span aria-hidden="true">↗</span></button><button class="space-text-link" type="button" data-dialog="skills">All skills & tools <span aria-hidden="true">↗</span></button></div>
+    <div class="space-actions"><button class="space-text-link" type="button" data-dialog="dossier">The full story <span aria-hidden="true">↗</span></button><button class="space-text-link" type="button" data-dialog="skills">All skills & tools <span aria-hidden="true">↗</span></button><a class="space-text-link" href="#education">Education & training <span aria-hidden="true">↓</span></a></div>
+  </div></section>
+  <section class="space-learning space-section" id="education" aria-labelledby="education-title"><div class="space-content">
+    <p class="space-kicker">THE FOUNDATIONS</p><h2 id="education-title">Learning,<br><em>layer by layer.</em></h2>
+    <div class="space-education">${profile.education.map(education => `<article><p class="space-kicker">${html(education.period)}</p><h3>${html(education.degree)}</h3><p class="experience-company">${html(education.institution)}</p><p>${html(education.highlights)}</p></article>`).join('')}</div>
+    <h3 class="story-subheading">Training & recognition</h3><div class="space-recognition">${profile.training.map(item => `<article><p class="space-kicker">${html(item.date)}</p><h3>${html(item.title)}</h3><p>${html(item.organization)} · ${html(item.description)}</p><p class="training-certificate">Certificate: ${html(item.certificate)}</p></article>`).join('')}${profile.achievements.map(item => `<article><p class="space-kicker">${html(item.date)}</p><h3>${html(item.title)}</h3><p>${html(item.organization)}</p><p>${html(item.description)}</p></article>`).join('')}</div>
+    <a class="space-text-link" href="${profile.links.certifications}" target="_blank" rel="noopener noreferrer">View certificate gallery <span aria-hidden="true">↗</span></a>
   </div></section>
   <section class="space-dawn space-section" aria-labelledby="dawn-title"><div class="space-content">
     <p class="space-kicker">A CONVERSATION, IF YOU'RE CURIOUS</p><h2 id="dawn-title">Meet <em>DAWN.</em></h2><p class="section-intro">An AI guide to my projects, skills, and experience. Ask a question and explore the work in a different way.</p><div class="dawn-questions"><button type="button" data-ask="What did Pavithran build for ClanSure?">Tell me about ClanSure <span aria-hidden="true">↗</span></button><button type="button" data-ask="How does Pavithran use backend engineering and AI together?">How do backend and AI connect? <span aria-hidden="true">↗</span></button><button type="button" data-dialog="dawn">Ask your own question <span aria-hidden="true">↗</span></button></div>
   </div></section>
-  <footer class="space-contact space-section" id="contact"><div class="space-content"><p class="space-kicker">THE NEXT CHAPTER</p><h2>Let's make<br><em>something matter.</em></h2><a class="space-email" href="mailto:${html(profile.email)}">${html(profile.email)} <span aria-hidden="true">↗</span></a><div class="space-socials"><a href="${profile.links.github}" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="${profile.links.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="${profile.links.leetcode}" target="_blank" rel="noopener noreferrer">LeetCode ↗</a><button type="button" id="copy-email">Copy email</button></div><p id="copy-feedback" role="status"></p><div class="space-colophon"><span>© ${new Date().getFullYear()} ${html(profile.name)}</span><button type="button" data-dialog="terminal">Developer terminal ↗</button><a href="#top">Back to the beginning ↑</a></div></div></footer>
+  <footer class="space-contact space-section" id="contact"><div class="space-content"><p class="space-kicker">THE NEXT CHAPTER</p><h2>Let's make<br><em>something matter.</em></h2><a class="space-email" href="mailto:${html(profile.email)}">${html(profile.email)} <span aria-hidden="true">↗</span></a><div class="space-socials"><a href="${profile.links.github}" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="${profile.links.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="${profile.links.leetcode}" target="_blank" rel="noopener noreferrer">LeetCode ↗</a><a href="${profile.links.hackerrank}" target="_blank" rel="noopener noreferrer">HackerRank ↗</a><a href="${profile.links.codechef}" target="_blank" rel="noopener noreferrer">CodeChef ↗</a><a href="${profile.links.geeksforgeeks}" target="_blank" rel="noopener noreferrer">GeeksforGeeks ↗</a><a href="${profile.links.youtube}" target="_blank" rel="noopener noreferrer">YouTube ↗</a><button type="button" id="copy-email">Copy email</button></div><p id="copy-feedback" role="status"></p><div class="space-colophon"><span>© ${new Date().getFullYear()} ${html(profile.name)}</span><button type="button" data-dialog="terminal">Developer terminal ↗</button><a href="#top">Back to the beginning ↑</a></div></div></footer>
 `;
 
 const dialogs = new PortfolioDialogs();
 const journey = new SpaceJourney(document.querySelector('#universe'));
+const sectionMotion = new SectionMotion(root);
 const events = new AbortController();
 const on = (target, type, handler) => target.addEventListener(type, handler, { signal: events.signal });
 on(document, 'click', event => {
@@ -65,4 +73,4 @@ on(document.querySelector('#copy-email'), 'click', async () => {
   try { await navigator.clipboard.writeText(profile.email); feedback.textContent = 'Email address copied.'; }
   catch { feedback.textContent = 'Select the email address above to copy it, or open it to send a message.'; }
 });
-if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); journey.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });
+if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); sectionMotion.dispose(); journey.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });
