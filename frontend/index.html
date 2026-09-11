@@ -1,52 +1,34 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pavithran S. | Cyberpunk Workstation & Interactive 3D Portfolio</title>
-  
-  <!-- SEO Metadata -->
-  <meta name="description" content="Portfolio of Pavithran S. - Multi-Stack Software Engineer at OWLSure (ValueMomentum) specializing in ASP.NET Core, FastAPI, React, LangChain, PostgreSQL pgvector, Three.js 3D WebGL, and DevOps." />
-  <meta name="keywords" content="Pavithran S, Software Engineer, ValueMomentum, OWLSure, Three.js, WebGL, 3D Architecture, Dev Terminal, FastAPI, LangChain, PostgreSQL, pgvector" />
-  <meta name="author" content="Pavithran S." />
-
-  <!-- Google Fonts -->
+  <meta name="theme-color" content="#05080e" />
+  <meta name="description" content="Pavithran S. — software engineer. Explore a journey through frontend, backend, databases, and applied AI, and the real projects connecting them." />
+  <title>Pavithran S. | From Interface to Intelligence</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <link rel="stylesheet" href="/src/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="/images/space/ocean-world.webp" fetchpriority="high" />
 </head>
-<body class="station-fullscreen-body">
-  <div id="app">
-    <!-- Pavithran's Cyberpunk Workstation (100% Fullscreen Primary Interactive Universe) -->
-    <main id="cyber-station-root"></main>
-
-    <!-- Floating Quick Action Bar (Bottom-Right) -->
-    <div class="floating-quick-bar" style="position: fixed; bottom: 24px; right: 24px; z-index: 999; display: flex; gap: 12px; align-items: center;">
-      <!-- Meet DAWN AI Assistant Floating Pill Button -->
-      <button id="fab-rag-btn" class="clara-ai-pill-btn" aria-label="Meet DAWN AI Assistant" type="button">
-        <div class="clara-eye-wrapper">
-          <div class="clara-eye-sclera">
-            <div class="clara-eye-iris">
-              <div class="clara-eye-pupil"></div>
-              <div class="clara-eye-glint"></div>
-            </div>
-          </div>
-        </div>
-        <div class="clara-text-group">
-          <span class="clara-eyebrow">MEET DAWN</span>
-          <span class="clara-title">AI Assistant</span>
-        </div>
-        <div class="clara-status-pulse" title="Online & Ready">
-          <span class="clara-status-dot"></span>
-        </div>
-        <div class="clara-tooltip">DAWN AI Assistant</div>
-      </button>
-    </div>
-  </div>
-
+<body class="space-portfolio">
+  <a class="skip-link" href="#work">Skip to selected work</a>
+  <div class="universe" id="universe" aria-hidden="true"><div class="universe-darkness"></div></div>
+  <header class="space-header">
+    <a class="space-signature" href="#top" aria-label="Pavithran S. — back to the beginning">Pavithran <span>S.</span></a>
+    <nav class="space-nav" aria-label="Main navigation"><a href="#stack-frontend">Journey</a><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+    <div class="space-header-actions"><button id="appearance-toggle" type="button" aria-label="Switch to light appearance"><span aria-hidden="true">◐</span> Light</button><button id="menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false">Menu <span aria-hidden="true">+</span></button></div>
+  </header>
+  <dialog id="mobile-menu" class="mobile-menu" aria-labelledby="menu-title">
+    <div class="mobile-menu-top"><span id="menu-title">Explore</span><button id="menu-close" type="button" aria-label="Close menu">Close ×</button></div>
+    <nav aria-label="Mobile navigation"><a href="#top">The beginning</a><a href="#stack-frontend">Frontend</a><a href="#stack-backend">Backend</a><a href="#stack-databases">Databases</a><a href="#stack-ai">Applied AI</a><a href="#work">Selected work</a><a href="#about">About me</a><a href="#contact">Contact</a></nav>
+  </dialog>
+  <main id="portfolio"><section class="space-intro" id="top"><div class="intro-identity"><p class="space-kicker">SOFTWARE ENGINEER</p><h1>Pavithran <em>S.</em></h1><p>Interfaces, systems, and applied intelligence.</p><a href="mailto:pavithran2004cs@gmail.com">Get in touch ↗</a></div></section></main>
+  <div class="orbit-interface" id="orbit-interface"></div>
+  <div class="flight-footer"><div class="flight-location"><span class="location-dot" aria-hidden="true"></span><span id="flight-location">THE BEGINNING</span></div><a class="flight-scroll" href="#stack-frontend">Scroll to explore <span aria-hidden="true">↓</span></a><button class="space-motion" id="motion-toggle" type="button" aria-pressed="true">Motion on</button></div>
+  <nav class="flight-nav" aria-label="Journey chapters"><a href="#top" aria-label="The beginning" title="The beginning" aria-current="location"><span></span></a><a href="#stack-frontend" aria-label="Frontend" title="Frontend"><span></span></a><a href="#stack-backend" aria-label="Backend" title="Backend"><span></span></a><a href="#stack-databases" aria-label="Databases" title="Databases"><span></span></a><a href="#stack-ai" aria-label="Applied AI" title="Applied AI"><span></span></a><a href="#work" aria-label="Selected work" title="Selected work"><span></span></a></nav>
+  <noscript><p class="space-noscript">The animated journey needs JavaScript. Contact Pavithran at <a href="mailto:pavithran2004cs@gmail.com">pavithran2004cs@gmail.com</a> or visit <a href="https://github.com/Pavithran26">GitHub</a>.</p></noscript>
   <script type="module" src="/src/main.js"></script>
 </body>
 </html>

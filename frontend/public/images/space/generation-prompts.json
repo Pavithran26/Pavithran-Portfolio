@@ -1,0 +1,27 @@
+{
+  "mode": "built-in image_gen",
+  "generationCount": 3,
+  "regenerated": false,
+  "assets": [
+    {
+      "name": "ocean-world",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent raster planet cutout for a cinematic software portfolio space journey.\nPrimary request: One exquisitely detailed fictional blue ocean planet, Earth-like but NOT Earth and not a factual depiction of any real world.\nScene/backdrop: genuinely transparent background with real alpha, isolated object, nothing behind it.\nSubject: a beautiful blue spherical ocean world with deep blue oceans, natural coastlines that are clearly not a literal map of Earth, subtle small continents, swirling fine white clouds, and a delicately glowing thin blue atmospheric rim.\nStyle/medium: cinematic astronomical realism, understated high-end astronomical photography aesthetic with physically convincing surface detail.\nComposition/framing: square 1024x1024 or larger; entire circular planet contained in frame and centered with generous safe margins. Three-quarter lit sphere. Single light arrives from upper left; dark lower-right limb with convincing spherical falloff.\nConstraints: preserve transparent alpha around the entire object, including any delicate atmosphere. Exactly one planet only, no stars, no nebula, no black or colored space background, no cast shadow beyond the planet, no checkerboard pattern painted into the artwork, no text, no logos, no labels, no UI, no borders.",
+      "file": "ocean-world.webp"
+    },
+    {
+      "name": "rocky-world",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent raster planet cutout for a cinematic software portfolio space journey.\nPrimary request: One exquisitely detailed fictional silvery cratered moon, not a factual depiction of a real moon.\nScene/backdrop: genuinely transparent background with real alpha, isolated object, nothing behind it.\nSubject: a beautiful silvery gray spherical rocky world with highly natural mineral texture, intricate varied crater relief, subtle highlands and basaltic regions.\nStyle/medium: cinematic astronomical realism, understated high-end astronomical photography aesthetic, physically convincing crater shadows and surface relief.\nComposition/framing: square 1024x1024 or larger; entire circular moon contained in frame and centered with generous safe margins. Three-quarter lit sphere. Single sunlight arrives from upper left; dark lower-right limb and convincing spherical falloff.\nConstraints: preserve transparent alpha around the entire object. Exactly one moon only, no stars, no nebula, no black or colored space background, no cast shadow beyond the moon, no checkerboard pattern painted into the artwork, no text, no logos, no labels, no UI, no borders.",
+      "file": "rocky-world.webp"
+    },
+    {
+      "name": "ring-world",
+      "prompt": "Use case: stylized-concept\nAsset type: original transparent raster planet cutout for a cinematic software portfolio space journey.\nPrimary request: One exquisitely detailed fictional pale warm sand-colored gas giant with elegant broad, thin, realistic orbital rings; not a factual depiction of any real planet.\nScene/backdrop: genuinely transparent background with real alpha, isolated object, nothing behind it.\nSubject: softly banded pale warm sand and ivory gas giant, delicate cloud layers, broad thin rings with fine concentric banding and ring gaps. Rings angled 25 degrees from lower left to upper right, convincing orbital geometry and realistic planet-on-ring shadow.\nStyle/medium: cinematic astronomical realism, understated high-end astronomical photography aesthetic; quiet refined palette and physically convincing materials.\nComposition/framing: landscape 1536x1024 or larger; entire planet and ALL outer rings fully contained and centered with generous safe margins on every side. Single light arriving from upper left; three-quarter lit sphere with dark lower-right limb.\nConstraints: preserve transparent alpha around the entire object and through ring gaps. Exactly one ringed gas giant only, no additional moon, no stars, no nebula, no black or colored space background, no checkerboard pattern painted into the artwork, no text, no logos, no labels, no UI, no borders.",
+      "file": "ring-world.webp"
+    }
+  ],
+  "inspection": {
+    "ocean-world": "1254×1254 RGBA. Detailed fictional coastlines and clouds; blue atmospheric rim; upper-left light and dark lower right. Transparent corners and background; substantial subject bounds contained.",
+    "rocky-world": "1254×1254 RGBA. Detailed varied crater relief and silvery mineral texture; upper-left light and dark lower right. Transparent corners and background; substantial subject bounds contained.",
+    "ring-world": "1536×1024 RGBA. Pale warm banded gas giant and fine rings ascending lower left to upper right. Full substantial ring geometry contained, with tight horizontal margins (~25 px left and 9 px right at alpha≥16); use contain sizing. Transparent background preserved."
+  }
+}
