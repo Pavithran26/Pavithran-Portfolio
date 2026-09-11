@@ -437,7 +437,7 @@ Core Expertise: ASP.NET Core, FastAPI, React, TypeScript, LangChain, PostgreSQL 
 
     this.appendOutput(`
       <div class="term-output-block">
-        <div class="term-heading">🚀 Flagship Production Deployments</div>
+        <div class="term-heading">🚀 Projects & Experiments</div>
         ${projs}
       </div>
     `);

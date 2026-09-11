@@ -56,7 +56,7 @@ export class PortfolioDialogs {
       <p class="detail-lead">${html(project.tagline)}</p><p>${html(project.overview)}</p>
       <div class="detail-columns"><div><h3>The challenge</h3><p>${html(project.challenge)}</p></div><div><h3>The approach</h3><p>${html(project.solution)}</p></div></div>
       ${project.implementationNote ? `<p class="project-scope-note">${html(project.implementationNote)}</p>` : ''}<h3>Engineering contributions</h3>${bullets(project.highlights)}<h3>Technologies</h3>${tags(project.technologies)}
-      <div class="detail-actions">${project.liveUrl ? `<a class="button button-light" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit project ↗</a>` : (project.githubUrl ? '' : '<span class="eyebrow">CLIENT PROJECT / NO PUBLIC DEMO</span>')}${project.githubUrl ? `<a class="text-link" href="${html(project.githubUrl)}" target="_blank" rel="noopener noreferrer">Source code ↗</a>` : ''}</div>
+      <div class="detail-actions">${project.liveUrl ? `<a class="button button-light" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit project ↗</a>` : (project.githubUrl ? '' : '<span class="eyebrow">NO PUBLIC DEMO LINK</span>')}${project.githubUrl ? `<a class="text-link" href="${html(project.githubUrl)}" target="_blank" rel="noopener noreferrer">Source code ↗</a>` : ''}</div>
     `);
   }
 

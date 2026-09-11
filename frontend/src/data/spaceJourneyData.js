@@ -68,10 +68,8 @@ export function createPortfolioRoute(projects, profile) {
       galaxy: 0, blackhole: 0, orbits: 0, starMap: 0, shade: side === 'left' ? 1 : 0, ...scene });
   };
   destination('#top', 'THE BEGINNING / MILKY WAY', '#top', -1, 'right', { galaxy: 1 });
-  destination('#work', 'SELECTED WORK / NEW WORLDS', '#work', -1, 'right', { galaxy: .65 });
-  const projectWorlds = [0, 3, 4, 5, 6, 2];
-  const names = ['EARTH', 'MARS', 'JUPITER', 'NEPTUNE', 'VENUS', 'SATURN'];
-  projects.forEach((project, index) => destination(`#project-${project.id}`, 'WORK / ' + project.title.toUpperCase() + ' / ' + names[index % names.length], '#work', projectWorlds[index % projectWorlds.length], index % 2 ? 'left' : 'right'));
+  destination('#work', 'SELECTED WORK', '#work', -1, 'right', { galaxy: .65 });
+  projects.forEach(project => destination(`#project-${project.id}`, 'WORK / ' + project.title.toUpperCase(), '#work'));
   destination('#about', 'EXPERIENCE / ORBITAL PATHS', '#about', -1, 'right', { orbits: 1 });
   profile.experience.forEach((job, index) => destination(`#experience-${index}`, 'EXPERIENCE / ' + job.company.split(',')[0].toUpperCase(), '#about', -1, 'right', { orbits: 1, roll: index * 12 }));
   SPACE_CHAPTERS.forEach((chapter, index) => destination('#stack-' + chapter.id, chapter.orbit, '#stack-' + chapter.id, [0, 3, 2, -1][index], index === 1 ? 'left' : 'right', { neural: index === 3 ? 1 : 0, galaxy: index === 3 ? .2 : 0 }));
