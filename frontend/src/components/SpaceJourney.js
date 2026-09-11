@@ -74,7 +74,9 @@ export class SpaceJourney {
   }
 
   applyMotion(preservePosition = false) {
-    const anchor = preservePosition && this.sections.filter(section => documentTop(section) <= window.scrollY + 100).at(-1);
+    const anchor = preservePosition
+      ? this.sections.filter(section => documentTop(section) <= window.scrollY + 100).at(-1)
+      : null;
     const before = anchor?.getBoundingClientRect().top;
     document.body.classList.toggle('space-reading', !this.motion);
     this.motionButton.textContent = this.motion ? 'Motion on' : 'Motion off';
