@@ -5,6 +5,7 @@ import { SPACE_CHAPTERS as chapters } from './data/spaceJourneyData.js';
 import { PortfolioDialogs } from './components/PortfolioDialogs.js';
 import { projectVisual } from './components/ProjectVisuals.js';
 import { technologyIcons } from './components/TechnologyIcons.js';
+import { ProjectSceneVideos } from './components/ProjectSceneVideos.js';
 import { SectionMotion } from './components/SectionMotion.js';
 import { getClaraEyeAvatarHtml } from './components/ClaraWidget.js';
 import { SpaceJourney } from './components/SpaceJourney.js';
@@ -58,6 +59,7 @@ eyeButton.innerHTML = getClaraEyeAvatarHtml(38) + '<span class="eye-label">Meet 
 const dialogs = new PortfolioDialogs();
 const journey = new SpaceJourney(document.querySelector('#universe'));
 const sectionMotion = new SectionMotion(root);
+const sceneVideos = new ProjectSceneVideos(root);
 const events = new AbortController();
 const on = (target, type, handler) => target.addEventListener(type, handler, { signal: events.signal });
 on(document, 'click', event => {
@@ -97,4 +99,4 @@ on(document.querySelector('#copy-email'), 'click', async () => {
   try { await navigator.clipboard.writeText(profile.email); feedback.textContent = 'Email address copied.'; }
   catch { feedback.textContent = 'Select the email address above to copy it, or open it to send a message.'; }
 });
-if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); sectionMotion.dispose(); journey.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });
+if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); sceneVideos.dispose(); sectionMotion.dispose(); journey.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });

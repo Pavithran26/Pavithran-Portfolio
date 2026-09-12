@@ -37,8 +37,8 @@ export function projectVisual(project) {
   const visual = PROJECT_VISUALS[project.id];
   if (!visual) return '';
   if (PROJECT_SCENES[project.id]) return `<figure class="project-visual project-scene" style="--project-accent:${visual.color}">
-    <div class="project-scene-camera"><img class="project-scene-image" src="/images/projects/${project.id}-1440.webp" srcset="/images/projects/${project.id}-768.webp 768w, /images/projects/${project.id}-1440.webp 1440w" sizes="(max-width: 759px) 100vw, 65vw" width="1440" height="810" alt="${html(PROJECT_SCENES[project.id])}" loading="lazy" decoding="async"></div>
-    <div class="project-scene-light" aria-hidden="true"></div>
+    <div class="project-scene-camera"><video class="project-scene-image project-scene-video" data-src="/images/projects/${project.id}-loop.mp4" poster="/images/projects/${project.id}-1440.webp" width="960" height="540" muted loop playsinline preload="none" aria-label="${html(PROJECT_SCENES[project.id])}"></video></div>
+    <button type="button" class="scene-playback" aria-label="Play project scene">Play scene</button>
     <figcaption class="visually-hidden">${html(visual.title)} — conceptual artwork</figcaption>
   </figure>`;
   return `<figure class="project-visual" style="--project-accent:${visual.color}">
