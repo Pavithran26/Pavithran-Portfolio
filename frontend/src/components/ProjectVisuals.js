@@ -38,7 +38,7 @@ export function projectVisual(project) {
   if (!visual) return '';
   if (PROJECT_SCENES[project.id]) return `<figure class="project-visual project-scene" style="--project-accent:${visual.color}">
     <div class="project-scene-camera"><video class="project-scene-image project-scene-video" data-src="/images/projects/${project.id}-loop.mp4" poster="/images/projects/${project.id}-1440.webp" width="960" height="540" muted loop playsinline preload="none" aria-label="${html(PROJECT_SCENES[project.id])}"></video></div>
-    <button type="button" class="scene-playback" aria-label="Play project scene">Play scene</button>
+    ${project.id === 'sattam-ai' ? '<span class="project-scene-label">SATTAM AI<small>Legal knowledge assistant</small></span>' : ''}
     <figcaption class="visually-hidden">${html(visual.title)} — conceptual artwork</figcaption>
   </figure>`;
   return `<figure class="project-visual" style="--project-accent:${visual.color}">
