@@ -1,6 +1,6 @@
 import { SPACE_CHAPTERS, clamp, flightPosition, interpolateFlight, createPortfolioRoute, destinationIndex, ambientFlight } from '../data/spaceJourneyData.js';
 import { CosmicScenes, createPlanet } from './CosmicScenes.js';
-import { PROJECTS_DATA } from '../data/projectsData.js';
+import { FEATURED_PROJECTS } from '../data/projectsData.js';
 import { PORTFOLIO_DATA } from '../data/portfolioData.js';
 import { technologyIcons } from './TechnologyIcons.js';
 import { escapeHtml as html } from '../utils/helpers.js';
@@ -38,7 +38,7 @@ export class SpaceJourney {
     this.overlay = document.querySelector('#orbit-interface');
     this.overlay.innerHTML = SPACE_CHAPTERS.map((chapter, index) => `<div class="orbit-group" data-orbit="${index + 1}" role="group" aria-label="${chapter.name} technologies" aria-hidden="true" inert>${chapter.tools.map(tool => `<button class="orbit-tool" type="button" data-technology="${html(tool.search)}" aria-label="Explore ${html(tool.name)} skills">${technologyIcons(tool.name, { eager: true })}<span class="orbit-tool-name">${html(tool.name)}</span></button>`).join('')}</div>`).join('');
     this.groups = [...this.overlay.children].map(element => ({ element, buttons: [...element.children] }));
-    this.route = createPortfolioRoute(PROJECTS_DATA, PORTFOLIO_DATA);
+    this.route = createPortfolioRoute(FEATURED_PROJECTS, PORTFOLIO_DATA);
     this.chapterPositions = SPACE_CHAPTERS.map(chapter => this.route.findIndex(stop => stop.selector === '#stack-' + chapter.id));
     this.sections = this.route.map(stop => document.querySelector(stop.selector));
     this.nav = [...document.querySelectorAll('.flight-nav a')];

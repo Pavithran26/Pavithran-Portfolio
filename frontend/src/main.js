@@ -1,6 +1,6 @@
 import './style.css';
 import { PORTFOLIO_DATA as profile } from './data/portfolioData.js';
-import { PROJECTS_DATA as projects } from './data/projectsData.js';
+import { FEATURED_PROJECTS as projects } from './data/projectsData.js';
 import { SPACE_CHAPTERS as chapters } from './data/spaceJourneyData.js';
 import { PortfolioDialogs } from './components/PortfolioDialogs.js';
 import { projectVisual } from './components/ProjectVisuals.js';
@@ -26,7 +26,7 @@ root.innerHTML = `
       <div class="project-logos" aria-label="${html(project.title)} technologies">${project.technologies.slice(0, 5).map(technology => `<span title="${html(technology)}"><span class="visually-hidden">${html(technology)}</span>${technologyIcons(technology)}</span>`).join('')}</div>
       <div class="project-links"><button class="space-text-link" type="button" data-project="${project.id}">Explore project ↗</button>${project.liveUrl ? `<a class="space-text-link" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit project ↗</a>` : ''}</div></div>
       ${projectVisual(project)}
-    </article>`).join('')}</div>
+    </article>`).join('')}</div><div class="project-archive-link"><a class="space-text-link" href="/projects.html">All projects & experiments <span aria-hidden="true">↗</span></a><p>More applications, explorations and things I learned by building.</p></div>
   </div></section>
   <section class="space-about space-section" id="about" aria-labelledby="about-title"><div class="space-content">
     <p class="space-kicker">THE PERSON BEHIND THE WORK</p><h2 id="about-title">Always curious.<br><em>Still building.</em></h2><p class="section-intro">I'm Pavithran, a software engineer from Tamil Nadu. I like making complicated things feel simple, from the first interaction to the systems underneath.</p>

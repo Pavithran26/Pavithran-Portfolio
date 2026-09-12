@@ -462,3 +462,6 @@ export const PROJECTS_DATA = [
     "implementationNote": "Authentication and role-based access use frontend demo/mock logic. This is a UI prototype, not a production insurance backend."
   }
 ];
+
+// Homepage and camera route must use the same curated selection.
+export const FEATURED_PROJECTS = ['clansure', 'gt-companion', 'srk-erp', 'sattam-ai'].map(id => PROJECTS_DATA.find(project => project.id === id));

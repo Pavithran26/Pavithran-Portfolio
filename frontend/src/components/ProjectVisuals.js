@@ -26,9 +26,21 @@ function iconMarkup([tag, attributes, children = []], root = true) {
   return `<${tag} ${Object.entries(attrs).map(([key, value]) => `${key}="${html(String(value))}"`).join(' ')}>${children.map(child => iconMarkup(child, false)).join('')}</${tag}>`;
 }
 
+export const PROJECT_SCENES = {
+  clansure: 'A family beneath a glass canopy, with policy folders, a model home and car in the foreground.',
+  'gt-companion': 'Graduate trainees sharing knowledge across connected, warmly lit learning spaces.',
+  'srk-erp': 'Coconut harvest baskets, a goods truck and a warehouse connected by a winding road.',
+  'sattam-ai': 'An open law book, a magnifying glass and illuminated pages inside a legal archive.'
+};
+
 export function projectVisual(project) {
   const visual = PROJECT_VISUALS[project.id];
   if (!visual) return '';
+  if (PROJECT_SCENES[project.id]) return `<figure class="project-visual project-scene" style="--project-accent:${visual.color}">
+    <div class="project-scene-camera"><img class="project-scene-image" src="/images/projects/${project.id}-1440.webp" srcset="/images/projects/${project.id}-768.webp 768w, /images/projects/${project.id}-1440.webp 1440w" sizes="(max-width: 759px) 100vw, 65vw" width="1440" height="810" alt="${html(PROJECT_SCENES[project.id])}" loading="lazy" decoding="async"></div>
+    <div class="project-scene-light" aria-hidden="true"></div>
+    <figcaption class="visually-hidden">${html(visual.title)} — conceptual artwork</figcaption>
+  </figure>`;
   return `<figure class="project-visual" style="--project-accent:${visual.color}">
     <div class="project-symbol">${iconMarkup(visual.icon)}</div>
     <figcaption>${html(visual.title)}</figcaption>
