@@ -87,20 +87,15 @@ Core Expertise: ASP.NET Core, FastAPI, React, TypeScript, LangChain, PostgreSQL 
           
           <!-- Terminal Header Bar -->
           <div class="terminal-header">
-            <div class="terminal-dots">
-              <span class="term-dot dot-red" id="term-btn-close" title="Close / Hide Terminal"></span>
-              <span class="term-dot dot-yellow" id="term-btn-min" title="Minimize"></span>
-              <span class="term-dot dot-green" id="term-btn-max" title="Toggle Fullscreen"></span>
-            </div>
-            
-            <div class="terminal-title">
-              <span class="term-icon">⚡</span> pavithran@developer-box: ~
-            </div>
-            
             <div class="terminal-header-tools">
-              <span class="terminal-pill">bash 5.2</span>
-              <button class="term-tool-btn" id="term-btn-theme" title="Switch Theme">🎨 Theme</button>
-              <button class="term-tool-btn" id="term-btn-clear" title="Clear Buffer">🧹 Clear</button>
+              <button class="term-tool-btn" id="term-btn-clear" title="Clear terminal">Clear</button>
+              <button class="term-tool-btn" id="term-btn-theme" title="Switch theme">Theme</button>
+            </div>
+            <div class="terminal-title">pavithran@ubuntu: ~</div>
+            <div class="terminal-dots">
+              <button type="button" class="term-dot" id="term-btn-min" title="Minimize terminal" aria-label="Minimize terminal">−</button>
+              <button type="button" class="term-dot" id="term-btn-max" title="Maximize terminal" aria-label="Maximize terminal" aria-pressed="false">□</button>
+              <button type="button" class="term-dot dot-red" id="term-btn-close" title="Close terminal" aria-label="Close terminal">×</button>
             </div>
           </div>
 
@@ -112,7 +107,7 @@ Core Expertise: ASP.NET Core, FastAPI, React, TypeScript, LangChain, PostgreSQL 
             <!-- Active Input Prompt Line -->
             <div class="terminal-input-line" id="term-input-container">
               <span class="term-prompt">
-                <span class="prompt-user">pavithran</span><span class="prompt-at">@</span><span class="prompt-host">dev-box</span>:<span class="prompt-path">~</span>$
+                <span class="prompt-user">pavithran</span><span class="prompt-at">@</span><span class="prompt-host">ubuntu</span>:<span class="prompt-path">~</span>$
               </span>
               <div class="input-wrapper">
                 <input type="text" id="term-cli-input" class="term-input" autocomplete="off" spellcheck="false" autofocus />
@@ -146,6 +141,7 @@ Core Expertise: ASP.NET Core, FastAPI, React, TypeScript, LangChain, PostgreSQL 
         this.stopMatrix();
         return;
       }
+      if (window.getSelection()?.toString() || e.target.closest('a, button')) return;
       this.input.focus();
     });
 
@@ -212,33 +208,28 @@ Core Expertise: ASP.NET Core, FastAPI, React, TypeScript, LangChain, PostgreSQL 
     const minBtn = this.container.querySelector('#term-btn-min');
     if (minBtn) {
       minBtn.addEventListener('click', () => {
-        this.rootEl.classList.toggle('minimized');
+        if (this.container.closest('dialog')) this.close();
+        else this.rootEl.classList.toggle('minimized');
       });
     }
 
     const maxBtn = this.container.querySelector('#term-btn-max');
     if (maxBtn) {
       maxBtn.addEventListener('click', () => {
-        this.rootEl.classList.toggle('fullscreen');
+        const host = this.container.closest('dialog') || this.rootEl;
+        const maximized = host.classList.toggle('fullscreen');
+        maxBtn.setAttribute('aria-pressed', String(maximized));
+        maxBtn.setAttribute('aria-label', maximized ? 'Restore terminal size' : 'Maximize terminal');
       });
     }
   }
 
   printWelcome() {
     const welcomeHtml = `
-      <div class="term-banner">
-        <pre class="term-ascii-art">
-   ___             _ _   _                         ____  
-  / _ \\__ ___   _(_) |_| |__  _ __ __ _ _ __      / ___| 
- / /_)/ _\` \\ \\ / / | __| '_ \\| '__/ _\` | '_ \\ ____\\___ \\ 
-/ ___/ (_| |\\ V /| | |_| | | | | | (_| | | | |_____|__) |
-\\/    \\__,_| \\_/ |_|\\__|_| |_|_|  \\__,_|_| |_|    |____/ 
-        </pre>
-        <div class="term-welcome-text">
-          <p><strong>Pavithran S. — Software Engineer & 3D Interactive Terminal</strong></p>
-          <p class="term-text-muted">OWLSure / ValueMomentum • Multi-Stack Developer • RAG & Cloud Systems</p>
-          <p>Type <span class="term-highlight">help</span> to view available commands, or press <span class="term-highlight">Tab</span> to auto-complete.</p>
-        </div>
+      <div class="term-welcome-text">
+        <p>Welcome to Pavithran's terminal.</p>
+        <p class="term-text-muted">Interactive portfolio shell · no system access</p>
+        <p>Type <span class="term-highlight">help</span> to see available commands.</p>
       </div>
     `;
     this.appendOutput(welcomeHtml);
@@ -787,7 +778,7 @@ Core Expertise: ASP.NET Core, FastAPI, React, TypeScript, LangChain, PostgreSQL 
     const lineHtml = `
       <div class="term-history-entry">
         <span class="term-prompt">
-          <span class="prompt-user">pavithran</span><span class="prompt-at">@</span><span class="prompt-host">dev-box</span>:<span class="prompt-path">~</span>$
+          <span class="prompt-user">pavithran</span><span class="prompt-at">@</span><span class="prompt-host">ubuntu</span>:<span class="prompt-path">~</span>$
         </span>
         <span class="term-entered-cmd">${cmd}</span>
       </div>
