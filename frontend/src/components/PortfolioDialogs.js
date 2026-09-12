@@ -4,6 +4,7 @@ import { PROJECTS_DATA as projects } from '../data/projectsData.js';
 import { SKILLS_CATEGORIES as categories } from '../data/skillsData.js';
 import { RAGService } from '../services/ragService.js';
 import { escapeHtml as html, formatMarkdown } from '../utils/helpers.js';
+import { getClaraEyeAvatarHtml } from './ClaraWidget.js';
 import { technologyIcons } from './TechnologyIcons.js';
 
 const tags = values => `<div class="detail-tags">${values.map(value => `<span class="detail-tag">${technologyIcons(value)}${html(value)}</span>`).join('')}</div>`;
@@ -33,13 +34,14 @@ export class PortfolioDialogs {
     if (this.terminalMount?.isConnected) this.terminalMount.remove();
     this.view = type;
     this.viewRevision = (this.viewRevision || 0) + 1;
+    this.dialog.classList.remove('fullscreen');
     this.dialog.dataset.view = type;
     this.dialog.querySelector('#detail-label').textContent = label;
     this.dialog.querySelector('#detail-title').textContent = title;
     this.body.innerHTML = content;
     this.dialog.scrollTop = 0;
     if (!this.dialog.open) { this.opener = document.activeElement; this.dialog.showModal(); }
-    this.dialog.querySelector('.dialog-close').focus({ preventScroll: true });
+    if (type !== 'terminal') this.dialog.querySelector('.dialog-close').focus({ preventScroll: true });
   }
 
   open(type) {
@@ -113,29 +115,30 @@ export class PortfolioDialogs {
   }
 
   openDawn(question) {
-    this.show('PORTFOLIO ASSISTANT', 'Meet DAWN AI.', `
-      <p class="detail-lead">Ask about my work, technical skills, or journey.</p><div class="chat-suggestions"><button type="button" data-chat-prompt="What is ClanSure and what did Pavithran build?">ClanSure</button><button type="button" data-chat-prompt="What is GT Companion?">GT Companion</button><button type="button" data-chat-prompt="Tell me about Pavithran's experience.">Experience</button></div>
-      <div class="chat-transcript" role="log" aria-label="Conversation with DAWN" aria-live="polite"><div class="chat-message assistant"><span class="eyebrow">DAWN</span><p>What would you like to know about Pavithran?</p></div></div>
-      <form class="chat-form"><label class="visually-hidden" for="dawn-question">Your question for DAWN</label><input id="dawn-question" type="text" placeholder="Ask a question…" maxlength="2000" required autocomplete="off"><button class="button button-light" type="submit">Send ↗</button></form><p class="chat-status" role="status"></p>
+    this.show('DAWN', 'Portfolio assistant', `
+      <div class="chat-transcript" role="log" aria-label="Conversation with DAWN" aria-live="polite">
+        <div class="chat-empty">${getClaraEyeAvatarHtml(64)}<h3>DAWN</h3><p>Pavithran's portfolio assistant.</p></div>
+      </div>
+      <div class="chat-compose"><p class="chat-status" role="status"></p><form class="chat-form"><label class="visually-hidden" for="dawn-question">Message DAWN</label><textarea id="dawn-question" rows="1" placeholder="Message DAWN…" maxlength="2000" required></textarea><button type="submit" class="chat-send" aria-label="Send message"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 19V5m-6 6 6-6 6 6"/></svg></button></form><p class="chat-footnote">DAWN can make mistakes. Check important details.</p></div>
     `, 'dawn');
     const form = this.body.querySelector('form');
     const input = this.body.querySelector('#dawn-question');
     const transcript = this.body.querySelector('.chat-transcript');
     const submit = form.querySelector('button');
     const status = this.body.querySelector('.chat-status');
-    const prompts = this.body.querySelectorAll('[data-chat-prompt]');
     let busy = false;
     const append = (role, text, sources = []) => {
       const message = document.createElement('div');
       message.className = `chat-message ${role}`;
       message.innerHTML = `<span class="eyebrow">${role === 'user' ? 'YOU' : 'DAWN'}</span><div>${formatMarkdown(text)}</div>${sources.length ? `<details><summary>Sources (${sources.length})</summary>${sources.map(source => `<p><strong>${html(source.title || source.source || 'Portfolio knowledge base')}</strong>${source.snippet ? ': ' + html(source.snippet) : ''}</p>`).join('')}</details>` : ''}`;
+      transcript.querySelector('.chat-empty')?.remove();
       transcript.appendChild(message); transcript.scrollTop = transcript.scrollHeight;
     };
     const ask = async questionText => {
       if (busy || !questionText.trim()) return;
-      busy = true; submit.disabled = true; prompts.forEach(prompt => { prompt.disabled = true; });
-      input.value = ''; append('user', questionText);
-      status.textContent = 'Looking through the portfolio…';
+      busy = true; submit.disabled = true; transcript.setAttribute('aria-busy', 'true');
+      input.value = ''; input.style.height = 'auto'; append('user', questionText);
+      status.textContent = 'DAWN is thinking…';
       this.request = new AbortController();
       const request = this.request;
       try {
@@ -144,23 +147,24 @@ export class PortfolioDialogs {
         const answer = response.answer || response.response;
         if (typeof answer !== 'string' || !answer.trim()) throw new Error('No answer returned');
         append('assistant', answer, Array.isArray(response.sources) ? response.sources.filter(source => source && typeof source === 'object') : []);
-        status.textContent = 'Answer received. You can ask another question.';
+        status.textContent = '';
       } catch {
         if (request.signal.aborted) return;
         append('assistant', 'DAWN is unavailable right now. Please try again, or explore the projects and experience sections. You can also reach Pavithran by email.');
         status.textContent = 'Your question was not answered. Please try again.';
       } finally {
-        busy = false; submit.disabled = false; prompts.forEach(prompt => { prompt.disabled = false; });
+        busy = false; submit.disabled = false; transcript.setAttribute('aria-busy', 'false');
         if (this.dialog.open && this.view === 'dawn' && !request.signal.aborted) input.focus({ preventScroll: true });
       }
     };
     form.addEventListener('submit', event => { event.preventDefault(); ask(input.value.trim()); });
-    prompts.forEach(prompt => prompt.addEventListener('click', () => ask(prompt.dataset.chatPrompt)));
+    input.addEventListener('input', () => { input.style.height = 'auto'; input.style.height = `${Math.min(input.scrollHeight, 140)}px`; });
+    input.addEventListener('keydown', event => { if (event.key === 'Enter' && !event.shiftKey && !event.isComposing) { event.preventDefault(); if (!busy) form.requestSubmit(); } });
     if (question) ask(question); else input.focus({ preventScroll: true });
   }
 
   async openTerminal() {
-    this.show('DEVELOPER CONSOLE', 'A different way in.', '<p class="detail-lead">Type <code>help</code> to explore. Use ↑ and ↓ for command history.</p><p id="terminal-loading" role="status">Opening terminal…</p>', 'terminal');
+    this.show('TERMINAL', 'pavithran@ubuntu: ~', '<p id="terminal-loading" role="status">Opening terminal…</p>', 'terminal');
     const revision = this.viewRevision;
     try {
       if (!this.terminal) {
@@ -171,13 +175,11 @@ export class PortfolioDialogs {
         this.terminal = new DevTerminalConsole('portfolio-terminal', { isFloating: false });
         this.terminal.input.setAttribute('aria-label', 'Terminal command');
         this.terminal.close = () => this.dialog.close();
-        // Make the existing window controls keyboard accessible.
-        this.terminalMount.querySelectorAll('.terminal-dots span[id]').forEach(control => {
-          control.setAttribute('role', 'button'); control.setAttribute('tabindex', '0');
-          control.setAttribute('aria-label', control.title);
-          control.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); control.click(); } });
-        });
+
       } else this.body.appendChild(this.terminalMount);
+      const maximize = this.terminalMount.querySelector('#term-btn-max');
+      maximize.setAttribute('aria-pressed', 'false');
+      maximize.setAttribute('aria-label', 'Maximize terminal');
       this.body.querySelector('#terminal-loading')?.remove();
       this.terminal.input.focus({ preventScroll: true });
     } catch { const loading = this.body.querySelector('#terminal-loading'); if (loading) loading.textContent = 'The terminal could not open. Please close this window and try again.'; }
