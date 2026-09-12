@@ -192,7 +192,7 @@ test('all sixteen projects have complete details and domain visuals, retaining l
     for (const field of ['id', 'title', 'category', 'badge', 'overview', 'challenge', 'solution']) assert.ok(project[field], `${project.id}: ${field}`);
     assert.ok(project.technologies.length && project.highlights.length);
     assert.ok(PROJECT_VISUALS[project.id], `${project.id}: missing domain visual`);
-    assert.match(projectVisual(project), /<(svg|img) /);
+    assert.match(projectVisual(project), /<(svg|img|video) /);
     assert.match(projectVisual(project), /<figcaption[ >]/);
     assert.equal(PROJECT_VISUALS[project.id].steps.length, 3);
     for (const url of [project.githubUrl, project.liveUrl].filter(Boolean)) assert.equal(new URL(url).protocol, 'https:');
@@ -211,7 +211,7 @@ test('homepage camera only visits the four featured scenes while the full catalo
   assert.deepEqual(stops.map(stop => stop.selector), FEATURED_PROJECTS.map(p => '#project-' + p.id));
   for (const project of FEATURED_PROJECTS) {
     assert.match(projectVisual(project), /class="project-visual project-scene"/);
-    assert.match(projectVisual(project), /loading="lazy"/);
+    assert.match(projectVisual(project), /preload="none"/);
   }
   assert.equal(PROJECTS_DATA.length - FEATURED_PROJECTS.length, 12);
 });
