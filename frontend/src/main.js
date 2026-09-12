@@ -1,3 +1,4 @@
+import { CursorSpotlight } from './components/CursorSpotlight.js';
 import './style.css';
 import { PORTFOLIO_DATA as profile } from './data/portfolioData.js';
 import { FEATURED_PROJECTS as projects } from './data/projectsData.js';
@@ -54,6 +55,7 @@ root.innerHTML = `
   <footer class="space-contact space-section" id="contact"><div class="space-content"><p class="space-kicker">THE NEXT CHAPTER</p><h2>Let's make<br><em>something matter.</em></h2><a class="space-email" href="mailto:${html(profile.email)}">${html(profile.email)} <span aria-hidden="true">↗</span></a><div class="space-socials"><a href="${profile.links.github}" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="${profile.links.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="${profile.links.leetcode}" target="_blank" rel="noopener noreferrer">LeetCode ↗</a><a href="${profile.links.hackerrank}" target="_blank" rel="noopener noreferrer">HackerRank ↗</a><a href="${profile.links.codechef}" target="_blank" rel="noopener noreferrer">CodeChef ↗</a><a href="${profile.links.geeksforgeeks}" target="_blank" rel="noopener noreferrer">GeeksforGeeks ↗</a><a href="${profile.links.youtube}" target="_blank" rel="noopener noreferrer">YouTube ↗</a><button type="button" id="copy-email">Copy email</button></div><p id="copy-feedback" role="status"></p><div class="space-colophon"><span>© ${new Date().getFullYear()} ${html(profile.name)}</span><button type="button" data-dialog="terminal">Developer terminal ↗</button><a href="#top">Back to the beginning ↑</a></div></div></footer>
 `;
 
+const spotlight = new CursorSpotlight(root);
 const eyeButton = document.querySelector('#dawn-eye');
 eyeButton.innerHTML = getClaraEyeAvatarHtml(38) + '<span class="eye-label">Meet DAWN<small>AI guide</small></span>';
 const dialogs = new PortfolioDialogs();
@@ -99,4 +101,4 @@ on(document.querySelector('#copy-email'), 'click', async () => {
   try { await navigator.clipboard.writeText(profile.email); feedback.textContent = 'Email address copied.'; }
   catch { feedback.textContent = 'Select the email address above to copy it, or open it to send a message.'; }
 });
-if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); sceneVideos.dispose(); sectionMotion.dispose(); journey.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });
+if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); spotlight.dispose(); sceneVideos.dispose(); sectionMotion.dispose(); journey.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });

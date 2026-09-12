@@ -1,0 +1,5 @@
+.cursor-spotlight { position: relative; isolation: isolate; }
+.cursor-spotlight-light { position: absolute; inset: 0; z-index: 1; border-radius: inherit; pointer-events: none; opacity: 0; background: radial-gradient(230px circle at var(--light-x, 50%) var(--light-y, 50%), color-mix(in srgb, var(--project-accent, #d5e3ef) 18%, transparent), transparent 75%); transition: opacity 260ms ease-out; }
+.cursor-spotlight.spotlight-active > .cursor-spotlight-light { opacity: 1; }
+body.space-reading .cursor-spotlight-light, body:has(dialog[open]) .cursor-spotlight-light { opacity: 0; }
+@media (prefers-reduced-motion: reduce), (hover: none), (pointer: coarse), (max-width: 759px) { .cursor-spotlight-light { display: none; transition: none; } }
