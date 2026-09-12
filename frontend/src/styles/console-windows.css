@@ -66,3 +66,13 @@
 }
 
 .portfolio-dialog[data-view='terminal']:not(:has(#portfolio-terminal)) > .dialog-header { display: flex; padding: 16px 24px; background: #303030; }
+
+/* Override the global form focus ring and old embedded-console spacing. */
+#portfolio-terminal .terminal-embedded-wrapper { margin: 0; }
+#portfolio-terminal .terminal-window { --term-bg: inherit; --term-text: inherit; }
+#portfolio-terminal .term-input, #portfolio-terminal .term-input:focus, #portfolio-terminal .term-input:focus-visible { border: 0; outline: 0; box-shadow: none; padding: 0; min-height: 0; height: 1.65em; line-height: 1.65; }
+#portfolio-terminal .terminal-input-line, #portfolio-terminal .term-history-entry { align-items: baseline; }
+#portfolio-terminal .input-wrapper { align-self: baseline; }
+#portfolio-terminal .term-dot { padding: 0; line-height: 1; }
+#portfolio-terminal .term-dot svg { display: block; flex-shrink: 0; }
+#portfolio-terminal .terminal-header-tools { align-items: center; }

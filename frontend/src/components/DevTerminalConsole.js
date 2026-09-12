@@ -93,9 +93,9 @@ Core Expertise: ASP.NET Core, FastAPI, React, TypeScript, LangChain, PostgreSQL 
             </div>
             <div class="terminal-title">pavithran@ubuntu: ~</div>
             <div class="terminal-dots">
-              <button type="button" class="term-dot" id="term-btn-min" title="Minimize terminal" aria-label="Minimize terminal">−</button>
-              <button type="button" class="term-dot" id="term-btn-max" title="Maximize terminal" aria-label="Maximize terminal" aria-pressed="false">□</button>
-              <button type="button" class="term-dot dot-red" id="term-btn-close" title="Close terminal" aria-label="Close terminal">×</button>
+              <button type="button" class="term-dot" id="term-btn-min" title="Minimize terminal" aria-label="Minimize terminal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+              <button type="button" class="term-dot" id="term-btn-max" title="Maximize terminal" aria-label="Maximize terminal" aria-pressed="false"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 6h12v12H6z"/></svg></button>
+              <button type="button" class="term-dot dot-red" id="term-btn-close" title="Close terminal" aria-label="Close terminal"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6"/></svg></button>
             </div>
           </div>
 
