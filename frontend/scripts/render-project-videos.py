@@ -7,7 +7,8 @@ import math, subprocess, random
 root=Path(__file__).resolve().parents[1]
 assets=root/'public/images/projects'
 W,H,FPS,DURATION=960,540,24,12
-scenes={'clansure':(92,191,245),'gt-companion':(173,136,244),'srk-erp':(226,182,98),'sattam-ai':(245,193,100)}
+# SRK uses the user's Pika footage; never overwrite it with an ambient render.
+scenes={'clansure':(92,191,245),'gt-companion':(173,136,244),'sattam-ai':(245,193,100)}
 for index,(name,color) in enumerate(scenes.items()):
  source=Image.open(assets/f'{name}-1440.webp').convert('RGB')
  rng=random.Random(index+20)
