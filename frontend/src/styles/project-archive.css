@@ -1,0 +1,15 @@
+.project-archive { background: #05080e; }
+.archive-home { margin-left: auto; margin-right: 155px; font-size: .9rem; color: var(--muted); }
+.project-archive #catalog { padding-top: 160px; }
+.project-archive h1 { font-family: var(--font-display); font-size: clamp(3rem, 7vw, 6rem); font-weight: 400; line-height: 1.1; margin: 20px 0; }
+.project-archive h1 em { color: var(--accent); }
+.archive-grid { margin-top: 60px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; align-items: start; }
+.archive-project { border-top: 1px solid var(--line); background: linear-gradient(160deg, #0c121b, #05080e); overflow: hidden; }
+.archive-project > img { width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; display: block; }
+.archive-copy { padding: clamp(22px, 3vw, 40px); }
+.archive-copy h2 { margin: 16px 0; font: 400 clamp(2rem, 3vw, 3rem)/1.2 var(--font-display); }
+.archive-copy h2 button { text-align: left; }
+.archive-copy h2 span { color: var(--accent); }
+.archive-copy > p:not(.space-kicker) { color: var(--muted); line-height: 1.7; }
+.archive-tags { display: flex; flex-wrap: wrap; gap: 8px 16px; color: var(--muted); font-size: .8rem; margin-top: 24px; }
+@media (max-width: 759px) { .archive-grid { grid-template-columns: 1fr; } .archive-home { margin-right: 64px; font-size: .75rem; } .project-archive #catalog { padding-top: 125px; } }

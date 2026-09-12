@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync } from 'node:fs';
 import { SPACE_CHAPTERS, FLIGHT_STOPS, flightPosition, interpolateFlight, createPortfolioRoute, destinationIndex, ambientFlight } from '../src/data/spaceJourneyData.js';
-import { PROJECTS_DATA } from '../src/data/projectsData.js';
+import { PROJECTS_DATA, FEATURED_PROJECTS } from '../src/data/projectsData.js';
 import { PORTFOLIO_DATA } from '../src/data/portfolioData.js';
 import { SKILLS_CATEGORIES } from '../src/data/skillsData.js';
 import { getTechnologyIcons } from '../src/components/TechnologyIcons.js';
@@ -192,8 +192,8 @@ test('all sixteen projects have complete details and domain visuals, retaining l
     for (const field of ['id', 'title', 'category', 'badge', 'overview', 'challenge', 'solution']) assert.ok(project[field], `${project.id}: ${field}`);
     assert.ok(project.technologies.length && project.highlights.length);
     assert.ok(PROJECT_VISUALS[project.id], `${project.id}: missing domain visual`);
-    assert.match(projectVisual(project), /<svg /);
-    assert.match(projectVisual(project), /<figcaption>/);
+    assert.match(projectVisual(project), /<(svg|img) /);
+    assert.match(projectVisual(project), /<figcaption[ >]/);
     assert.equal(PROJECT_VISUALS[project.id].steps.length, 3);
     for (const url of [project.githubUrl, project.liveUrl].filter(Boolean)) assert.equal(new URL(url).protocol, 'https:');
   }
@@ -202,4 +202,16 @@ test('all sixteen projects have complete details and domain visuals, retaining l
   assert.ok(PROJECTS_DATA.find(p => p.id === 'gt-companion').liveUrl);
   for (const id of ['upi-fraud-detection', 'heart-disease-prediction', 'pneumonia-detection', 'healthsurance']) assert.ok(PROJECTS_DATA.find(p => p.id === id).implementationNote);
   assert.ok(!PROJECTS_DATA.some(p => ['adhoc-erp', '3d-rag-platform'].includes(p.id)));
+});
+
+
+test('homepage camera only visits the four featured scenes while the full catalog stays available', () => {
+  assert.deepEqual(FEATURED_PROJECTS.map(p => p.id), ['clansure', 'gt-companion', 'srk-erp', 'sattam-ai']);
+  const stops = createPortfolioRoute(FEATURED_PROJECTS, PORTFOLIO_DATA).filter(stop => stop.selector.startsWith('#project-'));
+  assert.deepEqual(stops.map(stop => stop.selector), FEATURED_PROJECTS.map(p => '#project-' + p.id));
+  for (const project of FEATURED_PROJECTS) {
+    assert.match(projectVisual(project), /class="project-visual project-scene"/);
+    assert.match(projectVisual(project), /loading="lazy"/);
+  }
+  assert.equal(PROJECTS_DATA.length - FEATURED_PROJECTS.length, 12);
 });
