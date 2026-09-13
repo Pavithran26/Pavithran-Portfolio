@@ -34,7 +34,7 @@ export class CosmicScenes {
   constructor() {
     let seed = 2611;
     const random = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
-    this.dust = Array.from({ length: 1800 }, () => ({ r: Math.pow(random(), .65), a: random() * TAU, spread: random() - .5, size: .4 + random(), alpha: .1 + random() * .65 }));
+    this.dust = Array.from({ length: 2600 }, () => ({ r: Math.pow(random(), .65), a: random() * TAU, spread: random() - .5, size: .4 + random(), alpha: .1 + random() * .65 }));
     this.map = Array.from({ length: 20 }, (_, i) => ({ x: .2 + random() * .6, y: .14 + i / 26, size: 1 + random() * 2 }));
   }
 
