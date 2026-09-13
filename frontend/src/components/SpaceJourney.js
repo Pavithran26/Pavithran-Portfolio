@@ -31,9 +31,6 @@ export class SpaceJourney {
     this.pointer = { x: 0, y: 0 };
     this.root.innerHTML = `<canvas class="universe-stars"></canvas>${WORLD_NAMES.map((name, index) => `<img class="world-art world-art-${index}" src="/images/space/${name}.webp" alt="" width="${index === 2 ? 1536 : 1254}" height="${index === 2 ? 1024 : 1254}" decoding="async" ${index === 0 ? 'fetchpriority="high"' : ''} draggable="false">`).join('')}<div class="universe-darkness"></div>`;
     this.canvas = root.querySelector('canvas');
-    this.aiCore = new Image();
-    this.aiCore.onload = () => this.requestFrame();
-    this.aiCore.src = '/images/space/ai-core.webp';
     this.context = this.canvas.getContext('2d', { alpha: true });
     for (let index = 0; index < 4; index++) root.insertBefore(createPlanet(index), root.querySelector('.universe-darkness'));
     this.worlds = [...root.querySelectorAll('.world-art')];
@@ -196,14 +193,38 @@ export class SpaceJourney {
       const angle = time * .000028 + pose.stars * .08;
       const radius = Math.min(w * (this.compact ? .31 : .19), h * .32);
       const cx = w * (this.compact ? .5 : .73), cy = h * (this.compact ? .61 : .49);
-      // The illustration occupies the inner globe, leaving its technology orbit clear.
-      if (this.aiCore.complete && this.aiCore.naturalWidth) {
-        const pulse = this.motion ? Math.sin(time * .0012) : 0;
-        const size = radius * (1.65 + pulse * .035);
-        const lift = this.motion ? Math.sin(time * .0008) * 7 : 0;
-        ctx.globalAlpha = pose.neural * .94;
-        ctx.drawImage(this.aiCore, cx - size / 2, cy - size / 2 + lift, size, size);
+      // A continuously morphing metallic core receives orbiting knowledge signals.
+      ctx.save(); ctx.translate(cx, cy);
+      const coreRadius = radius * .52;
+      const phase = this.motion ? time * .00055 : 0;
+      const halo = ctx.createRadialGradient(0, 0, coreRadius * .3, 0, 0, coreRadius * 1.8);
+      halo.addColorStop(0, '#8bdfff66'); halo.addColorStop(.5, '#5a83c92a'); halo.addColorStop(1, '#5376dd00');
+      ctx.globalAlpha = pose.neural; ctx.fillStyle = halo;
+      ctx.fillRect(-coreRadius * 2, -coreRadius * 2, coreRadius * 4, coreRadius * 4);
+      const metal = ctx.createLinearGradient(-coreRadius, -coreRadius, coreRadius, coreRadius);
+      [[0, '#e7f8ff'], [.2, '#728aa6'], [.38, '#f3ffff'], [.48, '#53647e'], [.62, '#152b46'], [.8, '#8abbd6'], [1, '#d7ceff']].forEach(([stop, color]) => metal.addColorStop(stop, color));
+      ctx.beginPath();
+      for (let step = 0; step <= 120; step++) {
+        const a = step / 120 * Math.PI * 2;
+        const r = coreRadius * (1 + .12 * Math.sin(a * 3 + phase) + .065 * Math.cos(a * 5 - phase * 1.3));
+        const x = Math.cos(a) * r, y = Math.sin(a) * r;
+        if (step === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
       }
+      ctx.closePath(); ctx.fillStyle = metal; ctx.fill();
+      ctx.strokeStyle = '#bceaff'; ctx.lineWidth = 1.4; ctx.stroke();
+      for (let i = 0; i < 12; i++) {
+        const progress = ((phase * .3 + i / 12) % 1);
+        const angle = i * 2.4 + phase * .12;
+        const r = radius * (1 - progress * .5);
+        const x = Math.cos(angle) * r, y = Math.sin(angle) * r;
+        ctx.globalAlpha = pose.neural * Math.sin(progress * Math.PI);
+        ctx.strokeStyle = i % 2 ? '#9fe6fa' : '#c6b8f0'; ctx.lineWidth = 1;
+        if (i % 3 === 0) {
+          ctx.strokeRect(x - 5, y - 7, 10, 14);
+          ctx.beginPath(); ctx.moveTo(x - 3, y - 2); ctx.lineTo(x + 3, y - 2); ctx.moveTo(x - 3, y + 2); ctx.lineTo(x + 2, y + 2); ctx.stroke();
+        } else { ctx.fillStyle = '#c5ecff'; ctx.beginPath(); ctx.arc(x, y, 2, 0, Math.PI * 2); ctx.fill(); }
+      }
+      ctx.restore();
       const points = this.nodes.map(node => {
         const x = node.x * Math.cos(angle) - node.z * Math.sin(angle);
         const z = node.x * Math.sin(angle) + node.z * Math.cos(angle);
