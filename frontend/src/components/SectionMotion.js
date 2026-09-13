@@ -3,7 +3,7 @@ export class SectionMotion {
   constructor(root) {
     this.events = new AbortController();
     this.reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    this.scenes = [...root.querySelectorAll('.project-scene')];
+    this.scenes = [...root.querySelectorAll('.project-scene, .education-character')];
     this.sections = [...root.querySelectorAll('.space-section')];
     this.entries = [...root.querySelectorAll('.space-content > h2, .space-content > .space-kicker, .section-intro, .space-projects article, .space-experience article, .space-education article, .space-recognition article, .space-actions, .dawn-questions')];
     this.entries.forEach((entry, index) => {
