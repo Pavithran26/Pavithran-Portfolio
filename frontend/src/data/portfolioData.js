@@ -49,6 +49,7 @@ export const PORTFOLIO_DATA = {
       "period": "2024 – 2026",
       "location": "Coimbatore, Tamil Nadu",
       "badge": "Postgraduate Degree",
+      "visualStage": "graduate",
       "highlights": "Specialized in data analytics, machine learning pipelines, RAG systems, vector embeddings, and distributed databases. Final-year major project: Sattam AI, a Tamil Nadu legal knowledge assistant for web and mobile."
     },
     {
@@ -57,6 +58,7 @@ export const PORTFOLIO_DATA = {
       "period": "2021 – 2024",
       "location": "Coimbatore, Tamil Nadu",
       "badge": "Undergraduate Degree",
+      "visualStage": "student",
       "highlights": "Core computer science fundamentals, data structures, algorithms, object-oriented software engineering, and web development."
     },
     {
@@ -64,6 +66,7 @@ export const PORTFOLIO_DATA = {
       "degree": "Higher Secondary & Secondary Education (Grades 6–12)",
       "period": "Morappur, Dharmapuri District",
       "badge": "Schooling (Grades 6–12)",
+      "visualStage": "teen",
       "highlights": "Academic excellence in Mathematics, Computer Science, and Physics with active participation in science exhibitions."
     },
     {
@@ -71,6 +74,7 @@ export const PORTFOLIO_DATA = {
       "degree": "Primary Education (Up to Grade 5)",
       "period": "M. Vellampatti, Harur Taluk",
       "badge": "Primary Education",
+      "visualStage": "school",
       "highlights": "Foundational schooling rooted in his native village in Dharmapuri district, sparking an early curiosity for science and technology."
     }
   ],

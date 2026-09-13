@@ -14,7 +14,34 @@
 .education-character { position: relative; margin: 0; width: 100%; max-width: 400px; justify-self: center; }
 .education-character::before { content: ''; position: absolute; inset: 12% 0 4%; border-radius: 50%; background: radial-gradient(ellipse, #559ea522, transparent 68%); pointer-events: none; }
 .education-character img { display: block; width: 100%; height: auto; object-fit: contain; position: relative; }
-.story-motion .education-character img { transform: translateY(var(--scene-travel, 0px)); }
+.story-motion .education-actor { transform: translateY(var(--scene-travel, 0px)); }
+.education-character { isolation: isolate; --stage-color: #93c8ce; }
+.education-character--school { --stage-color: #e6b777; }
+.education-character--teen { --stage-color: #a3b8f5; }
+.education-character--graduate { --stage-color: #e3cb8b; }
+.education-actor { position: relative; z-index: 1; }
+.education-orbit { position: absolute; inset: 16% 3%; border: 1px solid color-mix(in srgb, var(--stage-color) 25%, transparent); border-radius: 50%; transform: rotate(-24deg); }
+.education-orbit::after { content: ''; position: absolute; top: 10%; left: 15%; width: 7px; height: 7px; border-radius: 50%; background: var(--stage-color); box-shadow: 0 0 18px var(--stage-color); }
+.education-sparks { position: absolute; inset: 0; z-index: 2; pointer-events: none; color: var(--stage-color); font: 500 clamp(14px, 2vw, 22px)/1.2 var(--font-mono); }
+.education-sparks span { position: absolute; left: 8%; top: 22%; opacity: .75; }
+.education-sparks span:nth-child(2) { left: auto; right: 7%; top: 43%; }
+.education-sparks span:nth-child(3) { left: 13%; top: 70%; }
+.story-motion .education-character img { animation: education-sway 5s ease-in-out infinite; transform-origin: 50% 90%; }
+.story-motion .education-character--teen img { animation-name: education-read; animation-duration: 6s; }
+.story-motion .education-character--student img { animation-name: education-code; animation-duration: 4s; }
+.story-motion .education-character--graduate img { animation-name: education-rise; animation-duration: 6s; }
+.story-motion .education-orbit { animation: education-orbit 18s linear infinite; }
+.story-motion .education-sparks span { animation: education-spark 4s ease-in-out infinite; animation-delay: calc(var(--spark) * -1.2s); }
+.story-motion .education-character--student .education-sparks span { animation-timing-function: steps(4, end); }
+.story-motion .education-character--graduate .education-sparks span { animation-name: education-celebrate; }
+.education-character:not(.scene-active) *, .document-hidden .education-character *, body:has(dialog[open]) .education-character * { animation-play-state: paused !important; }
+@keyframes education-sway { 0%, 100% { transform: rotate(-2deg) translateY(0); } 50% { transform: rotate(2deg) translateY(-10px); } }
+@keyframes education-read { 0%, 100% { transform: rotate(0); } 50% { transform: rotate(-2.5deg) translateY(-6px); } }
+@keyframes education-code { 0%, 100% { transform: translateY(0) rotate(-.6deg); } 50% { transform: translateY(-8px) rotate(.6deg); } }
+@keyframes education-rise { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-16px) rotate(1.5deg); } }
+@keyframes education-orbit { to { transform: rotate(336deg); } }
+@keyframes education-spark { 0%, 100% { transform: translateY(8px); opacity: .35; } 50% { transform: translateY(-14px); opacity: 1; } }
+@keyframes education-celebrate { 0% { transform: translateY(24px) rotate(0); opacity: 0; } 45% { opacity: 1; } 100% { transform: translateY(-38px) rotate(100deg); opacity: 0; } }
 .space-reading .space-learning .space-content { max-width: 1120px; }
 .space-reading .space-education .education-milestone { min-height: 0; padding: 32px 0; }
 .space-reading .education-character { max-width: 220px; }
@@ -25,5 +52,5 @@
   .space-education h3 { font-size: clamp(1.8rem, 7vw, 2.5rem); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .story-motion .education-character img { transform: none; }
+  .story-motion .education-character * { animation: none; transform: none; }
 }
