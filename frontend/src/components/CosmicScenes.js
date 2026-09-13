@@ -44,34 +44,54 @@ export class CosmicScenes {
     const radius = Math.min(width * (compact ? .48 : .32), height * .52);
     ctx.save();
     if (pose.galaxy > .001) {
-      ctx.save(); ctx.translate(cx, cy); ctx.rotate(-.45 + seconds * .009 + pose.stars * .012);
-      ctx.scale(1, .48);
-      const glow = ctx.createRadialGradient(0, 0, 0, 0, 0, radius * 1.5);
-      glow.addColorStop(0, light ? '#6977aa70' : '#ead4ff70');
-      glow.addColorStop(.18, '#8a77d733'); glow.addColorStop(.55, '#455da21c'); glow.addColorStop(1, '#00000000');
-      ctx.globalAlpha = pose.galaxy; ctx.fillStyle = glow;
-      ctx.fillRect(-radius * 1.5, -radius * 1.5, radius * 3, radius * 3);
-      for (const star of this.dust) {
-        const angle = star.a % (Math.PI / 2) * .16 + Math.floor(star.a / (Math.PI / 2)) * Math.PI / 2 + star.r * 7 + star.spread * .5;
-        const r = star.r * radius * 1.5;
-        ctx.globalAlpha = pose.galaxy * star.alpha;
-        ctx.fillStyle = light ? '#3d487b' : star.r < .25 ? '#fff0d5' : star.spread > 0 ? '#b6caff' : '#bca0e1';
-        ctx.beginPath(); ctx.arc(Math.cos(angle) * r, Math.sin(angle) * r, star.size, 0, TAU); ctx.fill();
+      // Eight planets in order; visual sizes and orbital periods are illustrative.
+      const planets = [
+        ['#aaa49b', 3.5], ['#e6bd7f', 5.5], ['#5ba3e6', 6], ['#c96d4b', 4.5],
+        ['#d6ad87', 13], ['#d9c38a', 10.5], ['#8bd5d9', 8], ['#527fdd', 7.5],
+      ];
+      const extent = Math.min(width * (compact ? .43 : .215), height * .39);
+      const tilt = -.28;
+      ctx.save(); ctx.translate(width * (compact ? .5 : .75), cy);
+      const bodies = planets.map(([color, size], i) => {
+        const r = extent * (.2 + i * .112);
+        const angle = seconds * (.23 / (1 + i * .6)) + i * 2.39;
+        const x = Math.cos(angle) * r, y = Math.sin(angle) * r * .57;
+        ctx.save(); ctx.rotate(tilt);
+        ctx.globalAlpha = pose.orbits * .3; ctx.strokeStyle = light ? '#344a70' : '#8caed0'; ctx.lineWidth = .7;
+        ctx.beginPath(); ctx.ellipse(0, 0, r, r * .57, 0, 0, TAU); ctx.stroke(); ctx.restore();
+        return { color, size: size * (compact ? .72 : 1), i, x: x * Math.cos(tilt) - y * Math.sin(tilt), y: x * Math.sin(tilt) + y * Math.cos(tilt) };
+      });
+      const sun = Math.max(12, extent * .078);
+      const glow = ctx.createRadialGradient(0, 0, sun * .4, 0, 0, sun * 3.5);
+      glow.addColorStop(0, '#fff4bddd'); glow.addColorStop(.3, '#ffb63888'); glow.addColorStop(1, '#ff800000');
+      ctx.globalAlpha = pose.orbits; ctx.fillStyle = glow;
+      ctx.fillRect(-sun * 3.5, -sun * 3.5, sun * 7, sun * 7);
+      const fire = ctx.createRadialGradient(-sun * .3, -sun * .3, 0, 0, 0, sun);
+      fire.addColorStop(0, '#fff9ce'); fire.addColorStop(.55, '#ffd05a'); fire.addColorStop(1, '#f08022');
+      ctx.fillStyle = fire; ctx.beginPath(); ctx.arc(0, 0, sun, 0, TAU); ctx.fill();
+      for (const body of bodies.sort((a, b) => a.y - b.y)) {
+        const { x, y, size, color, i } = body;
+        ctx.save(); ctx.translate(x, y); ctx.globalAlpha = pose.orbits;
+        if (i === 5) {
+          ctx.strokeStyle = '#d6c398'; ctx.lineWidth = size * .4;
+          ctx.beginPath(); ctx.ellipse(0, 0, size * 1.9, size * .65, -.35, 0, TAU); ctx.stroke();
+        }
+        const surface = ctx.createRadialGradient(-size * .35, -size * .35, 0, 0, 0, size);
+        surface.addColorStop(0, '#fff2db'); surface.addColorStop(.22, color); surface.addColorStop(1, '#111a2a');
+        ctx.fillStyle = surface; ctx.beginPath(); ctx.arc(0, 0, size, 0, TAU); ctx.fill();
+        ctx.save(); ctx.beginPath(); ctx.arc(0, 0, size, 0, TAU); ctx.clip();
+        if (i === 4 || i === 5) {
+          ctx.strokeStyle = '#86583c'; ctx.globalAlpha = pose.orbits * .45; ctx.lineWidth = size * .2;
+          for (let band = -2; band <= 2; band++) { ctx.beginPath(); ctx.moveTo(-size, band * size * .35); ctx.lineTo(size, band * size * .35 + size * .15); ctx.stroke(); }
+        }
+        if (i === 2) {
+          ctx.fillStyle = '#83b58b'; ctx.beginPath(); ctx.ellipse(-size * .2, -size * .2, size * .35, size * .55, -.5, 0, TAU); ctx.fill();
+        }
+        ctx.restore(); ctx.restore();
       }
       ctx.restore();
     }
-    if (pose.orbits > .001) {
-      ctx.save(); ctx.translate(cx, cy); ctx.rotate(-.4 + pose.roll * .01);
-      for (let i = 0; i < 5; i++) {
-        const r = radius * (.3 + i * .17);
-        ctx.globalAlpha = pose.orbits * .35; ctx.strokeStyle = light ? '#344a70' : '#8caed0'; ctx.lineWidth = .7;
-        ctx.beginPath(); ctx.ellipse(0, 0, r, r * .48, 0, 0, TAU); ctx.stroke();
-        const a = seconds * (.08 - i * .008) + i * 1.8 + pose.stars * .15;
-        ctx.globalAlpha = pose.orbits; ctx.fillStyle = i % 2 ? '#deb99a' : '#8dcce9';
-        ctx.beginPath(); ctx.arc(Math.cos(a) * r, Math.sin(a) * r * .48, 4 + i, 0, TAU); ctx.fill();
-      }
-      ctx.restore();
-    }
+
     if (pose.starMap > .001) {
       ctx.save(); ctx.translate(cx - radius * .5, cy - radius * .5);
       ctx.rotate(Math.sin(seconds * .06 + pose.stars * .02) * .12);
