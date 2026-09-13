@@ -31,6 +31,9 @@ export class SpaceJourney {
     this.pointer = { x: 0, y: 0 };
     this.root.innerHTML = `<canvas class="universe-stars"></canvas>${WORLD_NAMES.map((name, index) => `<img class="world-art world-art-${index}" src="/images/space/${name}.webp" alt="" width="${index === 2 ? 1536 : 1254}" height="${index === 2 ? 1024 : 1254}" decoding="async" ${index === 0 ? 'fetchpriority="high"' : ''} draggable="false">`).join('')}<div class="universe-darkness"></div>`;
     this.canvas = root.querySelector('canvas');
+    this.aiCore = new Image();
+    this.aiCore.onload = () => this.requestFrame();
+    this.aiCore.src = '/images/space/ai-core.webp';
     this.context = this.canvas.getContext('2d', { alpha: true });
     for (let index = 0; index < 4; index++) root.insertBefore(createPlanet(index), root.querySelector('.universe-darkness'));
     this.worlds = [...root.querySelectorAll('.world-art')];
@@ -193,6 +196,14 @@ export class SpaceJourney {
       const angle = time * .000028 + pose.stars * .08;
       const radius = Math.min(w * (this.compact ? .31 : .19), h * .32);
       const cx = w * (this.compact ? .5 : .73), cy = h * (this.compact ? .61 : .49);
+      // The illustration occupies the inner globe, leaving its technology orbit clear.
+      if (this.aiCore.complete && this.aiCore.naturalWidth) {
+        const pulse = this.motion ? Math.sin(time * .0012) : 0;
+        const size = radius * (1.65 + pulse * .035);
+        const lift = this.motion ? Math.sin(time * .0008) * 7 : 0;
+        ctx.globalAlpha = pose.neural * .94;
+        ctx.drawImage(this.aiCore, cx - size / 2, cy - size / 2 + lift, size, size);
+      }
       const points = this.nodes.map(node => {
         const x = node.x * Math.cos(angle) - node.z * Math.sin(angle);
         const z = node.x * Math.sin(angle) + node.z * Math.cos(angle);
