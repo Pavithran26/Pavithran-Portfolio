@@ -448,3 +448,16 @@ body:has(dialog[open]) #dawn-eye .clara-eye-sclera { animation-play-state: pause
 @media (prefers-reduced-motion: reduce) {
   #dawn-eye .clara-eye-sclera { animation: none; }
 }
+
+/* Content and fixed world landmarks share lateral camera translation. Native
+   document scrolling supplies the vertical camera axis and keeps links accessible. */
+@media (min-width: 760px) {
+  .space-portfolio:not(.project-archive):not(.space-reading) #portfolio {
+    translate: var(--camera-x, 0px) 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) { #portfolio { translate: none !important; } }
+
+@media (min-width: 760px) {
+  body:not(.space-reading) .orbit-interface { translate: var(--camera-x, 0px) 0; }
+}
