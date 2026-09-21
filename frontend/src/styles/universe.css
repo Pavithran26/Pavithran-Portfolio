@@ -453,11 +453,17 @@ body:has(dialog[open]) #dawn-eye .clara-eye-sclera { animation-play-state: pause
    document scrolling supplies the vertical camera axis and keeps links accessible. */
 @media (min-width: 760px) {
   .space-portfolio:not(.project-archive):not(.space-reading) #portfolio {
-    translate: var(--camera-x, 0px) 0;
+    translate: var(--camera-x, 0px) var(--camera-y, 0px);
   }
 }
 @media (prefers-reduced-motion: reduce) { #portfolio { translate: none !important; } }
 
 @media (min-width: 760px) {
   body:not(.space-reading) .orbit-interface { translate: var(--camera-x, 0px) 0; }
+}
+
+/* Vertical compensation keeps native text and canvas on the same camera frame. */
+body:not(.space-reading):not(.project-archive) #portfolio { translate: var(--camera-x, 0px) var(--camera-y, 0px); }
+@media (prefers-reduced-motion: reduce) {
+  #portfolio, .orbit-interface { translate: none !important; }
 }
