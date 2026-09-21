@@ -1,3 +1,4 @@
+import { WorldCamera, cameraAt } from './WorldCamera.js';
 import { SPACE_CHAPTERS, clamp, flightPosition, interpolateFlight, createPortfolioRoute, destinationIndex, ambientFlight } from '../data/spaceJourneyData.js';
 import { CosmicScenes, createPlanet } from './CosmicScenes.js';
 import { FEATURED_PROJECTS } from '../data/projectsData.js';
@@ -35,6 +36,7 @@ export class SpaceJourney {
     for (let index = 0; index < 4; index++) root.insertBefore(createPlanet(index), root.querySelector('.universe-darkness'));
     this.worlds = [...root.querySelectorAll('.world-art')];
     this.cosmic = new CosmicScenes();
+    this.worldCamera = new WorldCamera(() => this.requestFrame());
     this.overlay = document.querySelector('#orbit-interface');
     this.overlay.innerHTML = SPACE_CHAPTERS.map((chapter, index) => `<div class="orbit-group" data-orbit="${index + 1}" role="group" aria-label="${chapter.name} technologies" aria-hidden="true" inert>${chapter.tools.map(tool => `<button class="orbit-tool" type="button" data-technology="${html(tool.search)}" aria-label="Explore ${html(tool.name)} skills">${technologyIcons(tool.name, { eager: true })}<span class="orbit-tool-name">${html(tool.name)}</span></button>`).join('')}</div>`).join('');
     this.groups = [...this.overlay.children].map(element => ({ element, buttons: [...element.children] }));
@@ -109,6 +111,7 @@ export class SpaceJourney {
       this.canvas.height = Math.round(this.height * ratio);
       this.context?.setTransform(ratio, 0, 0, ratio, 0, 0);
     }
+    this.worldCamera.measure(this.width, this.height, this.route, this.stops);
     this.requestFrame();
   }
 
@@ -127,16 +130,10 @@ export class SpaceJourney {
     if (Math.abs(target - this.position) < .001) this.position = target;
     const modalOpen = Boolean(document.querySelector('dialog[open]'));
     if (this.motion && !modalOpen) this.animationTime += elapsed;
-    const basePose = interpolateFlight(this.motion ? this.position : 0, this.compact, this.route);
-    const pose = ambientFlight(basePose, this.animationTime, this.motion);
-    this.root.style.setProperty('--scene-shade', pose.shade);
-    const pointer = this.motion ? this.pointer : { x: 0, y: 0 };
-    this.worlds.forEach((world, index) => {
-      const [x, y, size, opacity] = pose.worlds[index];
-      world.style.width = `${this.height * size}px`;
-      world.style.transform = `translate3d(${x * this.width + pointer.x * size * 8}px, ${y * this.height + pointer.y * size * 5}px, 0) translate(-50%, -50%) rotate(${pose.roll}deg)`;
-      world.style.opacity = opacity * (this.appearance === 'light' ? .65 : 1);
-    });
+    // All scenery is anchored in world coordinates. Only the shared camera moves.
+    this.worlds.forEach(world => { world.style.display = 'none'; });
+    const camera = cameraAt(window.scrollY, this.stops, this.width);
+    document.documentElement.style.setProperty('--camera-x', `${this.motion ? -camera.x : 0}px`);
     const active = destinationIndex(window.scrollY + this.height * .2, this.stops);
     if (this.active !== active) {
       this.active = active;
@@ -146,9 +143,9 @@ export class SpaceJourney {
       document.body.classList.toggle('beyond-journey', active > this.chapterPositions.at(-1));
     }
     this.positionTools();
-    this.drawSky(pose, this.motion ? this.animationTime : 0);
+    this.worldCamera.draw(this.context, this.motion ? window.scrollY : 0, this.appearance === 'light');
     // Idle during modal reading and in hidden tabs. Native close resumes the sky.
-    if (this.motion && !modalOpen) this.requestFrame();
+    if (this.motion && !modalOpen && Math.abs(target - this.position) > .001) this.requestFrame();
   }
 
   positionTools() {
@@ -250,6 +247,7 @@ export class SpaceJourney {
     cancelAnimationFrame(this.frame);
     this.events.abort();
     this.resizeObserver.disconnect();
+    document.documentElement.style.removeProperty('--camera-x');
     this.overlay.innerHTML = '';
   }
 }
