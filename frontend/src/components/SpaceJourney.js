@@ -28,12 +28,13 @@ export class SpaceJourney {
     this.motion = readPreference('portfolio-space-motion') !== 'off' && !this.reducedMotion.matches;
     this.appearance = readPreference('portfolio-universe-theme') === 'light' ? 'light' : 'dark';
     this.position = 0;
+    this.cameraScroll = window.scrollY;
     this.animationTime = 0;
     this.pointer = { x: 0, y: 0 };
     this.root.innerHTML = `<canvas class="universe-stars"></canvas>${WORLD_NAMES.map((name, index) => `<img class="world-art world-art-${index}" src="/images/space/${name}.webp" alt="" width="${index === 2 ? 1536 : 1254}" height="${index === 2 ? 1024 : 1254}" decoding="async" ${index === 0 ? 'fetchpriority="high"' : ''} draggable="false">`).join('')}<div class="universe-darkness"></div>`;
     this.canvas = root.querySelector('canvas');
     this.context = this.canvas.getContext('2d', { alpha: true });
-    for (let index = 0; index < 4; index++) root.insertBefore(createPlanet(index), root.querySelector('.universe-darkness'));
+
     this.worlds = [...root.querySelectorAll('.world-art')];
     this.cosmic = new CosmicScenes();
     this.worldCamera = new WorldCamera(() => this.requestFrame());
@@ -121,19 +122,26 @@ export class SpaceJourney {
 
   render(time) {
     this.frame = null;
-    if (this.motion && time - (this.lastPaint || 0) < 30) { this.requestFrame(); return; }
+    // Paint at the display refresh rate; 30fps throttling desynchronised native scroll.
     this.lastPaint = time;
     const elapsed = Math.min(64, Math.max(1, time - (this.lastTime || time - 16)));
     this.lastTime = time;
-    const target = flightPosition(window.scrollY, this.stops);
+    const actualScroll = window.scrollY;
+    const gap = actualScroll - this.cameraScroll;
+    // Smooth small wheel steps; anchor jumps arrive immediately without a long chase.
+    this.cameraScroll = !this.motion || Math.abs(gap) > this.height * .7
+      ? actualScroll : this.cameraScroll + gap * (1 - Math.exp(-elapsed / 65));
+    if (Math.abs(actualScroll - this.cameraScroll) < .25) this.cameraScroll = actualScroll;
+    const target = flightPosition(this.cameraScroll, this.stops);
     this.position = this.motion ? this.position + (target - this.position) * (1 - Math.exp(-elapsed / 125)) : target;
     if (Math.abs(target - this.position) < .001) this.position = target;
     const modalOpen = Boolean(document.querySelector('dialog[open]'));
     if (this.motion && !modalOpen) this.animationTime += elapsed;
     // All scenery is anchored in world coordinates. Only the shared camera moves.
     this.worlds.forEach(world => { world.style.display = 'none'; });
-    const camera = cameraAt(window.scrollY, this.stops, this.width);
-    document.documentElement.style.setProperty('--camera-x', `${this.motion ? -camera.x : 0}px`);
+    const camera = cameraAt(this.cameraScroll, this.stops, this.width);
+    document.documentElement.style.setProperty('--camera-x', `${this.motion && !this.compact ? -camera.x : 0}px`);
+    document.documentElement.style.setProperty('--camera-y', `${this.motion ? actualScroll - this.cameraScroll : 0}px`);
     const active = destinationIndex(window.scrollY + this.height * .2, this.stops);
     if (this.active !== active) {
       this.active = active;
@@ -143,9 +151,9 @@ export class SpaceJourney {
       document.body.classList.toggle('beyond-journey', active > this.chapterPositions.at(-1));
     }
     this.positionTools();
-    this.worldCamera.draw(this.context, this.motion ? window.scrollY : 0, this.appearance === 'light');
+    this.worldCamera.draw(this.context, this.motion ? this.cameraScroll : 0, this.appearance === 'light');
     // Idle during modal reading and in hidden tabs. Native close resumes the sky.
-    if (this.motion && !modalOpen && Math.abs(target - this.position) > .001) this.requestFrame();
+    if (this.motion && !modalOpen && (Math.abs(target - this.position) > .001 || this.cameraScroll !== actualScroll)) this.requestFrame();
   }
 
   positionTools() {
@@ -248,6 +256,7 @@ export class SpaceJourney {
     this.events.abort();
     this.resizeObserver.disconnect();
     document.documentElement.style.removeProperty('--camera-x');
+    document.documentElement.style.removeProperty('--camera-y');
     this.overlay.innerHTML = '';
   }
 }

@@ -2,7 +2,7 @@ import { CosmicScenes } from './CosmicScenes.js';
 
 /** Orthographic world: bodies never change position, scale or opacity on scroll. */
 export function cameraAt(scrollY, anchors, width) {
-  const offsets = [0, .10, -.08, .07, -.10, .06];
+  const offsets = [0, .028, -.022, .018, -.026, .016];
   let index = 0;
   while (index + 1 < anchors.length && scrollY >= anchors[index + 1]) index++;
   const next = Math.min(index + 1, anchors.length - 1);
@@ -23,6 +23,9 @@ export class WorldCamera {
     this.cosmic = new CosmicScenes();
   }
   measure(width, height, route, stops) {
+    const signature = `${width}:${height}:${stops.join(',')}`;
+    if (signature === this.signature) return;
+    this.signature = signature;
     this.width = width; this.height = height; this.stops = stops;
     const yAt = id => stops[Math.max(0, route.findIndex(stop => stop.selector === id))] + height * .53;
     const x = width * (width < 760 ? .5 : .76);
@@ -53,6 +56,7 @@ export class WorldCamera {
     if (!ctx || !this.stops?.length) return;
     const { width: w, height: h } = this;
     const camera = cameraAt(scrollY, this.stops, w);
+    if (w < 760) camera.x = 0;
     ctx.clearRect(0, 0, w, h);
     ctx.save(); ctx.globalAlpha = 1;
     // Fixed distant stars: parallax is camera projection, not independent drift.
