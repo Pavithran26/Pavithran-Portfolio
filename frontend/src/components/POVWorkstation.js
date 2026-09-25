@@ -37,6 +37,12 @@ export class POVWorkstation {
     this.root.setAttribute("aria-label", "Pavithran workstation portfolio");
     this.root.innerHTML = this.template();
     document.body.appendChild(this.root);
+    this.returnButton = document.createElement("button");
+    this.returnButton.className = "pov-return-button";
+    this.returnButton.type = "button";
+    this.returnButton.textContent = "← Workstation";
+    this.returnButton.hidden = true;
+    document.body.appendChild(this.returnButton);
     document.documentElement.classList.add("pov-active");
     this.bind();
   }
@@ -99,6 +105,7 @@ export class POVWorkstation {
       if (action) this.runAction(action.dataset.povAction);
     });
     on(this.root.querySelector("#ubuntu-window-close"), "click", () => this.closeWindow());
+    on(this.returnButton, "click", () => this.restoreDesktop());
     on(document, "keydown", event => {
       if (!document.documentElement.classList.contains("pov-active")) return;
       if (event.key === "Escape" && !this.window.hidden) this.closeWindow();
@@ -151,12 +158,14 @@ export class POVWorkstation {
     this.root.classList.add("is-exiting");
     window.setTimeout(() => {
       this.root.hidden = true;
+      this.returnButton.hidden = false;
       if (this.journey && this.journey.flyTo) this.journey.flyTo("#top", { updateHistory: false });
     }, 520);
   }
 
   restoreDesktop() {
     this.root.hidden = false;
+    this.returnButton.hidden = true;
     document.documentElement.classList.remove("pov-journey-mode");
     document.documentElement.classList.add("pov-active");
     requestAnimationFrame(() => this.root.classList.remove("is-exiting"));
@@ -240,6 +249,7 @@ export class POVWorkstation {
     this.events.abort();
     window.clearInterval(this.clockTimer);
     this.root.remove();
+    this.returnButton && this.returnButton.remove();
     document.documentElement.classList.remove("pov-active", "pov-journey-mode");
   }
 }
