@@ -11,40 +11,17 @@ import { ProjectSceneVideos } from './components/ProjectSceneVideos.js';
 import { SectionMotion } from './components/SectionMotion.js';
 import { getClaraEyeAvatarHtml } from './components/ClaraWidget.js';
 import { SpaceJourney } from './components/SpaceJourney.js';
-import { TechUniverse } from './components/TechUniverse.js';
 import { escapeHtml as html } from './utils/helpers.js';
 
 const root = document.querySelector('#portfolio');
 root.innerHTML = `
-  <section class="space-intro tech-hero" id="top" aria-labelledby="intro-title">
-    <div class="tech-hero-copy">
-      <p class="space-kicker">FROM INTERFACE TO INTELLIGENCE</p>
-      <h1 id="intro-title">Pavithran <em>S.</em></h1>
-      <p class="tech-hero-statement"><strong>Software engineer</strong> building across interfaces, backend systems, data, and applied AI — turning complex ideas into working products.</p>
-      <div class="tech-hero-actions">
-        <a href="#work">Explore projects <span aria-hidden="true">↘</span></a>
-        <a href="#stack-frontend">Explore the stack <span aria-hidden="true">↗</span></a>
-      </div>
-    </div>
-    <div class="tech-universe" aria-label="Interactive map of Pavithran's work">
-      <div class="tech-orbit-ring tech-orbit-ring--1" aria-hidden="true"></div>
-      <div class="tech-orbit-ring tech-orbit-ring--2" aria-hidden="true"></div>
-      <div class="tech-orbit-ring tech-orbit-ring--3" aria-hidden="true"></div>
-      <div class="tech-core" aria-hidden="true"><div class="tech-core-content"><span>Engineering core</span><strong>PS</strong><small>Interface → Systems → Intelligence</small></div></div>
-      <button class="tech-node tech-node--frontend" type="button" data-tech-target="#stack-frontend"><span>Frontend</span><small>React · Next.js · TypeScript · Three.js</small></button>
-      <button class="tech-node tech-node--backend" type="button" data-tech-target="#stack-backend"><span>Backend</span><small>.NET · FastAPI · Django · Java</small></button>
-      <button class="tech-node tech-node--data" type="button" data-tech-target="#stack-databases"><span>Data</span><small>PostgreSQL · pgvector · Redis</small></button>
-      <button class="tech-node tech-node--ai" type="button" data-tech-target="#stack-ai"><span>AI / RAG</span><small>Gemini · LangChain · Embeddings</small></button>
-      <button class="tech-node tech-node--projects" type="button" data-tech-target="#work"><span>Projects</span><small>Insurance · Legal AI · ERP · Learning</small></button>
-      <span class="tech-universe-legend">Select a domain to travel</span>
-    </div>
+  <section class="space-intro" id="top" aria-labelledby="intro-title">
+    <div class="intro-identity"><p class="space-kicker">TAMIL NADU, INDIA · SOFTWARE ENGINEER</p><h1 id="intro-title">Pavithran <em>S.</em></h1><p class="intro-statement">Thoughtful interfaces.<br>Dependable systems.<br>A little intelligence in between.</p><a class="intro-enter" href="#work">Explore my work <span aria-hidden="true">↓</span></a></div>
+    <p class="intro-caption">A SMALL PART OF<br>A MUCH BIGGER UNIVERSE</p>
   </section>
   <section class="space-work space-section" id="work" aria-labelledby="work-title"><div class="space-content">
     <p class="space-kicker">IDEAS, BUILT INTO REAL THINGS</p><h2 id="work-title">Selected <em>work.</em></h2><p class="section-intro">Different problems. The same curiosity.</p>
-    <div class="project-constellation" aria-label="Featured project constellation">
-      <div class="project-galaxy-core" aria-hidden="true"><span>Selected work</span></div>
-      ${projects.map((project, index) => `<a class="project-planet project-planet--${index}" href="#project-${project.id}"><strong>${html(project.title)}</strong><small>${html(project.category)}</small></a>`).join('')}
-    </div>
+    <nav class="project-index" aria-label="Browse projects">${projects.map(project => `<a href="#project-${project.id}">${html(project.title)}</a>`).join('')}</nav>
     <div class="space-projects">${projects.map((project, index) => `<article id="project-${project.id}" class="project-destination">
       <div class="project-copy"><p class="project-overline">${String(index + 1).padStart(2, '0')} / ${html(project.category)}</p>
       <button class="space-project-title" type="button" data-project="${project.id}"><span>${html(project.title)}</span><span aria-hidden="true">↗</span></button>
@@ -80,7 +57,6 @@ root.innerHTML = `
 `;
 
 const spotlight = new CursorSpotlight(root);
-const techUniverse = new TechUniverse(root);
 const eyeButton = document.querySelector('#dawn-eye');
 eyeButton.innerHTML = getClaraEyeAvatarHtml(38) + '<span class="eye-label">Meet DAWN<small>AI guide</small></span>';
 const dialogs = new PortfolioDialogs();
@@ -126,4 +102,4 @@ on(document.querySelector('#copy-email'), 'click', async () => {
   try { await navigator.clipboard.writeText(profile.email); feedback.textContent = 'Email address copied.'; }
   catch { feedback.textContent = 'Select the email address above to copy it, or open it to send a message.'; }
 });
-if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); spotlight.dispose(); techUniverse.dispose(); sceneVideos.dispose(); sectionMotion.dispose(); journey.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });
+if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); spotlight.dispose(); sceneVideos.dispose(); sectionMotion.dispose(); journey.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });
