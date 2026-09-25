@@ -38,7 +38,7 @@ export const PROJECTS_DATA = [
       "searchLatency": "< 50ms",
       "deployment": "Docker / Railway"
     },
-    "liveUrl": "https://family-portal.up.railway.app/dashboard",
+    "liveUrl": "https://clansure.vercel.app/",
     "githubUrl": null
   },
   {
@@ -76,7 +76,7 @@ export const PROJECTS_DATA = [
       "exportSupport": "Excel / CSV",
       "activeTrainees": "Enterprise Wide"
     },
-    "liveUrl": "https://gt-companion.up.railway.app/",
+    "liveUrl": "https://gt-companion.vercel.app/",
     "githubUrl": null
   },
   {
