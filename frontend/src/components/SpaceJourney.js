@@ -18,6 +18,11 @@ const documentTop = element => {
   for (let node = element; node; node = node.offsetParent) top += node.offsetTop;
   return top;
 };
+const smootherstep = value => {
+  const t = clamp(value);
+  return t * t * t * (t * (t * 6 - 15) + 10);
+};
+const CAMERA_INTERRUPT_KEYS = new Set(['ArrowUp', 'ArrowDown', 'PageUp', 'PageDown', 'Home', 'End', ' ']);
 
 /** A single persistent sky. Document scroll is the camera, never an input lock. */
 export class SpaceJourney {
@@ -31,6 +36,8 @@ export class SpaceJourney {
     this.cameraScroll = window.scrollY;
     this.animationTime = 0;
     this.pointer = { x: 0, y: 0 };
+    this.flight = null;
+    this.previousScrollBehavior = '';
     this.root.innerHTML = `<canvas class="universe-stars"></canvas>${WORLD_NAMES.map((name, index) => `<img class="world-art world-art-${index}" src="/images/space/${name}.webp" alt="" width="${index === 2 ? 1536 : 1254}" height="${index === 2 ? 1024 : 1254}" decoding="async" ${index === 0 ? 'fetchpriority="high"' : ''} draggable="false">`).join('')}<div class="universe-darkness"></div>`;
     this.canvas = root.querySelector('canvas');
     this.context = this.canvas.getContext('2d', { alpha: true });
@@ -59,7 +66,10 @@ export class SpaceJourney {
     this.applyMotion();
     const on = (target, type, handler, options = {}) => target.addEventListener(type, handler, { ...options, signal: this.events.signal });
     on(window, 'scroll', () => this.requestFrame(), { passive: true });
-    on(window, 'resize', () => this.measure(), { passive: true });
+    on(window, 'wheel', () => this.cancelFlight(), { passive: true });
+    on(window, 'touchstart', () => this.cancelFlight(), { passive: true });
+    on(window, 'keydown', event => { if (CAMERA_INTERRUPT_KEYS.has(event.key)) this.cancelFlight(); });
+    on(window, 'resize', () => { this.cancelFlight(); this.measure(); }, { passive: true });
     on(window, 'pointermove', event => {
       if (!this.motion || this.compact || event.pointerType !== 'mouse') return;
       this.pointer.x = (event.clientX / this.width - .5) * 2;
@@ -78,6 +88,69 @@ export class SpaceJourney {
     this.measure();
     this.position = flightPosition(window.scrollY, this.stops);
     this.requestFrame();
+  }
+
+  flyTo(selector, { updateHistory = true } = {}) {
+    if (!selector || selector[0] !== '#') return false;
+    const element = document.querySelector(selector);
+    if (!element || !this.stops?.length) return false;
+
+    const routeIndex = this.route.findIndex(stop => stop.selector === selector);
+    const maxScroll = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    const destination = routeIndex >= 0
+      ? this.stops[routeIndex]
+      : Math.min(maxScroll, documentTop(element));
+    const start = window.scrollY;
+
+    if (updateHistory && window.location.hash !== selector) {
+      history.pushState(null, '', selector);
+    }
+
+    this.cancelFlight(false);
+
+    if (!this.motion || this.reducedMotion.matches || Math.abs(destination - start) < 2) {
+      window.scrollTo(0, destination);
+      this.cameraScroll = destination;
+      this.position = flightPosition(destination, this.stops);
+      this.requestFrame();
+      return true;
+    }
+
+    const screens = Math.abs(destination - start) / Math.max(1, this.height);
+    const duration = Math.min(1500, Math.max(760, 720 + Math.log2(1 + screens) * 210));
+    this.previousScrollBehavior = document.documentElement.style.scrollBehavior;
+    document.documentElement.style.scrollBehavior = 'auto';
+    document.documentElement.classList.add('camera-flying');
+    this.flight = {
+      from: start,
+      to: destination,
+      startedAt: null,
+      duration,
+    };
+    this.cameraScroll = start;
+    this.position = flightPosition(start, this.stops);
+    this.lastTime = null;
+    this.requestFrame();
+    return true;
+  }
+
+  finishFlight() {
+    if (!this.flight) return;
+    this.flight = null;
+    document.documentElement.classList.remove('camera-flying');
+    document.documentElement.style.scrollBehavior = this.previousScrollBehavior;
+    this.previousScrollBehavior = '';
+  }
+
+  cancelFlight(sync = true) {
+    if (!this.flight) return;
+    this.finishFlight();
+    if (sync && this.stops?.length) {
+      this.cameraScroll = window.scrollY;
+      this.position = flightPosition(this.cameraScroll, this.stops);
+      this.lastTime = null;
+      this.requestFrame();
+    }
   }
 
   applyMotion(preservePosition = false) {
@@ -127,22 +200,47 @@ export class SpaceJourney {
     const elapsed = Math.min(64, Math.max(1, time - (this.lastTime || time - 16)));
     this.lastTime = time;
     const actualScroll = window.scrollY;
-    const gap = actualScroll - this.cameraScroll;
-    // Smooth small wheel steps; anchor jumps arrive immediately without a long chase.
-    this.cameraScroll = !this.motion || Math.abs(gap) > this.height * .7
-      ? actualScroll : this.cameraScroll + gap * (1 - Math.exp(-elapsed / 65));
-    if (Math.abs(actualScroll - this.cameraScroll) < .25) this.cameraScroll = actualScroll;
-    const target = flightPosition(this.cameraScroll, this.stops);
-    this.position = this.motion ? this.position + (target - this.position) * (1 - Math.exp(-elapsed / 125)) : target;
-    if (Math.abs(target - this.position) < .001) this.position = target;
+    let target;
+
+    if (this.flight) {
+      if (this.flight.startedAt == null) this.flight.startedAt = time;
+      const progress = clamp((time - this.flight.startedAt) / this.flight.duration);
+      const eased = smootherstep(progress);
+      const flightScroll = this.flight.from + (this.flight.to - this.flight.from) * eased;
+
+      this.cameraScroll = flightScroll;
+      target = flightPosition(flightScroll, this.stops);
+      this.position = target;
+
+      if (Math.abs(window.scrollY - flightScroll) > .25) window.scrollTo(0, flightScroll);
+
+      if (progress >= 1) {
+        window.scrollTo(0, this.flight.to);
+        this.cameraScroll = this.flight.to;
+        target = flightPosition(this.cameraScroll, this.stops);
+        this.position = target;
+        this.finishFlight();
+      }
+    } else {
+      const gap = actualScroll - this.cameraScroll;
+      // Manual scrolling keeps a small amount of damping. Click navigation bypasses
+      // this chase entirely and drives page + camera from one shared flight timeline.
+      this.cameraScroll = !this.motion || Math.abs(gap) > this.height * .7
+        ? actualScroll : this.cameraScroll + gap * (1 - Math.exp(-elapsed / 65));
+      if (Math.abs(actualScroll - this.cameraScroll) < .25) this.cameraScroll = actualScroll;
+      target = flightPosition(this.cameraScroll, this.stops);
+      this.position = this.motion ? this.position + (target - this.position) * (1 - Math.exp(-elapsed / 125)) : target;
+      if (Math.abs(target - this.position) < .001) this.position = target;
+    }
     const modalOpen = Boolean(document.querySelector('dialog[open]'));
     if (this.motion && !modalOpen) this.animationTime += elapsed;
     // All scenery is anchored in world coordinates. Only the shared camera moves.
     this.worlds.forEach(world => { world.style.display = 'none'; });
     const camera = cameraAt(this.cameraScroll, this.stops, this.width);
     document.documentElement.style.setProperty('--camera-x', `${this.motion && !this.compact ? -camera.x : 0}px`);
-    document.documentElement.style.setProperty('--camera-y', `${this.motion ? actualScroll - this.cameraScroll : 0}px`);
-    const active = destinationIndex(window.scrollY + this.height * .2, this.stops);
+    const visualScroll = this.flight ? this.cameraScroll : window.scrollY;
+    document.documentElement.style.setProperty('--camera-y', `${this.motion ? visualScroll - this.cameraScroll : 0}px`);
+    const active = destinationIndex(visualScroll + this.height * .2, this.stops);
     if (this.active !== active) {
       this.active = active;
       this.location.textContent = this.route[active].label;
@@ -153,7 +251,7 @@ export class SpaceJourney {
     this.positionTools();
     this.worldCamera.draw(this.context, this.motion ? this.cameraScroll : 0, this.appearance === 'light');
     // Idle during modal reading and in hidden tabs. Native close resumes the sky.
-    if (this.motion && !modalOpen && (Math.abs(target - this.position) > .001 || this.cameraScroll !== actualScroll)) this.requestFrame();
+    if (this.flight || (this.motion && !modalOpen && (Math.abs(target - this.position) > .001 || this.cameraScroll !== window.scrollY))) this.requestFrame();
   }
 
   positionTools() {
@@ -252,6 +350,7 @@ export class SpaceJourney {
 
   dispose() {
     this.disposed = true;
+    this.cancelFlight(false);
     cancelAnimationFrame(this.frame);
     this.events.abort();
     this.resizeObserver.disconnect();
