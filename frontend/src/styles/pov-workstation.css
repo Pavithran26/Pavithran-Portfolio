@@ -1510,3 +1510,66 @@ html.pov-active body {
     animation: none !important;
   }
 }
+
+
+html.pov-active .space-header,
+html.pov-active .flight-footer,
+html.pov-active .flight-nav,
+html.pov-active .terminal-launch,
+html.pov-active #orbit-interface {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+.pov-return-button {
+  position: fixed;
+  z-index: 8500;
+  left: 18px;
+  top: 18px;
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid rgba(160,214,246,.18);
+  border-radius: 999px;
+  color: rgba(235,246,255,.78);
+  background: rgba(7,15,27,.64);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 10px 30px rgba(0,0,0,.2);
+  cursor: pointer;
+  font: 500 10px/1 "Outfit", sans-serif;
+  transition: transform .2s ease, border-color .2s ease, color .2s ease;
+}
+
+.pov-return-button:hover {
+  transform: translateY(-2px);
+  border-color: rgba(137,219,255,.4);
+  color: #fff;
+}
+
+.pov-workstation.is-at-desk .pov-monitor--center::before {
+  content: "PRESS POWER";
+  position: absolute;
+  right: 0;
+  bottom: -38px;
+  color: rgba(151,204,238,.5);
+  font: 500 7px/1 "Fira Code", monospace;
+  letter-spacing: .16em;
+  animation: powerHint 1.8s ease-in-out infinite;
+}
+
+.pov-workstation.is-powering .pov-monitor--center::before {
+  opacity: 0;
+}
+
+@keyframes powerHint {
+  50% { opacity: .4; }
+}
+
+@media (max-width: 680px) {
+  .pov-return-button {
+    left: 10px;
+    top: 10px;
+    min-height: 34px;
+    padding: 0 11px;
+    font-size: 9px;
+  }
+}
