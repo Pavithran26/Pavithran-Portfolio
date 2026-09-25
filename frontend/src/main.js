@@ -66,6 +66,14 @@ const sceneVideos = new ProjectSceneVideos(root);
 const events = new AbortController();
 const on = (target, type, handler) => target.addEventListener(type, handler, { signal: events.signal });
 on(document, 'click', event => {
+  const anchor = event.target.closest('a[href^="#"]');
+  if (!anchor || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+  const selector = anchor.getAttribute('href');
+  if (!selector || selector === '#' || !document.querySelector(selector)) return;
+  event.preventDefault();
+  journey.flyTo(selector);
+});
+on(document, 'click', event => {
   const action = event.target.closest('[data-dialog], [data-project], [data-ask], [data-technology], [data-inspect-world]');
   if (!action) return;
   if (action.dataset.dialog) dialogs.open(action.dataset.dialog);
