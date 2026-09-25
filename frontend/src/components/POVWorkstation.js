@@ -3,6 +3,8 @@ import { FEATURED_PROJECTS as projects } from "../data/projectsData.js";
 import { SPACE_CHAPTERS as chapters } from "../data/spaceJourneyData.js";
 import { escapeHtml as html } from "../utils/helpers.js";
 
+const CINEMATIC_INTRO_URL = "https://cdn.openart.ai/openart-uploads/production/attachment-transfers/3fb0ffbecbcacd99557a930ae90175c5e809a24a5e9666bab642d3433dddfafe.mp4";
+
 const icon = kind => {
   const map = {
     projects: '<svg viewBox="0 0 24 24"><path d="M3 6.5h7l2 2h9v9.5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6.5Z"/><path d="M3 9h18"/></svg>',
@@ -52,7 +54,7 @@ export class POVWorkstation {
       return '<button class="ubuntu-folder" type="button" data-pov-folder="' + item[0] + '" aria-label="Open ' + item[1] + '"><span class="ubuntu-folder-icon">' + icon(item[0]) + '</span><span class="ubuntu-folder-label">' + item[1] + '</span></button>';
     }).join("");
 
-    return '<div class="pov-room" aria-hidden="true">' +
+    return '<video class="pov-cinematic-intro" id="pov-cinematic-intro" playsinline preload="auto" src="' + CINEMATIC_INTRO_URL + '"></video><button class="pov-skip-intro" id="pov-skip-intro" type="button">Skip intro →</button><div class="pov-room" aria-hidden="true">' +
       '<div class="pov-wall-glow"></div><div class="pov-window"><i></i><i></i><i></i></div>' +
       '<div class="pov-desk-rig">' +
         '<div class="pov-monitor pov-monitor--left"><div class="pov-monitor-screen"><span class="pov-side-kicker">SYS.MONITOR</span><div class="pov-side-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>' +
@@ -82,6 +84,8 @@ export class POVWorkstation {
     const on = (target, type, handler, options = {}) => target && target.addEventListener(type, handler, Object.assign({}, options, { signal }));
     this.wakeButton = this.root.querySelector("#pov-wake");
     this.powerButton = this.root.querySelector("#pov-power-button");
+    this.cinematicVideo = this.root.querySelector("#pov-cinematic-intro");
+    this.skipIntroButton = this.root.querySelector("#pov-skip-intro");
     this.shell = this.root.querySelector("#ubuntu-shell");
     this.window = this.root.querySelector("#ubuntu-window");
     this.windowTitle = this.root.querySelector("#ubuntu-window-title");
@@ -89,6 +93,12 @@ export class POVWorkstation {
 
     on(this.wakeButton, "click", () => this.wake());
     on(this.powerButton, "click", () => this.powerOn());
+    on(this.skipIntroButton, "click", () => this.finishCinematic());
+    on(this.cinematicVideo, "timeupdate", () => {
+      if (this.stage === "cinematic" && this.cinematicVideo.currentTime >= 7.35) this.finishCinematic();
+    });
+    on(this.cinematicVideo, "ended", () => this.finishCinematic());
+    on(this.cinematicVideo, "error", () => this.fallbackWake());
     on(this.root, "dblclick", event => {
       const folder = event.target.closest("[data-pov-folder]");
       if (folder) this.openFolder(folder.dataset.povFolder);
@@ -122,15 +132,47 @@ export class POVWorkstation {
 
   wake() {
     if (this.stage !== "sleep") return;
-    this.stage = "wake";
-    this.root.classList.add("is-awake");
+    this.stage = "cinematic";
+    this.root.classList.add("is-cinematic");
     this.wakeButton.disabled = true;
-    window.setTimeout(() => this.root.classList.add("is-approaching"), 500);
+    this.cinematicVideo.currentTime = 0;
+    this.cinematicVideo.muted = false;
+    this.cinematicVideo.volume = 0.42;
+
+    const playback = this.cinematicVideo.play();
+    if (playback && typeof playback.catch === "function") {
+      playback.catch(() => {
+        this.cinematicVideo.muted = true;
+        this.cinematicVideo.play().catch(() => this.fallbackWake());
+      });
+    }
+  }
+
+  fallbackWake() {
+    if (this.stage === "desktop") return;
+    this.stage = "wake";
+    this.root.classList.remove("is-cinematic");
+    this.root.classList.add("is-awake");
+    window.setTimeout(() => this.root.classList.add("is-approaching"), 450);
     window.setTimeout(() => {
+      if (this.stage !== "wake") return;
       this.stage = "desk";
       this.root.classList.add("is-at-desk");
       this.powerButton.focus({ preventScroll: true });
-    }, 1550);
+    }, 1450);
+  }
+
+  finishCinematic() {
+    if (this.stage === "desktop") return;
+    this.stage = "desktop";
+    this.root.classList.add("is-cinematic-handoff", "is-desktop");
+    this.shell.setAttribute("aria-hidden", "false");
+    if (this.cinematicVideo) {
+      window.setTimeout(() => {
+        this.cinematicVideo.pause();
+        this.cinematicVideo.currentTime = 0;
+      }, 850);
+    }
   }
 
   powerOn() {
@@ -247,6 +289,7 @@ export class POVWorkstation {
 
   destroy() {
     this.events.abort();
+    if (this.cinematicVideo) this.cinematicVideo.pause();
     window.clearInterval(this.clockTimer);
     this.root.remove();
     this.returnButton && this.returnButton.remove();
