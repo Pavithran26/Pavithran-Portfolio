@@ -167,7 +167,6 @@ export class POVWorkstation {
     if (this.cinematicVideo) {
       window.setTimeout(() => {
         this.cinematicVideo.pause();
-        this.cinematicVideo.currentTime = 0;
       }, 850);
     }
   }
