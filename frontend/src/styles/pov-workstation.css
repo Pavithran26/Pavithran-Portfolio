@@ -1730,3 +1730,6 @@ html.pov-active #orbit-interface {
   transform: none;
   transition: opacity .65s ease, visibility 0s;
 }
+
+/* Decorative room overflow must never scroll the fixed workstation viewport. */
+.pov-workstation { overflow: clip; }
