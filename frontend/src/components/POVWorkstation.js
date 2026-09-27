@@ -3,7 +3,7 @@ import { FEATURED_PROJECTS as projects } from "../data/projectsData.js";
 import { SPACE_CHAPTERS as chapters } from "../data/spaceJourneyData.js";
 import { escapeHtml as html } from "../utils/helpers.js";
 
-const CINEMATIC_INTRO_URL = "/videos/realistic-power-on-slow.mp4";
+const CINEMATIC_INTRO_URL = "https://cdn.openart.ai/openart-uploads/production/attachment-transfers/3fb0ffbecbcacd99557a930ae90175c5e809a24a5e9666bab642d3433dddfafe.mp4";
 
 const icon = kind => {
   const map = {
