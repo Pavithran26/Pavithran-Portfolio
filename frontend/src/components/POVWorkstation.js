@@ -3,7 +3,7 @@ import { FEATURED_PROJECTS as projects } from "../data/projectsData.js";
 import { SPACE_CHAPTERS as chapters } from "../data/spaceJourneyData.js";
 import { escapeHtml as html } from "../utils/helpers.js";
 
-const CINEMATIC_INTRO_URL = "https://cdn.openart.ai/openart-uploads/production/attachment-transfers/3fb0ffbecbcacd99557a930ae90175c5e809a24a5e9666bab642d3433dddfafe.mp4";
+const CINEMATIC_INTRO_URL = "/videos/realistic-power-on-slow.mp4";
 
 const icon = kind => {
   const map = {
@@ -94,9 +94,6 @@ export class POVWorkstation {
     on(this.wakeButton, "click", () => this.wake());
     on(this.powerButton, "click", () => this.powerOn());
     on(this.skipIntroButton, "click", () => this.finishCinematic());
-    on(this.cinematicVideo, "timeupdate", () => {
-      if (this.stage === "cinematic" && this.cinematicVideo.currentTime >= 7.35) this.finishCinematic();
-    });
     on(this.cinematicVideo, "ended", () => this.finishCinematic());
     on(this.cinematicVideo, "error", () => this.fallbackWake());
     on(this.root, "dblclick", event => {
@@ -136,7 +133,7 @@ export class POVWorkstation {
     this.root.classList.add("is-cinematic");
     this.wakeButton.disabled = true;
     this.cinematicVideo.currentTime = 0;
-    this.cinematicVideo.muted = false;
+    this.cinematicVideo.muted = true;
     this.cinematicVideo.volume = 0.42;
 
     const playback = this.cinematicVideo.play();
