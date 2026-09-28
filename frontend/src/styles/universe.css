@@ -189,6 +189,21 @@ html[data-appearance='light'] .orbit-tool-name { color: #172333; text-shadow: 0 
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
 }
 
+/* Small, high-contrast affordances keep the cinematic UI easy to scan and tap. */
+::selection { color: var(--ink); background: var(--accent); }
+.intro-enter { border-bottom: 1px solid color-mix(in srgb, var(--accent) 55%, transparent); }
+.intro-enter:hover, .intro-enter:focus-visible { border-color: var(--accent); }
+.project-index a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; }
+.project-index a:hover, .project-index a:focus-visible { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
+.space-socials > * { display: inline-flex; align-items: center; min-height: 44px; }
+.mobile-menu nav a { display: flex; align-items: center; min-height: 44px; }
+@media (max-width: 759px) {
+  .intro-enter { padding: 14px 0; }
+  .project-index { margin-top: 24px; }
+  .space-socials { gap: 12px 18px; }
+  .space-socials > * { padding: 8px 10px; border: 1px solid var(--line); border-radius: 999px; }
+}
+
 /* The same quiet movement continues through work, experience and education. */
 .story-motion [data-reveal] { opacity: 0; transform: translate3d(0, 32px, 0); transition: opacity .8s ease var(--reveal-delay, 0ms), transform .9s cubic-bezier(.2,.65,.2,1) var(--reveal-delay, 0ms); }
 .story-motion [data-reveal].is-revealed, .story-motion [data-reveal]:focus-within { opacity: 1; transform: none; }

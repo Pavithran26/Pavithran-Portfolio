@@ -103,9 +103,10 @@ on(document, 'keydown', event => {
 });
 const menu = document.querySelector('#mobile-menu');
 const menuToggle = document.querySelector('#menu-toggle');
-on(menuToggle, 'click', () => { menu.showModal(); menuToggle.setAttribute('aria-expanded', 'true'); });
+on(menuToggle, 'click', () => { menu.showModal(); menuToggle.setAttribute('aria-expanded', 'true'); queueMicrotask(() => document.querySelector('#menu-close')?.focus()); });
 on(document.querySelector('#menu-close'), 'click', () => menu.close());
 on(menu, 'close', () => { menuToggle.setAttribute('aria-expanded', 'false'); });
+on(menu, 'close', () => menuToggle.focus());
 on(menu, 'click', event => { if (event.target.closest('a')) menu.close(); });
 on(document.querySelector('#copy-email'), 'click', async () => {
   const feedback = document.querySelector('#copy-feedback');

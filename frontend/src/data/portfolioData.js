@@ -20,7 +20,7 @@ export const PORTFOLIO_DATA = {
     "geeksforgeeks": "https://auth.geeksforgeeks.org/user/pavithraw7mx",
     "youtube": "https://youtube.com/@be_a_techiegamer",
     "prismiq": "https://prismiq26.vercel.app/",
-    "portfolio": "https://pavis.vercel.app/",
+    "portfolio": "https://pavithran26.vercel.app/",
     "hometownMaps": "https://maps.app.goo.gl/MVpJQWAEyFhyznFK9",
     "certifications": "https://github.com/Pavithran26/Pavithran26#-certifications"
   },

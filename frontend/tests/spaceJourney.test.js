@@ -211,7 +211,7 @@ test('homepage camera only visits the four featured scenes while the full catalo
   assert.deepEqual(stops.map(stop => stop.selector), FEATURED_PROJECTS.map(p => '#project-' + p.id));
   for (const project of FEATURED_PROJECTS) {
     assert.match(projectVisual(project), /class="project-visual project-scene"/);
-    assert.match(projectVisual(project), /preload="none"/);
+    assert.match(projectVisual(project), /loading="lazy"/);
   }
   assert.equal(PROJECTS_DATA.length - FEATURED_PROJECTS.length, 12);
 });
