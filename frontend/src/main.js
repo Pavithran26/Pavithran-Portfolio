@@ -7,10 +7,10 @@ import { SPACE_CHAPTERS as chapters } from './data/spaceJourneyData.js';
 import { PortfolioDialogs } from './components/PortfolioDialogs.js';
 import { projectVisual } from './components/ProjectVisuals.js';
 import { technologyIcons } from './components/TechnologyIcons.js';
-import { NativeMotion } from './components/NativeMotion.js';
-import { SectionMotion } from './components/SectionMotion.js';
+import { BookReader } from './components/BookReader.js';
+
 import { getClaraEyeAvatarHtml } from './components/ClaraWidget.js';
-import { SpaceJourney } from './components/SpaceJourney.js';
+
 
 import { escapeHtml as html } from './utils/helpers.js';
 
@@ -61,20 +61,10 @@ const spotlight = new CursorSpotlight(root);
 const eyeButton = document.querySelector('#dawn-eye');
 eyeButton.innerHTML = getClaraEyeAvatarHtml(38) + '<span class="eye-label">Meet DAWN<small>AI guide</small></span>';
 const dialogs = new PortfolioDialogs();
-const journey = new SpaceJourney(document.querySelector('#universe'));
-const nativeMotion = new NativeMotion(root);
-const sectionMotion = new SectionMotion(root);
+const book = new BookReader(root);
 
 const events = new AbortController();
 const on = (target, type, handler) => target.addEventListener(type, handler, { signal: events.signal });
-on(document, 'click', event => {
-  const anchor = event.target.closest('a[href^="#"]');
-  if (!anchor || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-  const selector = anchor.getAttribute('href');
-  if (!selector || selector === '#' || !document.querySelector(selector)) return;
-  event.preventDefault();
-  journey.flyTo(selector);
-});
 on(document, 'click', event => {
   const action = event.target.closest('[data-dialog], [data-project], [data-ask], [data-technology], [data-inspect-world]');
   if (!action) return;
@@ -85,7 +75,7 @@ on(document, 'click', event => {
   else if (action.dataset.inspectWorld !== undefined) dialogs.openChapter(chapters[Number(action.dataset.inspectWorld)]);
 });
 on(window, 'pointermove', event => {
-  if (!journey.motion || event.pointerType !== 'mouse') return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || event.pointerType !== 'mouse') return;
   const iris = eyeButton.querySelector('.clara-eye-iris');
   const box = eyeButton.getBoundingClientRect();
   const dx = event.clientX - box.left - box.width / 2;
@@ -93,9 +83,7 @@ on(window, 'pointermove', event => {
   const distance = Math.max(1, Math.hypot(dx, dy));
   iris.style.transform = `translate(${dx / distance * 5}px, ${dy / distance * 5}px)`;
 });
-on(document.querySelector('#motion-toggle'), 'click', () => {
-  if (!journey.motion) eyeButton.querySelector('.clara-eye-iris').style.transform = '';
-});
+
 on(document, 'keydown', event => {
   if (event.key !== '`' || event.ctrlKey || event.metaKey || event.altKey || event.target.closest('input, textarea, select, [contenteditable="true"]') || document.querySelector('dialog[open]')) return;
   event.preventDefault();
@@ -113,4 +101,4 @@ on(document.querySelector('#copy-email'), 'click', async () => {
   try { await navigator.clipboard.writeText(profile.email); feedback.textContent = 'Email address copied.'; }
   catch { feedback.textContent = 'Select the email address above to copy it, or open it to send a message.'; }
 });
-if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); spotlight.dispose(); nativeMotion.dispose(); sectionMotion.dispose(); journey.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });
+if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); spotlight.dispose(); book.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });

@@ -1,4 +1,4 @@
-import { NativeMotion } from './components/NativeMotion.js';
+import { BookReader } from './components/BookReader.js';
 import { CursorSpotlight } from './components/CursorSpotlight.js';
 import './style.css';
 import './styles/project-archive.css';
@@ -16,7 +16,7 @@ root.innerHTML = PROJECTS_DATA.map((project, index) => `<article class="archive-
   <p>${html(project.tagline)}</p><div class="archive-tags">${project.technologies.slice(0, 4).map(tech => `<span>${html(tech)}</span>`).join('')}</div>
   <div class="project-links"><button type="button" class="space-text-link" data-project="${project.id}">Explore project ↗</button>${project.liveUrl ? `<a class="space-text-link" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit project ↗</a>` : ''}</div></div>
 </article>`).join('');
-const nativeMotion = new NativeMotion(document);
+const book = new BookReader(root, { archive: true });
 const spotlight = new CursorSpotlight(root);
 document.querySelector('#dawn-eye').innerHTML = getClaraEyeAvatarHtml(38) + '<span class="eye-label">Meet DAWN<small>AI guide</small></span>';
 const dialogs = new PortfolioDialogs();
@@ -30,4 +30,4 @@ document.addEventListener('keydown', event => {
   if (event.key !== '`' || event.ctrlKey || event.metaKey || event.altKey || event.target.closest('input, textarea, [contenteditable], dialog')) return;
   event.preventDefault(); dialogs.open('terminal');
 }, { signal: events.signal });
-if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); nativeMotion.dispose(); spotlight.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });
+if (import.meta.hot) import.meta.hot.dispose(() => { events.abort(); book.dispose(); spotlight.dispose(); dialogs.request?.abort(); dialogs.terminal?.stopMatrix(); dialogs.dialog.remove(); });
