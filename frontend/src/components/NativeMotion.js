@@ -12,7 +12,7 @@ export class NativeMotion {
   this.scenes.forEach(el=>this.sceneObserver.observe(el));
   if(!this.reduced.matches && !location.hash){
    const intro=document.createElement('div');intro.className='native-opening native-video-opening';
-   intro.innerHTML='<video class="native-opening-video" playsinline muted preload="metadata" src="/videos/realistic-power-on-slow.mp4"></video><div class="native-opening-shade"></div><div class="native-opening-caption"><span>PAVITHRAN S.</span><small>FROM INTERFACE TO INTELLIGENCE</small></div><button class="native-opening-skip" type="button">Skip intro <span aria-hidden="true">→</span></button>';
+   intro.innerHTML='<video class="native-opening-video" playsinline muted preload="metadata" src="/videos/pov-portfolio-boot.mp4"></video><div class="native-opening-shade"></div><div class="native-opening-caption"><span>PAVITHRAN S.</span><small>FROM INTERFACE TO INTELLIGENCE</small></div><button class="native-opening-skip" type="button">Skip intro <span aria-hidden="true">→</span></button>';
    document.body.append(intro);this.intro=intro;this.video=intro.querySelector('video');
    const finish=()=>{if(!this.intro)return;this.intro.classList.add('native-opening-done');this.video?.pause();this.timer=setTimeout(()=>this.intro?.remove(),500);};
    this.finishIntro=finish;
