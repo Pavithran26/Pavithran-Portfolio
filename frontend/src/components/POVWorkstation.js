@@ -3,7 +3,7 @@ import { FEATURED_PROJECTS as projects } from "../data/projectsData.js";
 import { SPACE_CHAPTERS as chapters } from "../data/spaceJourneyData.js";
 import { escapeHtml as html } from "../utils/helpers.js";
 
-const CINEMATIC_INTRO_URL = "https://cdn.openart.ai/openart-uploads/production/attachment-transfers/3fb0ffbecbcacd99557a930ae90175c5e809a24a5e9666bab642d3433dddfafe.mp4";
+const CINEMATIC_INTRO_URL = "/videos/sketch-to-product.mp4";
 
 const icon = kind => {
   const map = {
@@ -62,7 +62,7 @@ export class POVWorkstation {
         '<div class="pov-monitor pov-monitor--right"><div class="pov-monitor-screen"><span class="pov-side-kicker">DEV.ACTIVITY</span><div class="pov-code-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>' +
         '<div class="pov-keyboard"></div><div class="pov-mouse"></div><div class="pov-mug"><i></i></div>' +
       '</div><div class="pov-hand pov-hand--left"></div><div class="pov-hand pov-hand--right"></div></div>' +
-      '<button class="pov-wake" id="pov-wake" type="button"><span>Click to wake</span><small>Enter Pavithran workstation</small></button>' +
+      '<button class="pov-wake" id="pov-wake" type="button"><span>Watch the idea take shape</span><small>Enter Pavithran workstation</small></button>' +
       '<div class="pov-eyelid pov-eyelid--top"></div><div class="pov-eyelid pov-eyelid--bottom"></div>' +
       '<div class="ubuntu-shell" id="ubuntu-shell" aria-hidden="true">' +
         '<div class="ubuntu-wallpaper"><div class="ubuntu-wallpaper-orbit ubuntu-wallpaper-orbit--1"></div><div class="ubuntu-wallpaper-orbit ubuntu-wallpaper-orbit--2"></div><div class="ubuntu-wallpaper-core">PS</div></div>' +
