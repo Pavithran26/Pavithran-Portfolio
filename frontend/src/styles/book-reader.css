@@ -119,3 +119,26 @@ body.reading-book.scroll-book { overflow-x: hidden; overflow-y: auto; }
  .cover-rule { margin:12px 0; }
  .cover-open { margin-top:12px; }
 }
+
+/* An uninterrupted book: all navigation lives inside the pages. */
+body.scroll-book { scrollbar-width: none; }
+body.scroll-book::-webkit-scrollbar { display: none; }
+.scroll-book .space-header,
+.scroll-book .terminal-launch,
+.scroll-book .book-toolbar,
+.scroll-book .book-controls,
+.scroll-book > .skip-link { display: none !important; }
+.scroll-book #portfolio,
+.scroll-book #catalog {
+  top: 0; height: 100dvh; display: flex; align-items: center;
+  padding: 0; 
+}
+.scroll-book #catalog > .space-content { width: 100%; }
+.scroll-book .book-volume {
+  height: min(82dvh, 860px); min-height: 0;
+  flex: 0 0 100%;
+}
+@media (max-width: 760px) {
+  .scroll-book #portfolio, .scroll-book #catalog { top: 0; height: 100dvh; }
+  .scroll-book .book-volume { height: 86dvh; }
+}
