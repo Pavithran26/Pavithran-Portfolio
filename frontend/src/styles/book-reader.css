@@ -145,3 +145,5 @@ body.scroll-book::-webkit-scrollbar { display: none; }
 
 .scroll-book .book-volume { background: transparent; box-shadow: none; }
 .scroll-book .book-paper { box-shadow: 4px 6px 0 #c9bea7,8px 10px 28px #0004; }
+
+.scroll-book .book-leaf { overscroll-behavior: auto; }
