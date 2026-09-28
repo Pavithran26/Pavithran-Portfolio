@@ -179,7 +179,7 @@ export class SpaceJourney {
     this.compact = this.width < 760;
     const maxScroll = Math.max(0, document.documentElement.scrollHeight - this.height);
     this.stops = this.sections.map((section, index) => index ? Math.min(maxScroll, documentTop(section) + (this.route[index].offset || 0) * this.height) : 0);
-    const ratio = Math.min(window.devicePixelRatio || 1, 1.6);
+    const ratio = Math.min(window.devicePixelRatio || 1, this.compact ? 1.25 : 1.6);
     if (this.canvas.width !== Math.round(this.width * ratio) || this.canvas.height !== Math.round(this.height * ratio)) {
       this.canvas.width = Math.round(this.width * ratio);
       this.canvas.height = Math.round(this.height * ratio);
@@ -225,8 +225,7 @@ export class SpaceJourney {
       const gap = actualScroll - this.cameraScroll;
       // Manual scrolling keeps a small amount of damping. Click navigation bypasses
       // this chase entirely and drives page + camera from one shared flight timeline.
-      this.cameraScroll = !this.motion || Math.abs(gap) > this.height * .7
-        ? actualScroll : this.cameraScroll + gap * (1 - Math.exp(-elapsed / 65));
+      this.cameraScroll = actualScroll;
       if (Math.abs(actualScroll - this.cameraScroll) < .25) this.cameraScroll = actualScroll;
       target = flightPosition(this.cameraScroll, this.stops);
       this.position = this.motion ? this.position + (target - this.position) * (1 - Math.exp(-elapsed / 125)) : target;
