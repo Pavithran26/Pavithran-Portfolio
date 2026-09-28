@@ -193,6 +193,50 @@ html[data-appearance='light'] .orbit-tool-name { color: #172333; text-shadow: 0 
 ::selection { color: var(--ink); background: var(--accent); }
 .intro-enter { border-bottom: 1px solid color-mix(in srgb, var(--accent) 55%, transparent); }
 .intro-enter:hover, .intro-enter:focus-visible { border-color: var(--accent); }
+
+/* Full-site reading mode: the portfolio is one continuous, open book. */
+body.book-portfolio { --book-ink: #26313a; --book-muted: #66717a; --book-paper: #eee8d9; --book-edge: #b7aa90; background: #cdbfa5; color: var(--book-ink); }
+body.book-portfolio::before { background: radial-gradient(circle at 20% 20%, #fff6 0 1px, transparent 2px), radial-gradient(circle at 80% 70%, #78664b22 0 1px, transparent 2px); background-size: 7px 7px, 11px 11px; opacity: .28; filter: none; z-index: 0; animation: none; }
+body.book-portfolio::after { background: radial-gradient(ellipse at center, #ffffff38, transparent 68%); opacity: .45; filter: blur(50px); z-index: 0; animation: none; }
+body.book-portfolio .universe { opacity: .12; mix-blend-mode: multiply; filter: sepia(.25); background: #b9a98e; }
+body.book-portfolio .universe-darkness { background: linear-gradient(90deg,#b9a98e88,#f4eddc18 48%,#9f8f77aa), linear-gradient(0deg,#a18e72aa,#e9dec8 35%,#aa987e77); }
+body.book-portfolio .space-header { left: 50%; width: min(1180px, calc(100% - 42px)); transform: translateX(-50%); padding: 19px clamp(22px, 4vw, 62px); background: linear-gradient(#eee8d9f5, #eee8d9d9); color: var(--book-ink); border: 1px solid #b7aa9077; border-top: 0; box-shadow: 0 8px 18px #5d4f3b22; }
+body.book-portfolio .space-signature, body.book-portfolio .space-nav a, body.book-portfolio .space-header-actions button { color: var(--book-ink); }
+body.book-portfolio .space-nav a:hover, body.book-portfolio .space-header-actions button:hover { color: #477b8e; }
+body.book-portfolio #portfolio { position: relative; z-index: 1; width: min(1180px, calc(100% - 42px)); margin: 92px auto 140px; padding: 0 clamp(25px, 5.2vw, 82px); background: var(--book-paper); color: var(--book-ink); box-shadow: 0 28px 60px #55473355, 0 0 0 1px #a39278, inset 0 0 70px #806b4a12; counter-reset: book-page; }
+body.book-portfolio #portfolio::before { content: ""; position: absolute; inset: 0 50% 0 auto; width: 2px; background: linear-gradient(transparent, #8d7b5c66 6%, #8d7b5c66 94%, transparent); box-shadow: 5px 0 14px #806b4a1c; pointer-events: none; }
+body.book-portfolio #portfolio::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: repeating-linear-gradient(0deg, transparent 0 5px, #78684a08 6px, transparent 7px); mix-blend-mode: multiply; }
+body.book-portfolio #portfolio > section { counter-increment: book-page; position: relative; z-index: 1; color: var(--book-ink); border-bottom: 1px solid #a5957b66; background: linear-gradient(90deg, #e8dfcf, #f3eddf 48%, #e9e0d0); }
+body.book-portfolio #portfolio > section::after { content: "—  " counter(book-page); position: absolute; right: 8%; bottom: 28px; color: #87908f; font: 10px/1 var(--font-mono); letter-spacing: .16em; }
+body.book-portfolio .space-intro { min-height: 780px; height: 100svh; padding: 0 8%; background: radial-gradient(circle at 72% 36%, #fff9 0 4%, transparent 28%), linear-gradient(135deg,#e5dbc9,#f5efe1 50%,#ded1bc); }
+body.book-portfolio .intro-identity { margin-left: 0; padding-top: 30svh; max-width: 580px; }
+body.book-portfolio .space-kicker, body.book-portfolio .project-overline { color: #74827f; }
+body.book-portfolio .intro-identity h1, body.book-portfolio .space-section h2, body.book-portfolio .world-copy h2 { color: var(--book-ink); text-shadow: none; }
+body.book-portfolio .intro-statement, body.book-portfolio .section-intro, body.book-portfolio .world-description, body.book-portfolio .space-experience article > p:last-child { color: var(--book-muted); }
+body.book-portfolio .intro-enter, body.book-portfolio .space-text-link { color: #456f80; border-color: #8aa4a666; }
+body.book-portfolio .space-work, body.book-portfolio .space-about, body.book-portfolio .space-learning, body.book-portfolio .space-dawn, body.book-portfolio .space-contact { padding: 125px 8%; min-height: 90svh; }
+body.book-portfolio .world-section { min-height: 100svh; padding: 23svh 8% 25svh; background: linear-gradient(90deg,#f1eadb,#e7ddca); }
+body.book-portfolio .world-copy { width: min(42vw, 500px); }
+body.book-portfolio .world-tagline, body.book-portfolio .space-projects article > p:not(.project-overline), body.book-portfolio .experience-company { color: #53656c; }
+body.book-portfolio .space-projects article, body.book-portfolio .space-experience article { border-color: #9d927f66; }
+body.book-portfolio .space-project-title, body.book-portfolio .space-experience h3 { color: var(--book-ink); }
+body.book-portfolio .flight-footer { left: 50%; width: min(1180px, calc(100% - 42px)); transform: translateX(-50%); color: #607078; background: linear-gradient(transparent,#eee8d9f5 44%); padding-left: clamp(25px, 5.2vw, 82px); padding-right: clamp(25px, 5.2vw, 82px); }
+body.book-portfolio .flight-nav { right: max(18px, calc((100vw - 1280px) / 2)); }
+body.book-portfolio .flight-nav a[aria-current] span { background: #477b8e; box-shadow: 0 0 9px #477b8e; }
+body.book-portfolio .flight-nav a span { background: #87908f; }
+body.book-portfolio .orbit-interface { opacity: .18; mix-blend-mode: multiply; }
+html[data-appearance='light'] body.book-portfolio { background: #cdbfa5; }
+@media (max-width: 759px) {
+ body.book-portfolio #portfolio, body.book-portfolio .space-header, body.book-portfolio .flight-footer { width: calc(100% - 18px); }
+ body.book-portfolio #portfolio { margin-top: 76px; padding: 0 18px; }
+ body.book-portfolio #portfolio::before { left: 50%; }
+ body.book-portfolio .space-intro { min-height: 760px; padding: 0 8%; }
+ body.book-portfolio .space-work, body.book-portfolio .space-about, body.book-portfolio .space-learning, body.book-portfolio .space-dawn, body.book-portfolio .space-contact { padding: 90px 8%; min-height: 0; }
+ body.book-portfolio .world-section { min-height: 0; padding: 110px 8% 120px; }
+ body.book-portfolio .world-copy { width: 100%; }
+ body.book-portfolio #portfolio > section::after { right: 8%; bottom: 22px; }
+ body.book-portfolio .flight-footer { padding-left: 26px; padding-right: 26px; }
+}
 .project-index a { display: inline-flex; align-items: center; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 999px; }
 .project-index a:hover, .project-index a:focus-visible { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, transparent); }
 .space-socials > * { display: inline-flex; align-items: center; min-height: 44px; }
