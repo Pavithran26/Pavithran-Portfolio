@@ -222,10 +222,11 @@ export class SpaceJourney {
         this.finishFlight();
       }
     } else {
-      const gap = actualScroll - this.cameraScroll;
-      // Manual scrolling keeps a small amount of damping. Click navigation bypasses
-      // this chase entirely and drives page + camera from one shared flight timeline.
-      this.cameraScroll = actualScroll;
+      // Manual scrolling keeps a small amount of damping. The previous implementation
+      // assigned actualScroll directly here, which bypassed the intended smoothing and
+      // made the camera snap on every wheel/touch update.
+      const smoothing = this.motion ? 1 - Math.exp(-elapsed / (this.compact ? 105 : 85)) : 1;
+      this.cameraScroll += (actualScroll - this.cameraScroll) * smoothing;
       if (Math.abs(actualScroll - this.cameraScroll) < .25) this.cameraScroll = actualScroll;
       target = flightPosition(this.cameraScroll, this.stops);
       this.position = this.motion ? this.position + (target - this.position) * (1 - Math.exp(-elapsed / 125)) : target;
