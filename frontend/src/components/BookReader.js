@@ -1,4 +1,5 @@
 import '../styles/book-reader.css';
+import { PhysicalPage } from './PhysicalPage.js';
 
 export class BookReader {
   constructor(root, { archive = false } = {}) {
@@ -61,6 +62,7 @@ export class BookReader {
     this.rail = document.createElement('div');
     this.rail.className = 'book-scroll-rail'; this.rail.setAttribute('aria-hidden', 'true');
     document.body.append(this.rail);
+    this.physical = new PhysicalPage(this.volume, this.paper);
     this.index = -1; this.progress = 0;
     this.measure();
     on(window, 'scroll', () => this.schedule());
@@ -72,6 +74,7 @@ export class BookReader {
     document.fonts?.ready.then(() => { if (!this.events.signal.aborted) { this.measure(); this.schedule(); } });
   }
   measure() {
+    this.physical?.resize();
     this.unit = Math.max(500, window.innerHeight * .9);
     let offset = this.unit;
     this.segments = this.pages.map(({node}) => {
@@ -119,11 +122,15 @@ export class BookReader {
       node.hidden = i !== index && !(turn > 0 && i === index + 1);
       node.inert = opening < 1 || i !== index || turn > 0;
       node.style.zIndex = i === index ? '2' : '1';
-      node.style.transform = i === index && turn > 0 && !this.reduced.matches ? `rotateY(${-180 * turn}deg)` : '';
+      node.style.transform = i === index && turn > 0 && !this.reduced.matches && !this.physical.available ? `rotateY(${-180 * turn}deg)` : '';
       node.style.opacity = i === index && turn > 0 && this.reduced.matches ? String(1 - turn) : '';
     });
     this.pages[index].node.scrollTop = Math.min(segment.read, Math.max(0, y - segment.start));
     if (turn > 0) this.pages[index + 1].node.scrollTop = 0;
+    if (turn > 0 && !this.reduced.matches && this.physical.available) {
+      this.physical.turn(turn, this.pages[index].node);
+      this.pages[index].node.style.opacity = '0';
+    } else this.physical.hide();
     if (index !== this.index || this.lastOpening !== (opening < 1)) {
       this.index = index; this.lastOpening = opening < 1;
       const page = this.pages[index];
@@ -135,5 +142,5 @@ export class BookReader {
       this.select.value = String(index);
     }
   }
-  dispose() { this.events.abort(); cancelAnimationFrame(this.frame); this.rail.remove(); document.body.classList.remove('scroll-book'); }
+  dispose() { this.physical.dispose(); this.events.abort(); cancelAnimationFrame(this.frame); this.rail.remove(); document.body.classList.remove('scroll-book'); }
 }

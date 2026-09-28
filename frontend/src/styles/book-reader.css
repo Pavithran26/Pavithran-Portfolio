@@ -147,3 +147,15 @@ body.scroll-book::-webkit-scrollbar { display: none; }
 .scroll-book .book-paper { box-shadow: 4px 6px 0 #c9bea7,8px 10px 28px #0004; }
 
 .scroll-book .book-leaf { overscroll-behavior: auto; }
+
+/* Clothbound cover, compressed paper edges and a curved WebGL turning sheet. */
+.physical-page-canvas { position:absolute; inset:0; width:100%; height:100%; z-index:7; pointer-events:none; }
+.scroll-book .book-volume { transform: translateX(calc((1 - var(--open,0)) * -19%)) perspective(2200px) rotateX(calc((1 - var(--open,0)) * 5deg)) rotateY(calc((1 - var(--open,0)) * -7deg)); transform-style:preserve-3d; }
+.scroll-book .book-paper { border-radius:2px 9px 12px 2px; box-shadow:2px 2px 0 #c2b698,4px 4px 0 #f1e6ce,6px 6px 0 #b4a78b,8px 8px 0 #e0d4b9,10px 10px 0 #aa9d80,12px 12px 0 #eee2c9,14px 15px 0 #133020,22px 30px 42px #0006; }
+.cover-face { background:repeating-linear-gradient(0deg,#ffffff06 0 .7px,#00000006 .7px 1.4px,transparent 1.4px 3px),repeating-linear-gradient(90deg,#0000000b 0 1px,transparent 1px 3px),radial-gradient(ellipse at 25% 15%,#31543d,#173a29 55%,#0e281d); box-shadow:inset 13px 0 9px #0008,inset 16px 0 2px #7d95613b,inset -2px -3px 4px #0008,3px 5px 0 #0c2116,7px 8px 15px #0005; }
+.cover-face h1,.cover-monogram,.cover-edition { text-shadow:0 1px 0 #fff4,0 -1px 1px #000b; }
+.book-cover::before { content:''; position:absolute; top:0; bottom:0; left:-12px; width:14px; background:linear-gradient(90deg,#081a10,#33523a,#0e2518); transform:rotateY(-90deg); transform-origin:right; }
+.scroll-book .book-frontispiece { background:linear-gradient(90deg,#e3d8bf,#f2e8d4 6%,#f0e6d1 84%,#d8cbb1 97%,#a2957a); box-shadow:-2px 4px 0 #c1b79e,-5px 7px 0 #e8dcc2,-9px 12px 0 #193726; }
+.scroll-book .book-leaf { background:linear-gradient(90deg,#a89b7f,#e1d5ba 2%,#f5efe2 8%,#f5efe2 93%,#e7ddc7); }
+@media(max-width:760px) { .scroll-book .book-volume { transform:perspective(1600px) rotateY(calc((1 - var(--open,0)) * -4deg)); } }
+@media(prefers-reduced-motion:reduce) { .scroll-book .book-volume { transform:none; } }
