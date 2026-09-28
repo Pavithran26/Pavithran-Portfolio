@@ -3,6 +3,7 @@ import '../styles/book-reader.css';
 export class BookReader {
   constructor(root, { archive = false } = {}) {
     this.root = root;
+    document.body.classList.remove('book-portfolio');
     this.events = new AbortController();
     this.reduced = matchMedia('(prefers-reduced-motion: reduce)');
     this.pages = [];
