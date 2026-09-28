@@ -3,7 +3,7 @@ import { FEATURED_PROJECTS as projects } from "../data/projectsData.js";
 import { SPACE_CHAPTERS as chapters } from "../data/spaceJourneyData.js";
 import { escapeHtml as html } from "../utils/helpers.js";
 
-const CINEMATIC_INTRO_URL = "/videos/sketch-to-product.mp4";
+const CINEMATIC_INTRO_URL = "https://cdn.openart.ai/openart-uploads/production/attachment-transfers/3fb0ffbecbcacd99557a930ae90175c5e809a24a5e9666bab642d3433dddfafe.mp4";
 
 const icon = kind => {
   const map = {
@@ -54,7 +54,7 @@ export class POVWorkstation {
       return '<button class="ubuntu-folder" type="button" data-pov-folder="' + item[0] + '" aria-label="Open ' + item[1] + '"><span class="ubuntu-folder-icon">' + icon(item[0]) + '</span><span class="ubuntu-folder-label">' + item[1] + '</span></button>';
     }).join("");
 
-    return '<video class="pov-cinematic-intro" id="pov-cinematic-intro" playsinline preload="auto" src="' + CINEMATIC_INTRO_URL + '"></video><button class="pov-skip-intro" id="pov-skip-intro" type="button">Skip intro →</button><div class="pov-room" aria-hidden="true">' +
+    return '<div class="portfolio-opening" aria-hidden="true"><div class="opening-orbit"></div><strong>PS<span>.</span></strong><p>FROM INTERFACE TO INTELLIGENCE</p></div><style>.portfolio-opening{position:absolute;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#060911;pointer-events:none;animation:openingFade 1.8s ease forwards}.portfolio-opening strong{font:500 clamp(64px,12vw,130px)/1 Georgia,serif;color:#edf3fa;letter-spacing:-.08em;animation:openingMark 1.2s cubic-bezier(.2,.7,.2,1) both}.portfolio-opening strong span{color:#92c6de}.portfolio-opening p{font:10px/1.5 monospace;letter-spacing:.25em;color:#9caec2;margin-top:24px}.opening-orbit{position:absolute;width:280px;height:280px;border:1px solid #213144;border-top-color:#98cde2;border-radius:50%;animation:openingOrbit 1.8s ease both;box-shadow:0 0 70px #41678b18}@keyframes openingOrbit{from{transform:rotate(-140deg) scale(.75);opacity:0}30%{opacity:1}to{transform:rotate(100deg) scale(1.15);opacity:0}}@keyframes openingMark{from{opacity:0;transform:translateY(18px);filter:blur(8px)}to{opacity:1;transform:none;filter:none}}@keyframes openingFade{0%,72%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}@media(prefers-reduced-motion:reduce){.portfolio-opening{display:none}}</style><video class="pov-cinematic-intro" id="pov-cinematic-intro" playsinline preload="auto" src="' + CINEMATIC_INTRO_URL + '"></video><button class="pov-skip-intro" id="pov-skip-intro" type="button">Skip intro →</button><div class="pov-room" aria-hidden="true">' +
       '<div class="pov-wall-glow"></div><div class="pov-window"><i></i><i></i><i></i></div>' +
       '<div class="pov-desk-rig">' +
         '<div class="pov-monitor pov-monitor--left"><div class="pov-monitor-screen"><span class="pov-side-kicker">SYS.MONITOR</span><div class="pov-side-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>' +
@@ -62,7 +62,7 @@ export class POVWorkstation {
         '<div class="pov-monitor pov-monitor--right"><div class="pov-monitor-screen"><span class="pov-side-kicker">DEV.ACTIVITY</span><div class="pov-code-lines"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>' +
         '<div class="pov-keyboard"></div><div class="pov-mouse"></div><div class="pov-mug"><i></i></div>' +
       '</div><div class="pov-hand pov-hand--left"></div><div class="pov-hand pov-hand--right"></div></div>' +
-      '<button class="pov-wake" id="pov-wake" type="button"><span>Watch the idea take shape</span><small>Enter Pavithran workstation</small></button>' +
+      '<button class="pov-wake" id="pov-wake" type="button"><span>Enter my workspace</span><small>Enter Pavithran workstation</small></button>' +
       '<div class="pov-eyelid pov-eyelid--top"></div><div class="pov-eyelid pov-eyelid--bottom"></div>' +
       '<div class="ubuntu-shell" id="ubuntu-shell" aria-hidden="true">' +
         '<div class="ubuntu-wallpaper"><div class="ubuntu-wallpaper-orbit ubuntu-wallpaper-orbit--1"></div><div class="ubuntu-wallpaper-orbit ubuntu-wallpaper-orbit--2"></div><div class="ubuntu-wallpaper-core">PS</div></div>' +
