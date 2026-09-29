@@ -5,7 +5,10 @@ export class PhysicalPage {
   constructor(volume, paper) {
     this.volume = volume; this.paper = paper;
     try {
-      this.renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: 'low-power' });
+      const canvas = document.createElement('canvas');
+      const context = canvas.getContext('webgl2', {alpha:true,antialias:true});
+      if (!context) { this.available = false; return; }
+      this.renderer = new THREE.WebGLRenderer({ canvas, context, alpha: true, antialias: true, powerPreference: 'low-power' });
     } catch { this.available = false; return; }
     this.available = true;
     this.renderer.setPixelRatio(Math.min(devicePixelRatio, 1.5));

@@ -133,6 +133,7 @@ export class BookReader {
       node.style.zIndex = i <= index + 1 ? '2' : '1';
       node.style.opacity = i % 2 === 0 && opening < 1 ? String(opening) : '';
       node.style.transform = '';
+      node.style.transformOrigin = i%2 ? 'left center' : 'right center';
       if (i === index || i === index + 1) node.scrollTop = Math.min(Math.max(0,node.scrollHeight-node.clientHeight), Math.max(0,y-segment.start));
       else if (active.includes(i)) node.scrollTop = 0;
     });
@@ -144,7 +145,21 @@ export class BookReader {
       if (this.pages[index+2]) this.pages[index+2].node.style.opacity = '0';
     } else {
       this.physical.hide();
-      if (turn > 0 && this.pages[index+1]) this.pages[index+1].node.style.opacity = String(1-turn);
+      if (turn > 0 && this.pages[index+1]) {
+        const front = this.pages[index+1].node, back = this.pages[index+2]?.node;
+        if (this.reduced.matches) {
+          front.hidden = turn >= .5;
+          if (back) back.style.zIndex = turn >= .5 ? '4' : '1';
+        } else {
+          front.style.transform = `rotateY(${-180*turn}deg)`;
+          front.style.zIndex = '4';
+          if (back) {
+            back.style.transformOrigin = 'right center';
+            back.style.transform = `rotateY(${180*(1-turn)}deg)`;
+            back.style.zIndex = '4';
+          }
+        }
+      }
     }
     if (index !== this.index || this.lastOpening !== (opening < 1)) {
       this.index = index; this.lastOpening = opening < 1;
