@@ -131,7 +131,7 @@ export class BookReader {
       node.hidden = !active.includes(i);
       node.inert = opening < 1 || ![index,index+1].includes(i) || turn > 0;
       node.style.zIndex = i <= index + 1 ? '2' : '1';
-      node.style.opacity = '';
+      node.style.opacity = i % 2 === 0 && opening < 1 ? String(opening) : '';
       node.style.transform = '';
       if (i === index || i === index + 1) node.scrollTop = Math.min(Math.max(0,node.scrollHeight-node.clientHeight), Math.max(0,y-segment.start));
       else if (active.includes(i)) node.scrollTop = 0;
