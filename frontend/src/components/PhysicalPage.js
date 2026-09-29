@@ -27,12 +27,12 @@ export class PhysicalPage {
     Object.assign(light.shadow.camera,{left:-1600,right:1600,top:1400,bottom:-1400,near:1,far:5000});
     light.shadow.bias = -.0002; light.shadow.normalBias = 2;
     this.scene.add(light);
-    this.shadow = new THREE.Mesh(new THREE.PlaneGeometry(1,1), new THREE.ShadowMaterial({opacity:.24}));
+    this.shadow = new THREE.Mesh(new THREE.PlaneGeometry(1,1), new THREE.ShadowMaterial({opacity:.09}));
     this.shadow.receiveShadow = true; this.scene.add(this.shadow);
     this.geometry = new THREE.PlaneGeometry(1, 1, 64, 12);
     this.original = this.geometry.attributes.position.array.slice();
-    this.front = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .95, side: THREE.FrontSide });
-    this.back = new THREE.MeshStandardMaterial({ color: 0xe8ddc3, roughness: 1, side: THREE.BackSide });
+    this.front = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.FrontSide });
+    this.back = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.BackSide });
     this.sheet = new THREE.Mesh(this.geometry, this.front);
     this.reverse = new THREE.Mesh(this.geometry, this.back);
     this.sheet.castShadow = true; this.reverse.castShadow = true;
@@ -69,10 +69,11 @@ export class PhysicalPage {
       if (style.visibility === 'hidden' || style.display === 'none' || text.parentElement.closest('.visually-hidden')) continue;
       ctx.font = `${style.fontStyle} ${style.fontWeight} ${style.fontSize} ${style.fontFamily}`;
       ctx.fillStyle = style.color; ctx.textBaseline = 'top';
+      if ('letterSpacing' in ctx) ctx.letterSpacing = style.letterSpacing === 'normal' ? '0px' : style.letterSpacing;
       for (const match of text.textContent.matchAll(/\S+/g)) {
         range.setStart(text, match.index); range.setEnd(text, match.index + match[0].length);
         const r = range.getBoundingClientRect();
-        if (r.bottom > box.top && r.top < box.bottom && r.width) ctx.fillText(match[0], r.left - box.left, r.top - box.top);
+        if (r.bottom > box.top && r.top < box.bottom && r.width) ctx.fillText(style.textTransform === 'uppercase' ? match[0].toUpperCase() : match[0], r.left - box.left, r.top - box.top);
       }
     }
     const texture = new THREE.CanvasTexture(canvas); texture.colorSpace = THREE.SRGBColorSpace;

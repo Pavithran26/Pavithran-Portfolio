@@ -47,7 +47,7 @@ export class BookReader {
     });
     const on = (target, type, fn) => target.addEventListener(type, fn, { signal: this.events.signal });
     on(root, 'click', event => { const button = event.target.closest('[data-turn]'); if (button) this.go(this.progress < 1 ? 0 : this.index + Number(button.dataset.turn) * 2); });
-    on(this.cover.querySelector('button'), 'click', () => this.go(0));
+    on(this.cover.querySelector('button'), 'click', () => window.scrollTo({top:this.unit,behavior:this.reduced.matches?'instant':'smooth'}));
     on(this.select, 'change', () => this.go(Number(this.select.value)));
     on(document, 'click', event => {
       const link = event.target.closest('a[href^="#"]');
@@ -66,6 +66,7 @@ export class BookReader {
     this.rail.className = 'book-scroll-rail'; this.rail.setAttribute('aria-hidden', 'true');
     document.body.append(this.rail);
     this.physical = new PhysicalPage(this.volume, this.paper);
+    this.sources = this.pages.map(page => ({ ...page, blocks: this.blocks(page.node) }));
     this.index = -1; this.progress = 0;
     this.measure();
     on(window, 'scroll', () => this.schedule());
@@ -76,18 +77,93 @@ export class BookReader {
     this.render();
     document.fonts?.ready.then(() => { if (!this.events.signal.aborted) { this.measure(); this.schedule(); } });
   }
+
+  blocks(node) {
+    const wrappers = '.space-content,.intro-identity,.world-copy,.project-copy,.education-copy,.archive-copy,.space-experience,.space-recognition,.space-education,.space-projects';
+    const result = [];
+    const visit = el => {
+      if (el.matches(wrappers) || (el.matches('article') && el.parentElement?.matches('.space-recognition'))) [...el.children].forEach(visit);
+      else result.push(el);
+    };
+    [...node.children].forEach(visit);
+    return result;
+  }
+  paginate() {
+    if (!this.sources) return;
+    const currentId = this.pages[this.index]?.node.dataset.source;
+    this.pages.forEach(p => p.node.remove());
+    this.pages = [];
+    const create = (source, part) => {
+      const node = part === 0 ? source.node : document.createElement('article');
+      node.replaceChildren(); node.classList.add('book-leaf','printed-leaf');
+      node.classList.remove('recto');
+      node.id = part === 0 ? source.node.id : source.node.id + '-part-' + part;
+      node.dataset.source = source.node.id;
+      node.hidden = false; node.inert = false;
+      node.style.cssText = ''; node.tabIndex = -1;
+      const body = document.createElement('div'); body.className = 'printed-content';
+      const folio = document.createElement('div'); folio.className = 'printed-folio';
+      folio.textContent = source.title + '  ·  ' + (this.pages.length + 1);
+      node.append(body,folio); this.paper.append(node);
+      this.pages.push({node,title:source.title + (part ? ' — continued' : ''),category:source.category});
+      return {node,body};
+    };
+    for (const source of this.sources) {
+      let part = 0, page = create(source,part);
+      const queue = source.blocks.slice();
+      while (queue.length) {
+        const block = queue.shift();
+        page.body.append(block);
+        if (page.body.scrollHeight <= page.body.clientHeight + 1) continue;
+        block.remove();
+        if (page.body.children.length) {
+          page = create(source,++part); queue.unshift(block); continue;
+        }
+        if (block.matches('p') && block.textContent.trim().split(/\s+/).length > 20 && !block.querySelector('a,button')) {
+          const words = block.textContent.trim().split(/\s+/);
+          let lo=1, hi=words.length, fit=1;
+          const piece=block.cloneNode(false); piece.removeAttribute('id'); page.body.append(piece);
+          while(lo<=hi) {
+            const mid=Math.floor((lo+hi)/2); piece.textContent=words.slice(0,mid).join(' ');
+            if(page.body.scrollHeight<=page.body.clientHeight+1){fit=mid;lo=mid+1;}else hi=mid-1;
+          }
+          piece.textContent=words.slice(0,fit).join(' ');
+          if(fit<words.length){const rest=block.cloneNode(false);rest.removeAttribute('id');rest.textContent=words.slice(fit).join(' ');queue.unshift(rest);}
+          page=create(source,++part);
+        } else if(block.children.length && !block.matches('figure,button,a,svg,picture')) {
+          const children=[...block.children];
+          const sourceIndex=source.blocks.indexOf(block);
+          if(sourceIndex>=0) source.blocks.splice(sourceIndex,1,...children);
+          queue.unshift(...children);
+        } else {
+          page.body.append(block);
+          block.classList.add('printed-fit');
+        }
+      }
+      if(!page.body.children.length && part){page.node.remove();this.pages.pop();}
+    }
+    // A printed colophon fills the final spread; no exposed blank page stack.
+    const ending = {node:document.createElement('article'),title:'The next chapter',category:'Colophon'};
+    ending.node.id='book-colophon';
+    const end=create(ending,0);
+    end.body.innerHTML='<p class="space-kicker">THE STORY CONTINUES</p><h2>Thank you<br>for reading.</h2><p>Every project begins with a conversation.</p><a class="space-text-link" href="mailto:pavithran2004cs@gmail.com">Let’s build something together ↗</a><p class="book-end-signature">Pavithran S.</p><a class="space-text-link" href="#top">Return to the cover ↑</a>';
+    if(this.pages.length%2) {
+      const back={node:document.createElement('article'),title:'Pavithran S.',category:'Endpaper'};back.node.id='book-endpaper';
+      create(back,0).body.innerHTML='<div class="printed-endmark"><span>PS</span><p>FROM INTERFACE<br>TO INTELLIGENCE</p><a href="#top">Back to the beginning ↑</a></div>';
+    }
+    this.select.replaceChildren();
+    this.pages.forEach(({node,title},i)=>{node.hidden=true;this.select.add(new Option(title,String(i)));});
+    if(currentId) this.index=this.pages.findIndex(p=>p.node.dataset.source===currentId);
+  }
+
   measure() {
+    this.paginate();
     this.physical?.resize();
     this.unit = Math.max(500, window.innerHeight * .9);
     let offset = this.unit;
     this.segments = [];
     for (let i = 0; i < this.pages.length; i += 2) {
-      let read = 0;
-      this.pages.slice(i, i + 2).forEach(({node}) => {
-        const hidden = node.hidden; node.hidden = false;
-        read = Math.max(read, node.scrollHeight - node.clientHeight);
-        node.hidden = hidden;
-      });
+      const read = 0;
       this.segments.push({ start: offset, read, turn: this.unit, page: i });
       offset += read + this.unit * .7 + this.unit;
     }
@@ -106,7 +182,7 @@ export class BookReader {
   }
   go(index, updateHash = true) {
     if (index < -1 || index >= this.pages.length) return;
-    const top = index < 0 ? 0 : this.segments[Math.floor(index / 2)].start;
+    const top = index < 0 || this.pages[index]?.node.id === 'top' ? 0 : this.segments[Math.floor(index / 2)].start;
     window.scrollTo({ top, behavior: this.reduced.matches ? 'instant' : 'smooth' });
     if (updateHash) history.replaceState(null, '', index < 0 ? '#top' : `#${this.pages[index].node.id}`);
   }
@@ -134,8 +210,7 @@ export class BookReader {
       node.style.opacity = i % 2 === 0 && opening < 1 ? String(opening) : '';
       node.style.transform = '';
       node.style.transformOrigin = i%2 ? 'left center' : 'right center';
-      if (i === index || i === index + 1) node.scrollTop = Math.min(Math.max(0,node.scrollHeight-node.clientHeight), Math.max(0,y-segment.start));
-      else if (active.includes(i)) node.scrollTop = 0;
+      node.scrollTop = 0;
     });
     this.volume.style.setProperty('--left-stack', `${3 + spread * .9}px`);
     this.volume.style.setProperty('--right-stack', `${3 + (this.segments.length - spread) * .9}px`);
