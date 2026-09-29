@@ -82,7 +82,7 @@ export class BookReader {
     const wrappers = '.space-content,.intro-identity,.world-copy,.project-copy,.education-copy,.archive-copy,.space-experience,.space-recognition,.space-education,.space-projects';
     const result = [];
     const visit = el => {
-      if (el.matches(wrappers) || (el.matches('article') && el.parentElement?.matches('.space-recognition'))) [...el.children].forEach(visit);
+      if (el.matches(wrappers)) [...el.children].forEach(visit);
       else result.push(el);
     };
     [...node.children].forEach(visit);
@@ -105,6 +105,7 @@ export class BookReader {
       const folio = document.createElement('div'); folio.className = 'printed-folio';
       folio.textContent = source.title + '  ·  ' + (this.pages.length + 1);
       node.append(body,folio); this.paper.append(node);
+      if (part) { const label=document.createElement('p');label.className='space-kicker continuation-label';label.textContent=source.title+' · continued';body.append(label); }
       this.pages.push({node,title:source.title + (part ? ' — continued' : ''),category:source.category});
       return {node,body};
     };
@@ -116,7 +117,7 @@ export class BookReader {
         page.body.append(block);
         if (page.body.scrollHeight <= page.body.clientHeight + 1) continue;
         block.remove();
-        if (page.body.children.length) {
+        if ([...page.body.children].some(el=>!el.classList.contains('continuation-label'))) {
           page = create(source,++part); queue.unshift(block); continue;
         }
         if (block.matches('p') && block.textContent.trim().split(/\s+/).length > 20 && !block.querySelector('a,button')) {
