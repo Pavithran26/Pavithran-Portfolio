@@ -1,3 +1,4 @@
+@import './styles/project-archive.css';
 @import './styles/terminal.css';
 @import './styles/cinematic.css';
 @import './styles/technology-icons.css';
@@ -5,8 +6,155 @@
 
 @import './styles/console-windows.css';
 @import './styles/cursor-spotlight.css';
+@import './styles/liquid-cursor.css';
 
 @import './styles/education-journey.css';
+@import './shaders/threeui.css';
+@import './styles/transformers-bg.css';
 
+/* Unified Single-Page Natural Scroll Layout */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
 
-@import './styles/pov-workstation.css';
+body.space-portfolio {
+  min-height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+#portfolio {
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* Widen Work & Projects section for showcase and archive */
+#work .space-content {
+  max-width: 1240px !important;
+  width: 100% !important;
+}
+
+.work-wide-content {
+  max-width: 1240px !important;
+  width: 100% !important;
+}
+
+/* Reading Tools (Technology Badges in Chapters) */
+.reading-tools {
+  display: flex !important;
+  gap: 12px 16px !important;
+  flex-wrap: wrap !important;
+  margin-top: 28px !important;
+}
+
+/* Space Projects Stack */
+.space-projects {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 48px;
+}
+
+.project-destination {
+  margin: 0 !important;
+}
+
+/* All Projects Catalog Filter Tabs */
+.catalog-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 28px 0 36px;
+}
+
+.filter-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--muted);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: all 0.2s cubic-bezier(0.2, 0, 0.1, 1);
+}
+
+.filter-tab:hover,
+.filter-tab.active {
+  background: linear-gradient(180deg, #3d2516 0%, #24140b 50%, #170b05 100%) !important;
+  color: #f7e2a9 !important;
+  border-color: rgba(212, 175, 55, 0.7) !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 240, 200, 0.5) !important;
+}
+
+.filter-tab small {
+  opacity: 0.8;
+  font-size: 0.76rem;
+  font-family: 'Fira Code', monospace;
+}
+
+.archive-project.is-hidden {
+  display: none !important;
+}
+
+/* Archive Grid inside main page */
+#work .archive-grid {
+  margin-top: 32px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  align-items: stretch;
+}
+
+@media (max-width: 820px) {
+  #work .archive-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.archive-project {
+  border-radius: 12px !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.archive-copy {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.archive-copy .project-links {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+/* Light Appearance Theme Overrides */
+body.light-appearance {
+  --ink: #f5f2ec;
+  --white: #14171c;
+  --paper: #14171c;
+  --muted: #5e6673;
+  --accent: #9e4b10;
+  --line: #d8d0c2;
+  background: #f4f0e6 !important;
+  color: #14171c !important;
+}
+
+body.light-appearance .universe-darkness {
+  background: linear-gradient(180deg, rgba(245, 242, 236, 0.95), rgba(240, 235, 225, 0.98)) !important;
+}
+
+body.light-appearance .space-header {
+  background: linear-gradient(#f4f0e6, transparent);
+}
+
+body.light-appearance .paper-giant-wordmark {
+  color: rgba(60, 45, 25, 0.065);
+}

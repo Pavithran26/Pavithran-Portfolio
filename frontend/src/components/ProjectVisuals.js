@@ -37,7 +37,7 @@ export function projectVisual(project) {
   const visual = PROJECT_VISUALS[project.id];
   if (!visual) return '';
   if (PROJECT_SCENES[project.id]) return `<figure class="project-visual project-scene" style="--project-accent:${visual.color}">
-    <div class="project-scene-camera"><img class="project-scene-image" src="/images/projects/${project.id}-1440.webp" width="960" height="540" loading="lazy" decoding="async" alt="${html(PROJECT_SCENES[project.id])}"><div class="project-native-flow" aria-hidden="true">${visual.steps.map(([,label],i)=>`<span><i style="--step:${i}"></i>${html(label)}</span>`).join('')}</div></div>
+    <!-- <img class="project-scene-image" src="/images/projects/${project.id}-1440.webp" width="960" height="540" loading="lazy" decoding="async" alt="${html(PROJECT_SCENES[project.id])}"> -->
     ${project.id === 'sattam-ai' ? '<span class="project-scene-label">SATTAM AI<small>Legal knowledge assistant</small></span>' : ''}
     <figcaption class="visually-hidden">${html(visual.title)} — conceptual artwork</figcaption>
   </figure>`;

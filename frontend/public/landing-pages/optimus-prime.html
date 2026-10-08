@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optimus Prime — The Cybertronian Matrix | Pavithran S.</title>
+  <link rel="stylesheet" href="/landing-pages/secret-pathways-assets/fonts.css">
+  <style>
+    :root {
+      --primary-color: #e0231c;
+      --energon-blue: #00e5ff;
+      --energon-glow: rgba(0, 229, 255, 0.6);
+      --prime-crimson: #c81919;
+      --prime-metal: #12151d;
+      --prime-chrome: #c2c9d6;
+      --bg-dark: #05070b;
+      --card-bg: rgba(10, 14, 22, 0.72);
+      --card-border: rgba(0, 229, 255, 0.18);
+      --font-display: 'Onest', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg-dark);
+      color: #e8ecf4;
+      font-family: var(--font-display);
+      overflow-x: hidden;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(0, 229, 255, 0.3) var(--bg-dark);
+    }
+
+    /* Three.js Background Canvas */
+    #prime-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: auto;
+      display: block;
+    }
+
+    /* Vignette & Cyber Grid Overlay */
+    .vignette-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(3, 5, 8, 0.85) 100%),
+                  linear-gradient(180deg, rgba(5, 7, 11, 0.4) 0%, transparent 20%, transparent 80%, rgba(5, 7, 11, 0.9) 100%);
+    }
+
+    .cyber-scanlines {
+      position: fixed;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, rgba(0, 229, 255, 0.015) 0px, rgba(0, 229, 255, 0.015) 1px, transparent 1px, transparent 3px);
+      opacity: 0.75;
+    }
+
+    /* Floating HUD Navigation */
+    .cyber-hud {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 20;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2rem;
+      pointer-events: none;
+    }
+
+    .hud-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      pointer-events: auto;
+      text-decoration: none;
+      color: #fff;
+    }
+
+    .autobot-insignia {
+      width: 32px;
+      height: 32px;
+      fill: var(--primary-color);
+      filter: drop-shadow(0 0 8px rgba(224, 35, 28, 0.7));
+      transition: transform 0.3s ease;
+    }
+
+    .hud-brand:hover .autobot-insignia {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .brand-meta {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .brand-sub {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--energon-blue);
+      text-transform: uppercase;
+    }
+
+    .hud-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      pointer-events: auto;
+    }
+
+    .hud-btn {
+      background: rgba(14, 20, 32, 0.85);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      color: #d1dcff;
+      padding: 0.45rem 0.9rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hud-btn:hover {
+      background: rgba(0, 229, 255, 0.15);
+      border-color: var(--energon-blue);
+      color: #ffffff;
+      box-shadow: 0 0 14px rgba(0, 229, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .hud-btn.active {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: #fff;
+      box-shadow: 0 0 16px rgba(224, 35, 28, 0.6);
+    }
+
+    /* Scroll Chapters Container */
+    .scroll-container {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .scroll-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 6rem 8vw;
+      position: relative;
+    }
+
+    .section-content {
+      max-width: 680px;
+      pointer-events: auto;
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 2.75rem;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      transition: transform 0.4s ease, border-color 0.4s ease;
+    }
+
+    .section-content:hover {
+      border-color: rgba(0, 229, 255, 0.45);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(0, 229, 255, 0.15);
+    }
+
+    .cyber-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.3rem 0.75rem;
+      background: rgba(224, 35, 28, 0.15);
+      border: 1px solid rgba(224, 35, 28, 0.4);
+      color: #ff6864;
+      font-size: 0.72rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 999px;
+      margin-bottom: 1.25rem;
+    }
+
+    .cyber-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--primary-color);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--primary-color);
+      animation: pulse-dot 1.8s infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.6); opacity: 0.4; }
+    }
+
+    h1, h2, h3 {
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: #ffffff;
+      margin-bottom: 1rem;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.2rem);
+      text-transform: uppercase;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, #ffffff 30%, var(--energon-blue) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 3.5vw, 3rem);
+    }
+
+    .tagline {
+      font-size: clamp(1.05rem, 1.4vw, 1.25rem);
+      line-height: 1.6;
+      color: #b8c4d9;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .tagline strong {
+      color: #ffffff;
+      font-weight: 500;
+    }
+
+    /* Interactive Matrix Trigger in Hero */
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .primary-action {
+      background: linear-gradient(135deg, var(--primary-color), #a8120d);
+      color: #ffffff;
+      padding: 0.85rem 1.8rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255, 120, 110, 0.4);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 20px rgba(224, 35, 28, 0.4);
+      transition: all 0.25s ease;
+    }
+
+    .primary-action:hover {
+      box-shadow: 0 6px 28px rgba(224, 35, 28, 0.7);
+      transform: translateY(-2px);
+    }
+
+    .secondary-action {
+      background: rgba(14, 20, 32, 0.6);
+      color: #d1dcff;
+      padding: 0.85rem 1.6rem;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      border: 1px solid rgba(0, 229, 255, 0.3);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .secondary-action:hover {
+      background: rgba(0, 229, 255, 0.12);
+      border-color: var(--energon-blue);
+      color: #fff;
+    }
+
+    /* Telemetry Grid / Stats */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .telemetry-item {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .telemetry-val {
+      font-family: var(--font-mono);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--energon-blue);
+      text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+    }
+
+    .telemetry-label {
+      font-size: 0.72rem;
+      color: #8c9cb6;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-top: 0.2rem;
+    }
+
+    /* Project Protocol Cards */
+    .protocol-cards {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.2rem;
+      margin-top: 1.5rem;
+    }
+
+    .protocol-card {
+      background: rgba(12, 17, 28, 0.6);
+      border: 1px solid rgba(0, 229, 255, 0.15);
+      border-radius: 8px;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: all 0.25s ease;
+    }
+
+    .protocol-card:hover {
+      border-color: var(--energon-blue);
+      transform: translateX(6px);
+      background: rgba(12, 17, 28, 0.85);
+    }
+
+    .protocol-title {
+      font-size: 1.1rem;
+      color: #ffffff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .protocol-desc {
+      font-size: 0.85rem;
+      color: #9ab0d1;
+      line-height: 1.5;
+    }
+
+    .protocol-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.4rem;
+    }
+
+    .protocol-tag {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 3px;
+      background: rgba(0, 229, 255, 0.08);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      color: var(--energon-blue);
+    }
+
+    /* Click Hint HUD */
+    .interaction-hint {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      background: rgba(10, 14, 22, 0.8);
+      border: 1px solid rgba(0, 229, 255, 0.25);
+      backdrop-filter: blur(10px);
+      padding: 0.5rem 1.2rem;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #a4b8db;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      animation: float-hint 3s ease-in-out infinite;
+    }
+
+    @keyframes float-hint {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -6px); }
+    }
+
+    .matrix-charge-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary-color), var(--energon-blue));
+      width: 0%;
+      z-index: 30;
+      box-shadow: 0 0 12px var(--energon-blue);
+      transition: width 0.1s ease;
+    }
+
+    @media (max-width: 768px) {
+      .cyber-hud {
+        padding: 1rem;
+      }
+      .brand-sub {
+        display: none;
+      }
+      .section-content {
+        padding: 1.8rem;
+      }
+      .telemetry-grid {
+        grid-template-columns: 1fr;
+      }
+      .interaction-hint {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Three.js 3D Viewport Canvas -->
+  <canvas id="prime-canvas"></canvas>
+
+  <!-- Visual Atmospheric Layers -->
+  <div class="vignette-overlay" aria-hidden="true"></div>
+  <div class="cyber-scanlines" aria-hidden="true"></div>
+  <div class="matrix-charge-bar" id="matrix-bar"></div>
+
+  <!-- Cybertronian HUD -->
+  <header class="cyber-hud">
+    <a href="#hero" class="hud-brand">
+      <svg class="autobot-insignia" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <!-- Iconic Autobot Insignia Path -->
+        <polygon points="50,4 20,24 20,68 34,78 34,60 42,60 42,70 50,74 58,70 58,60 66,60 66,78 80,68 80,24" />
+        <polygon points="50,22 36,36 42,46 50,40 58,46 64,36" fill="#fff" />
+        <polygon points="45,54 55,54 50,58" fill="#fff" />
+        <rect x="28" y="44" width="8" height="12" fill="#fff" />
+        <rect x="64" y="44" width="8" height="12" fill="#fff" />
+      </svg>
+      <div class="brand-meta">
+        <span class="brand-title">OPTIMUS // PRIME</span>
+        <span class="brand-sub">Pavithran S. • Cybertronian Core</span>
+      </div>
+    </a>
+
+    <div class="hud-controls">
+      <button class="hud-btn" id="btn-sound" title="Toggle cybernetic synthesizer">
+        <span id="sound-icon">🔈</span> <span>AUDIO</span>
+      </button>
+      <button class="hud-btn" id="btn-wireframe" title="Toggle wireframe diagnostics">
+        <span>GRID</span>
+      </button>
+      <button class="hud-btn" id="btn-surge" title="Trigger Matrix Energon Surge">
+        <span>⚡ MATRIX</span>
+      </button>
+      <a class="hud-btn" href="/" title="Back to main portfolio">
+        <span>RETURN ↗</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Interactive Hint -->
+  <div class="interaction-hint" id="hint-hud">
+    <span>◈ DRAG TO ORBIT // CLICK TO UNLEASH THE MATRIX</span>
+  </div>
+
+  <!-- Narrative Scroll Content -->
+  <main class="scroll-container">
+
+    <!-- Section 1: Hero Identity -->
+    <section class="scroll-section" id="hero">
+      <div class="section-content">
+        <div class="cyber-badge">AUTOBOT SYSTEM // ONLINE</div>
+        <h1>I AM <span>OPTIMUS PRIME.</span></h1>
+        <p class="tagline">
+          <em>"Freedom is the right of all sentient beings."</em><br>
+          In engineering, architecture is the backbone of dependable systems. Crafting reactive frontends, resilient full-stack platforms, and applied intelligence at production scale.
+        </p>
+        <div class="hero-actions">
+          <button class="primary-action" id="hero-matrix-trigger">
+            <span>⚡ UNLEASH MATRIX</span>
+          </button>
+          <a class="secondary-action" href="/images/prime.png" target="_blank" rel="noopener noreferrer">
+            <span>📐 4K BLUEPRINT ↗</span>
+          </a>
+          <a class="secondary-action" href="#arsenal">
+            <span>EXPLORE ARSENAL ↓</span>
+          </a>
+        </div>
+        <div class="telemetry-grid">
+          <div class="telemetry-item">
+            <span class="telemetry-val">100%</span>
+            <span class="telemetry-label">Energon Reserves</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="telemetry-val">16+</span>
+            <span class="telemetry-label">Production Repos</span>
+          </div>
+          <div class="telemetry-item">
+            <span class="telemetry-val">60 FPS</span>
+            <span class="telemetry-label">Shader Velocity</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: The Matrix of Leadership -->
+    <section class="scroll-section" id="matrix-lore" style="align-items: flex-end;">
+      <div class="section-content">
+        <div class="cyber-badge" style="border-color: rgba(0, 229, 255, 0.4); background: rgba(0, 229, 255, 0.1); color: var(--energon-blue);">
+          ARTIFACT // MATRIX OF LEADERSHIP
+        </div>
+        <h2>THE LIGHT OF WISDOM.</h2>
+        <p class="tagline">
+          Held within the chest of Prime, the Matrix of Leadership channels the knowledge of generations. In Pavithran's stack, it represents deep foundational mastery: algorithms, full-stack infrastructure, and neural retrieval pipelines.
+        </p>
+        <div class="hero-actions">
+          <button class="hud-btn active" id="btn-focus-matrix">
+            <span>INSPECT MATRIX CORE ↗</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Flagship Arsenal -->
+    <section class="scroll-section" id="arsenal">
+      <div class="section-content" style="max-width: 740px;">
+        <div class="cyber-badge">ENGINEERING PROTOCOLS // FLAGSHIP WORK</div>
+        <h2>CYBERTRONIAN ARSENAL.</h2>
+        <p class="tagline">
+          Battle-tested systems engineered by Pavithran S. to solve tangible real-world challenges.
+        </p>
+        <div class="protocol-cards">
+          <div class="protocol-card">
+            <div class="protocol-title">
+              <strong>Sattam AI — Legal Intelligence</strong>
+              <span style="color: var(--energon-blue); font-size: 0.8rem;">RAG // LLM</span>
+            </div>
+            <p class="protocol-desc">Retrieval-augmented generation engine synthesizing legal precedents across complex jurisprudence datasets with sub-second citations.</p>
+            <div class="protocol-tags">
+              <span class="protocol-tag">Python</span>
+              <span class="protocol-tag">LangChain</span>
+              <span class="protocol-tag">ChromaDB</span>
+              <span class="protocol-tag">FastAPI</span>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-title">
+              <strong>Clansure — Enterprise Workspace</strong>
+              <span style="color: #ff914d; font-size: 0.8rem;">FULL-STACK</span>
+            </div>
+            <p class="protocol-desc">High-throughput operational ERP and collaborative workspace with real-time state synchronization, audit streams, and RBAC security.</p>
+            <div class="protocol-tags">
+              <span class="protocol-tag">React</span>
+              <span class="protocol-tag">Node.js</span>
+              <span class="protocol-tag">PostgreSQL</span>
+              <span class="protocol-tag">WebSockets</span>
+            </div>
+          </div>
+
+          <div class="protocol-card">
+            <div class="protocol-title">
+              <strong>GT Companion — Transit & Mobility</strong>
+              <span style="color: #79f291; font-size: 0.8rem;">REALTIME</span>
+            </div>
+            <p class="protocol-desc">Campus transit telemetry system providing real-time bus tracking, optimal route ETA predictions, and peer dispatch coordinates.</p>
+            <div class="protocol-tags">
+              <span class="protocol-tag">Leaflet</span>
+              <span class="protocol-tag">WebSockets</span>
+              <span class="protocol-tag">Express</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: Roll Out / Contact -->
+    <section class="scroll-section" id="rollout" style="align-items: center; text-align: center;">
+      <div class="section-content" style="max-width: 640px; margin: 0 auto;">
+        <div class="cyber-badge" style="margin: 0 auto 1.25rem;">AUTOBOTS // TRANSFORM & ROLL OUT</div>
+        <h2>LET'S BUILD SOMETHING RELENTLESS.</h2>
+        <p class="tagline">
+          Looking for a Forward Deployment Engineer or Full-Stack System Architect who can command modern codebases from interface to machine learning?
+        </p>
+        <div class="hero-actions" style="justify-content: center;">
+          <a class="primary-action" href="mailto:pavithran2004cs@gmail.com">
+            <span>GET IN TOUCH ↗</span>
+          </a>
+          <a class="secondary-action" href="https://github.com/Pavithran26" target="_blank" rel="noopener noreferrer">
+            <span>GITHUB DOSSIER ↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Local Three.js Runtime -->
+  <script src="/landing-pages/secret-pathways-assets/three.min.js"></script>
+
+  <!-- Optimus Prime 3D World Script -->
+  <script>
+    (function () {
+      'use strict';
+
+      // ─── 1. AUDIO SYNTHESIZER (Browser Web Audio API) ───────────────────
+      let audioCtx = null;
+      let soundEnabled = false;
+
+      function initAudio() {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+      }
+
+      function playCyberneticHum(frequency = 55, duration = 1.2, gainVal = 0.15) {
+        if (!soundEnabled || !audioCtx) return;
+        try {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          const filter = audioCtx.createBiquadFilter();
+
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(frequency * 1.8, audioCtx.currentTime + duration * 0.5);
+          osc.frequency.exponentialRampToValueAtTime(frequency, audioCtx.currentTime + duration);
+
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(450, audioCtx.currentTime);
+
+          gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(audioCtx.destination);
+
+          osc.start();
+          osc.stop(audioCtx.currentTime + duration);
+        } catch (e) {}
+      }
+
+      function playMatrixSurgeSound() {
+        if (!soundEnabled || !audioCtx) return;
+        try {
+          // Dual chord harmonic surge
+          [220, 330, 440, 660].forEach((freq, idx) => {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(freq * 1.5, audioCtx.currentTime + 1.5);
+            gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 2.0);
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start(audioCtx.currentTime + idx * 0.05);
+            osc.stop(audioCtx.currentTime + 2.0);
+          });
+        } catch (e) {}
+      }
+
+      const btnSound = document.getElementById('btn-sound');
+      btnSound?.addEventListener('click', () => {
+        initAudio();
+        soundEnabled = !soundEnabled;
+        btnSound.classList.toggle('active', soundEnabled);
+        document.getElementById('sound-icon').textContent = soundEnabled ? '🔊' : '🔈';
+        if (soundEnabled) playCyberneticHum(80, 0.6, 0.2);
+      });
+
+      // ─── 2. THREE.JS SCENE SETUP ─────────────────────────────────────────
+      const canvas = document.getElementById('prime-canvas');
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
+      });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.35;
+
+      const scene = new THREE.Scene();
+      scene.fog = new THREE.FogExp2(0x05070b, 0.024);
+
+      const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+      camera.position.set(0, 0, 8.5);
+
+      // ─── 3. LIGHTING RIG ────────────────────────────────────────────────
+      const ambientLight = new THREE.AmbientLight(0x182030, 1.8);
+      scene.add(ambientLight);
+
+      // Key light: Crimson Red directional
+      const keyLight = new THREE.DirectionalLight(0xe0231c, 4.0);
+      keyLight.position.set(5, 6, 6);
+      scene.add(keyLight);
+
+      // Rim light: Energon Cyan directional from opposite rear
+      const rimLight = new THREE.DirectionalLight(0x00e5ff, 4.5);
+      rimLight.position.set(-5, 4, -4);
+      scene.add(rimLight);
+
+      // Overhead cool white fill
+      const topLight = new THREE.DirectionalLight(0xdde8ff, 2.0);
+      topLight.position.set(0, 8, 3);
+      scene.add(topLight);
+
+      // Dynamic Matrix point light (pulsing from the chest)
+      const matrixLight = new THREE.PointLight(0x00e5ff, 6.0, 12, 1.8);
+      matrixLight.position.set(0, 0.2, 0.9);
+      scene.add(matrixLight);
+
+      // ─── 4. MATERIAL PALETTE ───────────────────────────────────────────
+      const primeRedMaterial = new THREE.MeshStandardMaterial({
+        color: 0xc81919,
+        metalness: 0.85,
+        roughness: 0.24,
+        emissive: 0x3d0505,
+        emissiveIntensity: 0.3
+      });
+
+      const primeNavyMaterial = new THREE.MeshStandardMaterial({
+        color: 0x142038,
+        metalness: 0.88,
+        roughness: 0.28,
+        emissive: 0x050e1c,
+        emissiveIntensity: 0.2
+      });
+
+      const chromeMaterial = new THREE.MeshStandardMaterial({
+        color: 0xd8e0ee,
+        metalness: 0.95,
+        roughness: 0.12,
+      });
+
+      const goldAlloyMaterial = new THREE.MeshStandardMaterial({
+        color: 0xe6b840,
+        metalness: 0.92,
+        roughness: 0.2,
+        emissive: 0x473205,
+        emissiveIntensity: 0.4
+      });
+
+      const energonGlowMaterial = new THREE.MeshStandardMaterial({
+        color: 0x00f0ff,
+        emissive: 0x00e5ff,
+        emissiveIntensity: 2.2,
+        roughness: 0.15,
+        metalness: 0.1,
+        transparent: true,
+        opacity: 0.92
+      });
+
+      const glassMaterial = new THREE.MeshPhysicalMaterial({
+        color: 0x0a1c30,
+        metalness: 0.1,
+        roughness: 0.1,
+        transmission: 0.85,
+        thickness: 0.5,
+        transparent: true,
+        opacity: 0.8
+      });
+
+      // ─── 5. PROCEDURAL OPTIMUS PRIME 3D MODEL ──────────────────────────
+      const primeGroup = new THREE.Group();
+      scene.add(primeGroup);
+
+      // 5.1 Main Torso / Chassis
+      const torsoGeo = new THREE.BoxGeometry(2.4, 2.0, 1.5);
+      const torso = new THREE.Mesh(torsoGeo, primeRedMaterial);
+      torso.position.y = 0.2;
+      primeGroup.add(torso);
+
+      // 5.2 Angular Shoulder Pauldrons
+      const shoulderGeo = new THREE.BoxGeometry(1.2, 1.0, 1.4);
+      const leftShoulder = new THREE.Mesh(shoulderGeo, primeRedMaterial);
+      leftShoulder.position.set(-1.8, 0.9, 0);
+      leftShoulder.rotation.z = -0.15;
+      primeGroup.add(leftShoulder);
+
+      const rightShoulder = new THREE.Mesh(shoulderGeo, primeRedMaterial);
+      rightShoulder.position.set(1.8, 0.9, 0);
+      rightShoulder.rotation.z = 0.15;
+      primeGroup.add(rightShoulder);
+
+      // 5.3 Chrome Smokestacks on Pauldrons
+      const stackGeo = new THREE.CylinderGeometry(0.12, 0.12, 2.4, 16);
+      const leftStack = new THREE.Mesh(stackGeo, chromeMaterial);
+      leftStack.position.set(-2.2, 1.8, -0.2);
+      primeGroup.add(leftStack);
+
+      const rightStack = new THREE.Mesh(stackGeo, chromeMaterial);
+      rightStack.position.set(2.2, 1.8, -0.2);
+      primeGroup.add(rightStack);
+
+      // 5.4 Chest Windshield Windows (Classic Optimus Cab Over Engine look)
+      const windowFrameGeo = new THREE.BoxGeometry(0.95, 0.85, 0.15);
+      const leftWindow = new THREE.Mesh(windowFrameGeo, glassMaterial);
+      leftWindow.position.set(-0.55, 0.65, 0.8);
+      primeGroup.add(leftWindow);
+
+      const rightWindow = new THREE.Mesh(windowFrameGeo, glassMaterial);
+      rightWindow.position.set(0.55, 0.65, 0.8);
+      primeGroup.add(rightWindow);
+
+      // Chrome grill slats beneath the chest
+      const grillGeo = new THREE.BoxGeometry(1.6, 0.6, 0.1);
+      const grill = new THREE.Mesh(grillGeo, chromeMaterial);
+      grill.position.set(0, -0.45, 0.8);
+      primeGroup.add(grill);
+
+      // 5.5 Head & Helmet with Crest & Glowing Optics
+      const headGroup = new THREE.Group();
+      headGroup.position.set(0, 1.6, 0.1);
+      primeGroup.add(headGroup);
+
+      // Helmet base
+      const helmetGeo = new THREE.BoxGeometry(0.9, 0.95, 0.9);
+      const helmet = new THREE.Mesh(helmetGeo, primeNavyMaterial);
+      headGroup.add(helmet);
+
+      // Center Mohawk Crest Fin
+      const crestGeo = new THREE.BoxGeometry(0.16, 0.6, 1.05);
+      const crest = new THREE.Mesh(crestGeo, primeNavyMaterial);
+      crest.position.set(0, 0.55, -0.05);
+      headGroup.add(crest);
+
+      // Side Antennae / Ear Audio-Sensors
+      const antennaGeo = new THREE.CylinderGeometry(0.06, 0.08, 0.8, 12);
+      const leftAntenna = new THREE.Mesh(antennaGeo, primeNavyMaterial);
+      leftAntenna.position.set(-0.52, 0.35, 0);
+      headGroup.add(leftAntenna);
+
+      const rightAntenna = new THREE.Mesh(antennaGeo, primeNavyMaterial);
+      rightAntenna.position.set(0.52, 0.35, 0);
+      headGroup.add(rightAntenna);
+
+      // Faceplate (Silver metallic mouthplate)
+      const faceplateGeo = new THREE.BoxGeometry(0.65, 0.38, 0.25);
+      const faceplate = new THREE.Mesh(faceplateGeo, chromeMaterial);
+      faceplate.position.set(0, -0.22, 0.42);
+      faceplate.rotation.x = -0.15;
+      headGroup.add(faceplate);
+
+      // Glowing Energon Blue Optics (Eyes)
+      const eyeGeo = new THREE.BoxGeometry(0.2, 0.08, 0.15);
+      const leftEye = new THREE.Mesh(eyeGeo, energonGlowMaterial);
+      leftEye.position.set(-0.18, 0.08, 0.45);
+      headGroup.add(leftEye);
+
+      const rightEye = new THREE.Mesh(eyeGeo, energonGlowMaterial);
+      rightEye.position.set(0.18, 0.08, 0.45);
+      headGroup.add(rightEye);
+
+      // 5.6 THE MATRIX OF LEADERSHIP (Chest Center Chamber)
+      const matrixGroup = new THREE.Group();
+      matrixGroup.position.set(0, 0.1, 0.85);
+      primeGroup.add(matrixGroup);
+
+      // Outer Spherical Housing
+      const matrixShellGeo = new THREE.SphereGeometry(0.42, 24, 24);
+      const matrixShell = new THREE.Mesh(matrixShellGeo, chromeMaterial);
+      matrixGroup.add(matrixShell);
+
+      // Ornate Filigree Handles on sides
+      const handleTorusGeo = new THREE.TorusGeometry(0.24, 0.05, 12, 24, Math.PI);
+      const leftHandle = new THREE.Mesh(handleTorusGeo, goldAlloyMaterial);
+      leftHandle.rotation.z = Math.PI / 2;
+      leftHandle.position.set(-0.55, 0, 0);
+      matrixGroup.add(leftHandle);
+
+      const rightHandle = new THREE.Mesh(handleTorusGeo, goldAlloyMaterial);
+      rightHandle.rotation.z = -Math.PI / 2;
+      rightHandle.position.set(0.55, 0, 0);
+      matrixGroup.add(rightHandle);
+
+      // Rotating Gimbal Rings around the core
+      const gimbalGeo1 = new THREE.TorusGeometry(0.32, 0.025, 12, 32);
+      const gimbalRing1 = new THREE.Mesh(gimbalGeo1, goldAlloyMaterial);
+      matrixGroup.add(gimbalRing1);
+
+      const gimbalGeo2 = new THREE.TorusGeometry(0.28, 0.022, 12, 32);
+      const gimbalRing2 = new THREE.Mesh(gimbalGeo2, energonGlowMaterial);
+      matrixGroup.add(gimbalRing2);
+
+      // Core Energon Crystal (Faceted Icosahedron)
+      const crystalGeo = new THREE.IcosahedronGeometry(0.18, 0);
+      const crystal = new THREE.Mesh(crystalGeo, energonGlowMaterial);
+      matrixGroup.add(crystal);
+
+      // Volumetric glow halo sprite
+      const haloGeo = new THREE.RingGeometry(0.3, 0.75, 32);
+      const haloMat = new THREE.MeshBasicMaterial({
+        color: 0x00e5ff,
+        transparent: true,
+        opacity: 0.35,
+        side: THREE.DoubleSide
+      });
+      const matrixHalo = new THREE.Mesh(haloGeo, haloMat);
+      matrixHalo.position.z = 0.02;
+      matrixGroup.add(matrixHalo);
+
+      // ─── 6. PARTICLE FIELD: ENERGON SPARKS & CYBER DUST ────────────────
+      const particleCount = 450;
+      const particleGeo = new THREE.BufferGeometry();
+      const posArray = new Float32Array(particleCount * 3);
+      const speedArray = new Float32Array(particleCount);
+
+      for (let i = 0; i < particleCount; i++) {
+        posArray[i * 3 + 0] = (Math.random() - 0.5) * 16;
+        posArray[i * 3 + 1] = (Math.random() - 0.5) * 14;
+        posArray[i * 3 + 2] = (Math.random() - 0.5) * 10;
+        speedArray[i] = 0.005 + Math.random() * 0.015;
+      }
+
+      particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      const particleMat = new THREE.PointsMaterial({
+        size: 0.06,
+        color: 0x00e5ff,
+        transparent: true,
+        opacity: 0.65,
+        blending: THREE.AdditiveBlending
+      });
+      const particleSystem = new THREE.Points(particleGeo, particleMat);
+      scene.add(particleSystem);
+
+      // ─── 7. INTERACTION STATE & MOUSE PHYSICS ──────────────────────────
+      const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
+      let scrollProgress = 0;
+      let isSurging = false;
+      let surgeEnergy = 0;
+      let isWireframe = false;
+      let autoOrbit = false;
+
+      window.addEventListener('pointermove', (e) => {
+        mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouse.targetY = -(e.clientY / window.innerHeight - 0.5) * 2;
+      });
+
+      window.addEventListener('scroll', () => {
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        scrollProgress = totalHeight > 0 ? window.scrollY / totalHeight : 0;
+      }, { passive: true });
+
+      // Wireframe Mode Switcher
+      const btnWireframe = document.getElementById('btn-wireframe');
+      btnWireframe?.addEventListener('click', () => {
+        isWireframe = !isWireframe;
+        btnWireframe.classList.toggle('active', isWireframe);
+        primeGroup.traverse((child) => {
+          if (child.isMesh) {
+            child.material.wireframe = isWireframe;
+          }
+        });
+        playCyberneticHum(180, 0.3, 0.15);
+      });
+
+      // Energon Surge Trigger
+      function triggerSurge() {
+        isSurging = true;
+        surgeEnergy = 1.0;
+        playMatrixSurgeSound();
+
+        const bar = document.getElementById('matrix-bar');
+        if (bar) {
+          bar.style.width = '100%';
+          setTimeout(() => { bar.style.width = '0%'; }, 1200);
+        }
+      }
+
+      const btnSurge = document.getElementById('btn-surge');
+      btnSurge?.addEventListener('click', triggerSurge);
+
+      const heroMatrixTrigger = document.getElementById('hero-matrix-trigger');
+      heroMatrixTrigger?.addEventListener('click', triggerSurge);
+
+      const btnFocusMatrix = document.getElementById('btn-focus-matrix');
+      btnFocusMatrix?.addEventListener('click', () => {
+        triggerSurge();
+        // Zoom camera in closer
+        camera.position.z = 5.2;
+        setTimeout(() => { camera.position.z = 8.5; }, 3000);
+      });
+
+      // Click anywhere on canvas to surge
+      canvas.addEventListener('click', () => {
+        initAudio();
+        triggerSurge();
+      });
+
+      // ─── 8. RESIZE HANDLER ─────────────────────────────────────────────
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+
+      // ─── 9. MAIN ANIMATION LOOP ────────────────────────────────────────
+      let clock = new THREE.Clock();
+
+      function animate() {
+        requestAnimationFrame(animate);
+
+        const delta = clock.getDelta();
+        const elapsedTime = clock.getElapsedTime();
+
+        // Smooth mouse lerping
+        mouse.x += (mouse.targetX - mouse.x) * 0.05;
+        mouse.y += (mouse.targetY - mouse.y) * 0.05;
+
+        // Model orientation reacts to cursor & scroll
+        const baseRotY = scrollProgress * Math.PI * 0.8;
+        primeGroup.rotation.y = baseRotY + mouse.x * 0.45;
+        primeGroup.rotation.x = -mouse.y * 0.25;
+
+        // Gentle breathing float oscillation
+        primeGroup.position.y = Math.sin(elapsedTime * 1.8) * 0.08 - (scrollProgress * 0.5);
+
+        // Head subtly leads the look-direction
+        headGroup.rotation.y = mouse.x * 0.25;
+        headGroup.rotation.x = -mouse.y * 0.15;
+
+        // Matrix gimbal rotation
+        gimbalRing1.rotation.x = elapsedTime * 1.4;
+        gimbalRing1.rotation.y = elapsedTime * 0.8;
+        gimbalRing2.rotation.y = -elapsedTime * 1.6;
+        gimbalRing2.rotation.z = elapsedTime * 1.1;
+        crystal.rotation.y = elapsedTime * 2.2;
+        crystal.rotation.x = elapsedTime * 1.1;
+
+        // Matrix Pulse & Surge Dynamics
+        if (isSurging) {
+          surgeEnergy *= 0.94;
+          if (surgeEnergy < 0.01) {
+            isSurging = false;
+            surgeEnergy = 0;
+          }
+        }
+
+        const basePulse = Math.sin(elapsedTime * 4.0) * 0.5 + 0.5;
+        const totalIntensity = 4.0 + basePulse * 3.0 + surgeEnergy * 18.0;
+        matrixLight.intensity = totalIntensity;
+        energonGlowMaterial.emissiveIntensity = 2.0 + surgeEnergy * 6.0;
+
+        // Crystal scale breathing + surge expansion
+        const scaleVal = 1.0 + basePulse * 0.1 + surgeEnergy * 0.6;
+        crystal.scale.set(scaleVal, scaleVal, scaleVal);
+        matrixHalo.scale.set(scaleVal * 1.2, scaleVal * 1.2, 1);
+        matrixHalo.material.opacity = 0.3 + surgeEnergy * 0.5;
+
+        // Particle stream drift
+        const positions = particleGeo.attributes.position.array;
+        for (let i = 0; i < particleCount; i++) {
+          positions[i * 3 + 1] += speedArray[i] * (1.0 + surgeEnergy * 3.0);
+          if (positions[i * 3 + 1] > 7) {
+            positions[i * 3 + 1] = -7;
+          }
+        }
+        particleGeo.attributes.position.needsUpdate = true;
+
+        // Render frame
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      // ThreeUI bridge compatibility: allow parent window postMessage controls
+      window.addEventListener('message', (event) => {
+        if (!event.data || typeof event.data !== 'object') return;
+        if (event.data.type === 'threeui-optimus-controls') {
+          const { primaryColor, wireframe, surge } = event.data;
+          if (primaryColor) {
+            primeRedMaterial.color.set(primaryColor);
+            keyLight.color.set(primaryColor);
+          }
+          if (wireframe !== undefined) {
+            isWireframe = Boolean(wireframe);
+            primeGroup.traverse(child => { if (child.isMesh) child.material.wireframe = isWireframe; });
+          }
+          if (surge) triggerSurge();
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>

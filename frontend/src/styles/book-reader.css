@@ -10,6 +10,8 @@ body.reading-book { background: radial-gradient(ellipse at 50% 15%, #35413d, #18
 .reading-book #catalog > .space-content > h1,.reading-book #catalog > .space-content > p { display: none; }
 .reading-book #archive-grid { display: block; }
 .book-toolbar { display: flex; justify-content: space-between; align-items: center; height: 46px; font: 10px/1.4 'Fira Code',monospace; letter-spacing: .12em; color: #b8c5ba; }
+.btn-return-shelf { background: rgba(18, 12, 8, 0.75); border: 1px solid rgba(204, 166, 69, 0.4); color: #cca645; padding: 5px 12px; border-radius: 4px; font: 11px/1.4 'Outfit', sans-serif; letter-spacing: 0.1em; cursor: pointer; transition: all 0.2s ease; }
+.btn-return-shelf:hover { background: rgba(204, 166, 69, 0.2); color: #ffd700; border-color: #ffd700; }
 .book-toolbar label { display: flex; align-items: center; gap: 12px; }
 .book-toolbar select { color: #eee8db; background: #24332d; border: 1px solid #69756b; border-radius: 4px; max-width: 270px; padding: 7px; font: 11px 'Outfit',sans-serif; }
 .book-volume { display: grid; grid-template-columns: 38% 62%; height: calc(100dvh - 205px); min-height: 250px; position: relative; background: #f1eadb; border-radius: 5px 10px 10px 5px; box-shadow: 0 28px 70px #0006,0 3px 0 #bfb59e,0 6px 0 #e1d8c5,0 9px 0 #aea48c,0 12px 0 #10231b; color: #263830; }

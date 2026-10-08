@@ -49,6 +49,36 @@ export class PortfolioDialogs {
     else if (type === 'skills') this.openSkills();
     else if (type === 'dossier') this.openDossier();
     else if (type === 'terminal') this.openTerminal();
+    else if (type === 'prime') this.openPrime();
+  }
+
+  openPrime() {
+    this.show('CYBERTRONIAN MATRIX // ARCHITECTURE', 'Optimus Prime 4K Master Blueprint', `
+      <div class="prime-dossier-modal">
+        <div class="prime-modal-banner">
+          <span class="tf-status-badge">AUTOBOT FLAGSHIP · MASTER TECHNICAL SPECIFICATION</span>
+        </div>
+        <div class="prime-modal-image-wrap">
+          <a href="/images/prime.png" target="_blank" rel="noopener noreferrer" title="Click to view full 4K resolution">
+            <img src="/images/prime.png" alt="Optimus Prime 4K Master Model Blueprint and Orthographic Schematics" class="prime-modal-img" loading="eager" />
+          </a>
+          <p class="prime-img-caption">4K Master Blueprint · Orthographic Views, Wireframe Topology, PBR Texture Maps (Click to zoom)</p>
+        </div>
+        <div class="prime-modal-details">
+          <div class="prime-specs-grid">
+            <div class="prime-spec-card"><span class="eyebrow">DELIVERABLE</span><strong>GLB (Binary) Web-Ready</strong></div>
+            <div class="prime-spec-card"><span class="eyebrow">GEOMETRY</span><strong>High-Poly & Precision Optimized</strong></div>
+            <div class="prime-spec-card"><span class="eyebrow">TEXTURE MAPS</span><strong>4K Albedo, Normal, Roughness, Metallic</strong></div>
+            <div class="prime-spec-card"><span class="eyebrow">CORE ARCHETYPE</span><strong>Optimus Prime · Leader of Autobots</strong></div>
+          </div>
+          <p class="detail-lead">The foundational architectural archetype inspiring Pavithran's portfolio: modular architecture, zero-latency execution, resilient distributed systems, and relentless forward deployment.</p>
+          <div class="detail-actions">
+            <a class="button button-light" href="/landing-pages/optimus-prime.html" target="_blank" rel="noopener noreferrer">Launch 3D WebGL Matrix ↗</a>
+            <a class="button" href="/images/prime.png" target="_blank" download="optimus-prime-4k-blueprint.png">Download 4K Sheet (2.8MB) ↓</a>
+          </div>
+        </div>
+      </div>
+    `, 'prime');
   }
 
   openProject(id) {

@@ -1,12 +1,15 @@
 import '../styles/book-reader.css';
 import { PhysicalPage } from './PhysicalPage.js';
+import { libraryAudio } from './LibraryAudio.js';
 
 export class BookReader {
-  constructor(root, { archive = false } = {}) {
+  constructor(root, { archive = false, onReturnToShelf = null } = {}) {
     this.root = root;
+    this.onReturnToShelf = onReturnToShelf;
     document.body.classList.remove('book-portfolio');
     this.events = new AbortController();
     this.reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    this.turningSoundPlayed = false;
     this.pages = [];
     const add = (node, title, category) => {
       if (!node.id) node.id = `leaf-${this.pages.length}`;
@@ -30,12 +33,12 @@ export class BookReader {
       add(root.querySelector('#contact'), 'The next chapter', '08 / Let’s connect');
     }
     this.pages.forEach(({ node }) => node.remove());
-    root.innerHTML = `<div class="book-toolbar"><span>PAVITHRAN S. / FIELD NOTES</span><label>Contents <select aria-label="Choose a chapter"></select></label></div><div class="book-volume"><aside class="book-frontispiece"><span class="book-edition">INTERFACE → INTELLIGENCE<br>THE COLLECTED WORKS</span><div><p class="book-category"></p><h2 class="book-chapter"></h2><p class="book-note">Built with curiosity.<br>Written through experience.</p></div><div class="book-seal" aria-hidden="true">P<span>✳</span>S</div><span class="book-signature">Pavithran S.</span></aside><div class="book-paper" aria-label="Portfolio pages"></div></div><nav class="book-controls" aria-label="Turn pages"><button type="button" data-turn="-1">← Previous</button><span role="status" aria-live="polite" class="book-position"></span><button type="button" data-turn="1">Next page →</button></nav>`;
+    root.innerHTML = `<div class="book-toolbar"><button type="button" class="btn-return-shelf" id="btn-return-shelf">↑ Return to shelf</button><span>PAVITHRAN S. / FIELD NOTES</span><label>Contents <select aria-label="Choose a chapter"></select></label></div><div class="book-volume"><aside class="book-frontispiece"><span class="book-edition">INTERFACE → INTELLIGENCE<br>THE COLLECTED WORKS</span><div><p class="book-category"></p><h2 class="book-chapter"></h2><p class="book-note">Built with curiosity.<br>Written through experience.</p></div><div class="book-seal" aria-hidden="true">P<span>✳</span>S</div><span class="book-signature">Pavithran S.</span></aside><div class="book-paper" aria-label="Portfolio pages"></div></div><nav class="book-controls" aria-label="Turn pages"><button type="button" data-turn="-1">← Previous</button><span role="status" aria-live="polite" class="book-position"></span><button type="button" data-turn="1">Next page →</button></nav>`;
     root.querySelector('.book-frontispiece').remove();
     this.volume = root.querySelector('.book-volume');
     this.cover = document.createElement('div');
     this.cover.className = 'book-cover';
-    this.cover.innerHTML = `<div class="cover-face"><span class="cover-edition">A LIFE IN IDEAS · VOL. 01</span><div class="cover-monogram" aria-hidden="true">PS</div><h1>Pavithran <em>S.</em></h1><p>FDE — Forward Deployed Engineer</p><span class="cover-rule"></span><p class="cover-subtitle">From Interface<br>to Intelligence</p><button type="button" class="cover-open">Scroll to open <span aria-hidden="true">↓</span></button></div><div class="cover-back" aria-hidden="true"></div>`;
+    this.cover.innerHTML = `<div class="cover-face"><span class="cover-edition">A LIFE IN IDEAS · VOL. 01</span><div class="cover-monogram" aria-hidden="true">PS</div><h1>Pavithran <em>S.</em></h1><p>Forward Deployment Engineer (FDE)</p><span class="cover-rule"></span><p class="cover-subtitle">From Interface<br>to Intelligence</p><button type="button" class="cover-open">Scroll to open <span aria-hidden="true">↓</span></button></div><div class="cover-back" aria-hidden="true"></div>`;
     this.volume.append(this.cover);
     this.paper = root.querySelector('.book-paper');
     this.select = root.querySelector('select');
@@ -46,7 +49,15 @@ export class BookReader {
       this.select.add(option);
     });
     const on = (target, type, fn) => target.addEventListener(type, fn, { signal: this.events.signal });
-    on(root, 'click', event => { const button = event.target.closest('[data-turn]'); if (button) this.go(this.progress < 1 ? 0 : this.index + Number(button.dataset.turn) * 2); });
+    on(root, 'click', event => {
+      const returnBtn = event.target.closest('#btn-return-shelf');
+      if (returnBtn) {
+        if (this.onReturnToShelf) this.onReturnToShelf();
+        return;
+      }
+      const button = event.target.closest('[data-turn]');
+      if (button) this.go(this.progress < 1 ? 0 : this.index + Number(button.dataset.turn) * 2);
+    });
     on(this.cover.querySelector('button'), 'click', () => window.scrollTo({top:this.unit,behavior:this.reduced.matches?'instant':'smooth'}));
     on(this.select, 'change', () => this.go(Number(this.select.value)));
     on(document, 'click', event => {
@@ -215,6 +226,13 @@ export class BookReader {
     });
     this.volume.style.setProperty('--left-stack', `${3 + spread * .9}px`);
     this.volume.style.setProperty('--right-stack', `${3 + (this.segments.length - spread) * .9}px`);
+    if (turn > 0.08 && !this.turningSoundPlayed) {
+      libraryAudio.playPageTurn();
+      this.turningSoundPlayed = true;
+    } else if (turn === 0) {
+      this.turningSoundPlayed = false;
+    }
+
     if (turn > 0 && !this.reduced.matches && this.physical.available && this.pages[index+1]) {
       this.physical.turn(turn, this.pages[index+1].node, this.pages[index+2]?.node);
       this.pages[index+1].node.style.opacity = '0';

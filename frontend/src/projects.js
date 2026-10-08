@@ -1,5 +1,7 @@
 import { BookReader } from './components/BookReader.js';
 import { CursorSpotlight } from './components/CursorSpotlight.js';
+import { LiquidCursor } from './components/LiquidCursor.js';
+import { PaperInteractive3D } from './components/PaperInteractive3D.js';
 import './style.css';
 import './styles/project-archive.css';
 import { PROJECTS_DATA } from './data/projectsData.js';
@@ -10,7 +12,7 @@ import { escapeHtml as html } from './utils/helpers.js';
 
 const root = document.querySelector('#archive-grid');
 root.innerHTML = PROJECTS_DATA.map((project, index) => `<article class="archive-project">
-  ${PROJECT_SCENES[project.id] ? `<img src="/images/projects/${project.id}-768.webp" alt="${html(PROJECT_SCENES[project.id])}" width="768" height="432" loading="lazy" decoding="async">` : ''}
+  <!-- ${PROJECT_SCENES[project.id] ? `<img src="/images/projects/${project.id}-768.webp" alt="${html(PROJECT_SCENES[project.id])}" width="768" height="432" loading="lazy" decoding="async">` : ''} -->
   <div class="archive-copy"><p class="space-kicker">${String(index + 1).padStart(2, '0')} / ${html(project.category)}</p>
   <h2><button type="button" data-project="${project.id}">${html(project.title)} <span aria-hidden="true">↗</span></button></h2>
   <p>${html(project.tagline)}</p><div class="archive-tags">${project.technologies.slice(0, 4).map(tech => `<span>${html(tech)}</span>`).join('')}</div>
@@ -18,6 +20,8 @@ root.innerHTML = PROJECTS_DATA.map((project, index) => `<article class="archive-
 </article>`).join('');
 const book = new BookReader(root, { archive: true });
 const spotlight = new CursorSpotlight(root);
+const liquidCursor = new LiquidCursor();
+const paper3D = new PaperInteractive3D();
 document.querySelector('#dawn-eye').innerHTML = getClaraEyeAvatarHtml(38) + '<span class="eye-label">Meet DAWN<small>AI guide</small></span>';
 const dialogs = new PortfolioDialogs();
 const events = new AbortController();

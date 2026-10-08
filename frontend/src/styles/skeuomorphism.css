@@ -1,0 +1,680 @@
+/**
+ * skeuomorphism.css
+ * Comprehensive Master Skeuomorphic Design System for Pavithran's Portfolio.
+ * Implements tactile physical materials:
+ * - Burnished & Engraved Brass with Slotted Screw Rivets
+ * - Tuscan Stitched Saddle Leather & Embossed Grain
+ * - Pressed Letterpress Cream Parchment & Heavy Cardstock
+ * - Polished Mahogany & Dark Walnut Wood Paneling
+ * - Stamped Carmine Carmine Wax Seal with 3D Monogram
+ * - Convex Lens Glass, Specular Highlights & Liquid Water Caustics
+ * - Physical Mechanical Push Buttons with Realistic :active Spring Depression
+ * - Vintage CRT Terminal Bezel & Antique Rotary Dials
+ */
+
+/* =========================================================
+   1. GLOBAL SKEUOMORPHIC MATERIAL PALETTE & TOKENS
+   ========================================================= */
+:root {
+  /* Burnished Brass & Gold */
+  --brass-sheen: linear-gradient(135deg, #fff2c6 0%, #d4af37 25%, #9e7413 50%, #faeab8 75%, #7a5405 100%);
+  --brass-rim: linear-gradient(180deg, rgba(255, 238, 186, 0.95) 0%, rgba(158, 116, 19, 0.85) 100%);
+  --brass-shadow: 0 4px 14px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.8), inset 0 -1px 2px rgba(0, 0, 0, 0.7);
+  --gold-foil: 0 1px 0 rgba(255, 255, 255, 0.35), 0 -1px 1px rgba(0, 0, 0, 0.95), 0 0 14px rgba(212, 175, 55, 0.45);
+  
+  /* Saddle Leather */
+  --leather-dark: linear-gradient(160deg, #2b180d 0%, #1a0e08 55%, #100804 100%);
+  --leather-rich: linear-gradient(145deg, #3d2316 0%, #25140b 50%, #170b05 100%);
+  --leather-emboss: inset 0 1px 1px rgba(255, 220, 150, 0.3), inset 0 -2px 4px rgba(0, 0, 0, 0.8), 0 12px 35px rgba(0, 0, 0, 0.8);
+  --leather-stitch: 2px dashed rgba(212, 175, 55, 0.45);
+
+  /* Mahogany & Walnut Desk */
+  --wood-mahogany: linear-gradient(180deg, #2c1608 0%, #1c0e04 100%);
+  --wood-grain-panel: repeating-linear-gradient(90deg, #231207 0px, #2c1609 4px, #1a0d05 8px, #281408 12px);
+
+  /* Pressed Cream Parchment */
+  --parchment-sheet: linear-gradient(90deg, #d7cebb 0%, #f6f0e3 5%, #f6f0e3 95%, #e9e0ce 100%);
+  --parchment-edge: 0 4px 20px rgba(0, 0, 0, 0.45), inset 0 0 40px rgba(180, 160, 130, 0.25);
+  --letterpress-ink: #231b14;
+  --letterpress-shadow: 0 1px 0 rgba(255, 255, 255, 0.65), 0 -1px 0 rgba(0, 0, 0, 0.4);
+
+  /* Carmine Wax Seal */
+  --wax-seal: radial-gradient(circle at 35% 30%, #b83c30 0%, #852217 55%, #4f0f08 100%);
+  --wax-rim: 3px solid #b84537;
+  --wax-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), inset 0 2px 4px rgba(255, 200, 180, 0.6), inset 0 -3px 6px rgba(40, 5, 2, 0.85);
+
+  /* Convex Lens & Liquid Jewels */
+  --water-jewel: linear-gradient(180deg, #1b3544 0%, #0d1e28 50%, #071118 100%);
+  --water-rim: 1px solid rgba(108, 211, 255, 0.65);
+  --water-glow: 0 0 16px rgba(108, 211, 255, 0.4);
+}
+
+/* =========================================================
+   2. PHYSICAL TACTILE BUTTONS & MECHANICAL SWITCHES
+   ========================================================= */
+
+/* Universal Skeuomorphic Push Button */
+.btn-pull-book,
+.button-light,
+.space-actions button,
+.dialog-close,
+.btn-return-shelf,
+.desk-library-bar button,
+.desk-bar-link,
+.book-controls button,
+.terminal-launch,
+.space-text-link,
+.archive-home,
+#copy-email,
+.project-links button,
+.project-links a,
+.reading-tools button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #3d2516 0%, #24140b 50%, #170b05 100%) !important;
+  color: #f7e2a9 !important;
+  border: 1px solid rgba(212, 175, 55, 0.55) !important;
+  box-shadow: 
+    0 5px 0 #0d0603,
+    0 8px 18px rgba(0, 0, 0, 0.75),
+    inset 0 1px 1px rgba(255, 240, 200, 0.5),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.7) !important;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.95), 0 0 10px rgba(212, 175, 55, 0.35) !important;
+  font-family: 'Outfit', sans-serif !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  transition: transform 0.12s cubic-bezier(0.2, 0, 0.1, 1), box-shadow 0.12s cubic-bezier(0.2, 0, 0.1, 1), background 0.18s ease !important;
+  padding: 8px 18px;
+}
+
+/* Mechanical Hover Elevation */
+.btn-pull-book:hover,
+.desk-library-bar button:hover,
+.desk-bar-link:hover,
+.btn-return-shelf:hover,
+.book-controls button:hover:not(:disabled),
+.terminal-launch:hover,
+.space-text-link:hover,
+.archive-home:hover,
+#copy-email:hover,
+.project-links button:hover,
+.project-links a:hover,
+.reading-tools button:hover {
+  transform: translateY(-2px) !important;
+  background: linear-gradient(180deg, #4d2f1c 0%, #2f1b0f 50%, #1e0e06 100%) !important;
+  border-color: #ffd777 !important;
+  box-shadow: 
+    0 7px 0 #0d0603,
+    0 12px 24px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px rgba(255, 248, 225, 0.65),
+    0 0 16px rgba(212, 175, 55, 0.35) !important;
+  color: #fff1c4 !important;
+}
+
+/* Mechanical Physical Depression on Click (:active) */
+.btn-pull-book:active,
+.desk-library-bar button:active,
+.desk-bar-link:active,
+.btn-return-shelf:active,
+.book-controls button:active:not(:disabled),
+.terminal-launch:active,
+.space-text-link:active,
+.archive-home:active,
+#copy-email:active,
+.project-links button:active,
+.project-links a:active,
+.reading-tools button:active {
+  transform: translateY(4px) !important;
+  box-shadow: 
+    0 1px 0 #0d0603,
+    0 3px 6px rgba(0, 0, 0, 0.9),
+    inset 0 2px 4px rgba(0, 0, 0, 0.85),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.15) !important;
+}
+
+/* Water & 3D Paper Button - Liquid Jewel & Ivory Parchment Skeuomorphic Inset */
+.btn-water-hud,
+.btn-paper-hud,
+button[data-dialog="water"],
+button[data-dialog="paper"],
+.space-nav-water-btn {
+  background: linear-gradient(180deg, #2b1f14 0%, #1a120b 50%, #100b06 100%) !important;
+  color: #ffd875 !important;
+  border: 1px solid rgba(212, 175, 55, 0.65) !important;
+  box-shadow: 
+    0 5px 0 #080503,
+    0 8px 20px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px rgba(255, 240, 190, 0.55),
+    inset 0 0 14px rgba(212, 175, 55, 0.25) !important;
+  text-shadow: 0 0 10px rgba(212, 175, 55, 0.7) !important;
+}
+
+.btn-water-hud:hover,
+.btn-paper-hud:hover,
+button[data-dialog="water"]:hover,
+button[data-dialog="paper"]:hover,
+.space-nav-water-btn:hover {
+  transform: translateY(-2px) !important;
+  background: linear-gradient(180deg, #3d2b1c 0%, #24190f 50%, #17100a 100%) !important;
+  border-color: #ffe6a3 !important;
+  box-shadow: 
+    0 7px 0 #080503,
+    0 12px 24px rgba(0, 0, 0, 0.85),
+    inset 0 1px 2px rgba(255, 255, 255, 0.75),
+    0 0 20px rgba(212, 175, 55, 0.55) !important;
+  color: #fff2cc !important;
+}
+
+.btn-water-hud:active,
+.btn-paper-hud:active,
+button[data-dialog="water"]:active,
+button[data-dialog="paper"]:active,
+.space-nav-water-btn:active {
+  transform: translateY(4px) !important;
+  box-shadow: 
+    0 1px 0 #080503,
+    0 3px 6px rgba(0, 0, 0, 0.9),
+    inset 0 2px 5px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* =========================================================
+   3. 3D GRAND LIBRARY SHELF HUD & ENGRAVED BRASS PLAQUE
+   ========================================================= */
+
+.shelf-hud-badge {
+  position: relative;
+  font: 700 11px/1.6 'Fira Code', monospace !important;
+  letter-spacing: 0.28em !important;
+  color: #fce7ad !important;
+  background: linear-gradient(145deg, #3d2a15 0%, #201407 50%, #120a03 100%) !important;
+  border: 2px solid #b8933b !important;
+  border-radius: 6px !important;
+  padding: 8px 30px !important;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.75),
+    inset 0 1px 1px rgba(255, 240, 190, 0.7),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.8) !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95), 0 0 12px rgba(212, 175, 55, 0.4) !important;
+}
+
+/* Slotted Corner Screws on the Brass Plaque */
+.shelf-hud-badge::before,
+.shelf-hud-badge::after {
+  content: '' !important;
+  position: absolute;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe6a3 0%, #a07d2c 60%, #4a360f 100%);
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  transform: translateY(-50%);
+}
+.shelf-hud-badge::before { left: 9px; }
+.shelf-hud-badge::after { right: 9px; }
+
+.shelf-hud-title {
+  color: #fdfbf7 !important;
+  text-shadow: 
+    0 2px 0 rgba(255, 255, 255, 0.15),
+    0 -2px 4px rgba(0, 0, 0, 0.95),
+    0 6px 30px rgba(0, 0, 0, 0.9) !important;
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+}
+
+.shelf-hud-title em {
+  color: #ffd875 !important;
+  text-shadow: 0 0 24px rgba(255, 216, 117, 0.6), 0 -1px 2px rgba(0, 0, 0, 0.9) !important;
+}
+
+.shelf-hud-role {
+  color: #dfcaa2 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9) !important;
+  letter-spacing: 0.22em !important;
+}
+
+.shelf-hud-instruction {
+  color: #baa47d !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85) !important;
+}
+
+/* =========================================================
+   4. DESK BAR SKEUOMORPHIC MAHOGANY CONTROL PANEL
+   ========================================================= */
+
+.desk-library-bar {
+  background: linear-gradient(180deg, #2b180d 0%, #1a0d06 50%, #0f0703 100%) !important;
+  border: 2px solid #7a5823 !important;
+  border-radius: 14px !important;
+  padding: 10px 18px !important;
+  box-shadow: 
+    0 16px 45px rgba(0, 0, 0, 0.85),
+    inset 0 1px 2px rgba(255, 230, 160, 0.4),
+    inset 0 0 15px rgba(0, 0, 0, 0.8) !important;
+  gap: 10px !important;
+}
+
+.desk-library-bar button,
+.desk-library-bar .desk-bar-link {
+  padding: 8px 16px !important;
+  font-size: 12px !important;
+}
+
+/* =========================================================
+   5. PHYSICAL BOOK VOLUME & LEATHER FOIL FINISH
+   ========================================================= */
+
+.book-volume {
+  border-radius: 6px 14px 14px 6px !important;
+  box-shadow: 
+    0 35px 90px rgba(0, 0, 0, 0.9),
+    0 4px 0 #a99d86,
+    0 8px 0 #8c7f66,
+    0 12px 0 #574d3b,
+    0 16px 0 #1b130c !important;
+  border: 2px solid #c4b69c !important;
+  background: #f1eadb !important;
+}
+
+.book-frontispiece {
+  background: radial-gradient(ellipse at 0 0, #faf3e6 0%, transparent 70%), linear-gradient(90deg, #e4dac5 0%, #eee4ce 90%, #c4b69c 100%) !important;
+  border-right: 2px solid #b8a88c !important;
+  box-shadow: inset -4px 0 14px rgba(100, 80, 50, 0.15) !important;
+}
+
+/* Physical Stamped Carmine Wax Seal */
+.book-seal {
+  width: 90px !important;
+  height: 90px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle at 35% 30%, #b83c30 0%, #852217 55%, #4f0f08 100%) !important;
+  border: 3px solid #b84537 !important;
+  box-shadow: 
+    0 8px 22px rgba(0, 0, 0, 0.65),
+    inset 0 2px 4px rgba(255, 200, 180, 0.6),
+    inset 0 -3px 6px rgba(40, 5, 2, 0.8) !important;
+  color: #ffddd7 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.85) !important;
+}
+
+.book-seal span {
+  color: #ffd875 !important;
+  text-shadow: 0 0 10px rgba(255, 216, 117, 0.7) !important;
+}
+
+/* Book Cover - Tuscan Embossed Leather with Gold Foil */
+.book-cover {
+  background: linear-gradient(145deg, #382014 0%, #201108 50%, #120904 100%) !important;
+  border: 2px solid #8f6a31 !important;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.85),
+    inset 0 2px 3px rgba(255, 220, 140, 0.4),
+    inset 0 0 35px rgba(0, 0, 0, 0.85) !important;
+}
+
+.cover-face {
+  border: 2px dashed rgba(212, 175, 55, 0.45) !important;
+  margin: 12px !important;
+  padding: 24px !important;
+  border-radius: 4px !important;
+}
+
+.cover-monogram {
+  border: 2px solid #d4af37 !important;
+  background: radial-gradient(circle, #3d2314 0%, #180c05 100%) !important;
+  color: #ffd875 !important;
+  box-shadow: 
+    0 6px 18px rgba(0, 0, 0, 0.65),
+    inset 0 1px 2px rgba(255, 230, 150, 0.5) !important;
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.6) !important;
+}
+
+.cover-face h1 {
+  color: #fff6de !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.35), 0 -2px 3px rgba(0, 0, 0, 0.95), 0 0 20px rgba(212, 175, 55, 0.3) !important;
+}
+
+.cover-rule {
+  height: 2px !important;
+  background: linear-gradient(90deg, transparent, #d4af37, transparent) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.8) !important;
+}
+
+/* Book Leaf - Pressed Letterpress Parchment Paper */
+.reading-book .book-leaf {
+  background: linear-gradient(90deg, #d3c8b4 0%, #f6f0e3 6%, #f6f0e3 94%, #e2d7c0 100%) !important;
+  box-shadow: inset 20px 0 30px -15px rgba(80, 60, 30, 0.22), inset -6px 0 15px rgba(80, 60, 30, 0.12) !important;
+  color: #241c14 !important;
+}
+
+.reading-book .book-leaf h1,
+.reading-book .book-leaf h2,
+.reading-book .book-leaf h3 {
+  color: #1e160e !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+}
+
+.reading-book .book-leaf p {
+  color: #423629 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Chapter Thumbwheel Selector */
+.book-toolbar select {
+  background: linear-gradient(180deg, #2e1d12 0%, #1a0e07 100%) !important;
+  color: #f7e6b5 !important;
+  border: 1px solid #aa8033 !important;
+  border-radius: 6px !important;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.9), 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+  padding: 8px 12px !important;
+  cursor: pointer;
+}
+
+/* =========================================================
+   6. SKEUOMORPHIC PORTFOLIO DIALOGS & SPECIMEN FOLIOS
+   ========================================================= */
+
+.portfolio-dialog {
+  border-radius: 16px !important;
+  border: 3px solid #8c6a2d !important;
+  background: linear-gradient(170deg, #24160d 0%, #150b05 50%, #0d0602 100%) !important;
+  box-shadow: 
+    0 35px 120px rgba(0, 0, 0, 0.95),
+    inset 0 2px 4px rgba(255, 230, 160, 0.45),
+    inset 0 0 40px rgba(0, 0, 0, 0.9) !important;
+}
+
+.portfolio-dialog .dialog-header {
+  border-bottom: 2px solid #543e18 !important;
+  background: linear-gradient(180deg, rgba(255, 220, 140, 0.08) 0%, transparent 100%) !important;
+  padding-bottom: 16px !important;
+}
+
+.portfolio-dialog #detail-label {
+  color: #ffd875 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9), 0 0 10px rgba(212, 175, 55, 0.4) !important;
+}
+
+.portfolio-dialog #detail-title {
+  color: #fff4d6 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.95), 0 0 18px rgba(212, 175, 55, 0.3) !important;
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 38px !important;
+}
+
+.portfolio-dialog .dialog-close {
+  width: 38px !important;
+  height: 38px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-color: #d4af37 !important;
+  color: #ffd875 !important;
+}
+
+/* =========================================================
+   7. SITE HEADER, NAVIGATION PILL & VINTAGE TOGGLES
+   ========================================================= */
+
+.space-header {
+  backdrop-filter: blur(14px) !important;
+}
+
+.space-signature {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  color: #fce7b2 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.9), 0 0 15px rgba(212, 175, 55, 0.4) !important;
+}
+
+.space-signature span {
+  color: #e5be54 !important;
+  font-style: italic !important;
+}
+
+.space-nav {
+  background: linear-gradient(180deg, rgba(42, 25, 15, 0.9) 0%, rgba(20, 10, 5, 0.95) 100%) !important;
+  border: 1px solid rgba(212, 175, 55, 0.5) !important;
+  border-radius: 30px !important;
+  padding: 6px 20px !important;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.75),
+    inset 0 1px 1px rgba(255, 230, 160, 0.35) !important;
+}
+
+.space-nav a {
+  color: #eedcc0 !important;
+  font-size: 11px !important;
+  letter-spacing: 0.14em !important;
+  transition: color 0.2s ease, text-shadow 0.2s ease !important;
+}
+
+.space-nav a:hover {
+  color: #ffd875 !important;
+  text-shadow: 0 0 12px rgba(212, 175, 55, 0.6) !important;
+}
+
+/* Appearance Toggle - Antique Rotary Dial */
+#appearance-toggle {
+  background: linear-gradient(180deg, #3a2416 0%, #1e1008 100%) !important;
+  border: 1px solid #c49d3d !important;
+  border-radius: 20px !important;
+  color: #ffd875 !important;
+  padding: 6px 14px !important;
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 240, 190, 0.4) !important;
+}
+
+/* DAWN AI Automaton Monocle Aperture */
+.dawn-eye {
+  border: 2px solid #d4af37 !important;
+  background: radial-gradient(circle, #2b170c 0%, #0d0602 100%) !important;
+  box-shadow: 
+    0 8px 24px rgba(0, 0, 0, 0.8),
+    inset 0 2px 3px rgba(255, 230, 160, 0.5),
+    0 0 18px rgba(212, 175, 55, 0.3) !important;
+}
+
+/* Mobile Menu - Antique Field Journal Folio */
+.mobile-menu {
+  background: linear-gradient(170deg, #2b1a10 0%, #180d07 100%) !important;
+  border: 2px solid #8f6a31 !important;
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.95), inset 0 2px 4px rgba(255, 230, 160, 0.3) !important;
+  border-radius: 14px !important;
+}
+
+.mobile-menu a,
+.mobile-menu button {
+  color: #f7e6b5 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* =========================================================
+   8. DEV TERMINAL & VINTAGE CRT RECESSED BEZEL
+   ========================================================= */
+
+.portfolio-dialog[data-view='terminal'] {
+  background: #140d12 !important;
+  border: 4px solid #4a3442 !important;
+  border-radius: 14px !important;
+  box-shadow: 
+    0 35px 120px rgba(0, 0, 0, 0.95),
+    inset 0 4px 10px rgba(0, 0, 0, 0.9),
+    inset 0 0 30px rgba(20, 5, 18, 0.8) !important;
+}
+
+.terminal-launch {
+  background: linear-gradient(180deg, #301f2b 0%, #170d14 100%) !important;
+  border: 1px solid #825c75 !important;
+  color: #e5bfd8 !important;
+  box-shadow: 
+    0 6px 18px rgba(0, 0, 0, 0.7),
+    inset 0 1px 1px rgba(255, 215, 240, 0.35) !important;
+}
+
+/* =========================================================
+   9. SELECTED WORK, PROJECT TILES & SPECIMEN TRAYS
+   ========================================================= */
+
+.project-destination,
+.archive-project {
+  position: relative;
+  background: linear-gradient(165deg, rgba(38, 24, 15, 0.75) 0%, rgba(18, 10, 6, 0.85) 100%) !important;
+  border: 1px solid rgba(212, 175, 55, 0.4) !important;
+  border-radius: 12px !important;
+  box-shadow: 
+    0 18px 45px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px rgba(255, 240, 180, 0.2),
+    inset 0 0 25px rgba(0, 0, 0, 0.6) !important;
+  padding: 30px !important;
+  margin-bottom: 30px !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease !important;
+}
+
+.project-destination:hover,
+.archive-project:hover {
+  border-color: #ffd777 !important;
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.9),
+    inset 0 1px 2px rgba(255, 248, 225, 0.35),
+    0 0 25px rgba(212, 175, 55, 0.25) !important;
+  transform: translateY(-3px);
+}
+
+.project-overline {
+  color: #ffd875 !important;
+  font: 700 11px/1.6 'Fira Code', monospace !important;
+  letter-spacing: 0.16em !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9) !important;
+}
+
+.space-project-title,
+.archive-copy h2 button {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  color: #fff4d6 !important;
+  text-shadow: 0 2px 3px rgba(0, 0, 0, 0.95), 0 0 16px rgba(212, 175, 55, 0.3) !important;
+  background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  text-align: left;
+}
+
+.project-visual {
+  border: 2px solid rgba(212, 175, 55, 0.3) !important;
+  border-radius: 8px !important;
+  box-shadow: 
+    0 12px 35px rgba(0, 0, 0, 0.8),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2) !important;
+  overflow: hidden;
+}
+
+/* Stamped Copper / Brass Tech Badges */
+.project-logos span,
+.archive-tags span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 12px;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #2b1b11 0%, #170d07 100%) !important;
+  border: 1px solid rgba(212, 175, 55, 0.35) !important;
+  color: #eedcc0 !important;
+  box-shadow: 
+    0 2px 6px rgba(0, 0, 0, 0.6),
+    inset 0 1px 1px rgba(255, 240, 190, 0.25) !important;
+  font-size: 11px !important;
+  font-family: 'Fira Code', monospace;
+}
+
+/* =========================================================
+   10. EXPERIENCE, EDUCATION & ARCHIVAL LEDGER
+   ========================================================= */
+
+.space-experience article,
+.education-milestone,
+.space-recognition article {
+  position: relative;
+  background: linear-gradient(165deg, rgba(35, 22, 13, 0.65) 0%, rgba(16, 9, 5, 0.75) 100%) !important;
+  border: 1px solid rgba(212, 175, 55, 0.3) !important;
+  border-radius: 10px !important;
+  padding: 24px 28px !important;
+  margin-bottom: 24px !important;
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.75),
+    inset 0 1px 1px rgba(255, 230, 160, 0.2) !important;
+}
+
+/* Brass Rivet on Ledger Entry */
+.space-experience article::before,
+.education-milestone::before {
+  content: '' !important;
+  position: absolute !important;
+  left: -22px !important;
+  top: 32px !important;
+  width: 10px !important;
+  height: 10px !important;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, #ffe6a3 0%, #a07d2c 60%, #4a360f 100%) !important;
+  border: 1px solid rgba(0, 0, 0, 0.7) !important;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.8), 0 0 10px rgba(212, 175, 55, 0.5) !important;
+}
+
+.space-experience::before,
+.space-education::before {
+  background: linear-gradient(180deg, #d4af37 0%, #8a6408 50%, #4a360f 100%) !important;
+  width: 2px !important;
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.4) !important;
+}
+
+.experience-company {
+  color: #ffd875 !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.9) !important;
+}
+
+/* =========================================================
+   11. UNIVERSAL SKEUOMORPHIC SCROLLBARS & TRACKS
+   ========================================================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #140b05;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.9);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #a07d2c 0%, #684f18 100%);
+  border: 1px solid #d4af37;
+  border-radius: 5px;
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.6), 0 2px 5px rgba(0, 0, 0, 0.8);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #c49d3d 0%, #7d5f1f 100%);
+}
+
+/* =========================================================
+   12. THREEUI WATER SHADER FRAME SKEUOMORPHIC BEZEL
+   ========================================================= */
+
+.water-shader-mount-wrap {
+  border: 3px solid #8f6a31 !important;
+  border-radius: 16px !important;
+  box-shadow: 
+    0 25px 70px rgba(0, 0, 0, 0.9),
+    inset 0 2px 3px rgba(255, 230, 160, 0.4),
+    inset 0 0 20px rgba(0, 0, 0, 0.9) !important;
+  background: #060708 !important;
+}

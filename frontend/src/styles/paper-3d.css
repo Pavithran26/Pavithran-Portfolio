@@ -1,0 +1,331 @@
+/**
+ * paper-3d.css
+ * Authentic 3D Paper Experience for Pavithran's Portfolio & Book Reader.
+ * Implements:
+ * - Suspended giant editorial typography behind paper
+ * - Procedural translucent paper sheets with grain and frosted glass-paper depth
+ * - Dynamic pointer-driven specular light reflection that tracks cursor across pages
+ * - Smooth 3D tilt & drag physics
+ * - Monochrome & warm charcoal editorial typography with hairline rules
+ */
+
+/* =========================================================
+   1. SUSPENDED EDITORIAL WORDMARK & DOF BACKGROUND
+   ========================================================= */
+.paper-editorial-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.paper-giant-wordmark {
+  font-family: 'Cinzel', 'Inter Tight', serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-size: clamp(110px, 19vw, 420px);
+  line-height: 0.8;
+  white-space: nowrap;
+  color: rgba(255, 248, 235, 0.045);
+  text-transform: uppercase;
+  transform: translateY(-5%);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+/* Subtle Depth-of-Field Blur over background */
+.paper-dof-layer {
+  position: fixed;
+  inset: -30px;
+  z-index: 1;
+  pointer-events: none;
+  backdrop-filter: blur(2.5px);
+  -webkit-backdrop-filter: blur(2.5px);
+  background: radial-gradient(circle at 50% 40%, rgba(10, 8, 5, 0.15) 0%, rgba(8, 8, 10, 0.7) 100%);
+}
+
+/* Procedural Paper & Glass Grain Overlay */
+.paper-grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+  background-size: 4px 4px, 6px 6px;
+  background-position: 0 0, 2px 2px;
+  opacity: 0.45;
+  mix-blend-mode: overlay;
+}
+
+/* =========================================================
+   2. 3D PAPER CONTAINER & REAL-TIME LIGHTING HIGHLIGHTS
+   ========================================================= */
+
+/* The Book Volume in 3D Space with Pointer Light & Drag Tilt */
+.reading-book .book-volume,
+.scroll-book .book-volume {
+  position: relative;
+  z-index: 10;
+  transform-style: preserve-3d;
+  transition: box-shadow 0.25s ease;
+  will-change: transform, box-shadow;
+  /* Lighting & Tilt Custom Properties */
+  --light-x: 50%;
+  --light-y: 50%;
+  --light-intensity: 0.6;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+}
+
+/* Specular Light Sheen Overlay across Book Pages */
+.book-volume::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 20;
+  background: radial-gradient(
+    700px circle at var(--light-x) var(--light-y),
+    rgba(255, 255, 255, calc(var(--light-intensity) * 0.45)) 0%,
+    rgba(255, 255, 255, calc(var(--light-intensity) * 0.12)) 28%,
+    rgba(255, 255, 255, 0) 65%
+  );
+  mix-blend-mode: overlay;
+  transition: opacity 0.2s ease;
+  opacity: 1;
+}
+
+/* =========================================================
+   3. TRANSLUCENT PAPER SHEETS (BOOK LEAF & CONTENT)
+   ========================================================= */
+
+.reading-book .book-leaf,
+.scroll-book .book-leaf {
+  position: relative;
+  background: linear-gradient(
+    135deg,
+    rgba(247, 241, 230, 0.95) 0%,
+    rgba(241, 233, 219, 0.93) 48%,
+    rgba(233, 222, 204, 0.95) 100%
+  ) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-left: 1px solid rgba(170, 140, 100, 0.3) !important;
+  box-shadow: 
+    inset 0 1px 2px rgba(255, 255, 255, 0.9),
+    inset 24px 0 35px -15px rgba(80, 55, 25, 0.25),
+    inset -8px 0 20px rgba(90, 65, 30, 0.12),
+    0 25px 65px rgba(0, 0, 0, 0.45) !important;
+  overflow: hidden;
+}
+
+/* Procedural Paper Fibers & Watermark Line */
+.reading-book .book-leaf::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(rgba(140, 110, 70, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(212, 175, 55, 0.04) 1px, transparent 1px);
+  background-size: 8px 8px, 100% 32px;
+  opacity: 0.65;
+  z-index: 1;
+}
+
+/* Page Dynamic Specular Light Sweep */
+.reading-book .book-leaf::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    550px circle at var(--page-light-x, 50%) var(--page-light-y, 50%),
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(255, 255, 255, 0.14) 30%,
+    transparent 65%
+  );
+  mix-blend-mode: soft-light;
+  opacity: var(--page-light-opacity, 0.75);
+  transition: opacity 0.3s ease;
+}
+
+/* =========================================================
+   4. EDITORIAL TYPOGRAPHY & MONOCHROME INK
+   ========================================================= */
+
+.reading-book .book-leaf h1,
+.reading-book .book-leaf h2,
+.reading-book .book-leaf h3,
+.cover-face h1 {
+  font-family: 'Cinzel', 'Cormorant Garamond', Georgia, serif !important;
+  letter-spacing: -0.015em !important;
+  color: #1a140d !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75) !important;
+}
+
+.reading-book .book-leaf p,
+.reading-book .book-leaf li {
+  color: #382d20 !important;
+  font-family: 'Outfit', -apple-system, sans-serif !important;
+  line-height: 1.8 !important;
+  font-size: 14.5px !important;
+}
+
+.reading-book .book-leaf .space-kicker,
+.cover-face .cover-edition,
+.printed-folio {
+  font-family: 'Fira Code', monospace !important;
+  font-size: 10px !important;
+  letter-spacing: 0.24em !important;
+  text-transform: uppercase !important;
+  color: #8c6a32 !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Editorial Hairline Dividers */
+.paper-rule {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 28px 0;
+  width: 100%;
+}
+
+.paper-rule::before,
+.paper-rule::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(160, 125, 60, 0.35), transparent);
+}
+
+.paper-rule span {
+  font-size: 11px;
+  color: #a07d3c;
+  letter-spacing: 0.1em;
+}
+
+/* =========================================================
+   5. 3D PAPER INTERACTIVE PROJECT & EXPERIENCE CARDS
+   ========================================================= */
+
+.project-destination,
+.archive-project,
+.space-experience article,
+.education-milestone {
+  position: relative;
+  background: linear-gradient(
+    145deg,
+    rgba(248, 242, 232, 0.96) 0%,
+    rgba(238, 230, 216, 0.94) 100%
+  ) !important;
+  color: #241a10 !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  border-radius: 12px !important;
+  box-shadow: 
+    0 22px 60px rgba(0, 0, 0, 0.65),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9),
+    inset 0 0 35px rgba(180, 150, 110, 0.15) !important;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.2, 0, 0.1, 1), box-shadow 0.25s cubic-bezier(0.2, 0, 0.1, 1) !important;
+  will-change: transform, box-shadow;
+}
+
+/* Specular Paper Highlight on Hover for Cards */
+.project-destination::after,
+.archive-project::after,
+.space-experience article::after,
+.education-milestone::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    450px circle at var(--card-light-x, 50%) var(--card-light-y, 50%),
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.1) 32%,
+    transparent 65%
+  );
+  mix-blend-mode: soft-light;
+  opacity: var(--card-light-opacity, 0);
+  transition: opacity 0.25s ease;
+  z-index: 10;
+}
+
+.project-destination:hover::after,
+.archive-project:hover::after,
+.space-experience article:hover::after,
+.education-milestone:hover::after {
+  --card-light-opacity: 1;
+}
+
+.project-destination h3,
+.project-destination h2,
+.space-project-title,
+.archive-copy h2 button {
+  color: #1a1208 !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.project-destination p,
+.project-summary,
+.archive-copy p,
+.experience-company {
+  color: #423423 !important;
+}
+
+/* Stamped Copper/Brass Monocle Badges on Paper */
+.project-logos span,
+.archive-tags span,
+.detail-tag {
+  background: linear-gradient(180deg, #f0e6d5 0%, #e0d2bd 100%) !important;
+  border: 1px solid rgba(160, 125, 60, 0.45) !important;
+  color: #382b18 !important;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  font-weight: 600 !important;
+}
+
+/* Dragging State on the 3D Book Volume */
+.book-volume.is-dragging {
+  cursor: grabbing !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+.book-volume.is-dragging * {
+  pointer-events: none !important;
+}
+
+/* Interaction Hint like in ThreeUI 3D Paper */
+.paper-hint-hud {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 24px;
+  z-index: 15;
+  pointer-events: none;
+  text-align: center;
+  font-family: 'Fira Code', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(242, 235, 220, 0.45);
+  transition: opacity 0.8s ease;
+}
+
+.paper-hint-hud b {
+  font-weight: 600;
+  color: #ffd875;
+}
