@@ -21,7 +21,17 @@ const book = new BookReader(root, { archive: true });
 const spotlight = new CursorSpotlight(root);
 const liquidCursor = new LiquidCursor();
 const paper3D = new PaperInteractive3D();
-document.querySelector('#dawn-eye').innerHTML = getClaraEyeAvatarHtml(38) + '<span class="eye-label">Meet DAWN<small>AI guide</small></span>';
+const projectEye = document.querySelector('#dawn-eye');
+if (projectEye) {
+  if (!projectEye.querySelector('.dawn-katana-video')) {
+    projectEye.innerHTML = `<video class="dawn-katana-video" src="/videos/katana-blade.mp4" autoplay loop muted playsinline disablepictureinpicture aria-hidden="true"></video>`;
+  }
+  const vid = projectEye.querySelector('video');
+  if (vid) {
+    vid.muted = true;
+    vid.play().catch(() => {});
+  }
+}
 const dialogs = new PortfolioDialogs();
 const events = new AbortController();
 document.addEventListener('click', event => {

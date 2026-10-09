@@ -1,6 +1,6 @@
 // Profile content; existing contact email retained pending conflicting README address confirmation.
 export const PORTFOLIO_DATA = {
-  "name": "Pavithran S.",
+  "name": "Pavithran S",
   "role": "Forward Deployed Engineer (FDE)",
   "tagline": "Forward Deployed Engineer (FDE) • Backend, AI/RAG & High-Impact Systems",
   "summary": "Multi-stack Software Engineer who enjoys turning real-world problems into practical software solutions. Proven experience spanning backend engineering, REST APIs, modern web development, databases, AI/RAG systems, UI enhancement, DevOps, CI/CD, and cloud deployment across insurance, education, and enterprise ERP domains.",

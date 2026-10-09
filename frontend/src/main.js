@@ -15,27 +15,13 @@ import { TransformersBackground } from './components/TransformersBackground.js';
 import { ScrollDepthController } from './components/ScrollDepthController.js';
 import { GlitterTextEngine } from './components/GlitterTextEngine.js';
 
-function getProjectCategory(project) {
-  const cat = (project.category || '').toLowerCase();
-  const id = project.id;
-  if (['clansure', 'gt-companion', 'srk-erp', 'healthsurance'].includes(id) || cat.includes('full-stack') || cat.includes('erp') || cat.includes('business')) {
-    return 'fullstack';
-  }
-  if (['sattam-ai', 'product-demand-forecast', 'upi-fraud-detection', 'heart-disease-prediction', 'pneumonia-detection', 'speech-recognition'].includes(id) || cat.includes('ai') || cat.includes('machine learning') || cat.includes('deep learning') || cat.includes('speech')) {
-    return 'ai-ml';
-  }
-  if (['rf-detector', 'screen-drawing', 'save-water-game'].includes(id) || cat.includes('iot') || cat.includes('computer vision') || cat.includes('game')) {
-    return 'vision-iot';
-  }
-  return 'utilities';
-}
 
 const root = document.querySelector('#portfolio');
 root.innerHTML = `
   <section class="space-intro" id="top" aria-labelledby="intro-title">
     <div class="intro-identity">
       <p class="space-kicker">TAMIL NADU, INDIA · FORWARD DEPLOYED ENGINEER (FDE)</p>
-      <h1 id="intro-title">Pavithran <em>S.</em></h1>
+      <h1 id="intro-title">Pavithran <em>S</em></h1>
       <p class="intro-statement">Thoughtful interfaces.<br>Dependable systems.<br>A little intelligence in between.</p>
       <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
         <a class="intro-enter" href="#work">Explore my work <span aria-hidden="true">↓</span></a>
@@ -52,67 +38,26 @@ root.innerHTML = `
 
       <nav class="project-index" aria-label="Browse featured projects">
         ${featuredProjects.map(project => `<a href="#project-${project.id}">${html(project.title)}</a>`).join('')}
-        <a href="#all-projects" style="color: var(--tf-energon); font-weight: 500;">All 16 Projects ↓</a>
+        <button class="space-text-link" type="button" data-dialog="dossier" style="margin-left: 8px; color: var(--tf-energon); font-weight: 500;">All 16 Projects Dossier ↗</button>
       </nav>
 
       <!-- Featured Flagship Showcase -->
       <div class="space-projects">
-        ${featuredProjects.map((project, index) => `
+        ${featuredProjects.map(project => `
           <article id="project-${project.id}" class="project-destination" data-card-project="${project.id}">
             <div class="project-copy">
-              <p class="project-overline">${String(index + 1).padStart(2, '0')} / ${html(project.category)} · <span class="project-badge-pill">${html(project.badge || 'Featured')}</span></p>
               <button class="space-project-title" type="button" data-project="${project.id}">
                 <span>${html(project.title)}</span><span aria-hidden="true">↗</span>
               </button>
               <p class="project-tagline">${html(project.tagline)}</p>
               <p class="project-summary">${html(project.overview)}</p>
-              <div class="project-logos" aria-label="${html(project.title)} technologies">
-                ${project.technologies.slice(0, 6).map(technology => `<span title="${html(technology)}"><span class="visually-hidden">${html(technology)}</span>${technologyIcons(technology)}</span>`).join('')}
-              </div>
               <div class="project-links">
                 <button class="space-text-link" type="button" data-project="${project.id}">Explore technical dossier ↗</button>
                 ${project.liveUrl ? `<a class="space-text-link" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit live app ↗</a>` : ''}
-                ${project.githubUrl ? `<a class="space-text-link" href="${html(project.githubUrl)}" target="_blank" rel="noopener noreferrer">Source code ↗</a>` : ''}
               </div>
             </div>
           </article>
         `).join('')}
-      </div>
-
-      <!-- The Complete Engineering Catalog (All 16 Projects in One Place) -->
-      <div class="all-projects-wrapper" id="all-projects" style="margin-top: 96px; padding-top: 48px; border-top: 1px solid var(--line);">
-        <div class="archive-header-banner">
-          <p class="space-kicker">ENGINEERING CATALOG · ALL 16 REPOSITORIES</p>
-          <h3 class="story-subheading" style="font-size: clamp(2.2rem, 4vw, 3.4rem); font-family: var(--font-display); font-weight: 400; margin: 14px 0 16px;">The complete repository archive.</h3>
-          <p class="section-intro">Explore every full-stack platform, machine learning classifier, computer vision experiment, and utility tool built by Pavithran.</p>
-
-          <div class="catalog-filter-bar" role="tablist" aria-label="Filter projects by category">
-            <button type="button" class="filter-tab active" data-filter="all">All Repositories <small>(16)</small></button>
-            <button type="button" class="filter-tab" data-filter="fullstack">Enterprise & Full-Stack <small>(4)</small></button>
-            <button type="button" class="filter-tab" data-filter="ai-ml">AI, ML & RAG <small>(6)</small></button>
-            <button type="button" class="filter-tab" data-filter="vision-iot">Vision & IoT <small>(3)</small></button>
-            <button type="button" class="filter-tab" data-filter="utilities">Data & Tools <small>(3)</small></button>
-          </div>
-        </div>
-
-        <div class="archive-grid" id="full-projects-grid">
-          ${PROJECTS_DATA.map((project, index) => `
-            <article class="archive-project" data-cat="${getProjectCategory(project)}" data-project-id="${project.id}">
-              <div class="archive-copy">
-                <p class="space-kicker">${String(index + 1).padStart(2, '0')} / ${html(project.category)}</p>
-                <h2><button type="button" data-project="${project.id}">${html(project.title)} <span aria-hidden="true">↗</span></button></h2>
-                <p class="archive-tagline" style="font-weight: 500; margin: 6px 0 10px; color: #ffffff;">${html(project.tagline)}</p>
-                <p class="archive-overview" style="margin: 0 0 16px; font-size: 0.92rem; line-height: 1.65; color: var(--tf-text-body);">${html(project.overview.slice(0, 160))}...</p>
-                <div class="archive-tags">${project.technologies.slice(0, 4).map(tech => `<span>${html(tech)}</span>`).join('')}</div>
-                <div class="project-links">
-                  <button type="button" class="space-text-link" data-project="${project.id}">Explore dossier ↗</button>
-                  ${project.liveUrl ? `<a class="space-text-link" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Live demo ↗</a>` : ''}
-                  ${project.githubUrl ? `<a class="space-text-link" href="${html(project.githubUrl)}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>` : ''}
-                </div>
-              </div>
-            </article>
-          `).join('')}
-        </div>
       </div>
     </div>
   </section>
@@ -121,7 +66,7 @@ root.innerHTML = `
     <div class="space-content">
       <p class="space-kicker">THE PERSON BEHIND THE WORK</p>
       <h2 id="about-title">Always curious.<br><em>Still building.</em></h2>
-      <p class="section-intro">I'm Pavithran, a Forward Deployed Engineer (FDE) from Tamil Nadu. I like making complicated things feel simple, from the first interaction to the systems underneath.</p>
+      <p class="section-intro">I'm Pavithran S, a Forward Deployed Engineer (FDE) from Tamil Nadu. I like making complicated things feel simple, from the first interaction to the systems underneath.</p>
       <div class="space-experience" id="experience">
         ${profile.experience.map((job, index) => `
           <article id="experience-${index}">
@@ -273,7 +218,14 @@ lenisRafId = requestAnimationFrame(rafLoop);
 
 const eyeButton = document.querySelector('#dawn-eye');
 if (eyeButton) {
-  eyeButton.innerHTML = getClaraEyeAvatarHtml(38) + '<span class="eye-label">Meet DAWN<small>AI guide</small></span>';
+  if (!eyeButton.querySelector('.dawn-katana-video')) {
+    eyeButton.innerHTML = `<video class="dawn-katana-video" src="/videos/katana-blade.mp4" autoplay loop muted playsinline disablepictureinpicture aria-hidden="true"></video>`;
+  }
+  const vid = eyeButton.querySelector('video');
+  if (vid) {
+    vid.muted = true;
+    vid.play().catch(() => {});
+  }
 }
 
 const dialogs = new PortfolioDialogs();
@@ -312,21 +264,6 @@ if (dialogEl) {
   });
   dialogObserver.observe(dialogEl, { attributes: true, attributeFilter: ['open'] });
 }
-
-// Filter tabs in the All Projects Catalog
-const filterTabs = document.querySelectorAll('.catalog-filter-bar .filter-tab');
-const archiveCards = document.querySelectorAll('.archive-project');
-filterTabs.forEach(tab => {
-  on(tab, 'click', () => {
-    filterTabs.forEach(t => t.classList.remove('active'));
-    tab.classList.add('active');
-    const filter = tab.dataset.filter;
-    archiveCards.forEach(card => {
-      const match = filter === 'all' || card.dataset.cat === filter;
-      card.classList.toggle('is-hidden', !match);
-    });
-  });
-});
 
 // Click delegation for dialogs, projects, skills, chapters, DAWN
 on(document, 'click', event => {

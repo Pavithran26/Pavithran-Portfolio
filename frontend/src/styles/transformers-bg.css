@@ -368,10 +368,20 @@ h1 em, h2 em, .intro-identity h1 em, .space-section h2 em {
   text-shadow: 0 0 16px var(--tf-energon-glow) !important;
 }
 
-/* ─── 4. ENGINEERING CATALOG ARCHIVE (WITHOUT IMAGES - SLEEK GRID) ─ */
+.project-tagline {
+  font-family: var(--font-display) !important;
+  font-size: 1.15rem !important;
+  font-weight: 500 !important;
+  color: #ffffff !important;
+  margin: 10px 0 12px !important;
+  letter-spacing: -0.01em !important;
+}
 
-.all-projects-wrapper {
-  border-top: 1px solid rgba(0, 229, 255, 0.18) !important;
+.project-summary {
+  font-size: 0.95rem !important;
+  line-height: 1.7 !important;
+  color: var(--tf-text-body) !important;
+  margin: 0 0 22px !important;
 }
 
 /* Filter Tab Bar */
@@ -1001,6 +1011,45 @@ html.lenis body {
   text-shadow: 0 0 20px var(--tf-energon-glow) !important;
 }
 
+/* ─── 13. DAWN KATANA FIERY BLADE VIDEO PILL ─────────────────────── */
+.dawn-eye {
+  position: relative !important;
+  overflow: hidden !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  width: 124px !important;
+  height: 42px !important;
+  min-height: 42px !important;
+  padding: 0 !important;
+  border-radius: 999px !important;
+  border: 1.5px solid rgba(255, 110, 40, 0.65) !important;
+  background: #020306 !important;
+  box-shadow: 0 0 18px rgba(255, 80, 20, 0.4), inset 0 0 10px rgba(0, 0, 0, 0.85) !important;
+  cursor: pointer !important;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease !important;
+  flex-shrink: 0 !important;
+}
 
+.dawn-eye:hover {
+  border-color: #ffa14a !important;
+  box-shadow: 0 0 28px rgba(255, 100, 25, 0.8), 0 0 45px rgba(255, 60, 10, 0.45) !important;
+  transform: translateY(-1px) scale(1.04) !important;
+}
 
+.dawn-katana-video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block !important;
+  border-radius: 999px !important;
+  pointer-events: none !important;
+}
 
+.dawn-eye .eye-label,
+.dawn-eye .clara-eye-sclera,
+.dawn-eye svg,
+.dawn-eye span {
+  display: none !important;
+}
