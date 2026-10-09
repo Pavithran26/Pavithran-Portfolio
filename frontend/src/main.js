@@ -237,7 +237,7 @@ root.innerHTML = `
 
 const spotlight = new CursorSpotlight(root);
 const liquidCursor = new LiquidCursor();
-const transformersBg = new TransformersBackground();
+const transformersBg = new TransformersBackground('/videos/Muzan-meets-Ubuyashiki-SnapYT.App.webm');
 
 const eyeButton = document.querySelector('#dawn-eye');
 if (eyeButton) {
@@ -330,6 +330,99 @@ if (copyEmailBtn) {
       feedback.textContent = 'Select the email address above to copy it.';
     }
   });
+}
+
+// ─── THREEUI PERFORMANCE GAUGES SPEEDOMETER PURE CIRCULAR ONLOAD SEQUENCE ───
+const speedometerOverlay = document.getElementById('onload-speedometer');
+const openSpeedometerBtn = document.getElementById('open-speedometer-btn');
+
+let speedometerDismissed = false;
+let isPageLoaded = document.readyState === 'complete';
+let isVideoReady = false;
+let isGaugeSweepDone = false;
+
+function dismissSpeedometer() {
+  if (speedometerDismissed || !speedometerOverlay) return;
+  speedometerDismissed = true;
+  speedometerOverlay.classList.add('is-dismissed');
+  setTimeout(() => {
+    if (speedometerOverlay) speedometerOverlay.style.display = 'none';
+  }, 900);
+}
+
+function checkAndDismissWhenReady() {
+  if (speedometerDismissed) return;
+  // Dismiss only when the video animation, full page, and needle self-test have loaded!
+  if (isPageLoaded && isVideoReady && isGaugeSweepDone) {
+    dismissSpeedometer();
+  }
+}
+
+// 1. Page load tracking
+if (!isPageLoaded) {
+  on(window, 'load', () => {
+    isPageLoaded = true;
+    checkAndDismissWhenReady();
+  });
+}
+
+// 2. Background video load tracking (Muzan meets Ubuyashiki 4K video)
+function markVideoReady() {
+  if (isVideoReady) return;
+  isVideoReady = true;
+  checkAndDismissWhenReady();
+}
+
+if (transformersBg?.video) {
+  if (transformersBg.video.readyState >= 2) {
+    markVideoReady();
+  } else {
+    on(transformersBg.video, 'loadeddata', markVideoReady, { once: true });
+    on(transformersBg.video, 'canplay', markVideoReady, { once: true });
+    on(transformersBg.video, 'canplaythrough', markVideoReady, { once: true });
+  }
+} else {
+  isVideoReady = true;
+}
+
+// 3. ThreeUI Speedometer self-test completion (sweep 0 -> 160 -> settles on live speed)
+on(window, 'message', (event) => {
+  if (event.data?.type === 'speedometer-selftest-complete') {
+    isGaugeSweepDone = true;
+    checkAndDismissWhenReady();
+  }
+});
+
+// Fallback maximum wait (8s) so user is never stuck if network slows down
+setTimeout(() => {
+  isPageLoaded = true;
+  isVideoReady = true;
+  isGaugeSweepDone = true;
+  checkAndDismissWhenReady();
+}, 8000);
+
+// User interactive dismiss (click anywhere or press Escape/Enter/Space)
+if (speedometerOverlay) {
+  on(speedometerOverlay, 'click', dismissSpeedometer);
+}
+
+on(window, 'keydown', (e) => {
+  if (['Escape', 'Enter', ' '].includes(e.key) && !speedometerDismissed) {
+    dismissSpeedometer();
+  }
+});
+
+function showSpeedometer() {
+  if (!speedometerOverlay) return;
+  speedometerDismissed = false;
+  speedometerOverlay.style.display = 'flex';
+  requestAnimationFrame(() => {
+    speedometerOverlay.classList.remove('is-dismissed');
+  });
+}
+
+if (openSpeedometerBtn) {
+  on(openSpeedometerBtn, 'click', showSpeedometer);
 }
 
 if (import.meta.hot) {

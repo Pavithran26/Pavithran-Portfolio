@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Optimus Prime — The Cybertronian Matrix | Pavithran S.</title>
+  <title>Optimus Prime — 3D Cybertronian Core | Pavithran S.</title>
   <link rel="stylesheet" href="/landing-pages/secret-pathways-assets/fonts.css">
   <style>
     :root {
@@ -49,6 +49,11 @@
       z-index: 1;
       pointer-events: auto;
       display: block;
+      cursor: grab;
+    }
+
+    #prime-canvas:active {
+      cursor: grabbing;
     }
 
     /* Vignette & Cyber Grid Overlay */
@@ -130,6 +135,7 @@
       align-items: center;
       gap: 0.6rem;
       pointer-events: auto;
+      flex-wrap: wrap;
     }
 
     .hud-btn {
@@ -147,6 +153,7 @@
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
+      text-decoration: none;
     }
 
     .hud-btn:hover {
@@ -162,6 +169,13 @@
       border-color: var(--primary-color);
       color: #fff;
       box-shadow: 0 0 16px rgba(224, 35, 28, 0.6);
+    }
+
+    .hud-btn.btn-glb {
+      background: linear-gradient(135deg, rgba(0, 229, 255, 0.25), rgba(0, 150, 255, 0.15));
+      border-color: var(--energon-blue);
+      color: #ffffff;
+      font-weight: 600;
     }
 
     /* Scroll Chapters Container */
@@ -290,6 +304,7 @@
       gap: 0.6rem;
       box-shadow: 0 4px 20px rgba(224, 35, 28, 0.4);
       transition: all 0.25s ease;
+      text-decoration: none;
     }
 
     .primary-action:hover {
@@ -406,32 +421,61 @@
       color: var(--energon-blue);
     }
 
-    /* Click Hint HUD */
-    .interaction-hint {
+    /* Camera Turntable Preset Dock */
+    .camera-dock {
       position: fixed;
       bottom: 2rem;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 20;
-      background: rgba(10, 14, 22, 0.8);
-      border: 1px solid rgba(0, 229, 255, 0.25);
-      backdrop-filter: blur(10px);
-      padding: 0.5rem 1.2rem;
-      border-radius: 999px;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: #a4b8db;
-      pointer-events: none;
+      z-index: 25;
       display: flex;
       align-items: center;
-      gap: 0.6rem;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-      animation: float-hint 3s ease-in-out infinite;
+      gap: 0.45rem;
+      background: rgba(10, 16, 26, 0.88);
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      padding: 0.45rem 0.85rem;
+      border-radius: 999px;
+      box-shadow: 0 10px 32px rgba(0, 0, 0, 0.8), 0 0 24px rgba(0, 229, 255, 0.25);
     }
 
-    @keyframes float-hint {
-      0%, 100% { transform: translate(-50%, 0); }
-      50% { transform: translate(-50%, -6px); }
+    .camera-dock-label {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: #8da4ca;
+      letter-spacing: 0.12em;
+      margin-right: 0.3rem;
+      padding-left: 0.4rem;
+      font-weight: 600;
+    }
+
+    .camera-btn {
+      background: rgba(16, 24, 38, 0.7);
+      border: 1px solid rgba(0, 229, 255, 0.18);
+      color: #bcd0ed;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .camera-btn:hover {
+      background: rgba(0, 229, 255, 0.18);
+      border-color: var(--energon-blue);
+      color: #fff;
+      box-shadow: 0 0 12px rgba(0, 229, 255, 0.35);
+      transform: translateY(-1px);
+    }
+
+    .camera-btn.active {
+      background: linear-gradient(135deg, var(--primary-color), #a8120d);
+      border-color: var(--primary-color);
+      color: #fff;
+      box-shadow: 0 0 14px rgba(224, 35, 28, 0.6);
     }
 
     .matrix-charge-bar {
@@ -459,7 +503,13 @@
       .telemetry-grid {
         grid-template-columns: 1fr;
       }
-      .interaction-hint {
+      .camera-dock {
+        bottom: 1rem;
+        padding: 0.3rem 0.6rem;
+        gap: 0.3rem;
+        transform: translateX(-50%) scale(0.9);
+      }
+      .camera-dock-label {
         display: none;
       }
     }
@@ -479,7 +529,6 @@
   <header class="cyber-hud">
     <a href="#hero" class="hud-brand">
       <svg class="autobot-insignia" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <!-- Iconic Autobot Insignia Path -->
         <polygon points="50,4 20,24 20,68 34,78 34,60 42,60 42,70 50,74 58,70 58,60 66,60 66,78 80,68 80,24" />
         <polygon points="50,22 36,36 42,46 50,40 58,46 64,36" fill="#fff" />
         <polygon points="45,54 55,54 50,58" fill="#fff" />
@@ -488,7 +537,7 @@
       </svg>
       <div class="brand-meta">
         <span class="brand-title">OPTIMUS // PRIME</span>
-        <span class="brand-sub">Pavithran S. • Cybertronian Core</span>
+        <span class="brand-sub">Pavithran S. • 3D Cybertronian Core</span>
       </div>
     </a>
 
@@ -496,21 +545,32 @@
       <button class="hud-btn" id="btn-sound" title="Toggle cybernetic synthesizer">
         <span id="sound-icon">🔈</span> <span>AUDIO</span>
       </button>
+      <button class="hud-btn" id="btn-turntable" title="Toggle 360 Turntable Auto-Rotation">
+        <span>🔄 360° SPIN</span>
+      </button>
       <button class="hud-btn" id="btn-wireframe" title="Toggle wireframe diagnostics">
-        <span>GRID</span>
+        <span>📐 WIREFRAME</span>
       </button>
       <button class="hud-btn" id="btn-surge" title="Trigger Matrix Energon Surge">
         <span>⚡ MATRIX</span>
       </button>
+      <a class="hud-btn btn-glb" id="btn-download-glb" href="/models/optimus-prime.glb" download="optimus-prime.glb" title="Download High-Poly 3D Binary GLB">
+        <span>💾 3D .GLB</span>
+      </a>
       <a class="hud-btn" href="/" title="Back to main portfolio">
         <span>RETURN ↗</span>
       </a>
     </div>
   </header>
 
-  <!-- Interactive Hint -->
-  <div class="interaction-hint" id="hint-hud">
-    <span>◈ DRAG TO ORBIT // CLICK TO UNLEASH THE MATRIX</span>
+  <!-- Turntable Camera Dock -->
+  <div class="camera-dock" id="camera-dock">
+    <span class="camera-dock-label">TURNTABLE:</span>
+    <button class="camera-btn active" data-view="front">FRONT</button>
+    <button class="camera-btn" data-view="left">LEFT</button>
+    <button class="camera-btn" data-view="back">BACK</button>
+    <button class="camera-btn" data-view="right">RIGHT</button>
+    <button class="camera-btn" data-view="matrix">MATRIX CORE</button>
   </div>
 
   <!-- Narrative Scroll Content -->
@@ -526,14 +586,14 @@
           In engineering, architecture is the backbone of dependable systems. Crafting reactive frontends, resilient full-stack platforms, and applied intelligence at production scale.
         </p>
         <div class="hero-actions">
-          <button class="primary-action" id="hero-matrix-trigger">
+          <a class="primary-action" href="/models/optimus-prime.glb" download="optimus-prime.glb">
+            <span>💾 DOWNLOAD 3D GLB</span>
+          </a>
+          <button class="secondary-action" id="hero-matrix-trigger">
             <span>⚡ UNLEASH MATRIX</span>
           </button>
           <a class="secondary-action" href="/images/prime.png" target="_blank" rel="noopener noreferrer">
             <span>📐 4K BLUEPRINT ↗</span>
-          </a>
-          <a class="secondary-action" href="#arsenal">
-            <span>EXPLORE ARSENAL ↓</span>
           </a>
         </div>
         <div class="telemetry-grid">
@@ -696,7 +756,6 @@
       function playMatrixSurgeSound() {
         if (!soundEnabled || !audioCtx) return;
         try {
-          // Dual chord harmonic surge
           [220, 330, 440, 660].forEach((freq, idx) => {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
@@ -739,7 +798,7 @@
       scene.fog = new THREE.FogExp2(0x05070b, 0.024);
 
       const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
-      camera.position.set(0, 0, 8.5);
+      camera.position.set(0, 0, 9.5);
 
       // ─── 3. LIGHTING RIG ────────────────────────────────────────────────
       const ambientLight = new THREE.AmbientLight(0x182030, 1.8);
@@ -770,30 +829,36 @@
         color: 0xc81919,
         metalness: 0.85,
         roughness: 0.24,
-        emissive: 0x3d0505,
-        emissiveIntensity: 0.3
       });
 
       const primeNavyMaterial = new THREE.MeshStandardMaterial({
-        color: 0x142038,
-        metalness: 0.88,
-        roughness: 0.28,
-        emissive: 0x050e1c,
-        emissiveIntensity: 0.2
+        color: 0x12254a,
+        metalness: 0.86,
+        roughness: 0.26,
       });
 
       const chromeMaterial = new THREE.MeshStandardMaterial({
-        color: 0xd8e0ee,
-        metalness: 0.95,
+        color: 0xdde4f0,
+        metalness: 0.96,
         roughness: 0.12,
       });
 
+      const darkChassisMaterial = new THREE.MeshStandardMaterial({
+        color: 0x161a22,
+        metalness: 0.90,
+        roughness: 0.42,
+      });
+
+      const tireRubberMaterial = new THREE.MeshStandardMaterial({
+        color: 0x181a1d,
+        metalness: 0.12,
+        roughness: 0.85,
+      });
+
       const goldAlloyMaterial = new THREE.MeshStandardMaterial({
-        color: 0xe6b840,
+        color: 0xdeb030,
         metalness: 0.92,
-        roughness: 0.2,
-        emissive: 0x473205,
-        emissiveIntensity: 0.4
+        roughness: 0.20,
       });
 
       const energonGlowMaterial = new THREE.MeshStandardMaterial({
@@ -816,144 +881,356 @@
         opacity: 0.8
       });
 
-      // ─── 5. PROCEDURAL OPTIMUS PRIME 3D MODEL ──────────────────────────
+      const flameAccentMaterial = new THREE.MeshStandardMaterial({
+        color: 0xffa014,
+        metalness: 0.80,
+        roughness: 0.28,
+      });
+
+      // Helper to build heavy truck wheels
+      function createWheel() {
+        const wheelGroup = new THREE.Group();
+        const tireGeo = new THREE.CylinderGeometry(0.38, 0.38, 0.24, 24);
+        tireGeo.rotateZ(Math.PI / 2);
+        const tire = new THREE.Mesh(tireGeo, tireRubberMaterial);
+        wheelGroup.add(tire);
+
+        const rimGeo = new THREE.CylinderGeometry(0.24, 0.24, 0.25, 18);
+        rimGeo.rotateZ(Math.PI / 2);
+        const rim = new THREE.Mesh(rimGeo, chromeMaterial);
+        wheelGroup.add(rim);
+
+        const hubGeo = new THREE.CylinderGeometry(0.1, 0.1, 0.28, 12);
+        hubGeo.rotateZ(Math.PI / 2);
+        const hub = new THREE.Mesh(hubGeo, goldAlloyMaterial);
+        wheelGroup.add(hub);
+
+        return wheelGroup;
+      }
+
+      // ─── 5. FULL-BODY PROCEDURAL OPTIMUS PRIME 3D MODEL ─────────────────
       const primeGroup = new THREE.Group();
       scene.add(primeGroup);
 
-      // 5.1 Main Torso / Chassis
-      const torsoGeo = new THREE.BoxGeometry(2.4, 2.0, 1.5);
-      const torso = new THREE.Mesh(torsoGeo, primeRedMaterial);
-      torso.position.y = 0.2;
-      primeGroup.add(torso);
-
-      // 5.2 Angular Shoulder Pauldrons
-      const shoulderGeo = new THREE.BoxGeometry(1.2, 1.0, 1.4);
-      const leftShoulder = new THREE.Mesh(shoulderGeo, primeRedMaterial);
-      leftShoulder.position.set(-1.8, 0.9, 0);
-      leftShoulder.rotation.z = -0.15;
-      primeGroup.add(leftShoulder);
-
-      const rightShoulder = new THREE.Mesh(shoulderGeo, primeRedMaterial);
-      rightShoulder.position.set(1.8, 0.9, 0);
-      rightShoulder.rotation.z = 0.15;
-      primeGroup.add(rightShoulder);
-
-      // 5.3 Chrome Smokestacks on Pauldrons
-      const stackGeo = new THREE.CylinderGeometry(0.12, 0.12, 2.4, 16);
-      const leftStack = new THREE.Mesh(stackGeo, chromeMaterial);
-      leftStack.position.set(-2.2, 1.8, -0.2);
-      primeGroup.add(leftStack);
-
-      const rightStack = new THREE.Mesh(stackGeo, chromeMaterial);
-      rightStack.position.set(2.2, 1.8, -0.2);
-      primeGroup.add(rightStack);
-
-      // 5.4 Chest Windshield Windows (Classic Optimus Cab Over Engine look)
-      const windowFrameGeo = new THREE.BoxGeometry(0.95, 0.85, 0.15);
-      const leftWindow = new THREE.Mesh(windowFrameGeo, glassMaterial);
-      leftWindow.position.set(-0.55, 0.65, 0.8);
-      primeGroup.add(leftWindow);
-
-      const rightWindow = new THREE.Mesh(windowFrameGeo, glassMaterial);
-      rightWindow.position.set(0.55, 0.65, 0.8);
-      primeGroup.add(rightWindow);
-
-      // Chrome grill slats beneath the chest
-      const grillGeo = new THREE.BoxGeometry(1.6, 0.6, 0.1);
-      const grill = new THREE.Mesh(grillGeo, chromeMaterial);
-      grill.position.set(0, -0.45, 0.8);
-      primeGroup.add(grill);
-
-      // 5.5 Head & Helmet with Crest & Glowing Optics
+      // 5.1 Head Unit & Helmet
       const headGroup = new THREE.Group();
-      headGroup.position.set(0, 1.6, 0.1);
-      primeGroup.add(headGroup);
+      headGroup.position.set(0, 2.2, 0.08);
 
-      // Helmet base
-      const helmetGeo = new THREE.BoxGeometry(0.9, 0.95, 0.9);
+      const helmetGeo = new THREE.BoxGeometry(0.72, 0.78, 0.75);
       const helmet = new THREE.Mesh(helmetGeo, primeNavyMaterial);
       headGroup.add(helmet);
 
-      // Center Mohawk Crest Fin
-      const crestGeo = new THREE.BoxGeometry(0.16, 0.6, 1.05);
+      const crestGeo = new THREE.BoxGeometry(0.14, 0.52, 0.88);
       const crest = new THREE.Mesh(crestGeo, primeNavyMaterial);
-      crest.position.set(0, 0.55, -0.05);
+      crest.position.set(0, 0.44, -0.04);
       headGroup.add(crest);
 
-      // Side Antennae / Ear Audio-Sensors
-      const antennaGeo = new THREE.CylinderGeometry(0.06, 0.08, 0.8, 12);
-      const leftAntenna = new THREE.Mesh(antennaGeo, primeNavyMaterial);
-      leftAntenna.position.set(-0.52, 0.35, 0);
-      headGroup.add(leftAntenna);
+      const crestTip = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.18, 0.3), chromeMaterial);
+      crestTip.position.set(0, 0.65, 0.1);
+      headGroup.add(crestTip);
 
-      const rightAntenna = new THREE.Mesh(antennaGeo, primeNavyMaterial);
-      rightAntenna.position.set(0.52, 0.35, 0);
-      headGroup.add(rightAntenna);
+      const antLGeo = new THREE.CylinderGeometry(0.04, 0.06, 0.75, 12);
+      const antL = new THREE.Mesh(antLGeo, primeNavyMaterial);
+      antL.position.set(-0.42, 0.35, 0);
+      headGroup.add(antL);
 
-      // Faceplate (Silver metallic mouthplate)
-      const faceplateGeo = new THREE.BoxGeometry(0.65, 0.38, 0.25);
-      const faceplate = new THREE.Mesh(faceplateGeo, chromeMaterial);
-      faceplate.position.set(0, -0.22, 0.42);
+      const antR = new THREE.Mesh(antLGeo, primeNavyMaterial);
+      antR.position.set(0.42, 0.35, 0);
+      headGroup.add(antR);
+
+      const faceplate = new THREE.Mesh(new THREE.BoxGeometry(0.54, 0.32, 0.22), chromeMaterial);
+      faceplate.position.set(0, -0.18, 0.36);
       faceplate.rotation.x = -0.15;
       headGroup.add(faceplate);
 
-      // Glowing Energon Blue Optics (Eyes)
-      const eyeGeo = new THREE.BoxGeometry(0.2, 0.08, 0.15);
-      const leftEye = new THREE.Mesh(eyeGeo, energonGlowMaterial);
-      leftEye.position.set(-0.18, 0.08, 0.45);
-      headGroup.add(leftEye);
+      const eyeGeo = new THREE.BoxGeometry(0.16, 0.06, 0.12);
+      const eyeL = new THREE.Mesh(eyeGeo, energonGlowMaterial);
+      eyeL.position.set(-0.15, 0.07, 0.38);
+      headGroup.add(eyeL);
 
-      const rightEye = new THREE.Mesh(eyeGeo, energonGlowMaterial);
-      rightEye.position.set(0.18, 0.08, 0.45);
-      headGroup.add(rightEye);
+      const eyeR = new THREE.Mesh(eyeGeo, energonGlowMaterial);
+      eyeR.position.set(0.15, 0.07, 0.38);
+      headGroup.add(eyeR);
 
-      // 5.6 THE MATRIX OF LEADERSHIP (Chest Center Chamber)
+      const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.28, 0.35, 16), darkChassisMaterial);
+      neck.position.set(0, -0.45, 0);
+      headGroup.add(neck);
+
+      primeGroup.add(headGroup);
+
+      // 5.2 Torso / Peterbilt Truck Cab & Smokestacks
+      const torsoGroup = new THREE.Group();
+      torsoGroup.position.set(0, 1.05, 0);
+
+      const cabGeo = new THREE.BoxGeometry(2.1, 1.6, 1.35);
+      const cab = new THREE.Mesh(cabGeo, primeRedMaterial);
+      torsoGroup.add(cab);
+
+      // Dual Windshield Windows
+      const winGeo = new THREE.BoxGeometry(0.85, 0.72, 0.12);
+      const winL = new THREE.Mesh(winGeo, glassMaterial);
+      winL.position.set(-0.48, 0.28, 0.72);
+      torsoGroup.add(winL);
+
+      const winR = new THREE.Mesh(winGeo, glassMaterial);
+      winR.position.set(0.48, 0.28, 0.72);
+      torsoGroup.add(winR);
+
+      const pillar = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.74, 0.14), primeRedMaterial);
+      pillar.position.set(0, 0.28, 0.72);
+      torsoGroup.add(pillar);
+
+      const visor = new THREE.Mesh(new THREE.BoxGeometry(1.9, 0.15, 0.3), primeRedMaterial);
+      visor.position.set(0, 0.85, 0.55);
+      torsoGroup.add(visor);
+
+      [-0.6, -0.2, 0.2, 0.6].forEach(x => {
+        const light = new THREE.Mesh(new THREE.BoxGeometry(0.1, 0.06, 0.08), flameAccentMaterial);
+        light.position.set(x, 0.88, 0.68);
+        torsoGroup.add(light);
+      });
+
+      const grillBase = new THREE.Mesh(new THREE.BoxGeometry(1.4, 0.55, 0.12), chromeMaterial);
+      grillBase.position.set(0, -0.45, 0.72);
+      torsoGroup.add(grillBase);
+
+      const hLightL = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.35, 0.14), chromeMaterial);
+      hLightL.position.set(-0.9, -0.45, 0.7);
+      torsoGroup.add(hLightL);
+
+      const hLightR = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.35, 0.14), chromeMaterial);
+      hLightR.position.set(0.9, -0.45, 0.7);
+      torsoGroup.add(hLightR);
+
+      // 5.3 The Matrix of Leadership (Core Chamber)
       const matrixGroup = new THREE.Group();
-      matrixGroup.position.set(0, 0.1, 0.85);
-      primeGroup.add(matrixGroup);
+      matrixGroup.position.set(0, 0.15, 0.76);
 
-      // Outer Spherical Housing
-      const matrixShellGeo = new THREE.SphereGeometry(0.42, 24, 24);
-      const matrixShell = new THREE.Mesh(matrixShellGeo, chromeMaterial);
-      matrixGroup.add(matrixShell);
+      const mShell = new THREE.Mesh(new THREE.SphereGeometry(0.32, 20, 20), chromeMaterial);
+      matrixGroup.add(mShell);
 
-      // Ornate Filigree Handles on sides
-      const handleTorusGeo = new THREE.TorusGeometry(0.24, 0.05, 12, 24, Math.PI);
-      const leftHandle = new THREE.Mesh(handleTorusGeo, goldAlloyMaterial);
-      leftHandle.rotation.z = Math.PI / 2;
-      leftHandle.position.set(-0.55, 0, 0);
-      matrixGroup.add(leftHandle);
+      const mHandleGeo = new THREE.TorusGeometry(0.22, 0.045, 12, 24, Math.PI);
+      const mHandleL = new THREE.Mesh(mHandleGeo, goldAlloyMaterial);
+      mHandleL.rotation.z = Math.PI / 2;
+      mHandleL.position.set(-0.45, 0, 0);
+      matrixGroup.add(mHandleL);
 
-      const rightHandle = new THREE.Mesh(handleTorusGeo, goldAlloyMaterial);
-      rightHandle.rotation.z = -Math.PI / 2;
-      rightHandle.position.set(0.55, 0, 0);
-      matrixGroup.add(rightHandle);
+      const mHandleR = new THREE.Mesh(mHandleGeo, goldAlloyMaterial);
+      mHandleR.rotation.z = -Math.PI / 2;
+      mHandleR.position.set(0.45, 0, 0);
+      matrixGroup.add(mHandleR);
 
-      // Rotating Gimbal Rings around the core
-      const gimbalGeo1 = new THREE.TorusGeometry(0.32, 0.025, 12, 32);
-      const gimbalRing1 = new THREE.Mesh(gimbalGeo1, goldAlloyMaterial);
+      const gimbalRing1 = new THREE.Mesh(new THREE.TorusGeometry(0.26, 0.022, 12, 28), goldAlloyMaterial);
       matrixGroup.add(gimbalRing1);
 
-      const gimbalGeo2 = new THREE.TorusGeometry(0.28, 0.022, 12, 32);
-      const gimbalRing2 = new THREE.Mesh(gimbalGeo2, energonGlowMaterial);
+      const gimbalRing2 = new THREE.Mesh(new THREE.TorusGeometry(0.22, 0.018, 12, 28), energonGlowMaterial);
       matrixGroup.add(gimbalRing2);
 
-      // Core Energon Crystal (Faceted Icosahedron)
-      const crystalGeo = new THREE.IcosahedronGeometry(0.18, 0);
-      const crystal = new THREE.Mesh(crystalGeo, energonGlowMaterial);
+      const crystal = new THREE.Mesh(new THREE.IcosahedronGeometry(0.14, 0), energonGlowMaterial);
       matrixGroup.add(crystal);
 
-      // Volumetric glow halo sprite
-      const haloGeo = new THREE.RingGeometry(0.3, 0.75, 32);
-      const haloMat = new THREE.MeshBasicMaterial({
-        color: 0x00e5ff,
-        transparent: true,
-        opacity: 0.35,
-        side: THREE.DoubleSide
-      });
-      const matrixHalo = new THREE.Mesh(haloGeo, haloMat);
+      const matrixHalo = new THREE.Mesh(
+        new THREE.RingGeometry(0.25, 0.65, 32),
+        new THREE.MeshBasicMaterial({ color: 0x00e5ff, transparent: true, opacity: 0.4, side: THREE.DoubleSide })
+      );
       matrixHalo.position.z = 0.02;
       matrixGroup.add(matrixHalo);
+
+      torsoGroup.add(matrixGroup);
+
+      // Dual Chrome Smokestacks on Back
+      const stackGeo = new THREE.CylinderGeometry(0.1, 0.1, 2.3, 16);
+      const stackL = new THREE.Mesh(stackGeo, chromeMaterial);
+      stackL.position.set(-1.15, 0.85, -0.55);
+      torsoGroup.add(stackL);
+
+      const stackR = new THREE.Mesh(stackGeo, chromeMaterial);
+      stackR.position.set(1.15, 0.85, -0.55);
+      torsoGroup.add(stackR);
+
+      primeGroup.add(torsoGroup);
+
+      // 5.4 Shoulders & Articulated Arms
+      function createArm(isLeft) {
+        const side = isLeft ? -1 : 1;
+        const armGroup = new THREE.Group();
+        armGroup.position.set(side * 1.45, 1.55, 0);
+
+        const pauldron = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.85, 1.25), primeRedMaterial);
+        pauldron.rotation.z = side * -0.15;
+        armGroup.add(pauldron);
+
+        const pauldronFlame = new THREE.Mesh(new THREE.BoxGeometry(0.96, 0.3, 1.26), flameAccentMaterial);
+        pauldronFlame.position.set(0, -0.2, 0);
+        pauldron.add(pauldronFlame);
+
+        const shJoint = new THREE.Mesh(new THREE.SphereGeometry(0.32, 16, 16), darkChassisMaterial);
+        shJoint.position.set(side * 0.1, -0.35, 0);
+        armGroup.add(shJoint);
+
+        const bicepGroup = new THREE.Group();
+        bicepGroup.position.set(side * 0.1, -0.85, 0);
+
+        const bicepCore = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.7, 0.55), primeNavyMaterial);
+        bicepGroup.add(bicepCore);
+
+        const bicepPiston = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.65, 12), chromeMaterial);
+        bicepPiston.position.set(side * -0.22, 0, 0.15);
+        bicepGroup.add(bicepPiston);
+
+        armGroup.add(bicepGroup);
+
+        const elbow = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.45, 16), darkChassisMaterial);
+        elbow.geometry.rotateZ(Math.PI / 2);
+        elbow.position.set(side * 0.1, -1.3, 0);
+        armGroup.add(elbow);
+
+        const forearmGroup = new THREE.Group();
+        forearmGroup.position.set(side * 0.1, -1.95, 0.08);
+
+        const gauntlet = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.95, 0.7), primeRedMaterial);
+        forearmGroup.add(gauntlet);
+
+        const flameStrip = new THREE.Mesh(new THREE.BoxGeometry(0.66, 0.4, 0.71), flameAccentMaterial);
+        flameStrip.position.set(0, -0.15, 0);
+        forearmGroup.add(flameStrip);
+
+        const exPipe = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.8, 12), chromeMaterial);
+        exPipe.position.set(side * 0.38, 0.1, -0.15);
+        forearmGroup.add(exPipe);
+
+        const handGroup = new THREE.Group();
+        handGroup.position.set(0, -0.65, 0);
+
+        const palm = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.3, 0.45), darkChassisMaterial);
+        handGroup.add(palm);
+
+        for (let f = -1.5; f <= 1.5; f += 1) {
+          const finger = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.24, 0.1), chromeMaterial);
+          finger.position.set(side * 0.12, -0.2, f * 0.1);
+          handGroup.add(finger);
+        }
+
+        forearmGroup.add(handGroup);
+        armGroup.add(forearmGroup);
+
+        return armGroup;
+      }
+
+      primeGroup.add(createArm(true));
+      primeGroup.add(createArm(false));
+
+      // 5.5 Pelvis & Hip Wheels
+      const pelvisGroup = new THREE.Group();
+      pelvisGroup.position.set(0, 0.05, 0);
+
+      const pelvis = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.65, 1.1), darkChassisMaterial);
+      pelvisGroup.add(pelvis);
+
+      const buckle = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.4, 0.15), primeRedMaterial);
+      buckle.position.set(0, 0.05, 0.6);
+      pelvisGroup.add(buckle);
+
+      const emblemDot = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.18, 0.06), goldAlloyMaterial);
+      emblemDot.position.set(0, 0.05, 0.7);
+      pelvisGroup.add(emblemDot);
+
+      const tankGeo = new THREE.CylinderGeometry(0.22, 0.22, 0.9, 16);
+      tankGeo.rotateX(Math.PI / 2);
+      const tankL = new THREE.Mesh(tankGeo, chromeMaterial);
+      tankL.position.set(-0.95, -0.05, 0);
+      pelvisGroup.add(tankL);
+
+      const tankR = new THREE.Mesh(tankGeo, chromeMaterial);
+      tankR.position.set(0.95, -0.05, 0);
+      pelvisGroup.add(tankR);
+
+      const hipWheelL = createWheel();
+      hipWheelL.position.set(-1.25, -0.1, -0.15);
+      pelvisGroup.add(hipWheelL);
+
+      const hipWheelR = createWheel();
+      hipWheelR.position.set(1.25, -0.1, -0.15);
+      pelvisGroup.add(hipWheelR);
+
+      primeGroup.add(pelvisGroup);
+
+      // 5.6 Legs & Calves & Boots
+      function createLeg(isLeft) {
+        const side = isLeft ? -1 : 1;
+        const legGroup = new THREE.Group();
+        legGroup.position.set(side * 0.55, -0.3, 0);
+
+        const thighGroup = new THREE.Group();
+        thighGroup.position.set(0, -0.5, 0);
+
+        const thigh = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.95, 0.65), primeNavyMaterial);
+        thighGroup.add(thigh);
+
+        const cylFront = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.95, 12), chromeMaterial);
+        cylFront.position.set(0, 0, 0.35);
+        thighGroup.add(cylFront);
+
+        const cylBack = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.95, 12), darkChassisMaterial);
+        cylBack.position.set(side * 0.15, 0, -0.35);
+        thighGroup.add(cylBack);
+
+        legGroup.add(thighGroup);
+
+        const kneeGroup = new THREE.Group();
+        kneeGroup.position.set(0, -1.1, 0.1);
+
+        const kneeCap = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.45, 0.4), primeNavyMaterial);
+        kneeCap.rotation.x = 0.2;
+        kneeGroup.add(kneeCap);
+
+        const kneePlate = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.2, 0.15), chromeMaterial);
+        kneePlate.position.set(0, 0, 0.22);
+        kneeGroup.add(kneePlate);
+
+        legGroup.add(kneeGroup);
+
+        const calfGroup = new THREE.Group();
+        calfGroup.position.set(0, -1.9, 0);
+
+        const shin = new THREE.Mesh(new THREE.BoxGeometry(0.85, 1.2, 0.85), primeNavyMaterial);
+        calfGroup.add(shin);
+
+        const shinFlame = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.65, 0.1), flameAccentMaterial);
+        shinFlame.position.set(0, 0.1, 0.45);
+        calfGroup.add(shinFlame);
+
+        const calfWheel = createWheel();
+        calfWheel.position.set(side * 0.52, -0.15, -0.2);
+        calfGroup.add(calfWheel);
+
+        const achilles = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 1.1, 12), chromeMaterial);
+        achilles.position.set(0, 0, -0.42);
+        calfGroup.add(achilles);
+
+        legGroup.add(calfGroup);
+
+        const footGroup = new THREE.Group();
+        footGroup.position.set(0, -2.65, 0.2);
+
+        const footMain = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.35, 1.25), primeNavyMaterial);
+        footGroup.add(footMain);
+
+        const toes = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.22, 0.45), chromeMaterial);
+        toes.position.set(0, -0.06, 0.65);
+        footGroup.add(toes);
+
+        const heel = new THREE.Mesh(new THREE.BoxGeometry(0.75, 0.28, 0.4), darkChassisMaterial);
+        heel.position.set(0, -0.04, -0.7);
+        footGroup.add(heel);
+
+        legGroup.add(footGroup);
+
+        return legGroup;
+      }
+
+      primeGroup.add(createLeg(true));
+      primeGroup.add(createLeg(false));
 
       // ─── 6. PARTICLE FIELD: ENERGON SPARKS & CYBER DUST ────────────────
       const particleCount = 450;
@@ -979,23 +1256,109 @@
       const particleSystem = new THREE.Points(particleGeo, particleMat);
       scene.add(particleSystem);
 
-      // ─── 7. INTERACTION STATE & MOUSE PHYSICS ──────────────────────────
+      // ─── 7. INTERACTION STATE & 360° ORBIT CONTROLS ─────────────────────
       const mouse = { x: 0, y: 0, targetX: 0, targetY: 0 };
       let scrollProgress = 0;
       let isSurging = false;
       let surgeEnergy = 0;
       let isWireframe = false;
-      let autoOrbit = false;
+      let isTurntable = false;
+
+      // Orbit drag state
+      let isDragging = false;
+      let dragStartX = 0;
+      let dragStartY = 0;
+      let orbitAngle = { x: 0, y: 0 };
+      let targetOrbitAngle = { x: 0, y: 0 };
+      let cameraDistance = 9.5;
+      let targetCameraDistance = 9.5;
+      let cameraTargetY = 0;
+      let currentCameraTargetY = 0;
+
+      // Pointer Orbit Listeners on Canvas & Window
+      canvas.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+      });
 
       window.addEventListener('pointermove', (e) => {
         mouse.targetX = (e.clientX / window.innerWidth - 0.5) * 2;
         mouse.targetY = -(e.clientY / window.innerHeight - 0.5) * 2;
+
+        if (isDragging) {
+          const dx = e.clientX - dragStartX;
+          const dy = e.clientY - dragStartY;
+          dragStartX = e.clientX;
+          dragStartY = e.clientY;
+
+          targetOrbitAngle.y += dx * 0.008;
+          targetOrbitAngle.x += dy * 0.006;
+          // Clamp vertical pitch angle
+          targetOrbitAngle.x = Math.max(-0.6, Math.min(0.6, targetOrbitAngle.x));
+
+          // Deselect camera view buttons when manual drag occurs
+          document.querySelectorAll('.camera-btn').forEach(btn => btn.classList.remove('active'));
+        }
       });
+
+      window.addEventListener('pointerup', () => {
+        isDragging = false;
+      });
+
+      // Mouse Wheel Zoom
+      window.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaY) > 0) {
+          targetCameraDistance += e.deltaY * 0.006;
+          targetCameraDistance = Math.max(4.2, Math.min(14.0, targetCameraDistance));
+        }
+      }, { passive: true });
 
       window.addEventListener('scroll', () => {
         const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
         scrollProgress = totalHeight > 0 ? window.scrollY / totalHeight : 0;
       }, { passive: true });
+
+      // ─── 8. TURNTABLE VIEW PRESETS ─────────────────────────────────────
+      const viewAngles = {
+        front: 0,
+        left: Math.PI / 2,
+        back: Math.PI,
+        right: -Math.PI / 2,
+        matrix: 0
+      };
+
+      document.querySelectorAll('.camera-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.camera-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+
+          const view = btn.dataset.view;
+          if (view === 'matrix') {
+            targetOrbitAngle.y = 0;
+            targetOrbitAngle.x = 0;
+            targetCameraDistance = 4.4;
+            cameraTargetY = 1.1; // Focus on chest Matrix chamber
+            triggerSurge();
+          } else {
+            targetOrbitAngle.y = viewAngles[view] || 0;
+            targetOrbitAngle.x = 0;
+            targetCameraDistance = 9.5;
+            cameraTargetY = 0;
+          }
+          initAudio();
+          playCyberneticHum(120, 0.4, 0.12);
+        });
+      });
+
+      // Turntable Auto-Spin Toggle
+      const btnTurntable = document.getElementById('btn-turntable');
+      btnTurntable?.addEventListener('click', () => {
+        isTurntable = !isTurntable;
+        btnTurntable.classList.toggle('active', isTurntable);
+        initAudio();
+        playCyberneticHum(90, 0.5, 0.15);
+      });
 
       // Wireframe Mode Switcher
       const btnWireframe = document.getElementById('btn-wireframe');
@@ -1003,10 +1366,11 @@
         isWireframe = !isWireframe;
         btnWireframe.classList.toggle('active', isWireframe);
         primeGroup.traverse((child) => {
-          if (child.isMesh) {
+          if (child.isMesh && child.material) {
             child.material.wireframe = isWireframe;
           }
         });
+        initAudio();
         playCyberneticHum(180, 0.3, 0.15);
       });
 
@@ -1024,26 +1388,30 @@
       }
 
       const btnSurge = document.getElementById('btn-surge');
-      btnSurge?.addEventListener('click', triggerSurge);
-
-      const heroMatrixTrigger = document.getElementById('hero-matrix-trigger');
-      heroMatrixTrigger?.addEventListener('click', triggerSurge);
-
-      const btnFocusMatrix = document.getElementById('btn-focus-matrix');
-      btnFocusMatrix?.addEventListener('click', () => {
-        triggerSurge();
-        // Zoom camera in closer
-        camera.position.z = 5.2;
-        setTimeout(() => { camera.position.z = 8.5; }, 3000);
-      });
-
-      // Click anywhere on canvas to surge
-      canvas.addEventListener('click', () => {
+      btnSurge?.addEventListener('click', () => {
         initAudio();
         triggerSurge();
       });
 
-      // ─── 8. RESIZE HANDLER ─────────────────────────────────────────────
+      const heroMatrixTrigger = document.getElementById('hero-matrix-trigger');
+      heroMatrixTrigger?.addEventListener('click', () => {
+        initAudio();
+        triggerSurge();
+      });
+
+      const btnFocusMatrix = document.getElementById('btn-focus-matrix');
+      btnFocusMatrix?.addEventListener('click', () => {
+        initAudio();
+        targetCameraDistance = 4.4;
+        cameraTargetY = 1.1;
+        triggerSurge();
+        setTimeout(() => {
+          targetCameraDistance = 9.5;
+          cameraTargetY = 0;
+        }, 3600);
+      });
+
+      // Resize Handler
       window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -1059,17 +1427,28 @@
         const delta = clock.getDelta();
         const elapsedTime = clock.getElapsedTime();
 
-        // Smooth mouse lerping
+        // Mouse lerping
         mouse.x += (mouse.targetX - mouse.x) * 0.05;
         mouse.y += (mouse.targetY - mouse.y) * 0.05;
 
-        // Model orientation reacts to cursor & scroll
+        // Turntable Auto-Spin accumulation
+        if (isTurntable) {
+          targetOrbitAngle.y += 0.015;
+        }
+
+        // Smooth damping on orbit angles & camera distance
+        orbitAngle.x += (targetOrbitAngle.x - orbitAngle.x) * 0.08;
+        orbitAngle.y += (targetOrbitAngle.y - orbitAngle.y) * 0.08;
+        cameraDistance += (targetCameraDistance - cameraDistance) * 0.08;
+        currentCameraTargetY += (cameraTargetY - currentCameraTargetY) * 0.08;
+
+        // Model orientation reacts to orbit drag + subtle cursor parallax
         const baseRotY = scrollProgress * Math.PI * 0.8;
-        primeGroup.rotation.y = baseRotY + mouse.x * 0.45;
-        primeGroup.rotation.x = -mouse.y * 0.25;
+        primeGroup.rotation.y = baseRotY + orbitAngle.y + mouse.x * 0.2;
+        primeGroup.rotation.x = orbitAngle.x - mouse.y * 0.15;
 
         // Gentle breathing float oscillation
-        primeGroup.position.y = Math.sin(elapsedTime * 1.8) * 0.08 - (scrollProgress * 0.5);
+        primeGroup.position.y = -0.4 + Math.sin(elapsedTime * 1.8) * 0.06 - (scrollProgress * 0.4) - currentCameraTargetY;
 
         // Head subtly leads the look-direction
         headGroup.rotation.y = mouse.x * 0.25;
@@ -1113,13 +1492,16 @@
         }
         particleGeo.attributes.position.needsUpdate = true;
 
+        // Update Camera
+        camera.position.z = cameraDistance;
+
         // Render frame
         renderer.render(scene, camera);
       }
 
       animate();
 
-      // ThreeUI bridge compatibility: allow parent window postMessage controls
+      // ThreeUI bridge compatibility
       window.addEventListener('message', (event) => {
         if (!event.data || typeof event.data !== 'object') return;
         if (event.data.type === 'threeui-optimus-controls') {
@@ -1130,7 +1512,7 @@
           }
           if (wireframe !== undefined) {
             isWireframe = Boolean(wireframe);
-            primeGroup.traverse(child => { if (child.isMesh) child.material.wireframe = isWireframe; });
+            primeGroup.traverse(child => { if (child.isMesh && child.material) child.material.wireframe = isWireframe; });
           }
           if (surge) triggerSurge();
         }

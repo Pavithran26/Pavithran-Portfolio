@@ -100,23 +100,47 @@ body.space-portfolio {
 }
 
 /* Perfectly unified margin and column alignment across ALL sections */
-.intro-identity,
-#work .space-content,
-.work-wide-content,
-.space-about .space-content,
-.space-learning .space-content,
-.space-dawn .space-content,
-.space-contact .space-content {
-  margin-left: 5vw !important;
-  margin-right: auto !important;
-  max-width: 620px !important;
-  width: 100% !important;
+.space-header {
+  padding-left: 5vw !important;
+  padding-right: 5vw !important;
 }
 
 .space-intro {
   min-height: 85svh !important;
   height: auto !important;
   padding-bottom: 8svh !important;
+  padding-left: 5vw !important;
+  padding-right: 5vw !important;
+}
+
+.space-section {
+  padding-left: 5vw !important;
+  padding-right: 5vw !important;
+}
+
+.world-section {
+  padding-left: 5vw !important;
+  padding-right: 5vw !important;
+  min-height: 85svh !important;
+}
+
+/* Master Left-Aligned Column System (Everything flush to 5vw, max 620px width) */
+.intro-identity,
+.space-content,
+#work .space-content,
+.work-wide-content,
+.space-about .space-content,
+.world-copy,
+.world-section .world-copy,
+.world-section-right .world-copy,
+.space-learning .space-content,
+.space-dawn .space-content,
+.space-contact .space-content {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  max-width: 620px !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
 }
 
 .intro-identity {
@@ -162,21 +186,13 @@ body.space-portfolio {
   transform: translateY(-3px) !important;
 }
 
-/* 3. About & Experience: Also left-docked to maintain open stage view */
-.space-about .space-content {
-  max-width: 560px !important;
-  margin-left: 6vw !important;
-  margin-right: auto !important;
-}
-
-.space-experience {
-  max-width: 560px !important;
-}
-
-.space-contact .space-content {
-  max-width: 580px !important;
-  margin-left: 6vw !important;
-  margin-right: auto !important;
+/* Experience, Education & Colophon Containers flush */
+.space-experience,
+.space-education,
+.space-recognition {
+  max-width: 620px !important;
+  width: 100% !important;
+  margin-left: 0 !important;
 }
 
 /* ─── 3. TYPOGRAPHY HARMONY & CONTRAST ───────────────────────────── */
@@ -849,3 +865,88 @@ h1 em, h2 em, .intro-identity h1 em, .space-section h2 em {
     max-height: 200px;
   }
 }
+
+/* ─── ONLOAD THREEUI PERFORMANCE GAUGES SPEEDOMETER PRELOADER ───── */
+.speedometer-onload-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99999;
+  background: #020306;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1), transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), filter 0.85s ease, visibility 0.85s;
+  pointer-events: auto;
+  overflow: hidden;
+  user-select: none;
+}
+
+.speedometer-onload-overlay.is-dismissed {
+  opacity: 0;
+  transform: scale(1.12);
+  filter: blur(10px);
+  pointer-events: none;
+  visibility: hidden;
+}
+
+/* Pure Circular Gauge Presentation (Matches ThreeUI exact dial) */
+.speedometer-circular-stage {
+  width: min(84vw, 84vh, 420px);
+  height: min(84vw, 84vh, 420px);
+  aspect-ratio: 1 / 1;
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  box-shadow:
+    0 0 50px rgba(0, 0, 0, 0.98),
+    0 20px 45px rgba(0, 0, 0, 0.9),
+    0 0 45px rgba(226, 98, 38, 0.18);
+  transition: transform 0.5s ease;
+}
+
+.speedometer-circular-stage iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: transparent;
+  border-radius: 50%;
+}
+
+.nav-gauge-pill {
+  background: rgba(14, 20, 32, 0.85);
+  border: 1px solid rgba(0, 229, 255, 0.28);
+  color: #d1dcff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.2s ease;
+}
+
+.nav-gauge-pill:hover {
+  background: rgba(0, 229, 255, 0.16);
+  border-color: var(--tf-energon);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.35);
+}
+
+.gauge-pulse-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--tf-energon);
+  border-radius: 50%;
+  box-shadow: 0 0 6px var(--tf-energon);
+}
+

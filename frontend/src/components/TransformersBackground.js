@@ -11,14 +11,15 @@
  */
 
 export class TransformersBackground {
-  constructor(videoSrc = '/videos/transformers-optimus-hd.mp4') {
+  constructor(videoSrc = '/videos/Muzan-meets-Ubuyashiki-SnapYT.App.webm') {
     this.videoSrc = videoSrc;
     this.events = new AbortController();
 
     this.mode = 'scrub'; // 'scrub' (scroll-controlled) | 'auto' (free play)
     this.isVivid = true;
     this.isSeeking = false;
-    this.duration = 17.03;
+    this.duration = 76.68;
+    this._seekUnlockTimeout = null;
 
     this.targetProgress = 0;
     this.currentProgress = 0;
@@ -74,28 +75,25 @@ export class TransformersBackground {
     this.hud.className = 'transformers-hud-controls';
     this.hud.setAttribute('aria-label', 'Cinematic Background Controls');
     this.hud.innerHTML = `
-      <div class="tf-hud-badge" title="Scroll-Scrubbed Cybertronian Video">
-        <svg class="tf-insignia-icon" viewBox="0 0 100 100">
-          <polygon points="50,4 20,24 20,68 34,78 34,60 42,60 42,70 50,74 58,70 58,60 66,60 66,78 80,68 80,24" />
-          <polygon points="50,22 36,36 42,46 50,40 58,46 64,36" fill="#fff" />
-          <polygon points="45,54 55,54 50,58" fill="#fff" />
-          <rect x="28" y="44" width="8" height="12" fill="#fff" />
-          <rect x="64" y="44" width="8" height="12" fill="#fff" />
+      <div class="tf-hud-badge" title="Scroll-Scrubbed Cinematic 4K Video">
+        <svg class="tf-insignia-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.8l7 3.5v7.4l-7 3.5-7-3.5V8.3l7-3.5z"/>
         </svg>
         <span id="tf-scrub-label">SCROLL // SCRUB</span>
       </div>
 
-      <div class="tf-scrub-time" id="tf-time-display">0.0s / 17.0s</div>
+      <div class="tf-scrub-time" id="tf-time-display">0.0s / 76.7s</div>
 
       <!-- Quick Scene Jump Buttons -->
       <div class="tf-scene-jumps" role="group" aria-label="Jump to video moments">
-        <button type="button" class="tf-scene-chip" data-time="0" title="Jump to Opening">0s Intro</button>
-        <button type="button" class="tf-scene-chip" data-time="9.5" title="Jump to Power Surge">9.5s Power</button>
-        <button type="button" class="tf-scene-chip highlight" data-time="14.2" title="Jump to Front Tire / Celestial Wheel Climax">14.2s Wheel / Tire ⚡</button>
+        <button type="button" class="tf-scene-chip" data-time="0" title="Jump to Opening Arrival">0s Arrival</button>
+        <button type="button" class="tf-scene-chip" data-time="26" title="Jump to Face-to-Face Encounter">26s Encounter</button>
+        <button type="button" class="tf-scene-chip" data-time="52" title="Jump to Intense Standoff">52s Standoff</button>
+        <button type="button" class="tf-scene-chip highlight" data-time="68" title="Jump to Dramatic Climax">68s Climax ⚡</button>
       </div>
 
       <!-- Mini Timeline Slider -->
-      <input type="range" class="tf-hud-slider" id="tf-scrub-slider" min="0" max="17.03" step="0.1" value="0" title="Drag to seek video manually" />
+      <input type="range" class="tf-hud-slider" id="tf-scrub-slider" min="0" max="76.68" step="0.1" value="0" title="Drag to seek video manually" />
 
       <button type="button" class="tf-hud-btn" id="tf-mode-toggle" title="Switch between Scroll-Scrub and Autoplay">
         <span id="tf-mode-icon">📜</span> <span id="tf-mode-text">SCRUB MODE</span>
@@ -109,7 +107,7 @@ export class TransformersBackground {
 
     // Initial setup on loaded metadata
     const onMetadata = () => {
-      this.duration = this.video.duration || 17.03;
+      this.duration = this.video.duration || 76.68;
       const slider = this.hud.querySelector('#tf-scrub-slider');
       if (slider) slider.max = this.duration;
 
@@ -128,6 +126,10 @@ export class TransformersBackground {
     // Unlock seek state when seeking completes
     this.video.addEventListener('seeked', () => {
       this.isSeeking = false;
+      if (this._seekUnlockTimeout) {
+        clearTimeout(this._seekUnlockTimeout);
+        this._seekUnlockTimeout = null;
+      }
     });
   }
 
@@ -141,15 +143,19 @@ export class TransformersBackground {
     }, { signal, passive: true });
 
     // Track scroll position:
-    // Calibrated so that in the top sections (Hero + Featured Projects ~ 2400px of scrolling),
-    // the video traverses its full 17s transformation arc, bringing the front tire/wheel right into view!
+    // Mapped across the entire page depth so scrolling down smoothly advances the 76.7s cinematic showdown
     const onScroll = () => {
       const currentY = window.scrollY || window.pageYOffset;
       this.scrollY = currentY;
 
       if (this.mode === 'scrub') {
-        const cycleDistance = Math.max(window.innerHeight * 2.8, 2400);
-        const rawProgress = (currentY % cycleDistance) / cycleDistance;
+        const docHeight = Math.max(
+          document.documentElement.scrollHeight,
+          document.body.scrollHeight,
+          window.innerHeight
+        );
+        const maxScroll = Math.max(docHeight - window.innerHeight, 3200);
+        const rawProgress = currentY / maxScroll;
         this.targetProgress = Math.min(1, Math.max(0, rawProgress));
       }
     };
@@ -169,11 +175,11 @@ export class TransformersBackground {
         // Switch to autoplay
         this.mode = 'auto';
         this.video.loop = true;
-        this.video.play();
+        this.video.play().catch(() => {});
         modeBtn.classList.add('active');
         if (modeIcon) modeIcon.textContent = '▶';
         if (modeText) modeText.textContent = 'AUTO PLAY';
-        if (scrubLabel) scrubLabel.textContent = 'TRANSFORMERS // PLAY';
+        if (scrubLabel) scrubLabel.textContent = 'MUZAN // PLAY';
       } else {
         // Switch back to scroll scrub
         this.mode = 'scrub';
@@ -232,7 +238,7 @@ export class TransformersBackground {
     const display = this.hud?.querySelector('#tf-time-display');
     if (display) {
       const cur = currentTime.toFixed(1);
-      const dur = (this.duration || 17.03).toFixed(1);
+      const dur = (this.duration || 76.68).toFixed(1);
       display.textContent = `${cur}s / ${dur}s`;
     }
 
@@ -264,9 +270,18 @@ export class TransformersBackground {
         const targetTime = this.currentProgress * this.duration;
 
         // Seek video if delta is significant and not currently busy seeking
-        if (!this.isSeeking && Math.abs(this.video.currentTime - targetTime) > 0.02) {
+        if (!this.isSeeking && Math.abs(this.video.currentTime - targetTime) > 0.03) {
           this.isSeeking = true;
-          this.video.currentTime = targetTime;
+          if (this._seekUnlockTimeout) clearTimeout(this._seekUnlockTimeout);
+          this._seekUnlockTimeout = setTimeout(() => {
+            this.isSeeking = false;
+          }, 120);
+
+          if (typeof this.video.fastSeek === 'function') {
+            this.video.fastSeek(targetTime);
+          } else {
+            this.video.currentTime = targetTime;
+          }
           this.updateTimeDisplay(targetTime);
         }
       } else if (this.mode === 'auto' && this.video) {

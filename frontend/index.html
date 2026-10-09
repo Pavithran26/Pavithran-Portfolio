@@ -24,6 +24,18 @@
   <link rel="preload" as="image" href="/images/space/ocean-world.webp" fetchpriority="high" />
 </head>
 <body class="space-portfolio">
+  <!-- ThreeUI PerformanceGauges Speedometer Pure Circular Onload Screen -->
+  <aside id="onload-speedometer" class="speedometer-onload-overlay" aria-label="Loading Diagnostics">
+    <div class="speedometer-circular-stage">
+      <iframe
+        id="speedometer-iframe"
+        src="/landing-pages/speedometer.html"
+        title="ThreeUI Performance Gauges Speedometer"
+        loading="eager"
+      ></iframe>
+    </div>
+  </aside>
+
   <a class="skip-link" href="#work">Skip to selected work</a>
   <div class="universe" id="universe" aria-hidden="true"><div class="universe-darkness"></div></div>
 
@@ -38,13 +50,34 @@
       </svg>
       Pavithran <span>S.</span>
     </a>
-    <nav class="space-nav" aria-label="Main navigation"><a href="#work">Work</a><a href="#about">Experience</a><a href="#stack-frontend">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a><a href="/scene.html" style="color: #ff5050; font-weight: 500;">⚡ 3D Optimus</a></nav>
-    <div class="space-header-actions"><button id="appearance-toggle" type="button" aria-label="Switch to light appearance"><span aria-hidden="true">◐</span> Light</button><button id="menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false">Menu <span aria-hidden="true">+</span></button></div>
+    <nav class="space-nav" aria-label="Main navigation">
+      <a href="#work">Work</a>
+      <a href="#about">Experience</a>
+      <a href="#stack-frontend">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+      <a href="/landing-pages/optimus-prime.html" style="color: #ff5050; font-weight: 500;">⚡ 3D Optimus</a>
+      <a href="/scene.html" style="color: #00e5ff; font-weight: 500;">⏱️ Speedometer</a>
+    </nav>
+    <div class="space-header-actions">
+      <button id="open-speedometer-btn" class="nav-gauge-pill" type="button" title="View Speedometer Diagnostics"><span class="gauge-pulse-dot"></span> <span>GAUGE</span></button>
+      <button id="appearance-toggle" type="button" aria-label="Switch to light appearance"><span aria-hidden="true">◐</span> Light</button>
+      <button id="menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false">Menu <span aria-hidden="true">+</span></button>
+    </div>
     <button class="dawn-eye" id="dawn-eye" data-dialog="dawn" type="button" aria-label="Open DAWN AI guide"></button>
   </header>
   <dialog id="mobile-menu" class="mobile-menu" aria-labelledby="menu-title">
     <div class="mobile-menu-top"><span id="menu-title">Explore</span><button id="menu-close" type="button" aria-label="Close menu">Close ×</button></div>
-    <nav aria-label="Mobile navigation"><a href="#top">The beginning</a><a href="#work">Selected work</a><a href="#about">Experience</a><a href="#stack-frontend">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a><a href="/scene.html" style="color: #ff5050; font-weight: 500;">⚡ 3D Optimus Prime</a></nav>
+    <nav aria-label="Mobile navigation">
+      <a href="#top">The beginning</a>
+      <a href="#work">Selected work</a>
+      <a href="#about">Experience</a>
+      <a href="#stack-frontend">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+      <a href="/landing-pages/optimus-prime.html" style="color: #ff5050; font-weight: 500;">⚡ 3D Optimus Prime</a>
+      <a href="/scene.html" style="color: #00e5ff; font-weight: 500;">⏱️ Speedometer Gauge</a>
+    </nav>
   </dialog>
   <main id="portfolio"><section class="space-intro" id="top"><div class="intro-identity"><p class="space-kicker">SOFTWARE ENGINEER</p><h1>Pavithran <em>S.</em></h1><p>Interfaces, systems, and applied intelligence.</p><a href="mailto:pavithran2004cs@gmail.com">Get in touch ↗</a></div></section></main>
   <button class="terminal-launch" data-dialog="terminal" type="button" aria-label="Open developer terminal" aria-keyshortcuts="`"><span aria-hidden="true">&gt;_</span> <span>Dev terminal</span></button>
