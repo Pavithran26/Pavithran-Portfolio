@@ -387,48 +387,30 @@ on(window, 'message', (event) => {
   }
 });
 
-// 3. Dynamic video loading & buffer loop
-// The speedometer NEVER dismisses until the video is physically loaded & first frame rendered!
+// 3. Progressive cinematic loading. Never block access indefinitely on large media.
+// The portfolio is usable even if the decorative video or gauge fails to load.
+const introStartedAt = performance.now();
+const INTRO_MAX_WAIT_MS = 4500;
 const preloadWatchdog = setInterval(() => {
-  if (speedometerDismissed) {
-    clearInterval(preloadWatchdog);
-    return;
-  }
-
+  if (speedometerDismissed) { clearInterval(preloadWatchdog); return; }
+  const elapsed = performance.now() - introStartedAt;
   const actualBuffer = transformersBg ? transformersBg.getBufferProgress() : 0;
   const videoLoaded = transformersBg ? transformersBg.isVideoFullyReady() : false;
-
-  if (videoLoaded) {
-    isVideoReady = true;
-    displayProgress = 100;
-  } else {
-    // Advance progress based on real video bytes buffered, with a natural crawl
-    const target = Math.max(displayProgress, Math.min(94, actualBuffer > 0 ? actualBuffer : displayProgress + 2.5));
+  if (videoLoaded) { isVideoReady = true; displayProgress = 100; }
+  else {
+    const target = Math.min(94, Math.max(displayProgress + 2.5, actualBuffer));
     displayProgress += (target - displayProgress) * 0.28;
   }
-
-  if (displayProgress < 30) {
-    updateHud(displayProgress, 'INITIALIZING CINEMATIC ENGINE...');
-  } else if (displayProgress < 70) {
-    updateHud(displayProgress, 'BUFFERING DEMON SLAYER TIMELINE...');
-  } else if (displayProgress < 99) {
-    updateHud(displayProgress, 'SYNCHRONIZING 60FPS FRAMES...');
-  } else {
-    updateHud(100, 'CINEMATIC SYSTEM ARMED & READY', true);
-  }
-
-  // Dismiss only once video is fully loaded, self-test needle has settled, and document is complete!
-  if (isVideoReady && isGaugeSweepDone && isPageLoaded) {
+  if (elapsed >= INTRO_MAX_WAIT_MS || (isPageLoaded && isGaugeSweepDone && isVideoReady)) {
     clearInterval(preloadWatchdog);
-    updateHud(100, 'CINEMATIC SYSTEM ARMED & READY', true);
-
-    // Give a generous 2.5s window for user to enjoy the gauge or click "ENTER PORTFOLIO"
-    setTimeout(() => {
-      if (!speedometerDismissed) {
-        dismissSpeedometer();
-      }
-    }, 2800);
+    updateHud(100, 'PORTFOLIO READY — VISUALS CONTINUE LOADING', true);
+    // Show the actual portfolio promptly; background media continues independently.
+    dismissSpeedometer();
+    return;
   }
+  if (displayProgress < 30) updateHud(displayProgress, 'INITIALIZING CINEMATIC ENGINE...');
+  else if (displayProgress < 70) updateHud(displayProgress, 'BUFFERING CINEMATIC TIMELINE...');
+  else updateHud(displayProgress, 'SYNCHRONIZING FRAMES...');
 }, 120);
 
 // User interactive dismiss actions
