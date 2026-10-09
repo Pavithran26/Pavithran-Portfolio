@@ -71,6 +71,8 @@ export class TransformersBackground {
     // Prepend to body behind page content
     document.body.prepend(this.viewport);
 
+    this.firstFrameRendered = false;
+
     // Metadata & readiness handling
     const onReady = () => {
       this.duration = this.video.duration || 76.68;
@@ -84,13 +86,45 @@ export class TransformersBackground {
       onReady();
     } else {
       this.video.addEventListener('loadedmetadata', onReady, { once: true });
-      this.video.addEventListener('canplay', onReady, { once: true });
     }
+
+    // Actively prime the video buffer by starting muted playback for 1 tick then pausing
+    const primeBuffer = () => {
+      if (this.video && this.video.paused) {
+        const p = this.video.play();
+        if (p !== undefined) {
+          p.then(() => {
+            this.video.pause();
+            this.video.currentTime = 0.001;
+          }).catch(() => {});
+        }
+      }
+    };
+    this.video.addEventListener('canplay', primeBuffer, { once: true });
 
     // High-performance hardware seek completion listener
     this.video.addEventListener('seeked', () => {
+      this.firstFrameRendered = true;
       this.onFrameDecoded();
     });
+  }
+
+  getBufferProgress() {
+    if (!this.video || !this.duration || this.duration === 0) return 0;
+    if (!this.video.buffered || this.video.buffered.length === 0) return 0;
+    try {
+      const end = this.video.buffered.end(this.video.buffered.length - 1);
+      return Math.min(100, Math.round((end / this.duration) * 100));
+    } catch {
+      return 0;
+    }
+  }
+
+  isVideoFullyReady() {
+    if (!this.video) return false;
+    const buf = this.getBufferProgress();
+    // Video is fully ready when it has enough data to play through, OR has buffered substantial footage with first frame rendered
+    return (this.video.readyState >= 4 && this.firstFrameRendered) || (this.video.readyState >= 3 && buf >= 15 && this.firstFrameRendered);
   }
 
   onFrameDecoded() {

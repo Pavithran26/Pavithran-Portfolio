@@ -334,12 +334,17 @@ if (copyEmailBtn) {
 
 // ─── THREEUI PERFORMANCE GAUGES SPEEDOMETER PURE CIRCULAR ONLOAD SEQUENCE ───
 const speedometerOverlay = document.getElementById('onload-speedometer');
-
+const hudMsg = document.getElementById('speedometer-hud-msg');
+const hudPct = document.getElementById('speedometer-hud-pct');
+const hudFill = document.getElementById('speedometer-hud-fill');
+const hudDot = document.getElementById('speedometer-hud-dot');
+const enterBtn = document.getElementById('speedometer-enter-btn');
 
 let speedometerDismissed = false;
 let isPageLoaded = document.readyState === 'complete';
-let isVideoReady = false;
 let isGaugeSweepDone = false;
+let isVideoReady = false;
+let displayProgress = 8;
 
 function dismissSpeedometer() {
   if (speedometerDismissed || !speedometerOverlay) return;
@@ -352,11 +357,17 @@ function dismissSpeedometer() {
   }, 900);
 }
 
-function checkAndDismissWhenReady() {
+function updateHud(progress, message, ready = false) {
   if (speedometerDismissed) return;
-  // Dismiss only when the video animation, full page, and needle self-test have loaded!
-  if (isPageLoaded && isVideoReady && isGaugeSweepDone) {
-    dismissSpeedometer();
+  const rounded = Math.min(100, Math.max(0, Math.round(progress)));
+  if (hudPct) hudPct.textContent = `${rounded}%`;
+  if (hudFill) hudFill.style.width = `${rounded}%`;
+  if (hudMsg && message) hudMsg.textContent = message;
+  if (ready) {
+    if (hudDot) hudDot.classList.add('is-ready');
+    if (enterBtn) {
+      enterBtn.style.display = 'inline-flex';
+    }
   }
 }
 
@@ -364,48 +375,73 @@ function checkAndDismissWhenReady() {
 if (!isPageLoaded) {
   on(window, 'load', () => {
     isPageLoaded = true;
-    checkAndDismissWhenReady();
   });
 }
 
-// 2. Background video load tracking
-function markVideoReady() {
-  if (isVideoReady) return;
-  isVideoReady = true;
-  checkAndDismissWhenReady();
-}
-
-if (transformersBg?.video) {
-  if (transformersBg.video.readyState >= 2) {
-    markVideoReady();
-  } else {
-    on(transformersBg.video, 'loadeddata', markVideoReady, { once: true });
-    on(transformersBg.video, 'canplay', markVideoReady, { once: true });
-    on(transformersBg.video, 'canplaythrough', markVideoReady, { once: true });
-  }
-} else {
-  isVideoReady = true;
-}
-
-// 3. ThreeUI Speedometer self-test completion (sweep 0 -> 160 -> settles on live speed)
+// 2. ThreeUI Speedometer self-test completion (sweep 0 -> 160 -> settles on live speed)
 on(window, 'message', (event) => {
   if (event.data?.type === 'speedometer-selftest-complete') {
     isGaugeSweepDone = true;
-    checkAndDismissWhenReady();
   }
 });
 
-// Fallback safety timeout (6s) so user is never stuck if network slows down
-setTimeout(() => {
-  isPageLoaded = true;
-  isVideoReady = true;
-  isGaugeSweepDone = true;
-  checkAndDismissWhenReady();
-}, 6000);
+// 3. Dynamic video loading & buffer loop
+// The speedometer NEVER dismisses until the video is physically loaded & first frame rendered!
+const preloadWatchdog = setInterval(() => {
+  if (speedometerDismissed) {
+    clearInterval(preloadWatchdog);
+    return;
+  }
 
-// User interactive dismiss (click anywhere or press Escape/Enter/Space)
+  const actualBuffer = transformersBg ? transformersBg.getBufferProgress() : 0;
+  const videoLoaded = transformersBg ? transformersBg.isVideoFullyReady() : false;
+
+  if (videoLoaded) {
+    isVideoReady = true;
+    displayProgress = 100;
+  } else {
+    // Advance progress based on real video bytes buffered, with a natural crawl
+    const target = Math.max(displayProgress, Math.min(94, actualBuffer > 0 ? actualBuffer : displayProgress + 2.5));
+    displayProgress += (target - displayProgress) * 0.28;
+  }
+
+  if (displayProgress < 30) {
+    updateHud(displayProgress, 'INITIALIZING CINEMATIC ENGINE...');
+  } else if (displayProgress < 70) {
+    updateHud(displayProgress, 'BUFFERING DEMON SLAYER TIMELINE...');
+  } else if (displayProgress < 99) {
+    updateHud(displayProgress, 'SYNCHRONIZING 60FPS FRAMES...');
+  } else {
+    updateHud(100, 'CINEMATIC SYSTEM ARMED & READY', true);
+  }
+
+  // Dismiss only once video is fully loaded, self-test needle has settled, and document is complete!
+  if (isVideoReady && isGaugeSweepDone && isPageLoaded) {
+    clearInterval(preloadWatchdog);
+    updateHud(100, 'CINEMATIC SYSTEM ARMED & READY', true);
+
+    // Give a generous 2.5s window for user to enjoy the gauge or click "ENTER PORTFOLIO"
+    setTimeout(() => {
+      if (!speedometerDismissed) {
+        dismissSpeedometer();
+      }
+    }, 2800);
+  }
+}, 120);
+
+// User interactive dismiss actions
+if (enterBtn) {
+  on(enterBtn, 'click', (e) => {
+    e.stopPropagation();
+    dismissSpeedometer();
+  });
+}
+
 if (speedometerOverlay) {
-  on(speedometerOverlay, 'click', dismissSpeedometer);
+  on(speedometerOverlay, 'click', () => {
+    // If video is loaded or user explicitly clicks to skip, enter immediately
+    dismissSpeedometer();
+  });
 }
 
 on(window, 'keydown', (e) => {

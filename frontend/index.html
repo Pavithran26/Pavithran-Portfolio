@@ -113,19 +113,32 @@
     id="onload-speedometer"
     class="speedometer-onload-overlay"
     aria-label="Loading Diagnostics"
-    style="position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 99999; background: #020306; display: flex; align-items: center; justify-content: center;"
   >
-    <div
-      class="speedometer-circular-stage"
-      style="width: min(84vw, 84vh, 420px); height: min(84vw, 84vh, 420px); aspect-ratio: 1/1; border-radius: 50%; overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; background: transparent; box-shadow: 0 0 50px rgba(0, 0, 0, 0.98), 0 20px 45px rgba(0, 0, 0, 0.9), 0 0 45px rgba(226, 98, 38, 0.22);"
-    >
+    <div class="speedometer-circular-stage">
       <iframe
         id="speedometer-iframe"
         src="/landing-pages/speedometer.html"
         title="ThreeUI Performance Gauges Speedometer"
         loading="eager"
-        style="width: 100%; height: 100%; border: 0; display: block; background: transparent; border-radius: 50%;"
       ></iframe>
+    </div>
+
+    <!-- Real-time Cinematic Video Loading HUD -->
+    <div class="speedometer-hud-panel" id="speedometer-hud-panel">
+      <div class="speedometer-hud-status">
+        <span class="speedometer-hud-dot" id="speedometer-hud-dot"></span>
+        <span class="speedometer-hud-msg" id="speedometer-hud-msg">INITIALIZING CINEMATIC ENGINE...</span>
+        <span class="speedometer-hud-pct" id="speedometer-hud-pct">0%</span>
+      </div>
+      <div class="speedometer-hud-track">
+        <div class="speedometer-hud-fill" id="speedometer-hud-fill"></div>
+      </div>
+      <div class="speedometer-action-wrapper" id="speedometer-action-wrapper">
+        <button class="speedometer-enter-btn" id="speedometer-enter-btn" type="button">
+          <span>ENTER PORTFOLIO</span>
+          <span class="btn-arrow">↗</span>
+        </button>
+      </div>
     </div>
   </aside>
 
