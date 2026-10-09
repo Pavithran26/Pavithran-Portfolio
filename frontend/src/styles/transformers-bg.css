@@ -48,12 +48,11 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transform: scale(1.01) translateZ(0);
-  /* 100% Bold, High Clarity & Sharp - 1080p Crisp Video */
+  transform: translateZ(0);
+  /* 100% Original High-Fidelity 1080p 60fps Master Clarity - Zero Quality Degradation */
   opacity: 1 !important;
-  filter: contrast(1.18) brightness(1.05) saturate(1.28) !important;
-  image-rendering: -webkit-optimize-contrast !important;
-  image-rendering: crisp-edges !important;
+  filter: contrast(1.04) saturate(1.06) !important;
+  image-rendering: auto !important;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   will-change: transform;
@@ -1007,16 +1006,31 @@ h1 em, h2 em, .intro-identity h1 em, .space-section h2 em {
   background: transparent !important;
 }
 
-/* Master Depth Cards: Featured dossiers & Repository archive items */
+/* Master Depth Cards: Featured dossiers & Repository archive items with Framer Motion Tilt */
 .project-destination,
 .archive-project {
-  transform: translate3d(0, var(--depth-y, 0px), 0) scale(var(--depth-scale, 1)) !important;
+  transform: perspective(1000px) translate3d(0, calc(var(--depth-y, 0px) + var(--card-lift, 0px)), 0) scale(var(--depth-scale, 1)) rotateX(var(--card-rx, 0deg)) rotateY(var(--card-ry, 0deg)) !important;
   opacity: var(--depth-opacity, 1) !important;
   filter: blur(var(--depth-blur, 0px)) !important;
-  transition: border-color 0.25s ease, box-shadow 0.25s ease !important;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease !important;
   will-change: transform, opacity, filter;
   border: 1px solid rgba(0, 229, 255, 0.28) !important;
   box-shadow: 0 16px 45px rgba(0, 0, 0, 0.65), 0 0 26px rgba(0, 229, 255, 0.08) !important;
+  transform-style: preserve-3d;
+}
+
+.project-destination:hover,
+.archive-project:hover {
+  border-color: rgba(255, 112, 40, 0.6) !important;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.8), 0 0 35px rgba(226, 98, 38, 0.22) !important;
+}
+
+.space-experience article,
+.education-milestone,
+.space-recognition article {
+  transform: perspective(1000px) translate3d(0, var(--card-lift, 0px), 0) rotateX(var(--card-rx, 0deg)) rotateY(var(--card-ry, 0deg));
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
 }
 
 /* Scroll Erase & Depth for Headlines & Intro Text */

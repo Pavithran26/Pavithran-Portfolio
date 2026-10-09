@@ -80,7 +80,7 @@ export const PORTFOLIO_DATA = {
   ],
   "experience": [
     {
-      "role": "Software Engineer",
+      "role": "Forward Deployed Engineer (FDE)",
       "company": "OWLSure, a business unit of ValueMomentum",
       "period": "June 8, 2026 – Present",
       "location": "Coimbatore / Hybrid",

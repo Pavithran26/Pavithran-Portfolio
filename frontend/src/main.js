@@ -14,6 +14,7 @@ import { escapeHtml as html } from './utils/helpers.js';
 import { TransformersBackground } from './components/TransformersBackground.js';
 import { ScrollDepthController } from './components/ScrollDepthController.js';
 import { GlitterTextEngine } from './components/GlitterTextEngine.js';
+import { FramerMotionPhysics } from './utils/FramerMotionPhysics.js';
 
 
 const root = document.querySelector('#portfolio');
@@ -171,7 +172,7 @@ root.innerHTML = `
       </div>
       <p id="copy-feedback" role="status"></p>
       <div class="space-colophon">
-        <span>© ${new Date().getFullYear()} ${html(profile.name)} · Forward Deployment Engineer</span>
+        <span>© ${new Date().getFullYear()} ${html(profile.name)} · Forward Deployed Engineer (FDE)</span>
         <button type="button" data-dialog="terminal">Developer terminal ↗</button>
         <a href="#top">Back to the beginning ↑</a>
       </div>
@@ -201,6 +202,7 @@ document.querySelector('.liquid-svg-defs')?.remove();
 const transformersBg = new TransformersBackground('/videos/Muzan-meets-Ubuyashiki-Smooth.mp4', { lenis });
 const scrollDepth = new ScrollDepthController({ lenis });
 const glitterEngine = new GlitterTextEngine({ lenis });
+const motionPhysics = new FramerMotionPhysics();
 
 // Connect Lenis sub-pixel virtual scroll ticks directly to video scrubbing and 3D depth
 lenis.on('scroll', (e) => {
@@ -458,6 +460,7 @@ if (import.meta.hot) {
     transformersBg.dispose();
     scrollDepth.dispose();
     glitterEngine.dispose();
+    motionPhysics.dispose();
     dialogs.request?.abort();
     dialogs.terminal?.stopMatrix();
     dialogs.dialog.remove();
