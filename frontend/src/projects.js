@@ -12,7 +12,6 @@ import { escapeHtml as html } from './utils/helpers.js';
 
 const root = document.querySelector('#archive-grid');
 root.innerHTML = PROJECTS_DATA.map((project, index) => `<article class="archive-project">
-  <!-- ${PROJECT_SCENES[project.id] ? `<img src="/images/projects/${project.id}-768.webp" alt="${html(PROJECT_SCENES[project.id])}" width="768" height="432" loading="lazy" decoding="async">` : ''} -->
   <div class="archive-copy"><p class="space-kicker">${String(index + 1).padStart(2, '0')} / ${html(project.category)}</p>
   <h2><button type="button" data-project="${project.id}">${html(project.title)} <span aria-hidden="true">↗</span></button></h2>
   <p>${html(project.tagline)}</p><div class="archive-tags">${project.technologies.slice(0, 4).map(tech => `<span>${html(tech)}</span>`).join('')}</div>

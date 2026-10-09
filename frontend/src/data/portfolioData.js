@@ -1,8 +1,8 @@
 // Profile content; existing contact email retained pending conflicting README address confirmation.
 export const PORTFOLIO_DATA = {
   "name": "Pavithran S.",
-  "role": "Software Engineer",
-  "tagline": "Multi-Stack Software Engineer • Backend, AI/RAG & 3D Interactive Systems",
+  "role": "Forward Deployed Engineer (FDE)",
+  "tagline": "Forward Deployed Engineer (FDE) • Backend, AI/RAG & High-Impact Systems",
   "summary": "Multi-stack Software Engineer who enjoys turning real-world problems into practical software solutions. Proven experience spanning backend engineering, REST APIs, modern web development, databases, AI/RAG systems, UI enhancement, DevOps, CI/CD, and cloud deployment across insurance, education, and enterprise ERP domains.",
   "company": "OWLSure, a business unit of ValueMomentum",
   "experienceStart": "June 8, 2026",

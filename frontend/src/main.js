@@ -1,7 +1,8 @@
 import { educationCharacter } from './components/EducationCharacter.js';
 import { CursorSpotlight } from './components/CursorSpotlight.js';
-import { LiquidCursor } from './components/LiquidCursor.js';
 import './style.css';
+import Lenis from 'lenis';
+import 'lenis/dist/lenis.css';
 import { PORTFOLIO_DATA as profile } from './data/portfolioData.js';
 import { FEATURED_PROJECTS as featuredProjects, PROJECTS_DATA } from './data/projectsData.js';
 import { SPACE_CHAPTERS as chapters } from './data/spaceJourneyData.js';
@@ -11,6 +12,8 @@ import { technologyIcons } from './components/TechnologyIcons.js';
 import { getClaraEyeAvatarHtml } from './components/ClaraWidget.js';
 import { escapeHtml as html } from './utils/helpers.js';
 import { TransformersBackground } from './components/TransformersBackground.js';
+import { ScrollDepthController } from './components/ScrollDepthController.js';
+import { GlitterTextEngine } from './components/GlitterTextEngine.js';
 
 function getProjectCategory(project) {
   const cat = (project.category || '').toLowerCase();
@@ -31,12 +34,11 @@ const root = document.querySelector('#portfolio');
 root.innerHTML = `
   <section class="space-intro" id="top" aria-labelledby="intro-title">
     <div class="intro-identity">
-      <p class="space-kicker"><span class="tf-status-badge">AUTOBOT SYSTEM // ONLINE</span><br>TAMIL NADU, INDIA · SOFTWARE ENGINEER</p>
+      <p class="space-kicker">TAMIL NADU, INDIA · FORWARD DEPLOYED ENGINEER (FDE)</p>
       <h1 id="intro-title">Pavithran <em>S.</em></h1>
       <p class="intro-statement">Thoughtful interfaces.<br>Dependable systems.<br>A little intelligence in between.</p>
       <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
         <a class="intro-enter" href="#work">Explore my work <span aria-hidden="true">↓</span></a>
-        <a class="intro-enter" href="/scene.html" style="background: rgba(224, 35, 28, 0.15); border: 1px solid rgba(224, 35, 28, 0.4); color: #ff6864;">⚡ 3D Optimus Matrix <span aria-hidden="true">↗</span></a>
       </div>
     </div>
     <p class="intro-caption">A SMALL PART OF<br>A MUCH BIGGER UNIVERSE</p>
@@ -73,7 +75,6 @@ root.innerHTML = `
                 ${project.githubUrl ? `<a class="space-text-link" href="${html(project.githubUrl)}" target="_blank" rel="noopener noreferrer">Source code ↗</a>` : ''}
               </div>
             </div>
-            <!-- ${projectVisual(project)} (project image commented out to keep Transformers video visible) -->
           </article>
         `).join('')}
       </div>
@@ -97,7 +98,6 @@ root.innerHTML = `
         <div class="archive-grid" id="full-projects-grid">
           ${PROJECTS_DATA.map((project, index) => `
             <article class="archive-project" data-cat="${getProjectCategory(project)}" data-project-id="${project.id}">
-              <!-- ${PROJECT_SCENES[project.id] ? `<img src="/images/projects/${project.id}-768.webp" alt="${html(PROJECT_SCENES[project.id])}" width="768" height="432" loading="lazy" decoding="async">` : ''} -->
               <div class="archive-copy">
                 <p class="space-kicker">${String(index + 1).padStart(2, '0')} / ${html(project.category)}</p>
                 <h2><button type="button" data-project="${project.id}">${html(project.title)} <span aria-hidden="true">↗</span></button></h2>
@@ -121,7 +121,7 @@ root.innerHTML = `
     <div class="space-content">
       <p class="space-kicker">THE PERSON BEHIND THE WORK</p>
       <h2 id="about-title">Always curious.<br><em>Still building.</em></h2>
-      <p class="section-intro">I'm Pavithran, a software engineer from Tamil Nadu. I like making complicated things feel simple, from the first interaction to the systems underneath.</p>
+      <p class="section-intro">I'm Pavithran, a Forward Deployed Engineer (FDE) from Tamil Nadu. I like making complicated things feel simple, from the first interaction to the systems underneath.</p>
       <div class="space-experience" id="experience">
         ${profile.experience.map((job, index) => `
           <article id="experience-${index}">
@@ -170,7 +170,6 @@ root.innerHTML = `
               <p class="experience-company">${html(education.institution)}</p>
               <p>${html(education.highlights)}</p>
             </div>
-            <!-- ${educationCharacter(education.visualStage)} -->
           </article>
         `).join('')}
       </div>
@@ -235,9 +234,42 @@ root.innerHTML = `
   </footer>
 `;
 
+// ─── INITIALIZE LENIS ULTRA-SMOOTH VIRTUAL SCROLL ENGINE ───────────
+const lenis = new Lenis({
+  duration: 1.35,
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential deceleration curve
+  orientation: 'vertical',
+  gestureOrientation: 'vertical',
+  smoothWheel: true,
+  wheelMultiplier: 0.95,
+  touchMultiplier: 1.4,
+  infinite: false,
+});
+
+// Initially pause scrolling while the speedometer on-load sequence is running
+lenis.stop();
+
 const spotlight = new CursorSpotlight(root);
-const liquidCursor = new LiquidCursor();
-const transformersBg = new TransformersBackground('/videos/Muzan-meets-Ubuyashiki-SnapYT.App.webm');
+document.querySelector('#liquid-cursor-container')?.remove();
+document.querySelector('.liquid-svg-defs')?.remove();
+
+const transformersBg = new TransformersBackground('/videos/Muzan-meets-Ubuyashiki-Smooth.mp4', { lenis });
+const scrollDepth = new ScrollDepthController({ lenis });
+const glitterEngine = new GlitterTextEngine({ lenis });
+
+// Connect Lenis sub-pixel virtual scroll ticks directly to video scrubbing and 3D depth
+lenis.on('scroll', (e) => {
+  transformersBg.onScroll(e);
+  scrollDepth.onScroll(e);
+});
+
+// Master hardware-synchronized animation loop
+let lenisRafId = null;
+function rafLoop(time) {
+  lenis.raf(time);
+  lenisRafId = requestAnimationFrame(rafLoop);
+}
+lenisRafId = requestAnimationFrame(rafLoop);
 
 const eyeButton = document.querySelector('#dawn-eye');
 if (eyeButton) {
@@ -249,6 +281,37 @@ const events = new AbortController();
 const on = (target, type, handler, options = {}) => {
   if (target) target.addEventListener(type, handler, { signal: events.signal, ...options });
 };
+
+// Lenis smooth anchor navigation for all internal jump links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  on(anchor, 'click', (e) => {
+    const href = anchor.getAttribute('href');
+    if (href && href.startsWith('#') && href.length > 1) {
+      const target = document.querySelector(href);
+      if (target) {
+        e.preventDefault();
+        lenis.scrollTo(target, {
+          offset: -40,
+          duration: 1.4,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+      }
+    }
+  });
+});
+
+// Pause Lenis when dialog modals open, resume when closed
+const dialogEl = document.querySelector('.portfolio-dialog');
+if (dialogEl) {
+  const dialogObserver = new MutationObserver(() => {
+    if (dialogEl.hasAttribute('open')) {
+      lenis.stop();
+    } else {
+      lenis.start();
+    }
+  });
+  dialogObserver.observe(dialogEl, { attributes: true, attributeFilter: ['open'] });
+}
 
 // Filter tabs in the All Projects Catalog
 const filterTabs = document.querySelectorAll('.catalog-filter-bar .filter-tab');
@@ -334,7 +397,7 @@ if (copyEmailBtn) {
 
 // ─── THREEUI PERFORMANCE GAUGES SPEEDOMETER PURE CIRCULAR ONLOAD SEQUENCE ───
 const speedometerOverlay = document.getElementById('onload-speedometer');
-const openSpeedometerBtn = document.getElementById('open-speedometer-btn');
+
 
 let speedometerDismissed = false;
 let isPageLoaded = document.readyState === 'complete';
@@ -345,6 +408,8 @@ function dismissSpeedometer() {
   if (speedometerDismissed || !speedometerOverlay) return;
   speedometerDismissed = true;
   speedometerOverlay.classList.add('is-dismissed');
+  // Unlock ultra-smooth scrolling now that preloader is finished
+  lenis.start();
   setTimeout(() => {
     if (speedometerOverlay) speedometerOverlay.style.display = 'none';
   }, 900);
@@ -366,7 +431,7 @@ if (!isPageLoaded) {
   });
 }
 
-// 2. Background video load tracking (Muzan meets Ubuyashiki 4K video)
+// 2. Background video load tracking
 function markVideoReady() {
   if (isVideoReady) return;
   isVideoReady = true;
@@ -393,13 +458,13 @@ on(window, 'message', (event) => {
   }
 });
 
-// Fallback maximum wait (8s) so user is never stuck if network slows down
+// Fallback safety timeout (6s) so user is never stuck if network slows down
 setTimeout(() => {
   isPageLoaded = true;
   isVideoReady = true;
   isGaugeSweepDone = true;
   checkAndDismissWhenReady();
-}, 8000);
+}, 6000);
 
 // User interactive dismiss (click anywhere or press Escape/Enter/Space)
 if (speedometerOverlay) {
@@ -411,27 +476,19 @@ on(window, 'keydown', (e) => {
     dismissSpeedometer();
   }
 });
-
-function showSpeedometer() {
-  if (!speedometerOverlay) return;
-  speedometerDismissed = false;
-  speedometerOverlay.style.display = 'flex';
-  requestAnimationFrame(() => {
-    speedometerOverlay.classList.remove('is-dismissed');
-  });
-}
-
-if (openSpeedometerBtn) {
-  on(openSpeedometerBtn, 'click', showSpeedometer);
-}
-
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
+    if (lenisRafId) cancelAnimationFrame(lenisRafId);
+    lenis.destroy();
     events.abort();
     spotlight.dispose();
     transformersBg.dispose();
+    scrollDepth.dispose();
+    glitterEngine.dispose();
     dialogs.request?.abort();
     dialogs.terminal?.stopMatrix();
     dialogs.dialog.remove();
   });
 }
+
+
