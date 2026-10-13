@@ -108,7 +108,7 @@
   <link rel="stylesheet" href="/src/style.css" />
 </head>
 <body class="space-portfolio experience-mode-pending">
-  <aside id="experience-choice" class="experience-choice" role="dialog" aria-modal="true" aria-labelledby="experience-choice-title" aria-describedby="experience-choice-description">
+  <aside id="experience-choice" class="experience-choice" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="experience-choice-title" aria-describedby="experience-choice-description">
     <div class="experience-choice-panel">
       <p class="experience-choice-eyebrow">PAVITHRAN S · INTERACTIVE PORTFOLIO</p>
       <h1 id="experience-choice-title">Choose your <em>experience.</em></h1>
@@ -137,12 +137,12 @@
     id="onload-speedometer"
     class="speedometer-onload-overlay"
     aria-label="Loading Diagnostics"
-    aria-hidden="true"
-    hidden
+    aria-hidden="false"
   >
     <div class="speedometer-circular-stage">
       <iframe
         id="speedometer-iframe"
+        src="/landing-pages/speedometer.html"
         data-src="/landing-pages/speedometer.html"
         title="ThreeUI Performance Gauges Speedometer"
         loading="eager"
