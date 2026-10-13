@@ -48,11 +48,11 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transform: translateZ(0);
-  /* 100% Original High-Fidelity 1080p 60fps Master Clarity - Zero Quality Degradation */
+  transform: translate3d(0, 0, 0) scale(1.025);
   opacity: 1 !important;
-  filter: contrast(1.04) saturate(1.06) !important;
-  image-rendering: auto !important;
+  /* Avoid per-frame CSS filters on a full-viewport video; let the decoder/GPU composite it. */
+  filter: none !important;
+  image-rendering: auto;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   will-change: transform;
