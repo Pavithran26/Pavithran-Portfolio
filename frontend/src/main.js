@@ -354,6 +354,7 @@ const enterBtn = document.getElementById('speedometer-enter-btn');
 let speedometerDismissed = false;
 let isPageLoaded = document.readyState === 'complete';
 let isGaugeSweepDone = false;
+let isSpeedometerFrameReady = false;
 let isVideoReady = false;
 let displayProgress = 0;
 let latestLoadingProgress = 0;
@@ -411,9 +412,15 @@ function sendLoadingProgress() {
 }
 
 if (speedometerFrame) {
-  on(speedometerFrame, 'load', sendLoadingProgress);
+  on(speedometerFrame, 'load', () => {
+    isSpeedometerFrameReady = true;
+    sendLoadingProgress();
+  });
   on(window, 'message', (event) => {
-    if (event.data?.type === 'speedometer-ready') sendLoadingProgress();
+    if (event.data?.type === 'speedometer-ready') {
+      isSpeedometerFrameReady = true;
+      sendLoadingProgress();
+    }
   });
 }
 
@@ -452,7 +459,8 @@ on(window, 'message', (event) => {
 
 // 3. Progressive cinematic loading. Never block access indefinitely on large media.
 // The portfolio is usable even if the decorative video or gauge fails to load.
-const INTRO_MAX_WAIT_MS = 4500;
+const INTRO_MIN_VISIBLE_MS = 3500;
+const INTRO_MAX_WAIT_MS = 6500;
 
 function startPreloadWatchdog() {
   if (preloadWatchdog) clearInterval(preloadWatchdog);
@@ -461,6 +469,7 @@ function startPreloadWatchdog() {
   latestLoadingProgress = 0;
   isVideoReady = false;
   isGaugeSweepDone = false;
+  isSpeedometerFrameReady = false;
   isPageLoaded = document.readyState === 'complete';
 
   preloadWatchdog = setInterval(() => {
@@ -481,7 +490,15 @@ function startPreloadWatchdog() {
       displayProgress += (target - displayProgress) * 0.28;
     }
 
-    if (elapsed >= INTRO_MAX_WAIT_MS || (isPageLoaded && isGaugeSweepDone && isVideoReady)) {
+    // Keep the dial visible long enough for its sweep to be seen; dismiss early
+    // only after the minimum display time and full page/video/gauge readiness.
+    const isReadyToDismiss = elapsed >= INTRO_MIN_VISIBLE_MS
+      && isPageLoaded
+      && isSpeedometerFrameReady
+      && isGaugeSweepDone
+      && isVideoReady;
+
+    if (elapsed >= INTRO_MAX_WAIT_MS || isReadyToDismiss) {
       clearInterval(preloadWatchdog);
       preloadWatchdog = null;
       updateHud(100, 'PORTFOLIO READY — VISUALS CONTINUE LOADING', true);
