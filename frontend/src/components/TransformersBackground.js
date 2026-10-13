@@ -8,7 +8,7 @@
  */
 
 export class TransformersBackground {
-  constructor(videoSrc = '/videos/Muzan-meets-Ubuyashiki-Smooth.mp4', options = {}) {
+  constructor(videoSrc = '/videos/Muzan-meets-Ubuyashiki-SnapYT.App.webm', options = {}) {
     this.videoSrc = videoSrc;
     this.lenis = options.lenis || null;
     this.events = new AbortController();
@@ -50,16 +50,16 @@ export class TransformersBackground {
     // 3. Video element configured for ultra-fast frame scrubbing
     this.video = document.createElement('video');
     this.video.className = 'transformers-bg-video';
-    this.video.src = this.videoSrc;
+    // Set src only after media event handlers are attached.
     this.video.autoplay = false;
     this.video.loop = false;
     this.video.muted = true;
     this.video.playsInline = true;
-    this.video.preload = 'auto';
+    this.video.preload = 'metadata';
     this.video.disablePictureInPicture = true;
     this.video.setAttribute('playsinline', '');
     this.video.setAttribute('webkit-playsinline', '');
-    this.video.setAttribute('preload', 'auto');
+    this.video.setAttribute('preload', 'metadata');
 
     // 4. Subtle Directional Veil
     this.veil = document.createElement('div');
@@ -70,6 +70,15 @@ export class TransformersBackground {
 
     // Prepend to body behind page content
     document.body.prepend(this.viewport);
+
+    // The page must still have a designed backdrop if media is unavailable.
+    this.video.addEventListener('error', () => {
+      this.isLoaded = false;
+      this.viewport.classList.add('is-video-fallback');
+    }, { once: true, signal: this.events.signal });
+    this.video.addEventListener('loadeddata', () => {
+      this.viewport.classList.remove('is-video-fallback');
+    }, { once: true, signal: this.events.signal });
 
     this.firstFrameRendered = false;
 
@@ -107,6 +116,9 @@ export class TransformersBackground {
       this.firstFrameRendered = true;
       this.onFrameDecoded();
     });
+
+    // Start fetching only after all readiness/error listeners are in place.
+    this.video.src = this.videoSrc;
   }
 
   getBufferProgress() {
