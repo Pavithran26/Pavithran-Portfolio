@@ -1209,3 +1209,29 @@ html.lenis body {
 .dawn-eye span {
   display: none !important;
 }
+
+/* Reliable cinematic backdrop while the background video loads or if it fails. */
+.transformers-viewport {
+  background:
+    radial-gradient(ellipse at 76% 36%, rgba(0, 229, 255, 0.13), transparent 43%),
+    radial-gradient(ellipse at 24% 70%, rgba(224, 35, 28, 0.12), transparent 42%),
+    linear-gradient(125deg, #03060c 0%, #081522 52%, #03060c 100%) !important;
+}
+
+.transformers-viewport.is-video-fallback .transformers-bg-video {
+  display: none !important;
+}
+
+.transformers-viewport.is-video-fallback::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.38;
+  background:
+    linear-gradient(rgba(0, 229, 255, 0.065) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.065) 1px, transparent 1px);
+  background-size: 52px 52px;
+  mask-image: radial-gradient(ellipse at 72% 43%, #000 0%, transparent 78%);
+}
+
