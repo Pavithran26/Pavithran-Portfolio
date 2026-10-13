@@ -508,7 +508,7 @@ if (speedometerOverlay) {
 }
 
 on(window, 'keydown', (e) => {
-  if (experienceMode === 'animation' && ['Escape', 'Enter', ' '].includes(e.key) && !speedometerDismissed && !e.target.closest('button, a, input, textarea, select')) {
+  if (experienceMode === 'animation' && ['Escape', 'Enter', ' '].includes(e.key) && !speedometerDismissed && !(e.target instanceof Element && e.target.closest('button, a, input, textarea, select'))) {
     dismissSpeedometer();
   }
 });
