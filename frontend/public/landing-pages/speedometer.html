@@ -817,6 +817,10 @@
             // The parent preloader owns real loading progress; mirror it in this dial.
             if (window.parent !== window) {
                 window.addEventListener('message', (event) => {
+                    if (event.data?.type === 'speedometer-request-progress') {
+                        window.parent.postMessage({ type: 'speedometer-ready' }, '*');
+                        return;
+                    }
                     if (event.data?.type !== 'portfolio-loading-progress') return;
                     const card = document.getElementById('gauge-speedometer');
                     if (!card) return;
@@ -836,6 +840,7 @@
                 // Start at 0%, then let the parent send measured loading progress.
                 const readout = document.querySelector('#gauge-speedometer [data-readout]');
                 if (readout) readout.textContent = '0%';
+                window.parent.postMessage({ type: 'speedometer-ready' }, '*');
             }
 
             /* ---------- heading word reveal ---------- */
