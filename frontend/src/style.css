@@ -11,6 +11,7 @@
 @import './styles/education-journey.css';
 @import './shaders/threeui.css';
 @import './styles/transformers-bg.css';
+@import './styles/experience-mode.css';
 
 /* Unified Single-Page Natural Scroll Layout */
 html {
