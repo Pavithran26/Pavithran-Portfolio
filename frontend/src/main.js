@@ -195,20 +195,42 @@ const lenis = new Lenis({
 // Initially pause scrolling while the speedometer on-load sequence is running
 lenis.stop();
 
-const spotlight = new CursorSpotlight(root);
+let spotlight = null;
+let transformersBg = null;
+let scrollDepth = null;
+let glitterEngine = null;
+let motionPhysics = null;
+let experienceMode = null;
+let animationScrollListenerBound = false;
+
 document.querySelector('#liquid-cursor-container')?.remove();
 document.querySelector('.liquid-svg-defs')?.remove();
 
-const transformersBg = new TransformersBackground('/videos/Muzan-meets-Ubuyashiki-SnapYT.App.webm', { lenis });
-const scrollDepth = new ScrollDepthController({ lenis });
-const glitterEngine = new GlitterTextEngine({ lenis });
-const motionPhysics = new FramerMotionPhysics();
+// Heavy visuals are created only after the visitor explicitly chooses Animation mode.
+function initializeAnimationExperience() {
+  if (experienceMode !== 'animation') return;
 
-// Connect Lenis sub-pixel virtual scroll ticks directly to video scrubbing and 3D depth
-lenis.on('scroll', (e) => {
-  transformersBg.onScroll(e);
-  scrollDepth.onScroll(e);
-});
+  spotlight = spotlight || new CursorSpotlight(root);
+  transformersBg = transformersBg || new TransformersBackground('/videos/Muzan-meets-Ubuyashiki-SnapYT.App.webm', { lenis });
+  scrollDepth = scrollDepth || new ScrollDepthController({ lenis });
+  glitterEngine = glitterEngine || new GlitterTextEngine({ lenis });
+  motionPhysics = motionPhysics || new FramerMotionPhysics();
+
+  if (!animationScrollListenerBound) {
+    lenis.on('scroll', (e) => {
+      transformersBg?.onScroll(e);
+      scrollDepth?.onScroll(e);
+    });
+    animationScrollListenerBound = true;
+  }
+
+  const dawnVideo = document.querySelector('#dawn-eye .dawn-katana-video');
+  if (dawnVideo && !dawnVideo.getAttribute('src')) {
+    dawnVideo.setAttribute('src', dawnVideo.dataset.src || '/videos/katana-blade.mp4');
+    dawnVideo.load();
+    dawnVideo.play().catch(() => {});
+  }
+}
 
 // Master hardware-synchronized animation loop
 let lenisRafId = null;
@@ -219,16 +241,6 @@ function rafLoop(time) {
 lenisRafId = requestAnimationFrame(rafLoop);
 
 const eyeButton = document.querySelector('#dawn-eye');
-if (eyeButton) {
-  if (!eyeButton.querySelector('.dawn-katana-video')) {
-    eyeButton.innerHTML = `<video class="dawn-katana-video" src="/videos/katana-blade.mp4" autoplay loop muted playsinline disablepictureinpicture aria-hidden="true"></video>`;
-  }
-  const vid = eyeButton.querySelector('video');
-  if (vid) {
-    vid.muted = true;
-    vid.play().catch(() => {});
-  }
-}
 
 const dialogs = new PortfolioDialogs();
 const events = new AbortController();
@@ -345,6 +357,54 @@ let isGaugeSweepDone = false;
 let isVideoReady = false;
 let displayProgress = 0;
 let latestLoadingProgress = 0;
+let introStartedAt = 0;
+let preloadWatchdog = null;
+
+const experienceChoice = document.getElementById('experience-choice');
+const animationChoiceButton = document.getElementById('choose-animation');
+const normalChoiceButton = document.getElementById('choose-normal');
+
+function closeExperienceChoice() {
+  if (!experienceChoice) return;
+  experienceChoice.classList.add('is-dismissed');
+  experienceChoice.setAttribute('aria-hidden', 'true');
+  window.setTimeout(() => { experienceChoice.hidden = true; }, 450);
+  document.querySelector('.space-signature')?.focus({ preventScroll: true });
+}
+
+function chooseNormalMode() {
+  if (experienceMode) return;
+  experienceMode = 'normal';
+  document.body.classList.remove('experience-mode-pending', 'experience-animation');
+  document.body.classList.add('experience-normal');
+  if (speedometerOverlay) {
+    speedometerOverlay.hidden = true;
+    speedometerOverlay.setAttribute('aria-hidden', 'true');
+  }
+  closeExperienceChoice();
+  // Keep the page usable with native-feeling scrolling and no media preloader.
+  lenis.start();
+}
+
+function chooseAnimationMode() {
+  if (experienceMode) return;
+  experienceMode = 'animation';
+  document.body.classList.remove('experience-mode-pending', 'experience-normal');
+  document.body.classList.add('experience-animation');
+  if (speedometerOverlay) {
+    speedometerOverlay.hidden = false;
+    speedometerOverlay.setAttribute('aria-hidden', 'false');
+  }
+  closeExperienceChoice();
+  initializeAnimationExperience();
+  if (speedometerFrame && !speedometerFrame.getAttribute('src')) {
+    speedometerFrame.setAttribute('src', speedometerFrame.dataset.src || '/landing-pages/speedometer.html');
+  }
+  startPreloadWatchdog();
+}
+
+on(animationChoiceButton, 'click', chooseAnimationMode);
+on(normalChoiceButton, 'click', chooseNormalMode);
 
 function sendLoadingProgress() {
   speedometerFrame?.contentWindow?.postMessage({ type: 'portfolio-loading-progress', progress: latestLoadingProgress }, '*');
@@ -358,7 +418,7 @@ if (speedometerFrame) {
 }
 
 function dismissSpeedometer() {
-  if (speedometerDismissed || !speedometerOverlay) return;
+  if (experienceMode !== 'animation' || speedometerDismissed || !speedometerOverlay) return;
   speedometerDismissed = true;
   speedometerOverlay.classList.add('is-dismissed');
   // Unlock ultra-smooth scrolling now that preloader is finished
@@ -392,27 +452,45 @@ on(window, 'message', (event) => {
 
 // 3. Progressive cinematic loading. Never block access indefinitely on large media.
 // The portfolio is usable even if the decorative video or gauge fails to load.
-const introStartedAt = performance.now();
 const INTRO_MAX_WAIT_MS = 4500;
-const preloadWatchdog = setInterval(() => {
-  if (speedometerDismissed) { clearInterval(preloadWatchdog); return; }
-  const elapsed = performance.now() - introStartedAt;
-  const actualBuffer = transformersBg ? transformersBg.getBufferProgress() : 0;
-  const videoLoaded = transformersBg ? transformersBg.isVideoFullyReady() : false;
-  if (videoLoaded) { isVideoReady = true; displayProgress = 100; }
-  else {
-    const target = Math.min(94, Math.max(displayProgress + 2.5, actualBuffer));
-    displayProgress += (target - displayProgress) * 0.28;
-  }
-  if (elapsed >= INTRO_MAX_WAIT_MS || (isPageLoaded && isGaugeSweepDone && isVideoReady)) {
-    clearInterval(preloadWatchdog);
-    updateHud(100, 'PORTFOLIO READY — VISUALS CONTINUE LOADING', true);
-    // Show the actual portfolio promptly; background media continues independently.
-    dismissSpeedometer();
-    return;
-  }
-  updateHud(displayProgress);
-}, 120);
+
+function startPreloadWatchdog() {
+  if (preloadWatchdog) clearInterval(preloadWatchdog);
+  introStartedAt = performance.now();
+  displayProgress = 0;
+  latestLoadingProgress = 0;
+  isVideoReady = false;
+  isGaugeSweepDone = false;
+  isPageLoaded = document.readyState === 'complete';
+
+  preloadWatchdog = setInterval(() => {
+    if (experienceMode !== 'animation' || speedometerDismissed) {
+      clearInterval(preloadWatchdog);
+      preloadWatchdog = null;
+      return;
+    }
+
+    const elapsed = performance.now() - introStartedAt;
+    const actualBuffer = transformersBg ? transformersBg.getBufferProgress() : 0;
+    const videoLoaded = transformersBg ? transformersBg.isVideoFullyReady() : false;
+    if (videoLoaded) {
+      isVideoReady = true;
+      displayProgress = 100;
+    } else {
+      const target = Math.min(94, Math.max(displayProgress + 2.5, actualBuffer));
+      displayProgress += (target - displayProgress) * 0.28;
+    }
+
+    if (elapsed >= INTRO_MAX_WAIT_MS || (isPageLoaded && isGaugeSweepDone && isVideoReady)) {
+      clearInterval(preloadWatchdog);
+      preloadWatchdog = null;
+      updateHud(100, 'PORTFOLIO READY — VISUALS CONTINUE LOADING', true);
+      dismissSpeedometer();
+      return;
+    }
+    updateHud(displayProgress);
+  }, 120);
+}
 
 // User interactive dismiss actions
 if (enterBtn) {
@@ -430,7 +508,7 @@ if (speedometerOverlay) {
 }
 
 on(window, 'keydown', (e) => {
-  if (['Escape', 'Enter', ' '].includes(e.key) && !speedometerDismissed) {
+  if (experienceMode === 'animation' && ['Escape', 'Enter', ' '].includes(e.key) && !speedometerDismissed && !(e.target instanceof Element && e.target.closest('button, a, input, textarea, select'))) {
     dismissSpeedometer();
   }
 });
@@ -439,11 +517,11 @@ if (import.meta.hot) {
     if (lenisRafId) cancelAnimationFrame(lenisRafId);
     lenis.destroy();
     events.abort();
-    spotlight.dispose();
-    transformersBg.dispose();
-    scrollDepth.dispose();
-    glitterEngine.dispose();
-    motionPhysics.dispose();
+    spotlight?.dispose();
+    transformersBg?.dispose();
+    scrollDepth?.dispose();
+    glitterEngine?.dispose();
+    motionPhysics?.dispose();
     dialogs.request?.abort();
     dialogs.terminal?.stopMatrix();
     dialogs.dialog.remove();
