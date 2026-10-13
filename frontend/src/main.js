@@ -450,3 +450,30 @@ if (import.meta.hot) {
 }
 
 
+
+
+// Subtle pointer parallax gives foreground typography a separate depth plane
+// from the continuously playing background video. It is throttled to animation frames.
+(() => {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let raf = 0;
+  let x = 0, y = 0;
+  const reset = () => {
+    document.documentElement.style.setProperty('--depth-pointer-x', '0px');
+    document.documentElement.style.setProperty('--depth-pointer-y', '0px');
+  };
+  const onPointerMove = (event) => {
+    if (reduceMotion.matches || (event.pointerType && event.pointerType !== 'mouse')) return;
+    x = ((event.clientX / Math.max(1, window.innerWidth)) - 0.5) * 8;
+    y = ((event.clientY / Math.max(1, window.innerHeight)) - 0.5) * 6;
+    if (raf) return;
+    raf = requestAnimationFrame(() => {
+      document.documentElement.style.setProperty('--depth-pointer-x', x.toFixed(2) + 'px');
+      document.documentElement.style.setProperty('--depth-pointer-y', y.toFixed(2) + 'px');
+      raf = 0;
+    });
+  };
+  window.addEventListener('pointermove', onPointerMove, { passive: true });
+  window.addEventListener('blur', reset);
+  reduceMotion.addEventListener?.('change', () => { if (reduceMotion.matches) reset(); });
+})();
