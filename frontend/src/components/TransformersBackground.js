@@ -201,6 +201,23 @@ export class TransformersBackground {
     this.rafId = requestAnimationFrame(loop);
   }
 
+  // Report actual media readiness without assuming the video has fully buffered.
+  // The preloader uses these methods; keep them defined here so its watchdog cannot crash.
+  getBufferProgress() {
+    if (!this.video) return 0;
+    const duration = Number(this.video.duration);
+    if (!Number.isFinite(duration) || duration <= 0 || !this.video.buffered?.length) return 0;
+    let bufferedSeconds = 0;
+    for (let index = 0; index < this.video.buffered.length; index += 1) {
+      bufferedSeconds = Math.max(bufferedSeconds, this.video.buffered.end(index));
+    }
+    return Math.min(100, Math.max(0, (bufferedSeconds / duration) * 100));
+  }
+
+  isVideoFullyReady() {
+    return Boolean(this.video && this.video.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA && !this.video.error);
+  }
+
   dispose() {
     this.events.abort();
     if (this.rafId) cancelAnimationFrame(this.rafId);
