@@ -336,10 +336,7 @@ if (copyEmailBtn) {
 
 // ─── THREEUI PERFORMANCE GAUGES SPEEDOMETER PURE CIRCULAR ONLOAD SEQUENCE ───
 const speedometerOverlay = document.getElementById('onload-speedometer');
-const hudMsg = document.getElementById('speedometer-hud-msg');
-const hudPct = document.getElementById('speedometer-hud-pct');
-const hudFill = document.getElementById('speedometer-hud-fill');
-const hudDot = document.getElementById('speedometer-hud-dot');
+const speedometerFrame = document.getElementById('speedometer-iframe');
 const enterBtn = document.getElementById('speedometer-enter-btn');
 
 let speedometerDismissed = false;
@@ -362,15 +359,8 @@ function dismissSpeedometer() {
 function updateHud(progress, message, ready = false) {
   if (speedometerDismissed) return;
   const rounded = Math.min(100, Math.max(0, Math.round(progress)));
-  if (hudPct) hudPct.textContent = `${rounded}%`;
-  if (hudFill) hudFill.style.width = `${rounded}%`;
-  if (hudMsg && message) hudMsg.textContent = message;
-  if (ready) {
-    if (hudDot) hudDot.classList.add('is-ready');
-    if (enterBtn) {
-      enterBtn.style.display = 'inline-flex';
-    }
-  }
+  speedometerFrame?.contentWindow?.postMessage({ type: 'portfolio-loading-progress', progress: rounded }, '*');
+  if (ready && enterBtn) enterBtn.style.display = 'inline-flex';
 }
 
 // 1. Page load tracking
@@ -408,9 +398,7 @@ const preloadWatchdog = setInterval(() => {
     dismissSpeedometer();
     return;
   }
-  if (displayProgress < 30) updateHud(displayProgress, 'INITIALIZING CINEMATIC ENGINE...');
-  else if (displayProgress < 70) updateHud(displayProgress, 'BUFFERING CINEMATIC TIMELINE...');
-  else updateHud(displayProgress, 'SYNCHRONIZING FRAMES...');
+  updateHud(displayProgress);
 }, 120);
 
 // User interactive dismiss actions

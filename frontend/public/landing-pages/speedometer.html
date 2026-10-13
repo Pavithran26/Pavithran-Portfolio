@@ -611,18 +611,18 @@
                     sub: { start: -110, sweep: 220, min: 40, max: 130, majorStep: 30, minorPerMajor: 3, value: 92 },
                 },
                 speedometer: {
-                    start: -135, sweep: 270, min: 0, max: 160,
-                    majorStep: 20, minorPerMajor: 4,
+                    start: -135, sweep: 270, min: 0, max: 100,
+                    majorStep: 10, minorPerMajor: 2,
                     numeral: (v) => String(v),
                     numeralStyle: 'font-size:5.31cqw;font-weight:300;color:rgba(255,255,255,.72)',
-                    tickColor: (v) => (v >= 140 ? 'rgba(248,113,113,.95)' : 'rgba(255,255,255,.6)'),
+                    tickColor: (v) => (v >= 90 ? 'rgba(248,113,113,.95)' : 'rgba(255,255,255,.6)'),
                     zones: [
-                        { from: 0, to: 140, color: 'rgba(255,255,255,.09)' },
-                        { from: 140, to: 160, color: 'rgba(220,38,38,.6)' },
+                        { from: 0, to: 90, color: 'rgba(255,255,255,.09)' },
+                        { from: 90, to: 100, color: 'rgba(220,38,38,.6)' },
                     ],
                     progress: '#E26226', wash: '#E26226',
-                    idle: 0, value: 118, peak: 143,
-                    readout: (v) => String(Math.round(v)),
+                    idle: 0, value: 0, peak: 100,
+                    readout: (v) => `${Math.round(v)}%`,
                 },
                 boost: {
                     start: -135, sweep: 270, min: -1, max: 1.5,
@@ -814,6 +814,30 @@
                 setInterval(cycle, 8000);
             }
 
+            // The parent preloader owns real loading progress; mirror it in this dial.
+            if (window.parent !== window) {
+                window.addEventListener('message', (event) => {
+                    if (event.data?.type !== 'portfolio-loading-progress') return;
+                    const card = document.getElementById('gauge-speedometer');
+                    if (!card) return;
+                    const spec = SPECS.speedometer;
+                    const value = Math.max(0, Math.min(100, Number(event.data.progress) || 0));
+                    const needle = card.querySelector('[data-needle]');
+                    const readout = card.querySelector('[data-readout]');
+                    if (needle) {
+                        needle.style.setProperty('--needle-duration', '140ms');
+                        needle.style.setProperty('--angle', `${angleFor(spec, value)}deg`);
+                    }
+                    if (readout) readout.textContent = `${Math.round(value)}%`;
+                    setArc(card, '[data-progress-arc]', spec, value, spec.progress);
+                    setArc(card, '[data-progress-wash]', spec, value, spec.wash);
+                    if (value >= 100) window.parent.postMessage({ type: 'speedometer-selftest-complete', speed: 100 }, '*');
+                });
+                // Start at 0%, then let the parent send measured loading progress.
+                const readout = document.querySelector('#gauge-speedometer [data-readout]');
+                if (readout) readout.textContent = '0%';
+            }
+
             /* ---------- heading word reveal ---------- */
             const wrapWords = (elementId) => {
                 const el = document.getElementById(elementId);
@@ -859,7 +883,7 @@
                         word.style.filter = 'blur(0)';
                     });
 
-                    if (entry.target.dataset.gauge) setTimeout(() => runInstrument(entry.target), 500);
+                    if (entry.target.dataset.gauge && entry.target.dataset.gauge !== 'speedometer') setTimeout(() => runInstrument(entry.target), 500);
 
                     self.unobserve(entry.target);
                 });
@@ -872,7 +896,8 @@
                 speedGauge.style.opacity = '1';
                 speedGauge.style.transform = 'none';
                 speedGauge.style.filter = 'none';
-                setTimeout(() => runInstrument(speedGauge), 150);
+                const speedReadout = speedGauge.querySelector('[data-readout]');
+                if (speedReadout) speedReadout.textContent = '0%';
             }
         });
     </script>
