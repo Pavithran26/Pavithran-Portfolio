@@ -343,7 +343,19 @@ let speedometerDismissed = false;
 let isPageLoaded = document.readyState === 'complete';
 let isGaugeSweepDone = false;
 let isVideoReady = false;
-let displayProgress = 8;
+let displayProgress = 0;
+let latestLoadingProgress = 0;
+
+function sendLoadingProgress() {
+  speedometerFrame?.contentWindow?.postMessage({ type: 'portfolio-loading-progress', progress: latestLoadingProgress }, '*');
+}
+
+if (speedometerFrame) {
+  on(speedometerFrame, 'load', sendLoadingProgress);
+  on(window, 'message', (event) => {
+    if (event.data?.type === 'speedometer-ready') sendLoadingProgress();
+  });
+}
 
 function dismissSpeedometer() {
   if (speedometerDismissed || !speedometerOverlay) return;
@@ -359,7 +371,8 @@ function dismissSpeedometer() {
 function updateHud(progress, message, ready = false) {
   if (speedometerDismissed) return;
   const rounded = Math.min(100, Math.max(0, Math.round(progress)));
-  speedometerFrame?.contentWindow?.postMessage({ type: 'portfolio-loading-progress', progress: rounded }, '*');
+  latestLoadingProgress = rounded;
+  sendLoadingProgress();
   if (ready && enterBtn) enterBtn.style.display = 'inline-flex';
 }
 
