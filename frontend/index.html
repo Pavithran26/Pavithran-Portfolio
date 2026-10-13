@@ -107,19 +107,45 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Fira+Code:wght@400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/src/style.css" />
 </head>
-<body class="space-portfolio">
+<body class="space-portfolio experience-mode-pending">
+  <aside id="experience-choice" class="experience-choice" role="dialog" aria-modal="true" aria-labelledby="experience-choice-title" aria-describedby="experience-choice-description">
+    <div class="experience-choice-panel">
+      <p class="experience-choice-eyebrow">PAVITHRAN S · INTERACTIVE PORTFOLIO</p>
+      <h1 id="experience-choice-title">Choose your <em>experience.</em></h1>
+      <p id="experience-choice-description" class="experience-choice-description">How would you like to explore the work? You can enter the cinematic version or keep things simple and fast.</p>
+      <div class="experience-choice-grid">
+        <button id="choose-animation" class="experience-choice-card experience-choice-card-animated" type="button">
+          <span class="experience-choice-icon" aria-hidden="true">✦</span>
+          <span class="experience-choice-mode">IMMERSIVE · CINEMATIC</span>
+          <span class="experience-choice-card-title">Animation mode</span>
+          <span class="experience-choice-card-description">Video background, depth, and visual motion.</span>
+          <span class="experience-choice-card-action">Enter the experience <span aria-hidden="true">↗</span></span>
+        </button>
+        <button id="choose-normal" class="experience-choice-card experience-choice-card-normal" type="button">
+          <span class="experience-choice-icon" aria-hidden="true">▤</span>
+          <span class="experience-choice-mode">LIGHTWEIGHT · FOCUSED</span>
+          <span class="experience-choice-card-title">Normal mode</span>
+          <span class="experience-choice-card-description">A clean, static portfolio with the same projects and details.</span>
+          <span class="experience-choice-card-action">Browse simply <span aria-hidden="true">→</span></span>
+        </button>
+      </div>
+      <p class="experience-choice-footnote">Choose once for this visit. Your selection will not affect the portfolio content.</p>
+    </div>
+  </aside>
   <!-- ThreeUI PerformanceGauges Speedometer Pure Circular Onload Screen -->
   <aside
     id="onload-speedometer"
     class="speedometer-onload-overlay"
     aria-label="Loading Diagnostics"
+    aria-hidden="true"
+    hidden
   >
     <div class="speedometer-circular-stage">
       <iframe
         id="speedometer-iframe"
-        src="/landing-pages/speedometer.html"
+        data-src="/landing-pages/speedometer.html"
         title="ThreeUI Performance Gauges Speedometer"
-        loading="eager"
+        loading="lazy"
       ></iframe>
     </div>
 
@@ -152,7 +178,8 @@
       <button id="menu-toggle" type="button" aria-controls="mobile-menu" aria-expanded="false">Menu <span aria-hidden="true">+</span></button>
     </div>
     <button class="dawn-eye" id="dawn-eye" data-dialog="dawn" type="button" aria-label="Open DAWN AI guide">
-      <video class="dawn-katana-video" src="/videos/katana-blade.mp4" autoplay loop muted playsinline disablepictureinpicture aria-hidden="true"></video>
+      <video class="dawn-katana-video" data-src="/videos/katana-blade.mp4" loop muted playsinline preload="none" disablepictureinpicture aria-hidden="true"></video>
+      <span class="dawn-eye-label">DAWN AI</span>
     </button>
   </header>
   <dialog id="mobile-menu" class="mobile-menu" aria-labelledby="menu-title">
