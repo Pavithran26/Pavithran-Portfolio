@@ -354,6 +354,7 @@ const enterBtn = document.getElementById('speedometer-enter-btn');
 let speedometerDismissed = false;
 let isPageLoaded = document.readyState === 'complete';
 let isGaugeSweepDone = false;
+let isSpeedometerFrameReady = false;
 let isVideoReady = false;
 let displayProgress = 0;
 let latestLoadingProgress = 0;
@@ -363,6 +364,14 @@ let preloadWatchdog = null;
 const experienceChoice = document.getElementById('experience-choice');
 const animationChoiceButton = document.getElementById('choose-animation');
 const normalChoiceButton = document.getElementById('choose-normal');
+
+function openExperienceChoice() {
+  if (!experienceChoice || experienceMode) return;
+  experienceChoice.hidden = false;
+  experienceChoice.classList.remove('is-dismissed');
+  experienceChoice.setAttribute('aria-hidden', 'false');
+  window.setTimeout(() => animationChoiceButton?.focus({ preventScroll: true }), 30);
+}
 
 function closeExperienceChoice() {
   if (!experienceChoice) return;
@@ -391,16 +400,10 @@ function chooseAnimationMode() {
   experienceMode = 'animation';
   document.body.classList.remove('experience-mode-pending', 'experience-normal');
   document.body.classList.add('experience-animation');
-  if (speedometerOverlay) {
-    speedometerOverlay.hidden = false;
-    speedometerOverlay.setAttribute('aria-hidden', 'false');
-  }
   closeExperienceChoice();
+  // The speedometer already ran before this choice. Start cinematic effects only now.
   initializeAnimationExperience();
-  if (speedometerFrame && !speedometerFrame.getAttribute('src')) {
-    speedometerFrame.setAttribute('src', speedometerFrame.dataset.src || '/landing-pages/speedometer.html');
-  }
-  startPreloadWatchdog();
+  lenis.start();
 }
 
 on(animationChoiceButton, 'click', chooseAnimationMode);
@@ -411,20 +414,32 @@ function sendLoadingProgress() {
 }
 
 if (speedometerFrame) {
-  on(speedometerFrame, 'load', sendLoadingProgress);
+  on(speedometerFrame, 'load', () => {
+    isSpeedometerFrameReady = true;
+    sendLoadingProgress();
+  });
   on(window, 'message', (event) => {
-    if (event.data?.type === 'speedometer-ready') sendLoadingProgress();
+    if (event.data?.type === 'speedometer-ready') {
+      isSpeedometerFrameReady = true;
+      sendLoadingProgress();
+    }
   });
 }
 
 function dismissSpeedometer() {
-  if (experienceMode !== 'animation' || speedometerDismissed || !speedometerOverlay) return;
+  if (speedometerDismissed || !speedometerOverlay) return;
   speedometerDismissed = true;
   speedometerOverlay.classList.add('is-dismissed');
-  // Unlock ultra-smooth scrolling now that preloader is finished
-  lenis.start();
+  if (preloadWatchdog) {
+    clearInterval(preloadWatchdog);
+    preloadWatchdog = null;
+  }
+  // The loader must finish before the visitor is asked which experience to enter.
   setTimeout(() => {
-    if (speedometerOverlay) speedometerOverlay.style.display = 'none';
+    speedometerOverlay.style.display = 'none';
+    speedometerOverlay.hidden = true;
+    speedometerOverlay.setAttribute('aria-hidden', 'true');
+    if (!experienceMode) openExperienceChoice();
   }, 900);
 }
 
@@ -452,7 +467,8 @@ on(window, 'message', (event) => {
 
 // 3. Progressive cinematic loading. Never block access indefinitely on large media.
 // The portfolio is usable even if the decorative video or gauge fails to load.
-const INTRO_MAX_WAIT_MS = 4500;
+const INTRO_MIN_VISIBLE_MS = 3500;
+const INTRO_MAX_WAIT_MS = 6500;
 
 function startPreloadWatchdog() {
   if (preloadWatchdog) clearInterval(preloadWatchdog);
@@ -460,11 +476,10 @@ function startPreloadWatchdog() {
   displayProgress = 0;
   latestLoadingProgress = 0;
   isVideoReady = false;
-  isGaugeSweepDone = false;
   isPageLoaded = document.readyState === 'complete';
 
   preloadWatchdog = setInterval(() => {
-    if (experienceMode !== 'animation' || speedometerDismissed) {
+    if (speedometerDismissed) {
       clearInterval(preloadWatchdog);
       preloadWatchdog = null;
       return;
@@ -481,7 +496,14 @@ function startPreloadWatchdog() {
       displayProgress += (target - displayProgress) * 0.28;
     }
 
-    if (elapsed >= INTRO_MAX_WAIT_MS || (isPageLoaded && isGaugeSweepDone && isVideoReady)) {
+    // The speedometer runs before the visitor chooses a mode, so don't wait
+    // for cinematic video. Show the choice once the gauge sweep and page are ready.
+    const isReadyToDismiss = elapsed >= INTRO_MIN_VISIBLE_MS
+      && isPageLoaded
+      && isSpeedometerFrameReady
+      && isGaugeSweepDone;
+
+    if (elapsed >= INTRO_MAX_WAIT_MS || isReadyToDismiss) {
       clearInterval(preloadWatchdog);
       preloadWatchdog = null;
       updateHud(100, 'PORTFOLIO READY — VISUALS CONTINUE LOADING', true);
@@ -508,10 +530,14 @@ if (speedometerOverlay) {
 }
 
 on(window, 'keydown', (e) => {
-  if (experienceMode === 'animation' && ['Escape', 'Enter', ' '].includes(e.key) && !speedometerDismissed && !(e.target instanceof Element && e.target.closest('button, a, input, textarea, select'))) {
+  if (!speedometerDismissed && speedometerOverlay && !speedometerOverlay.hidden && ['Escape', 'Enter', ' '].includes(e.key) && !(e.target instanceof Element && e.target.closest('button, a, input, textarea, select'))) {
     dismissSpeedometer();
   }
 });
+
+// Start the performance gauge immediately on every visit. The two experience
+// choices remain hidden until the initial gauge sequence is complete (or times out).
+startPreloadWatchdog();
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
     if (lenisRafId) cancelAnimationFrame(lenisRafId);
