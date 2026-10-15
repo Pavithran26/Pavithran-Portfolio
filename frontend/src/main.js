@@ -460,14 +460,30 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (horizontalRail) {
           const railRect = horizontalRail.getBoundingClientRect();
           const targetRect = target.getBoundingClientRect();
+          const maxScroll = Math.max(0, horizontalRail.scrollWidth - horizontalRail.clientWidth);
           const targetLeft = horizontalRail.scrollLeft + targetRect.left - railRect.left;
-          const centeredLeft = targetLeft - (horizontalRail.clientWidth - targetRect.width) / 2;
-          horizontalRail.scrollTo({ left: Math.max(0, Math.min(horizontalRail.scrollWidth - horizontalRail.clientWidth, centeredLeft)), behavior: 'smooth' });
-          lenis.scrollTo(horizontalRail, {
-            offset: -40,
-            duration: 1.15,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-          });
+          const centeredLeft = horizontalStoryClamp(
+            targetLeft - (horizontalRail.clientWidth - targetRect.width) / 2,
+            0,
+            maxScroll
+          );
+          const stage = horizontalRail.closest('.horizontal-story-stage');
+          const toolbar = stage?.querySelector('.horizontal-rail-toolbar');
+          if (stage?.classList.contains('is-scroll-pinned') && toolbar && maxScroll > 1) {
+            const toolbarTop = parseFloat(getComputedStyle(toolbar).top) || 76;
+            const stageDocumentTop = window.scrollY + stage.getBoundingClientRect().top;
+            lenis.scrollTo(stageDocumentTop - toolbarTop + (centeredLeft / maxScroll) * maxScroll, {
+              duration: 1.05,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          } else {
+            horizontalRail.scrollTo({ left: centeredLeft, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+            lenis.scrollTo(horizontalRail, {
+              offset: -40,
+              duration: 1.15,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+          }
         } else {
           lenis.scrollTo(target, {
             offset: -40,
@@ -820,6 +836,8 @@ if (import.meta.hot) {
     if (lenisRafId) cancelAnimationFrame(lenisRafId);
     lenis.destroy();
     events.abort();
+    horizontalStoryResizeObserver?.disconnect();
+    if (horizontalStoryFrame !== null) cancelAnimationFrame(horizontalStoryFrame);
     document.documentElement.classList.remove('has-side-scroll-reveals');
     spotlight?.dispose();
     transformersBg?.dispose();
