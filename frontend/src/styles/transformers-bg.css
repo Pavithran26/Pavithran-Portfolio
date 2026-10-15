@@ -9,16 +9,16 @@
 
 :root {
   /* Core Cybertronian Palette */
-  --tf-crimson: #e0231c;
-  --tf-crimson-bright: #ff3b30;
-  --tf-crimson-glow: rgba(224, 35, 28, 0.5);
-  --tf-energon: #00e5ff;
-  --tf-energon-bright: #38eeff;
-  --tf-energon-glow: rgba(0, 229, 255, 0.45);
+  --tf-crimson: #21884d;
+  --tf-crimson-bright: #70dfa1;
+  --tf-crimson-glow: rgba(112, 223, 161, 0.42);
+  --tf-energon: #70dfa1;
+  --tf-energon-bright: #a0f5bd;
+  --tf-energon-glow: rgba(112, 223, 161, 0.45);
   --tf-obsidian: #03060c;
   --tf-panel-bg: rgba(6, 11, 22, 0.44);
-  --tf-panel-border: rgba(0, 229, 255, 0.28);
-  --tf-panel-hover: rgba(0, 229, 255, 0.65);
+  --tf-panel-border: rgba(112, 223, 161, 0.28);
+  --tf-panel-hover: rgba(112, 223, 161, 0.65);
   
   /* Text Contrast System */
   --tf-text-heading: #ffffff;
@@ -883,8 +883,8 @@ h1 em, h2 em, .intro-identity h1 em, .space-section h2 em {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: #ff7028;
-  box-shadow: 0 0 10px #ff7028, 0 0 20px #ff7028;
+  background: #39b96b;
+  box-shadow: 0 0 10px #39b96b, 0 0 20px #39b96b;
   display: inline-block;
   margin-right: 8px;
   flex-shrink: 0;
@@ -913,7 +913,7 @@ h1 em, h2 em, .intro-identity h1 em, .space-section h2 em {
 
 .speedometer-hud-pct {
   font-weight: 500;
-  color: #ff9955;
+  color: #54cc82;
   font-variant-numeric: tabular-nums;
   margin-left: 10px;
 }
@@ -930,7 +930,7 @@ h1 em, h2 em, .intro-identity h1 em, .space-section h2 em {
 .speedometer-hud-fill {
   width: 0%;
   height: 100%;
-  background: linear-gradient(90deg, #e26226, #ff7028, #ffaa40);
+  background: linear-gradient(90deg, #269b56, #39b96b, #70dfa1);
   box-shadow: 0 0 12px rgba(255, 112, 40, 0.9);
   border-radius: 999px;
   transition: width 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -966,13 +966,13 @@ h1 em, h2 em, .intro-identity h1 em, .space-section h2 em {
 
 .speedometer-enter-btn:hover {
   background: rgba(226, 98, 38, 0.32);
-  border-color: #ff914d;
+  border-color: #70dfa1;
   transform: translateY(-2px) scale(1.03);
   box-shadow: 0 0 35px rgba(255, 112, 40, 0.65), inset 0 0 16px rgba(255, 112, 40, 0.35);
 }
 
 .speedometer-enter-btn .btn-arrow {
-  color: #ffaa40;
+  color: #70dfa1;
   transition: transform 0.2s ease;
 }
 
@@ -1188,7 +1188,7 @@ html.lenis body {
 }
 
 .dawn-eye:hover {
-  border-color: #ffa14a !important;
+  border-color: #8cefb0 !important;
   box-shadow: 0 0 28px rgba(255, 100, 25, 0.8), 0 0 45px rgba(255, 60, 10, 0.45) !important;
   transform: translateY(-1px) scale(1.04) !important;
 }
