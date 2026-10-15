@@ -147,19 +147,19 @@
 }
 
 .hud-btn.active {
-  background: rgba(56, 189, 248, 0.2);
+  background: rgba(112, 223, 161, 0.18);
   border-color: var(--cyan-accent);
   color: var(--cyan-accent);
   box-shadow: 0 0 16px var(--cyan-glow), var(--glass-bevel);
 }
 
 .hud-btn-primary {
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.28), rgba(192, 132, 252, 0.28));
+  background: linear-gradient(135deg, rgba(112, 223, 161, 0.24), rgba(50, 165, 91, 0.22));
   border-color: rgba(255, 255, 255, 0.2);
 }
 
 .hud-btn-primary:hover {
-  background: linear-gradient(135deg, rgba(56, 189, 248, 0.45), rgba(192, 132, 252, 0.45));
+  background: linear-gradient(135deg, rgba(112, 223, 161, 0.4), rgba(50, 165, 91, 0.4));
   box-shadow: 0 0 20px var(--cyan-glow), var(--glass-bevel);
 }
 
