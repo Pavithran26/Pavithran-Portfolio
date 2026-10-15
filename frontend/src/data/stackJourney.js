@@ -19,7 +19,7 @@ export const STACK_CHAPTERS = [
     layerIndexes: [0], detail: 'Inspect frontend', next: 'Next: backend & logic'
   },
   {
-    id: 'backend', name: 'Backend', number: '02', accent: '#99d8ff',
+    id: 'backend', name: 'Backend', number: '02', accent: '#70dfa1',
     heading: ['BACK', 'END.'], eyebrow: 'The application layer',
     tagline: 'Give every interaction its logic.',
     description: 'APIs, authentication, validation, and business rules that turn an interface into a working product.',
@@ -55,7 +55,7 @@ export const STACK_CHAPTERS = [
     layerIndexes: [3, 4], detail: 'Inspect databases', next: 'Next: applied AI'
   },
   {
-    id: 'ai', name: 'AI', number: '04', accent: '#dbc0ff',
+    id: 'ai', name: 'AI', number: '04', accent: '#8cf0b0',
     heading: ['APPLIED', 'AI.'], eyebrow: 'The intelligence layer',
     tagline: 'Turn knowledge into answers.',
     description: 'Retrieval-augmented generation brings documents, context, and language models together to help people find what matters.',
