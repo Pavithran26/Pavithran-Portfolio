@@ -275,3 +275,226 @@ body.light-appearance .space-header {
 body.light-appearance .paper-giant-wordmark {
   color: rgba(60, 45, 25, 0.065);
 }
+
+/* Cohesive green finish across every portfolio surface. */
+:root {
+  --ink: #050b08;
+  --paper: #edf5ef;
+  --white: #edf5ef;
+  --muted: #a1b4a7;
+  --accent: #70dfa1;
+  --line: #294b36;
+  --text-muted: #a1b4a7;
+  --emerald-accent: #58d98b;
+  --cyan-accent: #8cf0b0;
+  --purple-accent: #57c983;
+  --blue-accent: #70dfa1;
+  --amber-accent: #9be3b2;
+  --rose-accent: #70dfa1;
+  --green-neon: #70dfa1;
+  --green-mint: #8cf0b0;
+  --primary-green: #26b968;
+  --color-shockingly-green: #70dfa1;
+  --tf-crimson: #21884d;
+  --tf-crimson-bright: #70dfa1;
+  --tf-crimson-glow: rgba(112, 223, 161, .42);
+  --tf-energon: #70dfa1;
+  --tf-energon-bright: #a0f5bd;
+  --tf-energon-glow: rgba(112, 223, 161, .45);
+  --tf-panel-border: rgba(112, 223, 161, .28);
+  --tf-panel-hover: rgba(112, 223, 161, .68);
+  --glass-border: rgba(112, 223, 161, .22);
+  --glass-border-light: rgba(112, 223, 161, .36);
+  --glass-border-hover: rgba(112, 223, 161, .68);
+  --glass-shadow-glow: 0 0 35px rgba(48, 202, 113, .23), inset 0 1px 0 rgba(255, 255, 255, .18);
+  --term-prompt-user: #70dfa1;
+  --term-prompt-host: #8cf0b0;
+  --term-cyan: #8cf0b0;
+  --term-highlight: #70dfa1;
+  --term-accent: #52d785;
+}
+
+/* Shared interactive states: green focus, active, hover, timeline, and progress. */
+::selection { color: #041008; background: #70dfa1; }
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline-color: #70dfa1;
+}
+.space-projects article:hover,
+.space-projects article:focus-within,
+.project-index a:hover,
+.project-index a:focus-visible,
+.live-preview-tab:hover,
+.live-preview-tab.is-active {
+  border-color: var(--accent);
+}
+.dawn-questions button:hover,
+.project-overline a:hover,
+.space-socials a:hover,
+.space-nav a:hover,
+.space-header-actions button:hover {
+  color: var(--accent);
+}
+.project-link-btn {
+  background: rgba(112, 223, 161, .12) !important;
+  border-color: rgba(112, 223, 161, .36) !important;
+  color: #9af4b7 !important;
+}
+.hero-btn-3d {
+  background: rgba(8, 34, 18, .9) !important;
+  color: #8cf0b0 !important;
+  border-color: rgba(112, 223, 161, .5) !important;
+}
+.hero-btn-3d .btn-flair,
+.hero-btn-accent .btn-flair {
+  background: radial-gradient(circle, rgba(112, 223, 161, .38) 0%, transparent 70%) !important;
+}
+.timeline-dot {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 12px rgba(112, 223, 161, .55) !important;
+}
+.timeline-org,
+.timeline-flow .project-tech-tag,
+.project-tech-tag {
+  color: var(--accent) !important;
+}
+.experience-card .project-tech-tag,
+.education-card .project-tech-tag {
+  background: rgba(112, 223, 161, .12) !important;
+  border-color: rgba(112, 223, 161, .3) !important;
+  color: #a1f0b8 !important;
+}
+.achievement-card,
+.station-project-card,
+.station-panel-window,
+.station-terminal-inner,
+.station-dossier-grid > *,
+.station-skill-item {
+  --proj-accent: var(--accent);
+  --cyan-accent: var(--accent);
+  border-color: rgba(112, 223, 161, .24);
+}
+.station-skill-badge,
+.station-skill-bar-fill,
+.station-footer-status,
+.station-panel-window .station-tab-btn.active {
+  --cyan-accent: var(--accent);
+}
+.station-skill-badge {
+  color: #8cf0b0 !important;
+  border-color: rgba(112, 223, 161, .4) !important;
+  background: rgba(112, 223, 161, .12) !important;
+}
+.station-panel-window .station-tab-btn.active,
+.station-quick-pill:hover,
+.station-close-btn:hover {
+  border-color: var(--accent) !important;
+  color: #a1f0b8 !important;
+}
+.intro-caption { color: #c0d8c8; }
+.section-intro,
+.world-description,
+.intro-statement {
+  color: #c3d3c8;
+}
+.terminal-embedded-wrapper,
+.terminal-floating-wrapper {
+  box-shadow: var(--glass-shadow), 0 0 30px rgba(57, 206, 119, .14);
+  border-color: rgba(112, 223, 161, .28);
+}
+.terminal-floating-wrapper[data-theme],
+.terminal-embedded-wrapper[data-theme] {
+  --term-bg: rgba(5, 18, 9, .9);
+  --term-header: rgba(12, 36, 20, .85);
+  --term-border: rgba(112, 223, 161, .35);
+  --term-text: #e8f7ed;
+  --term-prompt-user: #70dfa1;
+  --term-prompt-host: #a0f5bd;
+  --term-cyan: #8cf0b0;
+  --term-highlight: #70dfa1;
+  --term-accent: #52d785;
+}
+.portfolio-dialog[data-view='terminal'] {
+  background: #07110b !important;
+  border-color: rgba(112, 223, 161, .36) !important;
+  box-shadow: 0 28px 100px rgba(0, 0, 0, .62), 0 0 30px rgba(44, 185, 96, .1) !important;
+}
+#portfolio-terminal [data-theme='dark'] {
+  --term-bg: #07150b;
+  --term-header: #10271a;
+  --term-text: #edf8f0;
+  --term-prompt-user: #70dfa1;
+  --term-prompt-host: #a0f5bd;
+  --term-cyan: #8cf0b0;
+  --term-highlight: #70dfa1;
+  --term-accent: #52d785;
+}
+#portfolio-terminal .terminal-header {
+  background: #10271a !important;
+  border-bottom-color: #254a33 !important;
+}
+#portfolio-terminal .terminal-footer {
+  background: #09180e !important;
+  border-top-color: rgba(112, 223, 161, .18) !important;
+  color: #a1b4a7 !important;
+}
+#portfolio-terminal .prompt-path,
+#portfolio-terminal .term-text-muted {
+  color: #a1c9ae !important;
+}
+#portfolio-terminal .term-dot.dot-red {
+  background: #27874c !important;
+}
+
+/* Keep the light appearance green as well; no return to orange/blue accents. */
+html[data-appearance='light'] {
+  --ink: #edf3ee;
+  --paper: #f3f8f3;
+  --white: #1a3022;
+  --muted: #526a5a;
+  --line: #c3d8c9;
+  --accent: #18824b;
+  --emerald-accent: #18824b;
+  --cyan-accent: #2a9e5b;
+  --purple-accent: #21884d;
+  --blue-accent: #18824b;
+  --amber-accent: #398d58;
+}
+html[data-appearance='light'] .universe-darkness {
+  background:
+    radial-gradient(ellipse at 18% 38%, rgba(68, 171, 105, .1), transparent 48%),
+    linear-gradient(180deg, rgba(237, 243, 238, .92), rgba(237, 243, 238, .97));
+}
+html[data-appearance='light'] .intro-statement,
+html[data-appearance='light'] .intro-caption,
+html[data-appearance='light'] .section-intro,
+html[data-appearance='light'] .world-description {
+  color: #334f3d;
+}
+html[data-appearance='light'] .project-link-btn {
+  color: #176c3d !important;
+  background: rgba(24, 130, 75, .08) !important;
+  border-color: rgba(24, 130, 75, .3) !important;
+}
+html[data-appearance='light'] .terminal-floating-wrapper[data-theme],
+html[data-appearance='light'] .terminal-embedded-wrapper[data-theme] {
+  --term-bg: rgba(238, 248, 240, .95);
+  --term-header: rgba(221, 241, 226, .96);
+  --term-border: rgba(24, 130, 75, .3);
+  --term-text: #173523;
+  --term-prompt-user: #18824b;
+  --term-prompt-host: #247c49;
+  --term-cyan: #18824b;
+  --term-highlight: #18824b;
+  --term-accent: #247c49;
+}
+
+/* The archive's paper remains paper, but all interface trim stays green. */
+.project-archive h1 em,
+.project-archive .archive-copy h2 span,
+.project-archive .space-kicker,
+.project-archive .archive-project a:hover {
+  color: var(--accent);
+}
+.project-archive .archive-home:hover {
+  color: var(--accent);
+}
