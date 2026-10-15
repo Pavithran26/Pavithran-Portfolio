@@ -377,7 +377,7 @@ export class InStationPanels {
 
       const itemsHtml = filteredSkills.map((s) => {
         const levelPercent = s.level === 'Advanced' ? 95 : s.level === 'Proficient' ? 82 : 70;
-        const levelColor = s.level === 'Advanced' ? '#0ae448' : '#00bae2';
+        const levelColor = s.level === 'Advanced' ? '#70dfa1' : '#8cf0b0';
 
         return `
           <div class="station-skill-item">
@@ -654,7 +654,7 @@ export class InStationPanels {
             <strong>${escapeHtml(ach.title)}</strong>
             <span class="dossier-period">${escapeHtml(ach.period)}</span>
           </div>
-          <div style="font-size: 0.78rem; color: #00bae2;">${escapeHtml(ach.issuer)}</div>
+          <div style="font-size: 0.78rem; color: #70dfa1;">${escapeHtml(ach.issuer)}</div>
           <p style="font-size: 0.82rem; color: #a8aba3; margin-top: 4px;">${escapeHtml(ach.description)}</p>
         </div>
       `
