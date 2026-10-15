@@ -270,63 +270,183 @@ const on = (target, type, handler, options = {}) => {
   if (target) target.addEventListener(type, handler, { signal: events.signal, ...options });
 };
 
-// Initialize horizontal story rails for Projects, Work, Studies, and recognition.
+// Build explicit horizontal story stages for Projects, Work, Studies, and recognition.
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const horizontalRailDefinitions = [
-  ['.space-projects', 'Featured projects — scroll horizontally'],
-  ['.space-experience', 'Work experience timeline — scroll horizontally'],
-  ['.space-education', 'Education timeline — scroll horizontally'],
-  ['.space-recognition', 'Training and recognition — scroll horizontally'],
+  ['.space-projects', 'PROJECTS'],
+  ['.space-experience', 'WORK EXPERIENCE'],
+  ['.space-education', 'STUDIES'],
+  ['.space-recognition', 'TRAINING & RECOGNITION'],
 ];
 const horizontalStoryRails = [];
+const horizontalStoryStages = [];
+const horizontalStoryClamp = (value, min, max) => Math.max(min, Math.min(max, value));
+let horizontalStoryFrame = null;
+let horizontalStoryResizeObserver = null;
+
+function updatePinnedHorizontalStoryProgress() {
+  if (horizontalStoryFrame !== null) return;
+  horizontalStoryFrame = requestAnimationFrame(() => {
+    horizontalStoryFrame = null;
+    if (window.innerWidth < 760 || prefersReducedMotion) return;
+    horizontalStoryStages.forEach(({ stage, rail, toolbar }) => {
+      if (!stage.classList.contains('is-scroll-pinned')) return;
+      const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+      if (maxScroll <= 1) return;
+      const toolbarTop = parseFloat(getComputedStyle(toolbar).top) || 76;
+      const stageTop = stage.getBoundingClientRect().top;
+      const progress = horizontalStoryClamp((toolbarTop - stageTop) / maxScroll, 0, 1);
+      const nextLeft = maxScroll * progress;
+      if (Math.abs(rail.scrollLeft - nextLeft) > 1.5) rail.scrollLeft = nextLeft;
+    });
+  });
+}
+
+function sizeHorizontalStoryStages() {
+  const canPin = window.innerWidth >= 760 && !prefersReducedMotion;
+  horizontalStoryStages.forEach(({ stage, rail, toolbar }) => {
+    stage.classList.toggle('is-scroll-pinned', canPin);
+    if (!canPin) {
+      stage.style.removeProperty('height');
+      rail.style.removeProperty('scroll-snap-type');
+      return;
+    }
+    rail.style.scrollSnapType = 'x mandatory';
+    const railHeight = rail.getBoundingClientRect().height;
+    const toolbarHeight = toolbar.getBoundingClientRect().height;
+    const gap = 12;
+    const horizontalTravel = Math.max(0, rail.scrollWidth - rail.clientWidth);
+    const nextHeight = Math.ceil(toolbarHeight + gap + railHeight + horizontalTravel);
+    if (Math.abs((parseFloat(stage.style.height) || 0) - nextHeight) > 2) {
+      stage.style.height = `${nextHeight}px`;
+    }
+  });
+  updatePinnedHorizontalStoryProgress();
+}
+
+function scheduleHorizontalStoryLayout() {
+  requestAnimationFrame(() => {
+    sizeHorizontalStoryStages();
+    requestAnimationFrame(() => {
+      sizeHorizontalStoryStages();
+      updatePinnedHorizontalStoryProgress();
+    });
+  });
+}
+
 horizontalRailDefinitions.forEach(([selector, label]) => {
   root.querySelectorAll(selector).forEach(rail => {
     rail.classList.add('horizontal-story-rail');
     rail.setAttribute('role', 'region');
-    rail.setAttribute('aria-label', label);
-    if (!rail.hasAttribute('tabindex')) rail.setAttribute('tabindex', '0');
-    horizontalStoryRails.push(rail);
+    rail.setAttribute('aria-label', `${label} — scroll sideways to explore`);
+    rail.setAttribute('tabindex', '0');
 
-    // Convert the normal mouse-wheel gesture to horizontal movement while
-    // the pointer is over a rail. At either edge, vertical page scrolling resumes.
+    // The stage's extra page height turns ordinary vertical scrolling into
+    // horizontal progress, so dragging the browser scrollbar also works.
+    const stage = document.createElement('div');
+    stage.className = 'horizontal-story-stage';
+    const toolbar = document.createElement('div');
+    toolbar.className = 'horizontal-rail-toolbar';
+    const labelNode = document.createElement('span');
+    labelNode.className = 'horizontal-rail-toolbar-label';
+    labelNode.textContent = window.innerWidth >= 760 && !prefersReducedMotion
+      ? `${label}  /  SCROLL VERTICALLY TO MOVE SIDEWAYS`
+      : `${label}  /  SWIPE OR SCROLL SIDEWAYS`;
+
+    const controls = document.createElement('span');
+    controls.className = 'horizontal-rail-controls';
+    controls.setAttribute('role', 'group');
+    controls.setAttribute('aria-label', `${label} controls`);
+    const makeControl = (direction, text, accessibleLabel) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = text;
+      button.setAttribute('aria-label', accessibleLabel);
+      button.title = accessibleLabel;
+      on(button, 'click', () => {
+        const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+        if (maxScroll <= 1) return;
+        const desiredLeft = horizontalStoryClamp(
+          rail.scrollLeft + direction * Math.max(220, rail.clientWidth * 0.78),
+          0,
+          maxScroll
+        );
+        if (stage.classList.contains('is-scroll-pinned')) {
+          const toolbarTop = parseFloat(getComputedStyle(toolbar).top) || 76;
+          const stageDocumentTop = window.scrollY + stage.getBoundingClientRect().top;
+          const desiredProgress = desiredLeft / maxScroll;
+          const desiredPageY = stageDocumentTop - toolbarTop + desiredProgress * maxScroll;
+          lenis.scrollTo(desiredPageY, {
+            duration: 0.78,
+            easing: (t) => 1 - Math.pow(1 - t, 3)
+          });
+        } else {
+          rail.scrollTo({ left: desiredLeft, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
+        }
+      });
+      controls.appendChild(button);
+    };
+    makeControl(-1, '←', `Previous ${label.toLowerCase()}`);
+    makeControl(1, '→', `Next ${label.toLowerCase()}`);
+    toolbar.append(labelNode, controls);
+
+    rail.parentNode.insertBefore(stage, rail);
+    stage.append(toolbar, rail);
+    horizontalStoryRails.push(rail);
+    horizontalStoryStages.push({ stage, rail, toolbar });
+
+    // Mobile and reduced-motion users keep native swipe/trackpad horizontal scroll.
+    // Desktop pinned stages let the page wheel drive the horizontal story naturally.
     on(rail, 'wheel', event => {
       if (event.ctrlKey || event.metaKey) return;
+      if (stage.classList.contains('is-scroll-pinned') && window.innerWidth >= 760 && !prefersReducedMotion) return;
       const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
       if (!delta) return;
-
       const maxScroll = rail.scrollWidth - rail.clientWidth;
       if (maxScroll <= 1) return;
       const atStart = rail.scrollLeft <= 1;
       const atEnd = rail.scrollLeft >= maxScroll - 1;
       if ((delta < 0 && atStart) || (delta > 0 && atEnd)) return;
-
       event.preventDefault();
       event.stopPropagation();
-      rail.scrollLeft = Math.max(0, Math.min(maxScroll, rail.scrollLeft + delta * 1.08));
+      rail.scrollLeft = horizontalStoryClamp(rail.scrollLeft + delta * 1.08, 0, maxScroll);
     }, { passive: false });
   });
 });
 
-const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const sideScrollEntries = horizontalStoryRails.flatMap(rail =>
-  [...rail.children].filter(child => child.matches('article'))
-);
-if (!prefersReducedMotion && 'IntersectionObserver' in window && sideScrollEntries.length) {
-  sideScrollEntries.forEach((card, index) => {
-    card.classList.add('side-scroll-entry');
-    card.style.setProperty('--side-entry-x', index % 2 === 0 ? '-42px' : '42px');
-  });
-
-  const sideScrollObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.add('is-side-revealed');
-      sideScrollObserver.unobserve(entry.target);
+if (!prefersReducedMotion && 'IntersectionObserver' in window) {
+  const sideScrollEntries = horizontalStoryRails.flatMap(rail =>
+    [...rail.children].filter(child => child.matches('article'))
+  );
+  if (sideScrollEntries.length) {
+    sideScrollEntries.forEach((card, index) => {
+      card.classList.add('side-scroll-entry');
+      card.style.setProperty('--side-entry-x', index % 2 === 0 ? '-42px' : '42px');
     });
-  }, { threshold: 0.12, rootMargin: '0px -3% 0px -3%' });
-
-  sideScrollEntries.forEach(card => sideScrollObserver.observe(card));
-  document.documentElement.classList.add('has-side-scroll-reveals');
+    const sideScrollObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-side-revealed');
+        sideScrollObserver.unobserve(entry.target);
+      });
+    }, { threshold: 0.12, rootMargin: '0px -3% 0px -3%' });
+    sideScrollEntries.forEach(card => sideScrollObserver.observe(card));
+    document.documentElement.classList.add('has-side-scroll-reveals');
+  }
 }
+
+if ('ResizeObserver' in window) {
+  horizontalStoryResizeObserver = new ResizeObserver(() => scheduleHorizontalStoryLayout());
+  horizontalStoryStages.forEach(({ rail, toolbar }) => {
+    horizontalStoryResizeObserver.observe(rail);
+    horizontalStoryResizeObserver.observe(toolbar);
+  });
+}
+on(window, 'scroll', updatePinnedHorizontalStoryProgress, { passive: true });
+on(window, 'resize', scheduleHorizontalStoryLayout, { passive: true });
+scheduleHorizontalStoryLayout();
+
+
 
 // Lenis smooth anchor navigation for all internal jump links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
