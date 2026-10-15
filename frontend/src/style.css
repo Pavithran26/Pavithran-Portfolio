@@ -561,3 +561,265 @@ body.light-appearance .portfolio-dialog {
   --muted: #526a5a;
   --line: #c3d8c9;
 }
+
+/* Horizontal scroll storytelling: projects, work and studies */
+.horizontal-story-rail {
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch;
+  gap: clamp(16px, 2.4vw, 32px);
+  overflow-x: auto !important;
+  overflow-y: hidden !important;
+  max-width: none !important;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: auto;
+  scroll-padding-inline: 8vw;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) rgba(255, 255, 255, .06);
+  touch-action: pan-x pan-y;
+}
+.horizontal-story-rail::-webkit-scrollbar { height: 6px; }
+.horizontal-story-rail::-webkit-scrollbar-track { background: rgba(255,255,255,.045); border-radius: 999px; }
+.horizontal-story-rail::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--accent) 72%, transparent); border-radius: 999px; }
+.horizontal-story-rail:focus-visible { outline: 1px solid var(--accent); outline-offset: 5px; }
+
+/* Projects become wide, cinematic panels that snap as the visitor moves sideways. */
+.space-work .space-content {
+  width: 100%;
+  max-width: none;
+}
+.space-projects.horizontal-story-rail {
+  width: calc(100% + 16vw);
+  margin: 48px 0 0 -8vw;
+  padding: 12px 8vw 34px;
+}
+.space-projects.horizontal-story-rail .project-destination {
+  flex: 0 0 min(78vw, 1000px);
+  width: min(78vw, 1000px);
+  max-width: min(78vw, 1000px);
+  min-width: 0;
+  min-height: clamp(420px, 70svh, 720px);
+  height: auto;
+  margin: 0;
+  padding: clamp(26px, 3.5vw, 52px);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.055), transparent 38%),
+    linear-gradient(155deg, rgba(13, 31, 19, .92), rgba(5, 12, 7, .96));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.11), 0 22px 54px rgba(0,0,0,.23);
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+.space-projects.horizontal-story-rail .project-destination:nth-child(even) {
+  margin-left: 0;
+}
+.space-projects.horizontal-story-rail .project-scene {
+  border: 1px solid rgba(112,223,161,.18);
+  border-radius: 18px;
+  mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+}
+.space-projects.horizontal-story-rail .project-copy {
+  align-self: center;
+}
+.space-projects.horizontal-story-rail .project-links { margin-top: auto; padding-top: 22px; }
+
+/* Work experience, studies, and recognition use horizontal card timelines too. */
+.space-about .space-content,
+.space-learning .space-content {
+  width: 100%;
+  max-width: none;
+  margin-left: 0;
+}
+.space-experience.horizontal-story-rail,
+.space-education.horizontal-story-rail,
+.space-recognition.horizontal-story-rail {
+  width: calc(100% + 16vw);
+  margin-left: -8vw;
+  padding: 12px 8vw 34px;
+}
+.space-experience.horizontal-story-rail,
+.space-education.horizontal-story-rail {
+  margin-top: 30px;
+}
+.space-experience.horizontal-story-rail::before,
+.space-experience.horizontal-story-rail::after,
+.space-education.horizontal-story-rail::before,
+.space-education.horizontal-story-rail::after {
+  display: none !important;
+  content: none !important;
+}
+.space-experience.horizontal-story-rail > article,
+.space-education.horizontal-story-rail > article {
+  position: relative;
+  flex: 0 0 min(68vw, 720px);
+  width: min(68vw, 720px);
+  max-width: min(68vw, 720px);
+  min-width: 0;
+  min-height: clamp(340px, 58svh, 500px) !important;
+  height: auto;
+  margin: 0;
+  padding: clamp(26px, 3.4vw, 44px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.055), transparent 42%),
+    linear-gradient(155deg, rgba(13, 31, 19, .88), rgba(5, 12, 7, .95));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.10), 0 18px 42px rgba(0,0,0,.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+.space-experience.horizontal-story-rail > article::before,
+.space-education.horizontal-story-rail > article::before {
+  left: auto;
+  right: 28px;
+  top: 28px !important;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--accent) 62%, transparent);
+}
+.space-experience.horizontal-story-rail > article > .space-kicker,
+.space-education.horizontal-story-rail > article .space-kicker {
+  padding-right: 24px;
+}
+.space-experience.horizontal-story-rail h3,
+.space-education.horizontal-story-rail h3 {
+  font-size: clamp(2rem, 3vw, 3.2rem);
+  line-height: 1.12;
+  margin: 18px 0 12px;
+}
+.space-experience.horizontal-story-rail article > p:last-child,
+.space-education.horizontal-story-rail article > p:last-child {
+  line-height: 1.75;
+}
+.space-recognition.horizontal-story-rail {
+  margin-top: 12px;
+}
+.space-recognition.horizontal-story-rail > article {
+  flex: 0 0 min(50vw, 520px);
+  width: min(50vw, 520px);
+  max-width: min(50vw, 520px);
+  min-width: 0;
+  min-height: clamp(250px, 42svh, 390px);
+  margin: 0;
+  padding: clamp(22px, 2.8vw, 34px);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(255,255,255,.05), rgba(9, 26, 14, .82));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 15px 34px rgba(0,0,0,.18);
+  scroll-snap-align: center;
+}
+
+/* Cards arrive from alternating sides as the horizontal rail is explored. */
+.has-side-scroll-reveals .side-scroll-entry {
+  opacity: 0;
+  transform: translate3d(var(--side-entry-x, -38px), 0, 0);
+  transition: opacity .72s ease, transform .82s cubic-bezier(.2,.7,.2,1);
+}
+.has-side-scroll-reveals .side-scroll-entry.is-side-revealed {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+.has-side-scroll-reveals .side-scroll-entry:focus-within {
+  opacity: 1;
+  transform: none;
+}
+
+/* Use dark emerald glass in normal mode as well as the cinematic view. */
+body.experience-normal .space-projects.horizontal-story-rail .project-destination,
+body.experience-normal .space-experience.horizontal-story-rail > article,
+body.experience-normal .space-education.horizontal-story-rail > article,
+body.experience-normal .space-recognition.horizontal-story-rail > article {
+  background: linear-gradient(145deg, rgba(19, 47, 28, .92), rgba(5, 12, 7, .97)) !important;
+  border-color: rgba(112,223,161,.25) !important;
+  box-shadow: 0 16px 38px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.09) !important;
+}
+
+html[data-appearance='light'] .space-projects.horizontal-story-rail .project-destination,
+html[data-appearance='light'] .space-experience.horizontal-story-rail > article,
+html[data-appearance='light'] .space-education.horizontal-story-rail > article,
+html[data-appearance='light'] .space-recognition.horizontal-story-rail > article {
+  background: linear-gradient(145deg, #f4faf5, #e4f1e7);
+  border-color: #b8d7c1;
+  box-shadow: 0 14px 30px rgba(24, 83, 44, .08), inset 0 1px 0 #fff;
+}
+html[data-appearance='light'] .space-experience.horizontal-story-rail h3,
+html[data-appearance='light'] .space-education.horizontal-story-rail h3,
+html[data-appearance='light'] .space-recognition.horizontal-story-rail h3 {
+  color: #203b2a;
+}
+
+@media (max-width: 759px) {
+  .space-projects.horizontal-story-rail,
+  .space-experience.horizontal-story-rail,
+  .space-education.horizontal-story-rail,
+  .space-recognition.horizontal-story-rail {
+    width: calc(100% + 12vw);
+    margin-left: -6vw;
+    padding: 10px 6vw 26px;
+    gap: 14px;
+  }
+  .space-projects.horizontal-story-rail .project-destination {
+    flex-basis: 82vw;
+    width: 82vw;
+    max-width: 82vw;
+    min-height: 0;
+    padding: 20px;
+    border-radius: 18px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+  .space-projects.horizontal-story-rail .project-destination:nth-child(even) .project-copy,
+  .space-projects.horizontal-story-rail .project-destination:nth-child(even) .project-visual {
+    order: initial;
+  }
+  .space-projects.horizontal-story-rail .project-scene {
+    aspect-ratio: 16 / 10;
+    margin: 0;
+  }
+  .space-experience.horizontal-story-rail > article,
+  .space-education.horizontal-story-rail > article {
+    flex-basis: 82vw;
+    width: 82vw;
+    max-width: 82vw;
+    min-height: 330px !important;
+    padding: 24px;
+    border-radius: 18px;
+  }
+  .space-experience.horizontal-story-rail h3,
+  .space-education.horizontal-story-rail h3 {
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
+  }
+  .space-recognition.horizontal-story-rail > article {
+    flex-basis: 78vw;
+    width: 78vw;
+    max-width: 78vw;
+    min-height: 260px;
+    padding: 22px;
+  }
+  .space-reading .space-projects.horizontal-story-rail .project-destination,
+  .space-reading .space-experience.horizontal-story-rail > article,
+  .space-reading .space-education.horizontal-story-rail > article,
+  .space-reading .space-recognition.horizontal-story-rail > article {
+    padding: 22px;
+    min-height: 0 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .has-side-scroll-reveals .side-scroll-entry,
+  .has-side-scroll-reveals .side-scroll-entry.is-side-revealed {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  .horizontal-story-rail { scroll-behavior: auto !important; }
+}
+
