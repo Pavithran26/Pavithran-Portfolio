@@ -55,9 +55,9 @@ body.liquid-cursor-active #liquid-cursor-container {
   /* Liquid Refractive Fluid Background */
   background: radial-gradient(circle at 34% 28%, 
     rgba(255, 255, 255, 0.48) 0%, 
-    rgba(240, 249, 255, 0.22) 32%, 
-    rgba(11, 85, 184, 0.08) 65%, 
-    rgba(0, 242, 254, 0.26) 100%);
+    rgba(222, 250, 231, 0.22) 32%, 
+    rgba(30, 145, 72, 0.08) 65%, 
+    rgba(112, 223, 161, 0.22) 100%);
   
   /* Real-time liquid lens refraction of DOM characters beneath */
   -webkit-backdrop-filter: blur(1.2px) contrast(125%) brightness(112%) saturate(145%);
@@ -70,12 +70,12 @@ body.liquid-cursor-active #liquid-cursor-container {
   box-shadow: 
     /* Internal caustic light convergence (lens focus) */
     inset 0 3px 5px rgba(255, 255, 255, 0.95),
-    inset -2px -3px 6px rgba(0, 242, 254, 0.4),
-    inset 2px -4px 8px rgba(11, 85, 184, 0.3),
+    inset -2px -3px 6px rgba(112, 223, 161, 0.36),
+    inset 2px -4px 8px rgba(30, 145, 72, 0.25),
     inset 0 0 14px rgba(255, 255, 255, 0.3),
     /* Soft translucent water shadow with optical bright core */
     0 12px 24px -4px rgba(0, 0, 0, 0.4),
-    0 6px 14px -2px rgba(0, 242, 254, 0.25),
+    0 6px 14px -2px rgba(112, 223, 161, 0.2),
     0 2px 4px rgba(0, 0, 0, 0.15);
   
   transition: width 0.28s cubic-bezier(0.16, 1, 0.3, 1),
@@ -173,7 +173,7 @@ body.liquid-cursor-active #liquid-cursor-container {
   font-weight: 700;
   letter-spacing: -0.2px;
   text-transform: none;
-  color: #6cd3ff;
+  color: #70dfa1;
   /* Right-side up magnified zoom */
   transform: scale(1.38);
   filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
