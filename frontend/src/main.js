@@ -270,6 +270,64 @@ const on = (target, type, handler, options = {}) => {
   if (target) target.addEventListener(type, handler, { signal: events.signal, ...options });
 };
 
+// Initialize horizontal story rails for Projects, Work, Studies, and recognition.
+const horizontalRailDefinitions = [
+  ['.space-projects', 'Featured projects — scroll horizontally'],
+  ['.space-experience', 'Work experience timeline — scroll horizontally'],
+  ['.space-education', 'Education timeline — scroll horizontally'],
+  ['.space-recognition', 'Training and recognition — scroll horizontally'],
+];
+const horizontalStoryRails = [];
+horizontalRailDefinitions.forEach(([selector, label]) => {
+  root.querySelectorAll(selector).forEach(rail => {
+    rail.classList.add('horizontal-story-rail');
+    rail.setAttribute('role', 'region');
+    rail.setAttribute('aria-label', label);
+    if (!rail.hasAttribute('tabindex')) rail.setAttribute('tabindex', '0');
+    horizontalStoryRails.push(rail);
+
+    // Convert the normal mouse-wheel gesture to horizontal movement while
+    // the pointer is over a rail. At either edge, vertical page scrolling resumes.
+    on(rail, 'wheel', event => {
+      if (event.ctrlKey || event.metaKey) return;
+      const delta = Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      if (!delta) return;
+
+      const maxScroll = rail.scrollWidth - rail.clientWidth;
+      if (maxScroll <= 1) return;
+      const atStart = rail.scrollLeft <= 1;
+      const atEnd = rail.scrollLeft >= maxScroll - 1;
+      if ((delta < 0 && atStart) || (delta > 0 && atEnd)) return;
+
+      event.preventDefault();
+      event.stopPropagation();
+      rail.scrollLeft = Math.max(0, Math.min(maxScroll, rail.scrollLeft + delta * 1.08));
+    }, { passive: false });
+  });
+});
+
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const sideScrollEntries = horizontalStoryRails.flatMap(rail =>
+  [...rail.children].filter(child => child.matches('article'))
+);
+if (!prefersReducedMotion && 'IntersectionObserver' in window && sideScrollEntries.length) {
+  sideScrollEntries.forEach((card, index) => {
+    card.classList.add('side-scroll-entry');
+    card.style.setProperty('--side-entry-x', index % 2 === 0 ? '-42px' : '42px');
+  });
+
+  const sideScrollObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('is-side-revealed');
+      sideScrollObserver.unobserve(entry.target);
+    });
+  }, { threshold: 0.12, rootMargin: '0px -3% 0px -3%' });
+
+  sideScrollEntries.forEach(card => sideScrollObserver.observe(card));
+  document.documentElement.classList.add('has-side-scroll-reveals');
+}
+
 // Lenis smooth anchor navigation for all internal jump links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   on(anchor, 'click', (e) => {
@@ -278,11 +336,25 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       const target = document.querySelector(href);
       if (target) {
         e.preventDefault();
-        lenis.scrollTo(target, {
-          offset: -40,
-          duration: 1.4,
-          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
-        });
+        const horizontalRail = target.closest('.horizontal-story-rail');
+        if (horizontalRail) {
+          const railRect = horizontalRail.getBoundingClientRect();
+          const targetRect = target.getBoundingClientRect();
+          const targetLeft = horizontalRail.scrollLeft + targetRect.left - railRect.left;
+          const centeredLeft = targetLeft - (horizontalRail.clientWidth - targetRect.width) / 2;
+          horizontalRail.scrollTo({ left: Math.max(0, Math.min(horizontalRail.scrollWidth - horizontalRail.clientWidth, centeredLeft)), behavior: 'smooth' });
+          lenis.scrollTo(horizontalRail, {
+            offset: -40,
+            duration: 1.15,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+        } else {
+          lenis.scrollTo(target, {
+            offset: -40,
+            duration: 1.4,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+          });
+        }
       }
     }
   });
@@ -628,6 +700,7 @@ if (import.meta.hot) {
     if (lenisRafId) cancelAnimationFrame(lenisRafId);
     lenis.destroy();
     events.abort();
+    document.documentElement.classList.remove('has-side-scroll-reveals');
     spotlight?.dispose();
     transformersBg?.dispose();
     scrollDepth?.dispose();
