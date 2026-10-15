@@ -601,3 +601,99 @@ body:not(.space-reading):not(.project-archive) #portfolio { translate: var(--cam
   .space-intro .intro-identity h1 { font-size: clamp(3.2rem, 12vw, 4rem); }
 }
 
+/* Emerald atmosphere: replace the icy-blue accents with a cohesive green palette. */
+:root {
+  --ink: #050b08;
+  --white: #edf5ef;
+  --paper: #edf5ef;
+  --muted: #a1b4a7;
+  --accent: #70dfa1;
+  --line: #9bd8b629;
+  --emerald-accent: #70dfa1;
+  --text-muted: #a1b4a7;
+}
+
+.universe-darkness {
+  background:
+    radial-gradient(ellipse at 18% 38%, #14502b20 0%, transparent 48%),
+    radial-gradient(ellipse at 82% 60%, #0a583820 0%, transparent 42%),
+    linear-gradient(90deg, #050b08cc 0%, #050b0840 32%, transparent 63%),
+    linear-gradient(180deg, #050b0878, transparent 18%, transparent 86%, #050b087a);
+}
+
+/* A restrained colour grade gives the space artwork a subtle green atmosphere. */
+.world-art {
+  filter: hue-rotate(-100deg) saturate(.82);
+}
+
+.space-intro .space-kicker {
+  color: #d7f6e2;
+  text-shadow: 0 2px 18px #030805;
+}
+
+.intro-caption {
+  color: #c0d8c8;
+}
+
+.flight-nav a[aria-current] span {
+  box-shadow: 0 0 10px #70dfa1;
+}
+
+.space-experience article::before,
+.space-education article::before {
+  box-shadow: 0 0 14px #70dfa160;
+}
+
+.portfolio-dialog {
+  --accent: #70dfa1;
+  --ink: #07110b;
+  --white: #edf5ef;
+  --muted: #a5b9aa;
+  --line: #30483a;
+}
+
+.clara-eye-iris {
+  background: radial-gradient(circle at 35% 35%, #8df5b8 0%, #22a65a 55%, #116b3b 100%);
+  box-shadow: 0 0 10px rgba(75, 222, 133, .78), inset 0 0 4px rgba(0, 0, 0, .4);
+}
+
+.eye-label small {
+  color: #a9dfbc;
+}
+
+.dawn-eye:hover {
+  border-color: #8df5b8;
+  box-shadow: 0 0 24px #38d9762b;
+}
+
+html[data-appearance='light'] {
+  color-scheme: light;
+  --ink: #edf3ee;
+  --white: #1a3022;
+  --muted: #526a5a;
+  --line: #1b4b302b;
+  --accent: #18824b;
+  --emerald-accent: #18824b;
+  --text-muted: #526a5a;
+}
+
+html[data-appearance='light'] .universe-darkness {
+  background:
+    radial-gradient(ellipse at 18% 38%, #4db4771c 0%, transparent 48%),
+    #edf3ee73;
+}
+
+html[data-appearance='light'] .world-art {
+  filter: hue-rotate(-100deg) saturate(.78);
+}
+
+html[data-appearance='light'] .intro-statement,
+html[data-appearance='light'] .intro-caption {
+  color: #334f3d;
+}
+
+html[data-appearance='light'] .orbit-tool-name {
+  color: #1a3022;
+  text-shadow: 0 1px 6px #edf3ee, 0 0 15px #edf3ee;
+}
+
