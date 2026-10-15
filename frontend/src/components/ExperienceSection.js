@@ -45,7 +45,7 @@ export function renderExperienceSection(containerId) {
       <div class="timeline-org" style="color: var(--purple-accent); font-weight: 600;">
         ${escapeHtml(edu.institution)} • ${escapeHtml(edu.location)}
       </div>
-      <span class="project-tech-tag" style="background: rgba(168, 85, 247, 0.15); color: #c084fc; margin: 0.4rem 0; display: inline-block;">
+      <span class="project-tech-tag" style="background: rgba(112, 223, 161, 0.12); color: #8cf0b0; margin: 0.4rem 0; display: inline-block;">
         ${escapeHtml(edu.badge)}
       </span>
       <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; margin-top: 0.3rem;">
@@ -63,7 +63,7 @@ export function renderExperienceSection(containerId) {
           ${escapeHtml(ach.badge)}
         </span>
       </div>
-      <div style="font-size: 0.82rem; color: #f59e0b; margin-bottom: 0.4rem;">
+      <div style="font-size: 0.82rem; color: #8cf0b0; margin-bottom: 0.4rem;">
         ${escapeHtml(ach.organization)} • ${escapeHtml(ach.date)}
       </div>
       <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5;">
@@ -75,7 +75,7 @@ export function renderExperienceSection(containerId) {
   // 4. Career Roadmap
   const roadmapHtml = PORTFOLIO_DATA.careerAmbitions.roadmap.map(r => `
     <div style="display: flex; gap: 12px; margin-bottom: 0.8rem; align-items: flex-start;">
-      <span style="background: rgba(56, 189, 248, 0.15); color: var(--cyan-accent); font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; min-width: 80px; text-align: center;">
+      <span style="background: rgba(112, 223, 161, 0.12); color: var(--cyan-accent); font-size: 0.72rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; min-width: 80px; text-align: center;">
         ${escapeHtml(r.step)}
       </span>
       <div>
@@ -87,7 +87,7 @@ export function renderExperienceSection(containerId) {
 
   // 5. Gaming & Interests
   const gamesHtml = PORTFOLIO_DATA.interests.gaming.map(g => `
-    <span class="project-tech-tag" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3); font-size: 0.82rem; padding: 4px 10px;">
+    <span class="project-tech-tag" style="background: rgba(112, 223, 161, 0.12); color: #70dfa1; border-color: rgba(112, 223, 161, 0.25); font-size: 0.82rem; padding: 4px 10px;">
       🎮 ${escapeHtml(g.name)} <small>(${escapeHtml(g.tag)})</small>
     </span>
   `).join(' ');
@@ -162,7 +162,7 @@ export function renderExperienceSection(containerId) {
               ${gamesHtml}
             </div>
           </div>
-          <div style="margin-bottom: 1rem; padding: 0.75rem; background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 8px;">
+          <div style="margin-bottom: 1rem; padding: 0.75rem; background: rgba(112, 223, 161, 0.08); border: 1px solid rgba(112, 223, 161, 0.18); border-radius: 8px;">
             <div style="font-size: 0.85rem; font-weight: 700; color: var(--cyan-accent); margin-bottom: 0.2rem;">
               ⚡ LeetCode 100+ Day Streak
             </div>
