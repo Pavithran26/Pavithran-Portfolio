@@ -44,8 +44,8 @@
   --emerald-glow: var(--green-neon-glow);
   --purple-accent: var(--green-neon);
   --purple-glow: var(--green-glow);
-  --amber-accent: #fbbf24;
-  --amber-glow: rgba(251, 191, 36, 0.4);
+  --amber-accent: #9be3b2;
+  --amber-glow: rgba(112, 223, 161, 0.4);
   --rose-accent: #34d399;
   --rose-glow: var(--green-glow);
   --blue-accent: var(--primary-green);
