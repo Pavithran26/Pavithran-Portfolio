@@ -55,7 +55,7 @@ export function renderHeroSection(containerId, options = {}) {
                 <defs>
                   <linearGradient id="star-grad" x1="0" y1="0" x2="100" y2="100" gradientUnits="userSpaceOnUse">
                     <stop stop-color="#0ae448"/>
-                    <stop offset="1" stop-color="#00bae2"/>
+                    <stop offset="1" stop-color="#70dfa1"/>
                   </linearGradient>
                 </defs>
               </svg>
@@ -75,7 +75,7 @@ export function renderHeroSection(containerId, options = {}) {
           </span>
         </h1>
 
-        <p class="hero-lead-text" style="max-width: 720px; margin: 1.2rem auto 2.2rem auto; font-size: 1.05rem; color: #bbbaa6; line-height: 1.6;">
+        <p class="hero-lead-text" style="max-width: 720px; margin: 1.2rem auto 2.2rem auto; font-size: 1.05rem; color: #b5cbbb; line-height: 1.6;">
           ${escapeHtml(PORTFOLIO_DATA.summary)}
         </p>
 
@@ -89,8 +89,8 @@ export function renderHeroSection(containerId, options = {}) {
             </span>
           </a>
 
-          <a href="#cyber-station" class="magnetic-pill-btn hero-btn-3d" data-magnetic-strength="0.35" style="background: rgba(14, 16, 15, 0.85); color: #00bae2; border: 1.5px solid rgba(0, 186, 226, 0.4); text-decoration: none; padding: 0.85rem 1.6rem;">
-            <span class="btn-flair" style="background: radial-gradient(circle, rgba(0, 186, 226, 0.5) 0%, transparent 70%);"></span>
+          <a href="#cyber-station" class="magnetic-pill-btn hero-btn-3d" data-magnetic-strength="0.35" style="background: rgba(14, 16, 15, 0.85); color: #70dfa1; border: 1.5px solid rgba(112, 223, 161, 0.4); text-decoration: none; padding: 0.85rem 1.6rem;">
+            <span class="btn-flair" style="background: radial-gradient(circle, rgba(112, 223, 161, 0.5) 0%, transparent 70%);"></span>
             <span class="btn-content" style="position: relative; z-index: 2; display: flex; align-items: center; gap: 8px;">
               <span>🕹️</span> 3D Cyber Lab
             </span>
@@ -104,7 +104,7 @@ export function renderHeroSection(containerId, options = {}) {
           </button>
 
           <button id="hero-btn-rag" class="magnetic-pill-btn hero-btn-accent" data-magnetic-strength="0.35">
-            <span class="btn-flair" style="background: radial-gradient(circle, rgba(236, 72, 153, 0.5) 0%, transparent 70%);"></span>
+            <span class="btn-flair" style="background: radial-gradient(circle, rgba(112, 223, 161, 0.38) 0%, transparent 70%);"></span>
             <span class="btn-content" style="position: relative; z-index: 2; display: flex; align-items: center; gap: 8px;">
               <span class="clara-status-dot" style="width: 9px; height: 9px; display: inline-block;"></span>
               <span>Meet DAWN (AI)</span>
