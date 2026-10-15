@@ -1,17 +1,17 @@
 :root {
   color-scheme: dark;
-  --ink: #090a0b;
-  --paper: #eeefed;
-  --white: #f7f7f4;
-  --muted: #a2a5a9;
-  --accent: #ff634e;
-  --line: #303236;
+  --ink: #050b08;
+  --paper: #edf5ef;
+  --white: #edf5ef;
+  --muted: #a1b4a7;
+  --accent: #70dfa1;
+  --line: #294b36;
   --font-body: 'Outfit', Arial, sans-serif;
   --font-mono: 'Fira Code', monospace;
-  --text-muted: #a2a5a9;
-  --emerald-accent: #ff7a62;
-  --cyan-accent: #d8e1ed;
-  --glass-border: #303236;
+  --text-muted: #a1b4a7;
+  --emerald-accent: #58d98b;
+  --cyan-accent: #8cf0b0;
+  --glass-border: rgba(112, 223, 161, .22);
   --glass-shadow: none;
   --glass-blur: none;
 }
