@@ -823,3 +823,207 @@ html[data-appearance='light'] .space-recognition.horizontal-story-rail h3 {
   .horizontal-story-rail { scroll-behavior: auto !important; }
 }
 
+/* Sticky horizontal chapters: vertical page travel drives left-to-right movement. */
+.horizontal-story-stage {
+  position: relative;
+  width: calc(100% + 16vw);
+  margin-left: -8vw;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.space-work .horizontal-story-stage { margin-top: 42px; }
+.space-about .horizontal-story-stage,
+.space-learning .horizontal-story-stage { margin-top: 28px; }
+
+.horizontal-rail-toolbar {
+  position: sticky;
+  top: 76px;
+  z-index: 34;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  height: 38px;
+  box-sizing: border-box;
+  padding: 0 8vw;
+  margin: 0 0 12px;
+  color: #91cfa7;
+  background: linear-gradient(90deg, rgba(5,11,8,.94), rgba(5,11,8,.72) 76%, rgba(5,11,8,.08));
+  font: 500 .68rem/1.4 var(--font-mono);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.horizontal-rail-toolbar-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.horizontal-rail-toolbar-label::before {
+  content: '';
+  width: 22px;
+  height: 1px;
+  flex: 0 0 22px;
+  background: var(--accent);
+  box-shadow: 0 0 10px rgba(112,223,161,.45);
+}
+.horizontal-rail-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+}
+.horizontal-rail-controls button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid rgba(112,223,161,.3);
+  border-radius: 9px;
+  color: #b7f3c9;
+  background: linear-gradient(145deg, rgba(26,76,43,.76), rgba(5,20,10,.92));
+  box-shadow: inset 0 1px rgba(255,255,255,.12);
+  font: 500 1.05rem/1 var(--font-mono);
+  cursor: pointer;
+  transition: border-color .2s, background .2s, transform .2s;
+}
+.horizontal-rail-controls button:hover,
+.horizontal-rail-controls button:focus-visible {
+  border-color: var(--accent);
+  background: linear-gradient(145deg, rgba(36,111,62,.92), rgba(5,20,10,.96));
+  transform: translateY(-1px);
+  outline: none;
+}
+.horizontal-rail-controls button:disabled {
+  opacity: .32;
+  cursor: default;
+  transform: none;
+}
+.horizontal-story-stage.is-scroll-pinned {
+  /* JS sets the height to viewport rail + horizontal travel. */
+  min-height: 0;
+}
+.horizontal-story-stage .horizontal-story-rail {
+  position: sticky;
+  top: 126px;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  min-width: 0;
+  box-sizing: border-box;
+  scroll-behavior: auto;
+  overscroll-behavior-x: contain;
+}
+.space-projects.horizontal-story-rail {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 12px 8vw 30px;
+  gap: clamp(18px, 2vw, 30px);
+}
+.space-projects.horizontal-story-rail .project-destination {
+  flex: 0 0 min(84vw, 1560px);
+  width: min(84vw, 1560px);
+  max-width: min(84vw, 1560px);
+  min-height: clamp(430px, 64svh, 660px);
+  height: auto;
+  padding: clamp(26px, 3.3vw, 48px);
+  scroll-snap-align: center;
+}
+.space-experience.horizontal-story-rail,
+.space-education.horizontal-story-rail,
+.space-recognition.horizontal-story-rail {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 12px 8vw 30px;
+  gap: clamp(18px, 2vw, 30px);
+}
+.space-experience.horizontal-story-rail > article,
+.space-education.horizontal-story-rail > article {
+  flex: 0 0 min(76vw, 1360px);
+  width: min(76vw, 1360px);
+  max-width: min(76vw, 1360px);
+  min-height: clamp(360px, 56svh, 520px) !important;
+  height: auto;
+  padding: clamp(28px, 3.5vw, 48px);
+}
+.space-recognition.horizontal-story-rail > article {
+  flex: 0 0 min(68vw, 1050px);
+  width: min(68vw, 1050px);
+  max-width: min(68vw, 1050px);
+}
+.horizontal-story-stage .horizontal-story-rail::-webkit-scrollbar { height: 5px; }
+.horizontal-story-stage .horizontal-story-rail::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--accent) 76%, transparent);
+  border-radius: 99px;
+}
+.horizontal-story-stage .horizontal-story-rail::-webkit-scrollbar-track {
+  background: rgba(255,255,255,.045);
+  border-radius: 99px;
+}
+
+html[data-appearance='light'] .horizontal-rail-toolbar {
+  color: #206b3e;
+  background: linear-gradient(90deg, rgba(237,245,239,.97), rgba(237,245,239,.86) 76%, rgba(237,245,239,.08));
+}
+html[data-appearance='light'] .horizontal-rail-controls button {
+  color: #176c3d;
+  background: linear-gradient(145deg, #e1f2e5, #f5faf6);
+  border-color: rgba(24,130,75,.3);
+}
+body.book-portfolio .horizontal-rail-toolbar {
+  color: #206b3e;
+  background: linear-gradient(90deg, rgba(237,245,239,.98), rgba(237,245,239,.85) 76%, rgba(237,245,239,.08));
+}
+body.book-portfolio .space-projects.horizontal-story-rail .project-destination,
+body.book-portfolio .space-experience.horizontal-story-rail > article,
+body.book-portfolio .space-education.horizontal-story-rail > article,
+body.book-portfolio .space-recognition.horizontal-story-rail > article {
+  background: linear-gradient(145deg, #f4faf5, #deecdf);
+  border-color: #b2c9b7;
+  color: #203b2a;
+}
+@media (max-width: 759px), (prefers-reduced-motion: reduce) {
+  .horizontal-story-stage.is-scroll-pinned { height: auto !important; }
+  .horizontal-rail-toolbar {
+    position: relative;
+    top: auto;
+    padding: 0 6vw;
+    margin-bottom: 8px;
+    background: transparent;
+    font-size: .59rem;
+    letter-spacing: .1em;
+  }
+  .horizontal-story-stage .horizontal-story-rail { position: relative; top: auto; }
+  .space-projects.horizontal-story-rail .project-destination {
+    flex-basis: 82vw;
+    width: 82vw;
+    max-width: 82vw;
+    min-height: 0;
+    padding: 20px;
+  }
+  .space-experience.horizontal-story-rail > article,
+  .space-education.horizontal-story-rail > article {
+    flex-basis: 82vw;
+    width: 82vw;
+    max-width: 82vw;
+    min-height: 330px !important;
+    padding: 24px;
+  }
+  .space-recognition.horizontal-story-rail > article {
+    flex-basis: 78vw;
+    width: 78vw;
+    max-width: 78vw;
+    min-height: 260px;
+    padding: 22px;
+  }
+}
+@media (max-width: 400px) {
+  .horizontal-rail-toolbar-label { letter-spacing: .06em; gap: 7px; }
+  .horizontal-rail-controls { gap: 5px; }
+  .horizontal-rail-controls button { width: 30px; height: 30px; }
+}
+
