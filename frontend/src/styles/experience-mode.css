@@ -118,8 +118,8 @@
 
 /* Lightweight mode keeps the portfolio content, but removes costly moving layers. */
 body.experience-normal {
-  background: radial-gradient(ellipse at 78% 8%, #101f31 0%, transparent 38%), #070b12 !important;
-  color: #e5eaf2 !important;
+  background: radial-gradient(ellipse at 78% 8%, #102819 0%, transparent 38%), #050b08 !important;
+  color: #edf5ef !important;
   scroll-behavior: auto !important;
 }
 body.experience-normal #transformers-viewport,
@@ -162,7 +162,7 @@ body.experience-normal .intro-identity {
 body.experience-normal .dawn-eye .dawn-katana-video { display: none !important; }
 body.experience-normal .dawn-eye .dawn-eye-label {
   display: inline !important;
-  color: #f2d4b4;
+  color: #8cf0b0;
   font: 500 0.7rem/1 'Fira Code', monospace;
   letter-spacing: 0.08em;
 }
@@ -171,7 +171,7 @@ body.experience-normal .archive-project {
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
-  background: rgba(13, 21, 33, 0.78) !important;
+  background: rgba(11, 24, 15, 0.82) !important;
 }
 body.experience-normal .intro-identity h1,
 body.experience-normal .space-content > h2,
