@@ -196,3 +196,346 @@ body.experience-normal .project-summary {
   .experience-choice-card:hover,
   .experience-choice-card:focus-visible { transform: none !important; }
 }
+
+/* Fixed-viewport experience picker with layered glass controls. */
+html:has(body.experience-mode-pending),
+body.experience-mode-pending {
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+.experience-choice {
+  height: 100vh;
+  height: 100dvh;
+  min-height: 0;
+  overflow: hidden;
+  overscroll-behavior: none;
+  padding: clamp(16px, 3vh, 30px) clamp(18px, 4vw, 56px);
+  background:
+    radial-gradient(ellipse at 14% 20%, rgba(42, 190, 108, .16), transparent 43%),
+    radial-gradient(ellipse at 84% 82%, rgba(16, 102, 57, .15), transparent 42%),
+    #050b08;
+}
+
+.experience-choice-panel {
+  width: min(100%, 1160px);
+  max-height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: auto;
+}
+
+.experience-choice-eyebrow {
+  margin: 0 0 clamp(8px, 1.4vh, 14px);
+  color: #a1d9b4;
+  font-size: clamp(.62rem, .85vw, .75rem);
+  letter-spacing: .16em;
+}
+
+.experience-choice-panel h1 {
+  max-width: 100%;
+  font-size: clamp(2.25rem, 5.2vw, 4.65rem);
+  line-height: .99;
+  letter-spacing: -.045em;
+}
+
+.experience-choice-panel h1 em {
+  color: #70dfa1;
+}
+
+.experience-choice-description {
+  max-width: 760px;
+  margin: clamp(10px, 1.6vh, 16px) 0 clamp(16px, 2.8vh, 26px);
+  color: #bbcec1;
+  font-size: clamp(.9rem, 1.35vw, 1.08rem);
+  line-height: 1.55;
+}
+
+.experience-choice-grid {
+  gap: clamp(12px, 1.6vw, 20px);
+}
+
+.experience-choice-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: clamp(190px, 25vh, 250px);
+  min-height: 0;
+  padding: clamp(16px, 2.2vw, 25px);
+  border: 1px solid rgba(170, 205, 182, .25);
+  border-radius: 18px;
+  color: #f0f7f2;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.09), transparent 38%),
+    linear-gradient(155deg, rgba(20, 39, 28, .91), rgba(5, 13, 8, .94));
+  box-shadow:
+    inset 1px 1px 1px rgba(255,255,255,.18),
+    inset -1px -1px 1px rgba(0,0,0,.55),
+    0 12px 30px rgba(0,0,0,.24);
+  -webkit-backdrop-filter: blur(22px) saturate(145%);
+  backdrop-filter: blur(22px) saturate(145%);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    transform .22s ease,
+    border-color .22s ease,
+    background .22s ease,
+    box-shadow .22s ease,
+    filter .22s ease;
+}
+
+.experience-choice-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(132deg, rgba(255,255,255,.13), transparent 26%, transparent 72%, rgba(112,223,161,.08)),
+    linear-gradient(180deg, rgba(255,255,255,.06), transparent 30%);
+  opacity: .9;
+}
+
+.experience-choice-card > span {
+  position: relative;
+  z-index: 1;
+}
+
+.experience-choice-card:hover,
+.experience-choice-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: rgba(112,223,161,.78);
+  box-shadow:
+    inset 1px 1px 1px rgba(255,255,255,.23),
+    inset -1px -1px 1px rgba(0,0,0,.45),
+    0 18px 38px rgba(0,0,0,.32),
+    0 0 24px rgba(54, 199, 113, .12);
+  filter: brightness(1.06);
+  outline: none;
+}
+
+.experience-choice-card:active {
+  transform: translateY(1px) scale(.995);
+  filter: brightness(.97);
+}
+
+.experience-choice-card-animated {
+  border-color: rgba(112,223,161,.48);
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.10), transparent 42%),
+    linear-gradient(145deg, rgba(8, 72, 39, .88), rgba(5, 15, 9, .96));
+  box-shadow:
+    inset 1px 1px 1px rgba(255,255,255,.2),
+    inset -1px -1px 1px rgba(0,0,0,.5),
+    0 12px 32px rgba(0,0,0,.23),
+    0 0 24px rgba(54,199,113,.06);
+}
+
+.experience-choice-card-normal {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.08), transparent 40%),
+    linear-gradient(150deg, rgba(25, 35, 29, .91), rgba(6, 12, 8, .96));
+}
+
+.experience-choice-icon {
+  margin-bottom: clamp(10px, 1.7vh, 17px);
+  color: #8cf0b0;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(112,223,161,.28);
+}
+
+.experience-choice-card-normal .experience-choice-icon {
+  color: #d0e1d5;
+  text-shadow: none;
+}
+
+.experience-choice-mode {
+  margin-bottom: 6px;
+  color: #a6c7b1;
+  font-size: clamp(.55rem, .75vw, .65rem);
+  letter-spacing: .09em;
+}
+
+.experience-choice-card-title {
+  color: #f7fff9;
+  font-size: clamp(1.06rem, 2vw, 1.45rem);
+  line-height: 1.2;
+}
+
+.experience-choice-card-description {
+  max-width: 310px;
+  margin-top: 7px;
+  color: #c0d0c5;
+  font-size: clamp(.78rem, 1.1vw, .9rem);
+  line-height: 1.5;
+}
+
+.experience-choice-card-action {
+  align-items: center;
+  gap: 8px;
+  padding-top: clamp(12px, 2vh, 20px);
+  color: #8cf0b0;
+  font-size: clamp(.65rem, .88vw, .78rem);
+  letter-spacing: .01em;
+}
+
+.experience-choice-card-normal .experience-choice-card-action {
+  color: #dbe9df;
+}
+
+.experience-choice-footnote {
+  margin: clamp(9px, 1.5vh, 15px) 0 0;
+  color: #8da596;
+  font-size: clamp(.65rem, .85vw, .73rem);
+}
+
+/* Compact desktop/tablet heights: keep both cards and the footnote in view. */
+@media (max-height: 760px) {
+  .experience-choice {
+    padding-block: 12px;
+  }
+
+  .experience-choice-eyebrow {
+    margin-bottom: 7px;
+    line-height: 1.3;
+  }
+
+  .experience-choice-panel h1 {
+    font-size: clamp(2rem, 4.7vw, 3.8rem);
+    line-height: .96;
+  }
+
+  .experience-choice-description {
+    margin: 8px 0 13px;
+    line-height: 1.4;
+  }
+
+  .experience-choice-card {
+    height: clamp(165px, 27vh, 205px);
+    padding: 15px 18px;
+  }
+
+  .experience-choice-icon {
+    margin-bottom: 9px;
+  }
+
+  .experience-choice-card-action {
+    padding-top: 10px;
+  }
+
+  .experience-choice-footnote {
+    margin-top: 8px;
+  }
+}
+
+/* Narrow screens remain fixed; compact the cards rather than introducing scrolling. */
+@media (max-width: 640px) {
+  .experience-choice {
+    padding: max(12px, env(safe-area-inset-top)) 16px max(12px, env(safe-area-inset-bottom));
+  }
+
+  .experience-choice-panel {
+    width: min(100%, 440px);
+  }
+
+  .experience-choice-eyebrow {
+    margin-bottom: 8px;
+    font-size: .58rem;
+    letter-spacing: .12em;
+  }
+
+  .experience-choice-panel h1 {
+    font-size: clamp(2rem, 8.5vw, 3.1rem);
+    line-height: .98;
+  }
+
+  .experience-choice-description {
+    margin: 9px 0 13px;
+    font-size: .84rem;
+    line-height: 1.42;
+  }
+
+  .experience-choice-grid {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .experience-choice-card {
+    height: clamp(142px, 19vh, 170px);
+    padding: 12px 15px;
+    border-radius: 14px;
+  }
+
+  .experience-choice-icon {
+    margin-bottom: 6px;
+    font-size: 1.05rem;
+  }
+
+  .experience-choice-mode {
+    margin-bottom: 3px;
+    font-size: .52rem;
+  }
+
+  .experience-choice-card-title {
+    font-size: 1rem;
+  }
+
+  .experience-choice-card-description {
+    max-width: 100%;
+    margin-top: 4px;
+    font-size: .74rem;
+    line-height: 1.35;
+  }
+
+  .experience-choice-card-action {
+    padding-top: 7px;
+    font-size: .61rem;
+  }
+
+  .experience-choice-footnote {
+    margin-top: 7px;
+    font-size: .61rem;
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 640px) and (max-height: 740px) {
+  .experience-choice {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .experience-choice-panel h1 {
+    font-size: clamp(1.8rem, 7vw, 2.55rem);
+  }
+
+  .experience-choice-description {
+    margin: 7px 0 9px;
+    font-size: .78rem;
+  }
+
+  .experience-choice-card {
+    height: clamp(126px, 18vh, 145px);
+    padding: 10px 13px;
+  }
+
+  .experience-choice-card-description {
+    font-size: .7rem;
+    line-height: 1.3;
+  }
+
+  .experience-choice-footnote {
+    font-size: .58rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .experience-choice-card {
+    transition: none !important;
+  }
+}
+
