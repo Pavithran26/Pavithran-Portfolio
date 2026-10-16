@@ -420,17 +420,17 @@
 }
 .animation-mode-3d-button .button3d-char.state-1 > span {
   animation: none !important;
-  opacity: 1 !important;
-  visibility: visible !important;
-  filter: none !important;
-  transform: none !important;
+  opacity: 1;
+  visibility: visible;
+  filter: none;
+  transform: none;
 }
 .animation-mode-3d-button .button3d-char.state-2 > span {
   animation: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  filter: none !important;
-  transform: translateY(8px) !important;
+  opacity: 0;
+  visibility: visible;
+  filter: none;
+  transform: translateY(8px);
 }
 .animation-mode-3d-button:is(:hover, :focus-visible, .is-hovered) .button3d-char.state-1 > span {
   animation: button3d-old-text-out .24s ease both !important;
