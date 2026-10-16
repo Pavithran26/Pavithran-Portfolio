@@ -245,7 +245,7 @@ html.has-vx-text-effects .vx-gooey-target:not(.is-vx-gooey) {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: clamp(155px, 22vw, 300px);
+  width: clamp(120px, 22%, 260px);
   aspect-ratio: 16/10;
   object-fit: cover;
   border: 1px solid rgba(112,223,161,.48);
@@ -295,7 +295,7 @@ body.book-portfolio .project-collage-toggle { color: #176c3d; background: #edf8f
   .motion-stat-label { font-size: .5rem; letter-spacing: .07em; }
   .project-image-collage { padding: 14px; margin-block: 36px 48px; border-radius: 17px; }
   .project-collage-stage { height: 190px; }
-  .project-collage-image { width: clamp(118px, 37vw, 190px); border-radius: 9px; }
+  .project-collage-image { width: clamp(105px, 27%, 160px); border-radius: 9px; }
   .project-collage-stage.is-organized .project-collage-image { width: calc(25% - 4px); }
   .project-collage-toolbar { align-items: flex-start; }
   .project-collage-label { font-size: .59rem; letter-spacing: .09em; }
@@ -337,10 +337,10 @@ body.book-portfolio .project-collage-toggle { color: #176c3d; background: #edf8f
 }
 
 /* Scattered thumbnails spread across the viewport instead of overlapping in one pile. */
-.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(1) { --scatter-x: -27vw; --scatter-y: -12px; --scatter-rotate: -8deg; }
-.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(2) { --scatter-x: -9vw; --scatter-y: 8px; --scatter-rotate: 5deg; }
-.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(3) { --scatter-x: 9vw; --scatter-y: -13px; --scatter-rotate: -4deg; }
-.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(4) { --scatter-x: 27vw; --scatter-y: 12px; --scatter-rotate: 8deg; }
+.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(1) { --scatter-x: -140%; --scatter-y: -12px; --scatter-rotate: -8deg; }
+.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(2) { --scatter-x: -45%; --scatter-y: 8px; --scatter-rotate: 5deg; }
+.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(3) { --scatter-x: 45%; --scatter-y: -13px; --scatter-rotate: -4deg; }
+.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(4) { --scatter-x: 140%; --scatter-y: 12px; --scatter-rotate: 8deg; }
 
 @keyframes vx-heading-flip-in {
   from { opacity: 0; transform: perspective(900px) rotateX(-35deg) translateY(18px); filter: blur(8px); }
@@ -353,8 +353,8 @@ body.book-portfolio .project-collage-toggle { color: #176c3d; background: #edf8f
   #intro-title.vx-flip-heading { animation: none !important; }
 }
 @media (max-width: 759px) {
-  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(1) { --scatter-x: -27vw; }
-  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(2) { --scatter-x: -9vw; }
-  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(3) { --scatter-x: 9vw; }
-  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(4) { --scatter-x: 27vw; }
+  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(1) { --scatter-x: -140%; }
+  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(2) { --scatter-x: -45%; }
+  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(3) { --scatter-x: 45%; }
+  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(4) { --scatter-x: 140%; }
 }
