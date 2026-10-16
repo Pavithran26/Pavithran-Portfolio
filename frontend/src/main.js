@@ -717,7 +717,9 @@ function openExperienceChoice() {
   experienceChoice.hidden = false;
   experienceChoice.classList.remove('is-dismissed');
   experienceChoice.setAttribute('aria-hidden', 'false');
-  window.setTimeout(() => document.getElementById('choose-animation')?.focus({ preventScroll: true }), 60);
+  // Focus the dialog container, not the Animation button, so hover-only shine
+  // does not appear before the visitor has interacted with either choice.
+  window.setTimeout(() => experienceChoice.focus({ preventScroll: true }), 60);
 }
 
 function closeExperienceChoice() {
