@@ -260,9 +260,9 @@ export function ShinyButton({
         style={style}
       >
         <span className="shiny-button-content">
-          <span>{label}</span>
-          {children}
+          <span className="shiny-button-label">{label}</span>
         </span>
+        {children}
       </button>
     </>
   );
