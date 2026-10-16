@@ -1,0 +1,289 @@
+/* 3D launch button, scoped to the Animation mode chooser. */
+.animation-mode-3d-button {
+  position: relative !important;
+  isolation: isolate;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  justify-content: space-between !important;
+  gap: 12px !important;
+  overflow: hidden !important;
+  padding: 22px 26px !important;
+  text-align: left !important;
+  transform-style: preserve-3d;
+  perspective: 900px;
+  background: linear-gradient(145deg, rgba(12,70,38,.96), rgba(5,16,9,.98)) !important;
+  border-color: rgba(112,223,161,.68) !important;
+  box-shadow: inset 1px 1px 1px rgba(255,255,255,.18), inset -1px -1px 1px rgba(0,0,0,.42), 0 12px 32px rgba(0,0,0,.28), 0 0 20px rgba(67,210,122,.09) !important;
+  transition: transform .24s ease, border-color .24s ease, box-shadow .24s ease, filter .24s ease !important;
+}
+.animation-mode-3d-button .button3d-bg {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(136,240,176,.18), transparent 48%),
+    linear-gradient(135deg, rgba(255,255,255,.09), transparent 45%, rgba(112,223,161,.06));
+  transform: scale(.98);
+  transition: transform .4s cubic-bezier(.2,.8,.2,1), opacity .3s ease;
+}
+.animation-mode-3d-button .button3d-splash {
+  position: absolute;
+  z-index: -1;
+  width: min(92%, 342px);
+  max-height: 100%;
+  height: auto;
+  left: 50%;
+  top: 50%;
+  overflow: visible;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%,-50%) scale(.7);
+  stroke: #8cf0b0;
+  filter: drop-shadow(0 0 5px rgba(112,223,161,.4));
+}
+.animation-mode-3d-button .button3d-splash path {
+  stroke-dasharray: 3 55;
+  stroke-dashoffset: 0;
+}
+.animation-mode-3d-button.is-hovered .button3d-splash,
+.animation-mode-3d-button:focus-visible .button3d-splash {
+  opacity: .8;
+  animation: button3d-splash 1.05s ease-out both;
+}
+.animation-mode-3d-button .button3d-card-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+}
+.animation-mode-3d-button .button3d-card-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.animation-mode-3d-button .button3d-sparkle {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 25px;
+  height: 25px;
+  color: #8cf0b0;
+  font-size: 1.45rem;
+  text-shadow: 0 0 16px rgba(112,223,161,.55);
+  transition: transform .4s ease;
+}
+.animation-mode-3d-button .experience-choice-card-title {
+  margin: 0 !important;
+  color: #f4fbf6 !important;
+  font-size: clamp(1.15rem, 2vw, 1.65rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+}
+.animation-mode-3d-button .button3d-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: min(100%, 330px);
+  height: 48px;
+  min-height: 48px;
+  margin-top: auto;
+  transform-style: preserve-3d;
+}
+.animation-mode-3d-button .button3d-path {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  stroke: rgba(140,240,176,.54);
+  stroke-dasharray: 480;
+  stroke-dashoffset: 0;
+  transition: stroke .3s ease, filter .3s ease;
+}
+.animation-mode-3d-button .button3d-outline {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(112,223,161,.3);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(2,14,7,.2));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 7px 18px rgba(0,0,0,.12);
+  transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+}
+.animation-mode-3d-button .button3d-content {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 19px;
+  gap: 8px;
+  color: #a4f4bd;
+  font: 600 .72rem/1.2 var(--font-mono, monospace);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.animation-mode-3d-button .button3d-char {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: pre;
+}
+.animation-mode-3d-button .button3d-char > span {
+  position: relative;
+  display: inline-block;
+  min-width: .28em;
+  transform-origin: 50% 100%;
+}
+.animation-mode-3d-button .button3d-char.state-2 {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+.animation-mode-3d-button .button3d-arrow {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+  margin-left: 6px;
+  overflow: visible;
+  color: #8cf0b0;
+  transform-origin: 50% 50%;
+  transition: transform .3s ease;
+}
+.animation-mode-3d-button .button3d-arrow-line,
+.animation-mode-3d-button .button3d-arrow-head {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.animation-mode-3d-button.is-hovered,
+.animation-mode-3d-button:focus-visible {
+  border-color: rgba(140,240,176,.95) !important;
+  box-shadow: inset 1px 1px 1px rgba(255,255,255,.2), inset -1px -1px 1px rgba(0,0,0,.35), 0 18px 40px rgba(0,0,0,.34), 0 0 32px rgba(50,210,113,.2) !important;
+  filter: brightness(1.06);
+  transform: translateY(-2px) rotateX(1.5deg) !important;
+  outline: none !important;
+}
+.animation-mode-3d-button.is-hovered .button3d-bg,
+.animation-mode-3d-button:focus-visible .button3d-bg {
+  transform: scale(1.02);
+}
+.animation-mode-3d-button.is-hovered .button3d-sparkle,
+.animation-mode-3d-button:focus-visible .button3d-sparkle {
+  transform: rotate(35deg) scale(1.15);
+}
+.animation-mode-3d-button.is-hovered .button3d-path,
+.animation-mode-3d-button:focus-visible .button3d-path {
+  stroke: #b1f7c5;
+  filter: drop-shadow(0 0 4px rgba(112,223,161,.5));
+  animation: button3d-path .75s ease-out both;
+}
+.animation-mode-3d-button.is-hovered .button3d-outline,
+.animation-mode-3d-button:focus-visible .button3d-outline {
+  border-color: rgba(140,240,176,.74);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.16), 0 0 18px rgba(112,223,161,.12);
+  transform: translateZ(3px);
+}
+.animation-mode-3d-button.is-hovered .button3d-char.state-1 > span,
+.animation-mode-3d-button:focus-visible .button3d-char.state-1 > span {
+  animation: button3d-charDisappear .32s ease both;
+  animation-delay: calc(var(--i) * 13ms);
+}
+.animation-mode-3d-button.is-hovered .button3d-char.state-2,
+.animation-mode-3d-button:focus-visible .button3d-char.state-2 {
+  opacity: 1;
+}
+.animation-mode-3d-button.is-hovered .button3d-char.state-2 > span,
+.animation-mode-3d-button:focus-visible .button3d-char.state-2 > span {
+  animation: button3d-charAppear .43s cubic-bezier(.2,.7,.2,1) both;
+  animation-delay: calc(var(--i) * 16ms);
+}
+.animation-mode-3d-button.is-hovered .button3d-arrow,
+.animation-mode-3d-button:focus-visible .button3d-arrow {
+  animation: button3d-swingArrow .7s ease-in-out infinite;
+}
+.animation-mode-3d-button.is-hovered .button3d-arrow-line,
+.animation-mode-3d-button:focus-visible .button3d-arrow-line {
+  animation: button3d-rotateArrowLine .7s ease-in-out both;
+}
+.animation-mode-3d-button.is-hovered .button3d-arrow-head,
+.animation-mode-3d-button:focus-visible .button3d-arrow-head {
+  animation: button3d-rotateArrowLine2 .7s ease-in-out both;
+}
+
+@keyframes button3d-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes button3d-charAppear {
+  0% { transform: translateY(50%); opacity: 0; filter: blur(12px); }
+  20% { transform: translateY(70%); opacity: 1; }
+  50% { transform: translateY(-15%); opacity: 1; filter: blur(0); }
+  100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes button3d-charDisappear {
+  0% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-70%); opacity: 0; filter: blur(3px); }
+}
+@keyframes button3d-arrow {
+  0% { opacity: 1; }
+  50% { transform: translateX(12px); opacity: 0; }
+  51% { transform: translateX(-18px); opacity: 0; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes button3d-swingArrow {
+  50% { transform: translateX(4px) scale(.92); }
+}
+@keyframes button3d-rotateArrowLine {
+  50% { transform: rotate(30deg); }
+  80% { transform: rotate(55deg); }
+}
+@keyframes button3d-rotateArrowLine2 {
+  50% { transform: rotate(330deg); }
+  80% { transform: rotate(300deg); }
+}
+@keyframes button3d-resetArrow {
+  0% { transform: translateX(-20px); }
+  100% { transform: translateX(0); }
+}
+@keyframes button3d-path {
+  from { stroke: rgba(140,240,176,.4); stroke-dashoffset: 0; }
+  to { stroke-dashoffset: -480; stroke: #f9c6fe; }
+}
+@keyframes button3d-splash {
+  to {
+    stroke-dasharray: 2 60;
+    stroke-dashoffset: -60;
+    transform: translate(-50%,-50%) scale(1);
+    opacity: .82;
+  }
+}
+@media (max-width: 640px) {
+  .animation-mode-3d-button { padding: 14px 18px !important; gap: 8px !important; }
+  .animation-mode-3d-button .button3d-card-heading { gap: 8px; }
+  .animation-mode-3d-button .button3d-sparkle { width: 18px; height: 18px; font-size: 1.05rem; }
+  .animation-mode-3d-button .experience-choice-card-title { font-size: 1.05rem !important; }
+  .animation-mode-3d-button .button3d-wrap { width: min(100%, 290px); height: 39px; min-height: 39px; }
+  .animation-mode-3d-button .button3d-content { padding: 0 10px; font-size: .61rem; letter-spacing: .08em; }
+  .animation-mode-3d-button .button3d-arrow { width: 14px; height: 14px; flex-basis: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animation-mode-3d-button,
+  .animation-mode-3d-button *,
+  .animation-mode-3d-button::before {
+    transition: none !important;
+    animation: none !important;
+  }
+  .animation-mode-3d-button .button3d-char.state-2 { display: none; }
+  .animation-mode-3d-button .button3d-char.state-1 { opacity: 1; }
+}
