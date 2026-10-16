@@ -1520,3 +1520,467 @@ body.experience-animation .intro-caption {
   body.experience-animation .intro-identity::before { filter: none !important; }
 }
 
+/* Professional Mode — clean white canvas with emerald accents */
+body.experience-normal {
+  --ink: #f7faf7 !important;
+  --paper: #ffffff !important;
+  --white: #193b28 !important;
+  --muted: #536b5b !important;
+  --accent: #16834b !important;
+  --line: #d8e7dc !important;
+  --text-muted: #536b5b !important;
+  --emerald-accent: #16834b !important;
+  --cyan-accent: #16834b !important;
+  --purple-accent: #267d49 !important;
+  --blue-accent: #16834b !important;
+  --amber-accent: #3e8f5c !important;
+  color-scheme: light;
+  color: #193b28 !important;
+  background:
+    radial-gradient(ellipse at 12% 0%, rgba(36,142,76,.055), transparent 32%),
+    #f7faf8 !important;
+  scroll-behavior: auto !important;
+}
+body.experience-normal #portfolio {
+  position: relative;
+  z-index: 1;
+  color: #193b28 !important;
+  background: transparent !important;
+}
+body.experience-normal .space-header {
+  background: rgba(250,253,250,.92) !important;
+  color: #193b28 !important;
+  border-bottom: 1px solid #deebe1 !important;
+  box-shadow: 0 5px 24px rgba(20,75,39,.055) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(140%) !important;
+  backdrop-filter: blur(18px) saturate(140%) !important;
+}
+body.experience-normal .space-signature,
+body.experience-normal .space-nav a,
+body.experience-normal .space-header-actions button {
+  color: #234d34 !important;
+}
+body.experience-normal .space-nav a:hover,
+body.experience-normal .space-header-actions button:hover {
+  color: #16834b !important;
+}
+body.experience-normal .space-header-actions button:focus-visible,
+body.experience-normal .space-nav a:focus-visible {
+  outline: 2px solid #16834b;
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+body.experience-normal .space-intro {
+  display: flex !important;
+  align-items: center !important;
+  min-height: 650px !important;
+  min-height: clamp(650px, 88svh, 860px) !important;
+  height: auto !important;
+  padding: 125px 8vw 88px !important;
+  box-sizing: border-box !important;
+  background:
+    radial-gradient(ellipse at 80% 38%, rgba(56,157,91,.11), transparent 32%),
+    radial-gradient(ellipse at 70% 95%, rgba(56,157,91,.06), transparent 40%),
+    linear-gradient(125deg, #ffffff 0%, #f7fbf8 58%, #edf7f0 100%) !important;
+  border-bottom: 1px solid #deebe1;
+  overflow: hidden;
+}
+body.experience-normal .intro-identity {
+  width: min(810px, 100%) !important;
+  max-width: 810px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+  isolation: isolate;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+body.experience-normal .intro-identity::before { display: none !important; }
+body.experience-normal .intro-identity .space-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 100%;
+  margin: 0 0 23px !important;
+  padding: 7px 0 7px 13px !important;
+  border-left: 3px solid #16834b;
+  color: #287347 !important;
+  font: 600 clamp(.68rem, .9vw, .8rem)/1.7 var(--font-mono, monospace) !important;
+  letter-spacing: .13em !important;
+  text-shadow: none !important;
+}
+body.experience-normal .intro-identity h1 {
+  margin: 0 0 24px !important;
+  color: #183b28 !important;
+  font: 500 clamp(4.2rem, 7.7vw, 7.2rem)/.98 var(--font-display, Georgia, serif) !important;
+  letter-spacing: -.06em !important;
+  text-shadow: none !important;
+  white-space: normal;
+}
+body.experience-normal .intro-identity h1 em {
+  color: #16834b !important;
+  -webkit-text-fill-color: #16834b !important;
+  background: none !important;
+  filter: none !important;
+}
+body.experience-normal .intro-statement {
+  max-width: 530px;
+  margin: 0 0 25px !important;
+  color: #526b5b !important;
+  font-size: clamp(1.02rem, 1.4vw, 1.22rem) !important;
+  font-weight: 400 !important;
+  line-height: 1.8 !important;
+  text-shadow: none !important;
+}
+body.experience-normal .intro-statement-support { color: #526b5b; }
+body.experience-normal .intro-enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 22px;
+  min-height: 48px;
+  margin-top: 7px !important;
+  padding: 12px 20px !important;
+  border: 1px solid #16834b !important;
+  border-radius: 999px !important;
+  color: #ffffff !important;
+  background: #16834b !important;
+  box-shadow: 0 6px 18px rgba(22,131,75,.14) !important;
+  font: 600 .78rem/1.4 var(--font-mono, monospace) !important;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  text-shadow: none !important;
+  transition: transform .2s ease, background .2s ease, box-shadow .2s ease !important;
+}
+body.experience-normal .intro-enter:hover,
+body.experience-normal .intro-enter:focus-visible {
+  color: #ffffff !important;
+  background: #116c3c !important;
+  box-shadow: 0 9px 24px rgba(22,131,75,.21) !important;
+  transform: translateY(-2px);
+}
+body.experience-normal .intro-enter > span { color: #dff8e7 !important; }
+body.experience-normal .intro-caption { display: none !important; }
+
+/* White sections, restrained green dividers and readable editorial type. */
+body.experience-normal .space-section {
+  padding: clamp(76px, 9vw, 132px) 8vw !important;
+  color: #193b28 !important;
+  background: #ffffff !important;
+  border-bottom: 1px solid #e2ece4;
+}
+body.experience-normal .space-work,
+body.experience-normal .space-learning {
+  background: #f5faf6 !important;
+}
+body.experience-normal .space-content {
+  width: 100%;
+  max-width: 1180px !important;
+  margin-inline: auto;
+}
+body.experience-normal .space-content > .space-kicker,
+body.experience-normal .space-kicker,
+body.experience-normal .project-overline {
+  color: #39764f !important;
+  text-shadow: none !important;
+}
+body.experience-normal .space-content > h2,
+body.experience-normal .space-section h2,
+body.experience-normal .world-copy h2,
+body.experience-normal .space-contact h2,
+body.experience-normal .story-subheading {
+  color: #183b28 !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+body.experience-normal .space-content > h2 em,
+body.experience-normal .space-section h2 em,
+body.experience-normal .world-copy h2 em {
+  color: #16834b !important;
+  -webkit-text-fill-color: #16834b !important;
+  background: none !important;
+  filter: none !important;
+}
+body.experience-normal .section-intro,
+body.experience-normal .world-description,
+body.experience-normal .space-contact p,
+body.experience-normal .space-experience article > p:last-child,
+body.experience-normal .space-education article > p,
+body.experience-normal .space-recognition article > p,
+body.experience-normal .project-summary,
+body.experience-normal .project-tagline,
+body.experience-normal .live-preview-intro,
+body.experience-normal .experience-company {
+  color: #536b5b !important;
+  text-shadow: none !important;
+}
+body.experience-normal .space-text-link,
+body.experience-normal .space-actions a,
+body.experience-normal .space-actions button,
+body.experience-normal .project-links .space-text-link {
+  color: #176c3d !important;
+  border-color: #c0d9c8 !important;
+}
+body.experience-normal .space-text-link:hover,
+body.experience-normal .space-actions a:hover,
+body.experience-normal .space-actions button:hover {
+  color: #0f5831 !important;
+  border-color: #16834b !important;
+}
+body.experience-normal .project-index a {
+  border: 1px solid #d6e7db !important;
+  border-radius: 999px !important;
+  padding: 9px 14px !important;
+  color: #286b43 !important;
+  background: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(20,75,39,.025);
+}
+body.experience-normal .project-index a:hover,
+body.experience-normal .project-index a:focus-visible {
+  color: #116c3c !important;
+  background: #e9f6ed !important;
+  border-color: #86c39b !important;
+}
+body.experience-normal .space-project-title {
+  color: #183b28 !important;
+  font-weight: 500 !important;
+}
+body.experience-normal .space-project-title > span:last-child {
+  color: #16834b !important;
+}
+body.experience-normal .space-projects article,
+body.experience-normal .space-experience article,
+body.experience-normal .space-education article,
+body.experience-normal .space-recognition article,
+body.experience-normal .education-milestone {
+  border-color: #d7e6db !important;
+}
+body.experience-normal .project-destination,
+body.experience-normal .archive-project,
+body.experience-normal .space-projects.horizontal-story-rail .project-destination,
+body.experience-normal .space-experience.horizontal-story-rail > article,
+body.experience-normal .space-education.horizontal-story-rail > article,
+body.experience-normal .space-recognition.horizontal-story-rail > article {
+  color: #193b28 !important;
+  background: linear-gradient(145deg, #ffffff, #f0f8f2) !important;
+  border: 1px solid #d4e5d9 !important;
+  border-radius: 22px !important;
+  box-shadow: 0 14px 36px rgba(24,80,44,.075), inset 0 1px 0 rgba(255,255,255,.96) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+body.experience-normal .project-destination::before,
+body.experience-normal .archive-project::before { display: none !important; }
+body.experience-normal .project-destination:hover,
+body.experience-normal .archive-project:hover,
+body.experience-normal .space-experience.horizontal-story-rail > article:hover,
+body.experience-normal .space-education.horizontal-story-rail > article:hover {
+  border-color: #9fcdae !important;
+  box-shadow: 0 18px 42px rgba(24,80,44,.10), inset 0 1px 0 #fff !important;
+}
+body.experience-normal .project-visual {
+  color: #216b3e !important;
+  background: linear-gradient(145deg, #f7fbf8, #e8f4eb) !important;
+  border: 1px solid #d1e4d6 !important;
+  box-shadow: inset 0 1px 0 #fff, 0 14px 30px rgba(20,78,42,.055) !important;
+}
+body.experience-normal .project-visual figcaption,
+body.experience-normal .project-workflow li {
+  color: #315941 !important;
+  border-color: #cfe1d4 !important;
+}
+body.experience-normal .project-stage {
+  color: #237746 !important;
+  background: #e7f5eb !important;
+  border-color: #c4e1cc !important;
+}
+body.experience-normal .space-experience h3,
+body.experience-normal .space-education h3,
+body.experience-normal .space-recognition h3,
+body.experience-normal .space-contact h3 {
+  color: #183b28 !important;
+}
+body.experience-normal .horizontal-rail-toolbar {
+  color: #236640 !important;
+  background: linear-gradient(90deg, rgba(247,250,248,.98), rgba(247,250,248,.9) 76%, rgba(247,250,248,.05)) !important;
+}
+body.experience-normal .horizontal-rail-controls button {
+  color: #176c3d !important;
+  background: linear-gradient(145deg, #ffffff, #eaf5ed) !important;
+  border-color: #c6dfcd !important;
+  box-shadow: 0 3px 10px rgba(24,83,44,.07) !important;
+}
+body.experience-normal .horizontal-story-stage .horizontal-story-rail::-webkit-scrollbar-track {
+  background: #e6f0e8 !important;
+}
+body.experience-normal .horizontal-story-stage .horizontal-story-rail::-webkit-scrollbar-thumb {
+  background: #68ad7c !important;
+}
+
+/* Portfolio stats and interactive collage follow the same professional palette. */
+body.experience-normal .motion-stats-strip,
+body.experience-normal .project-image-collage {
+  color: #193b28 !important;
+  border-color: #d1e4d6 !important;
+  background: linear-gradient(145deg, #ffffff, #eff7f1) !important;
+  box-shadow: 0 12px 28px rgba(24,83,44,.065), inset 0 1px 0 #fff !important;
+}
+body.experience-normal .motion-stat { border-color: #16834b !important; }
+body.experience-normal .motion-stat-value {
+  color: #16834b !important;
+  text-shadow: none !important;
+}
+body.experience-normal .motion-stat-label,
+body.experience-normal .project-collage-label {
+  color: #496b55 !important;
+}
+body.experience-normal .project-collage-toggle {
+  color: #176c3d !important;
+  border-color: #b9d8c1 !important;
+  background: #edf7ef !important;
+}
+body.experience-normal .project-collage-toggle:hover,
+body.experience-normal .project-collage-toggle:focus-visible {
+  color: #0f5831 !important;
+  border-color: #16834b !important;
+  background: #e0f1e5 !important;
+}
+body.experience-normal .project-collage-image {
+  border-color: #a7cdb2 !important;
+  box-shadow: 0 13px 30px rgba(24,80,44,.16) !important;
+}
+
+/* Preview toolbar and controls use white surfaces with an emerald action color. */
+body.experience-normal .live-preview-shell {
+  color: #193b28 !important;
+  border-color: #d2e4d7 !important;
+  background: #ffffff !important;
+  box-shadow: 0 12px 32px rgba(24,83,44,.06) !important;
+}
+body.experience-normal .live-preview-toolbar {
+  color: #234d34 !important;
+  background: #f0f7f2 !important;
+  border-color: #d9e8dd !important;
+}
+body.experience-normal .live-preview-caption,
+body.experience-normal .live-preview-help {
+  color: #5c7664 !important;
+}
+body.experience-normal .live-preview-tab {
+  color: #356448 !important;
+  border-color: #cce0d2 !important;
+  background: #ffffff !important;
+}
+body.experience-normal .live-preview-tab.is-active,
+body.experience-normal .live-preview-tab:hover {
+  color: #ffffff !important;
+  border-color: #16834b !important;
+  background: #16834b !important;
+}
+body.experience-normal .live-preview-load {
+  color: #ffffff !important;
+  border-color: #16834b !important;
+  background: #16834b !important;
+}
+body.experience-normal .live-preview-load:hover,
+body.experience-normal .live-preview-load:focus-visible {
+  background: #116c3c !important;
+}
+body.experience-normal .live-preview-frame-wrap { background: #f7faf8 !important; }
+body.experience-normal .live-preview-status-dot { background: #16834b !important; }
+
+/* Skill, orbit, contact and dialog surfaces stay white and green in Professional mode. */
+body.experience-normal .world-section {
+  color: #193b28 !important;
+  background: linear-gradient(120deg, #f7faf8, #edf6f0) !important;
+  border-block: 1px solid #deebe1;
+}
+body.experience-normal .world-tagline { color: #315941 !important; }
+body.experience-normal .reading-tools button {
+  color: #276640 !important;
+  border-color: #cfe2d5 !important;
+  background: #ffffff !important;
+}
+body.experience-normal .reading-tools button:hover,
+body.experience-normal .reading-tools button:focus-visible {
+  border-color: #83bd94 !important;
+  background: #e8f5ec !important;
+}
+body.experience-normal .orbit-tool-name {
+  color: #30553c !important;
+  text-shadow: 0 1px 5px #fff, 0 0 10px #fff !important;
+}
+body.experience-normal .space-contact {
+  background: linear-gradient(135deg, #e7f3ea, #f7faf8) !important;
+}
+body.experience-normal .space-contact a { color: #176c3d !important; }
+body.experience-normal .space-colophon {
+  border-color: #cfe0d3 !important;
+  color: #597363 !important;
+}
+body.experience-normal .space-contact .space-text-link {
+  color: #176c3d !important;
+  border-color: #aacfb5 !important;
+}
+body.experience-normal .portfolio-dialog {
+  --accent: #16834b;
+  --ink: #f7faf8;
+  --white: #193b28;
+  --muted: #536b5b;
+  --line: #d7e6db;
+  color-scheme: light;
+  color: #193b28 !important;
+  background: #ffffff !important;
+  border-color: #d4e5d9 !important;
+  box-shadow: 0 20px 70px rgba(21,74,38,.18) !important;
+}
+body.experience-normal .dawn-shiny-button.dawn-eye {
+  --gleam-base: #f4faf6 !important;
+  --gleam-inset: #d5e8da !important;
+  --gleam-label: #176c3d !important;
+  color: #176c3d !important;
+  background:
+    linear-gradient(#f4faf6, #f4faf6) padding-box,
+    linear-gradient(135deg, #16834b, #9bcfac, #16834b) border-box !important;
+  border-color: transparent !important;
+  box-shadow: 0 3px 12px rgba(22,131,75,.09) !important;
+  animation: none !important;
+}
+body.experience-normal .dawn-shiny-button.dawn-eye > .shiny-button-content,
+body.experience-normal .dawn-shiny-button.dawn-eye .shiny-button-label {
+  color: #176c3d !important;
+}
+body.experience-normal .dawn-shiny-button.dawn-eye:hover,
+body.experience-normal .dawn-shiny-button.dawn-eye:focus-visible {
+  background:
+    linear-gradient(#e6f5eb, #e6f5eb) padding-box,
+    conic-gradient(from var(--dawn-shine-angle), #16834b, #b5e4c2, #16834b) border-box !important;
+  box-shadow: 0 0 0 3px rgba(22,131,75,.08), 0 5px 16px rgba(22,131,75,.12) !important;
+}
+
+@media (max-width: 759px) {
+  body.experience-normal .space-intro {
+    min-height: 640px !important;
+    min-height: clamp(640px, 85svh, 780px) !important;
+    padding: 112px 6vw 70px !important;
+  }
+  body.experience-normal .intro-identity { width: 100% !important; }
+  body.experience-normal .intro-identity h1 {
+    font-size: clamp(3.5rem, 12.5vw, 5.3rem) !important;
+  }
+  body.experience-normal .space-section { padding: 76px 6vw !important; }
+  body.experience-normal .motion-stats-strip {
+    width: calc(100% - 12vw) !important;
+    margin: 20px auto 54px !important;
+  }
+  body.experience-normal .project-destination,
+  body.experience-normal .space-projects.horizontal-story-rail .project-destination,
+  body.experience-normal .space-experience.horizontal-story-rail > article,
+  body.experience-normal .space-education.horizontal-story-rail > article {
+    border-radius: 16px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body.experience-normal .vx-liquid-text { animation: none !important; }
+}
+
