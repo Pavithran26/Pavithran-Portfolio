@@ -1,0 +1,315 @@
+/* Emerald motion typography and interactive project collage. */
+
+.motion-stats-strip {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 2vw, 26px);
+  width: min(100% - 10vw, 1180px);
+  margin: clamp(-28px, -2vh, -12px) auto clamp(70px, 9vh, 110px);
+  padding: clamp(18px, 2.5vw, 32px) clamp(18px, 3vw, 38px);
+  border: 1px solid rgba(112,223,161,.2);
+  border-radius: 22px;
+  background:
+    linear-gradient(125deg, rgba(255,255,255,.055), transparent 32%),
+    linear-gradient(145deg, rgba(10,35,19,.84), rgba(5,12,7,.86));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 18px 44px rgba(0,0,0,.18);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  backdrop-filter: blur(18px) saturate(130%);
+}
+.motion-stat {
+  display: grid;
+  justify-items: start;
+  gap: 5px;
+  min-width: 0;
+  padding-left: clamp(10px, 1.5vw, 22px);
+  border-left: 2px solid rgba(112,223,161,.42);
+}
+.motion-stat-value {
+  display: inline-block;
+  color: #a0f5bd;
+  font: 500 clamp(2rem, 3.5vw, 3.35rem)/1 var(--font-display, sans-serif);
+  letter-spacing: -.055em;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 22px rgba(112,223,161,.15);
+}
+.motion-stat-label {
+  color: #a2bdae;
+  font: 500 clamp(.57rem, .8vw, .72rem)/1.5 var(--font-mono, monospace);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+html[data-appearance='light'] .motion-stats-strip,
+body.book-portfolio .motion-stats-strip {
+  background: linear-gradient(145deg, rgba(244,250,245,.95), rgba(225,241,229,.92));
+  border-color: #b8d7c1;
+  box-shadow: 0 14px 30px rgba(24,83,44,.08), inset 0 1px 0 #fff;
+}
+html[data-appearance='light'] .motion-stat-value,
+body.book-portfolio .motion-stat-value { color: #18824b; }
+html[data-appearance='light'] .motion-stat-label,
+body.book-portfolio .motion-stat-label { color: #526a5a; }
+
+/* Flip Text: the project index turns each glyph into place on hover/focus. */
+.vx-flip-visual { display: inline-flex; align-items: center; }
+.vx-flip-char {
+  display: inline-block;
+  transform-origin: 50% 60%;
+  transform: perspective(220px) rotateX(0deg) translateY(0);
+  transition: transform .38s cubic-bezier(.2,.75,.2,1), color .25s ease;
+  transition-delay: calc(var(--vx-index, 0) * 9ms);
+}
+.project-index a:hover .vx-flip-char,
+.project-index a:focus-visible .vx-flip-char {
+  transform: perspective(220px) rotateX(360deg) translateY(-1px);
+  color: #a0f5bd;
+}
+
+/* Flip Fade Text and Morph Text: the hero's small support copy changes softly. */
+.vx-flip-fade-current {
+  display: block;
+  max-width: 250px;
+  transform-origin: 50% 80%;
+  transition: opacity .3s ease, filter .3s ease, transform .3s ease;
+}
+.vx-flip-fade-current.is-vx-flipping {
+  opacity: 0;
+  filter: blur(7px);
+  transform: translateY(-8px) rotateX(-18deg);
+}
+.vx-flip-fade-current.is-vx-flipped {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0) rotateX(0);
+}
+.vx-morph-phrase {
+  display: inline-block;
+  min-height: 1.5em;
+  color: #e5f7eb;
+  transform-origin: 0 60%;
+  transition: opacity .28s ease, filter .28s ease, transform .28s ease;
+}
+.vx-morph-phrase.is-vx-morphing {
+  opacity: 0;
+  filter: blur(12px);
+  transform: translateY(7px) scale(.985);
+}
+.vx-morph-phrase.is-vx-morphed {
+  animation: vx-morph-settle .46s cubic-bezier(.2,.8,.2,1) both;
+}
+@keyframes vx-morph-settle {
+  0% { opacity: 0; filter: blur(8px); transform: translateY(-6px) scale(1.025); }
+  100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+}
+
+/* Liquid Text: a restrained emerald current through emphasized words. */
+.vx-liquid-text {
+  background-image: linear-gradient(105deg, #edf9f0 0%, #70dfa1 24%, #e3ffec 40%, #42ba70 56%, #e8fff0 72%, #70dfa1 100%);
+  background-size: 240% 100%;
+  background-position: 0% 50%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: vx-liquid-current 7.5s ease-in-out infinite;
+  filter: drop-shadow(0 0 12px rgba(112,223,161,.12));
+}
+@keyframes vx-liquid-current {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+html[data-appearance='light'] .vx-liquid-text,
+body.book-portfolio .vx-liquid-text {
+  background-image: linear-gradient(105deg, #203b2a 0%, #18824b 28%, #70dfa1 46%, #236e41 62%, #18824b 80%);
+}
+
+/* Stagger Text: small section labels reveal with a character cascade. */
+.vx-stagger-text .vx-split-visual { display: inline; }
+.vx-stagger-char {
+  display: inline-block;
+  opacity: .14;
+  transform: translateY(9px) rotateX(-40deg);
+  filter: blur(3px);
+  transition: opacity .42s ease, transform .5s cubic-bezier(.2,.75,.2,1), filter .42s ease;
+  transition-delay: calc(var(--vx-index, 0) * 17ms);
+}
+.vx-stagger-text.is-vx-staggered .vx-stagger-char {
+  opacity: 1;
+  transform: translateY(0) rotateX(0);
+  filter: blur(0);
+}
+
+/* Gooey Text Reveal: headings materialize from soft focus when entering view. */
+html.has-vx-text-effects .vx-gooey-target:not(.is-vx-gooey) {
+  opacity: .06;
+  filter: blur(11px);
+  transform: translateY(18px) scale(.985);
+}
+.vx-gooey-target {
+  transition: opacity .85s ease, filter .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1);
+}
+.vx-gooey-target.is-vx-gooey {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0) scale(1);
+}
+
+/* ASCII Glitch Ripple: deliberately only on project-title hover/focus. */
+.space-project-title > span:first-child {
+  position: relative;
+  display: inline-block;
+  isolation: isolate;
+}
+.space-project-title > span:first-child::before,
+.space-project-title > span:first-child::after {
+  content: attr(data-vx-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  overflow: hidden;
+}
+.space-project-title > span:first-child::before { color: #70dfa1; }
+.space-project-title > span:first-child::after { color: #d6ffe1; }
+.space-project-title:hover > span:first-child::before,
+.space-project-title:focus-visible > span:first-child::before {
+  opacity: .75;
+  animation: vx-ascii-ripple .42s steps(2,end) both;
+}
+.space-project-title:hover > span:first-child::after,
+.space-project-title:focus-visible > span:first-child::after {
+  opacity: .42;
+  animation: vx-ascii-ripple .5s steps(2,end) reverse both;
+}
+@keyframes vx-ascii-ripple {
+  0% { clip-path: inset(0 0 72% 0); transform: translate(-2px,1px); }
+  22% { clip-path: inset(22% 0 41% 0); transform: translate(2px,-1px); }
+  44% { clip-path: inset(58% 0 16% 0); transform: translate(-1px,0); }
+  66% { clip-path: inset(42% 0 35% 0); transform: translate(2px,1px); }
+  100% { clip-path: inset(0 0 0 0); transform: translate(0,0); }
+}
+
+/* Interactive Image Collage: scattered product snapshots reorganize into a grid. */
+.project-image-collage {
+  margin: clamp(42px, 6vw, 78px) 0 clamp(54px, 7vw, 88px);
+  padding: clamp(18px, 2.8vw, 32px);
+  border: 1px solid rgba(112,223,161,.2);
+  border-radius: 22px;
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(34,122,65,.16), transparent 52%),
+    linear-gradient(145deg, rgba(255,255,255,.04), rgba(3,14,7,.62));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 20px 48px rgba(0,0,0,.18);
+}
+.project-collage-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 15px;
+}
+.project-collage-label {
+  color: #b7d7c1;
+  font: 500 .69rem/1.5 var(--font-mono, monospace);
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+.project-collage-toggle {
+  flex: 0 0 auto;
+  border: 1px solid rgba(112,223,161,.35);
+  border-radius: 999px;
+  padding: 8px 13px;
+  color: #9af0b5;
+  background: rgba(7,32,16,.72);
+  font: 500 .7rem/1.3 var(--font-mono, monospace);
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+.project-collage-toggle:hover,
+.project-collage-toggle:focus-visible {
+  border-color: #70dfa1;
+  background: rgba(16,67,34,.82);
+  transform: translateY(-1px);
+  outline: none;
+}
+.project-collage-stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: clamp(200px, 29vw, 310px);
+  overflow: hidden;
+  border-radius: 15px;
+  perspective: 1000px;
+  isolation: isolate;
+}
+.project-collage-image {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: clamp(155px, 22vw, 300px);
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  border: 1px solid rgba(112,223,161,.48);
+  border-radius: 12px;
+  box-shadow: 0 18px 45px rgba(0,0,0,.42), 0 0 22px rgba(47,165,86,.09);
+  transform: translate(-50%,-50%) translate(var(--scatter-x), var(--scatter-y)) rotate(var(--scatter-rotate)) scale(.94);
+  transition: transform .72s cubic-bezier(.18,.78,.22,1), filter .4s ease, border-color .35s ease;
+  will-change: transform;
+}
+.project-collage-image:nth-child(1) { --scatter-x: -54%; --scatter-y: -12%; --scatter-rotate: -8deg; z-index: 1; }
+.project-collage-image:nth-child(2) { --scatter-x: -18%; --scatter-y: 8%; --scatter-rotate: 5deg; z-index: 3; }
+.project-collage-image:nth-child(3) { --scatter-x: 19%; --scatter-y: -13%; --scatter-rotate: -4deg; z-index: 2; }
+.project-collage-image:nth-child(4) { --scatter-x: 53%; --scatter-y: 12%; --scatter-rotate: 8deg; z-index: 4; }
+.project-collage-stage.is-organized .project-collage-image {
+  width: calc(25% - 12px);
+  transform: translate(-50%,-50%) translate(var(--organized-x),0) rotate(0deg) scale(1);
+  filter: saturate(.92);
+}
+.project-collage-stage.is-organized .project-collage-image:nth-child(1) { --organized-x: -150%; z-index: 1; }
+.project-collage-stage.is-organized .project-collage-image:nth-child(2) { --organized-x: -50%; z-index: 2; }
+.project-collage-stage.is-organized .project-collage-image:nth-child(3) { --organized-x: 50%; z-index: 3; }
+.project-collage-stage.is-organized .project-collage-image:nth-child(4) { --organized-x: 150%; z-index: 4; }
+.project-collage-image:hover { filter: saturate(1.16) brightness(1.08); border-color: #b4f8c7; }
+html[data-appearance='light'] .project-image-collage,
+body.book-portfolio .project-image-collage {
+  background: linear-gradient(145deg, #f4faf5, #e4f1e7);
+  border-color: #b8d7c1;
+  box-shadow: 0 14px 30px rgba(24,83,44,.08), inset 0 1px 0 #fff;
+}
+html[data-appearance='light'] .project-collage-label,
+body.book-portfolio .project-collage-label { color: #376449; }
+html[data-appearance='light'] .project-collage-toggle,
+body.book-portfolio .project-collage-toggle { color: #176c3d; background: #edf8f0; border-color: #b8d7c1; }
+
+@media (max-width: 759px) {
+  .motion-stats-strip {
+    width: calc(100% - 12vw);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+    margin-top: 18px;
+    margin-bottom: 55px;
+    padding: 16px 12px;
+    border-radius: 16px;
+  }
+  .motion-stat { padding-left: 8px; gap: 6px; }
+  .motion-stat-value { font-size: clamp(1.65rem, 7vw, 2.4rem); }
+  .motion-stat-label { font-size: .5rem; letter-spacing: .07em; }
+  .project-image-collage { padding: 14px; margin-block: 36px 48px; border-radius: 17px; }
+  .project-collage-stage { height: 190px; }
+  .project-collage-image { width: clamp(118px, 37vw, 190px); border-radius: 9px; }
+  .project-collage-stage.is-organized .project-collage-image { width: calc(25% - 4px); }
+  .project-collage-toolbar { align-items: flex-start; }
+  .project-collage-label { font-size: .59rem; letter-spacing: .09em; }
+  .project-collage-toggle { padding: 7px 9px; font-size: .61rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vx-liquid-text { animation: none !important; background-position: 50% 50%; }
+  .vx-stagger-char, .vx-flip-char { transition: none !important; opacity: 1; filter: none; transform: none; }
+  .vx-gooey-target, .vx-flip-fade-current, .vx-morph-phrase { transition: none !important; animation: none !important; opacity: 1; filter: none; transform: none; }
+  .space-project-title > span:first-child::before,
+  .space-project-title > span:first-child::after { animation: none !important; }
+  .project-collage-image { transition: none !important; }
+}
+@media (max-width: 430px) {
+  .project-collage-stage { height: 155px; }
+  .project-collage-image { width: 130px; }
+}
