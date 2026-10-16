@@ -26,15 +26,6 @@ import { TextEffectsController } from './components/TextEffectsController.js';
 
 const root = document.querySelector('#portfolio');
 root.innerHTML = `
-  <nav class="spotlight-stack-nav" aria-label="Technology layers">
-    <a class="spotlight-stack-brand" href="#top" aria-label="Pavithran home">PS<span> / FDE</span></a>
-    <div class="spotlight-stack-links">
-      <a href="#stack-frontend" data-spotlight-nav>Frontend</a>
-      <a href="#stack-backend" data-spotlight-nav>Backend</a>
-      <a href="#stack-databases" data-spotlight-nav>Database</a>
-      <a href="#stack-ai" data-spotlight-nav>AI Service</a>
-    </div>
-  </nav>
   <section class="space-intro" id="top" aria-labelledby="intro-title">
     <div class="intro-identity">
       <p class="space-kicker">TAMIL NADU, INDIA · FORWARD DEPLOYED ENGINEER (FDE)</p>
@@ -166,6 +157,15 @@ root.innerHTML = `
 
   ${chapters.map((chapter, index) => `
     <section class="world-section world-section-${chapter.side}" id="stack-${chapter.id}" data-world-section="${index + 1}" aria-labelledby="world-title-${chapter.id}">
+      <nav class="spotlight-stack-nav" aria-label="Technology layers">
+        <a class="spotlight-stack-brand" href="#top" aria-label="Pavithran home">PS<span> / FDE</span></a>
+        <div class="spotlight-stack-links">
+          <a href="#stack-frontend" data-spotlight-nav>Frontend</a>
+          <a href="#stack-backend" data-spotlight-nav>Backend</a>
+          <a href="#stack-databases" data-spotlight-nav>Database</a>
+          <a href="#stack-ai" data-spotlight-nav>AI Service</a>
+        </div>
+      </nav>
       <div class="world-copy">
         <p class="space-kicker">${chapter.orbit}</p>
         <h2 id="world-title-${chapter.id}">${chapter.headline}</h2>
@@ -270,43 +270,43 @@ const lenis = new Lenis({
   infinite: false,
 });
 
-// Spotlight hover follows the pointer; active state tracks the current technology layer.
-const spotlightStackNav = document.querySelector('.spotlight-stack-nav');
-if (spotlightStackNav) {
-  const spotlightLinks = [...spotlightStackNav.querySelectorAll('[data-spotlight-nav]')];
-  spotlightStackNav.addEventListener('pointermove', event => {
+// Skills-only technology navigator. Each skill chapter owns a local copy.
+const spotlightStackNavs = [...document.querySelectorAll('.spotlight-stack-nav')];
+const spotlightLinks = [...document.querySelectorAll('[data-spotlight-nav]')];
+spotlightStackNavs.forEach(nav => {
+  nav.addEventListener('pointermove', event => {
     if (event.pointerType === 'touch') return;
-    const bounds = spotlightStackNav.getBoundingClientRect();
-    spotlightStackNav.style.setProperty('--spot-x', `${event.clientX - bounds.left}px`);
-    spotlightStackNav.style.setProperty('--spot-y', `${event.clientY - bounds.top}px`);
+    const bounds = nav.getBoundingClientRect();
+    nav.style.setProperty('--spot-x', `${event.clientX - bounds.left}px`);
+    nav.style.setProperty('--spot-y', `${event.clientY - bounds.top}px`);
   }, { passive: true });
-  spotlightStackNav.addEventListener('pointerleave', () => {
-    spotlightStackNav.style.setProperty('--spot-x', '50%');
-    spotlightStackNav.style.setProperty('--spot-y', '50%');
+  nav.addEventListener('pointerleave', () => {
+    nav.style.setProperty('--spot-x', '50%');
+    nav.style.setProperty('--spot-y', '50%');
   });
-  spotlightLinks.forEach(link => link.addEventListener('click', event => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (!target) return;
-    event.preventDefault();
-    lenis.scrollTo(target, { offset: -24, duration: 1.05 });
-    history.replaceState(null, '', link.getAttribute('href'));
-  }));
-  const stackObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      spotlightLinks.forEach(link => {
-        const active = link.hash === `#${entry.target.id}`;
-        link.classList.toggle('is-active', active);
-        if (active) link.setAttribute('aria-current', 'location');
-        else link.removeAttribute('aria-current');
-      });
+});
+spotlightLinks.forEach(link => link.addEventListener('click', event => {
+  const target = document.querySelector(link.getAttribute('href'));
+  if (!target) return;
+  event.preventDefault();
+  lenis.scrollTo(target, { offset: -24, duration: 1.05 });
+  history.replaceState(null, '', link.getAttribute('href'));
+}));
+const stackObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    spotlightLinks.forEach(link => {
+      const active = link.hash === `#${entry.target.id}`;
+      link.classList.toggle('is-active', active);
+      if (active) link.setAttribute('aria-current', 'location');
+      else link.removeAttribute('aria-current');
     });
-  }, { rootMargin: '-28% 0px -48% 0px', threshold: 0 });
-  spotlightLinks.forEach(link => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (target) stackObserver.observe(target);
   });
-}
+}, { rootMargin: '-28% 0px -48% 0px', threshold: 0 });
+spotlightLinks.forEach(link => {
+  const target = document.querySelector(link.getAttribute('href'));
+  if (target) stackObserver.observe(target);
+});
 
 // Initially pause scrolling while the speedometer on-load sequence is running
 lenis.stop();
