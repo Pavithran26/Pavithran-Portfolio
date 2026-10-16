@@ -2422,3 +2422,20 @@ body.experience-animation .spotlight-stack-links a.is-active {
     background: rgba(2, 13, 8, .97) !important;
   }
 }
+
+/* Final placement: technology-layer navigator sits visibly below the main header. */
+body.experience-animation .spotlight-stack-nav {
+  top: 144px !important;
+  z-index: 130 !important;
+}
+@media (max-width: 1050px) {
+  body.experience-animation .spotlight-stack-nav {
+    top: 136px !important;
+  }
+}
+@media (max-width: 759px) {
+  body.experience-animation .spotlight-stack-nav {
+    top: 82px !important;
+    z-index: 130 !important;
+  }
+}
