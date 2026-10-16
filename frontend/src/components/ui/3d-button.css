@@ -382,3 +382,86 @@
   }
 }
 
+/* Final fix: sequence CTA text so two states can never overlap. */
+.animation-mode-3d-button .button3d-content {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 17px !important;
+  align-items: center !important;
+  justify-content: initial !important;
+  gap: 8px !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+}
+.animation-mode-3d-button .button3d-char {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  justify-self: center !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
+}
+.animation-mode-3d-button .button3d-char.state-1 {
+  position: relative !important;
+  inset: auto !important;
+  z-index: 2 !important;
+  display: inline-flex !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+.animation-mode-3d-button .button3d-char.state-2 {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity .08s linear, visibility 0s linear !important;
+}
+.animation-mode-3d-button .button3d-char.state-1 > span {
+  animation: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  filter: none !important;
+  transform: none !important;
+}
+.animation-mode-3d-button .button3d-char.state-2 > span {
+  animation: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  filter: none !important;
+  transform: translateY(8px) !important;
+}
+.animation-mode-3d-button:is(:hover, :focus-visible, .is-hovered) .button3d-char.state-1 > span {
+  animation: button3d-old-text-out .24s ease both !important;
+  animation-delay: calc(var(--i) * 10ms) !important;
+}
+.animation-mode-3d-button:is(:hover, :focus-visible, .is-hovered) .button3d-char.state-2 {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transition-delay: .38s !important;
+}
+.animation-mode-3d-button:is(:hover, :focus-visible, .is-hovered) .button3d-char.state-2 > span {
+  animation: button3d-new-text-in .34s cubic-bezier(.2,.7,.2,1) both !important;
+  animation-delay: calc(.38s + var(--i) * 10ms) !important;
+  visibility: visible !important;
+}
+@keyframes button3d-old-text-out {
+  0% { opacity: 1; transform: translateY(0); filter: blur(0); }
+  100% { opacity: 0; transform: translateY(-8px); filter: blur(2px); }
+}
+@keyframes button3d-new-text-in {
+  0% { opacity: 0; transform: translateY(8px); filter: blur(5px); }
+  55% { opacity: 1; filter: blur(0); }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animation-mode-3d-button .button3d-char.state-1 > span {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+  .animation-mode-3d-button .button3d-char.state-2 {
+    display: none !important;
+  }
+}
+
