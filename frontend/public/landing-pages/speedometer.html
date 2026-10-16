@@ -72,7 +72,7 @@ body{display:grid;place-items:center;padding:12px}
     if (step !== current || !reportedReady) {
       current = step;
       nodes.forEach((node,i) => node.classList.toggle('is-active', i === step));
-      status.textContent = n >= 100 ? 'Experience ready' : ['Preparing interface','Connecting services','Warming data layer','Starting AI systems'][step];
+      status.textContent = ['Discover','Build','Review','Deliver'][n >= 100 ? 3 : step];
     }
     if (n >= 100 && !reportedReady) {
       reportedReady = true;
