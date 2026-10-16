@@ -1015,4 +1015,323 @@ body.experience-mode-pending {
   }
 }
 
+/* Final modal geometry: anchor to viewport and constrain every child. */
+#experience-choice.experience-choice {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  margin: 0 !important;
+  padding: clamp(12px, 3.2vh, 30px) clamp(12px, 3vw, 36px) !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+  place-items: center !important;
+  overflow-x: clip !important;
+  overflow-y: auto !important;
+  box-sizing: border-box !important;
+  transform: none !important;
+  translate: none !important;
+}
+#experience-choice.experience-choice[hidden] {
+  display: none !important;
+}
+#experience-choice .experience-choice-panel {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: stretch !important;
+  width: min(100%, 940px) !important;
+  max-width: 940px !important;
+  min-width: 0 !important;
+  max-height: none !important;
+  min-height: 0 !important;
+  margin: auto !important;
+  padding: 0 !important;
+  position: relative !important;
+  inset: auto !important;
+  transform: none !important;
+  translate: none !important;
+  box-sizing: border-box !important;
+}
+#experience-choice .experience-choice-panel h1 {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  text-align: center !important;
+  font-size: clamp(2.2rem, 6.1vw, 4.8rem) !important;
+  line-height: .98 !important;
+}
+#experience-choice .experience-choice-role {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  margin: clamp(8px, 1.6vh, 15px) 0 clamp(18px, 3.4vh, 30px) !important;
+  padding: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  text-align: center !important;
+  font-size: clamp(.68rem, 1.35vw, 1rem) !important;
+  line-height: 1.45 !important;
+  letter-spacing: clamp(.025em, .22vw, .1em) !important;
+}
+#experience-choice .experience-choice-grid {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: stretch !important;
+  justify-items: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  gap: clamp(10px, 1.6vw, 18px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+#experience-choice .experience-choice-card-mount,
+#experience-choice #choose-normal {
+  justify-self: stretch !important;
+  align-self: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: clamp(112px, 21vh, 174px) !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+#experience-choice .experience-choice-card-mount {
+  display: block !important;
+  position: relative !important;
+  padding: 0 !important;
+}
+#experience-choice .experience-choice-card-mount > .animation-mode-3d-button {
+  display: flex !important;
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: clamp(12px, 1.8vw, 22px) !important;
+  transform: none;
+  box-sizing: border-box !important;
+}
+#experience-choice #choose-normal {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-rows: auto 1fr !important;
+  align-content: center !important;
+  justify-items: start !important;
+  gap: 0 12px !important;
+  padding: clamp(12px, 1.8vw, 22px) !important;
+  overflow: hidden !important;
+}
+#experience-choice #choose-normal .experience-choice-icon {
+  grid-column: 1 / -1 !important;
+  grid-row: 1 !important;
+  margin: 0 0 8px !important;
+  font-size: clamp(1rem, 1.7vw, 1.4rem) !important;
+  line-height: 1 !important;
+}
+#experience-choice #choose-normal .experience-choice-card-title {
+  grid-column: 1 !important;
+  grid-row: 2 !important;
+  align-self: center !important;
+  min-width: 0 !important;
+  margin: 0 !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  font-size: clamp(.86rem, 1.75vw, 1.3rem) !important;
+  line-height: 1.25 !important;
+}
+#experience-choice #choose-normal .experience-choice-card-action {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+  align-self: center !important;
+  justify-self: end !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 28px !important;
+  height: 28px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+}
+#experience-choice .animation-mode-3d-button .button3d-card-content {
+  gap: 10px !important;
+}
+#experience-choice .animation-mode-3d-button .button3d-card-heading {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  gap: clamp(6px, 1vw, 12px) !important;
+}
+#experience-choice .animation-mode-3d-button .experience-choice-card-title {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  white-space: normal !important;
+  overflow-wrap: anywhere !important;
+  font-size: clamp(.86rem, 1.75vw, 1.3rem) !important;
+  line-height: 1.25 !important;
+}
+#experience-choice .animation-mode-3d-button .button3d-wrap {
+  width: min(100%, 300px) !important;
+  max-width: 100% !important;
+  height: clamp(31px, 5.4vh, 42px) !important;
+  min-height: clamp(31px, 5.4vh, 42px) !important;
+  margin-top: auto !important;
+}
+#experience-choice .animation-mode-3d-button .button3d-content {
+  min-width: 0 !important;
+  padding-inline: 8px !important;
+  gap: 5px !important;
+  font-size: clamp(.52rem, .8vw, .68rem) !important;
+  letter-spacing: .07em !important;
+}
+#experience-choice .animation-mode-3d-button .button3d-arrow {
+  width: 14px !important;
+  height: 14px !important;
+  flex-basis: 14px !important;
+  margin-left: 3px !important;
+}
+
+/* Moderate laptop widths keep the cards equal and compact instead of overflowing. */
+@media (min-width: 641px) and (max-width: 1000px) {
+  #experience-choice .experience-choice-panel {
+    width: min(100%, 820px) !important;
+    max-width: 820px !important;
+  }
+  #experience-choice .experience-choice-panel h1 {
+    font-size: clamp(2.35rem, 5.4vw, 3.5rem) !important;
+  }
+  #experience-choice .experience-choice-role {
+    margin-bottom: 18px !important;
+    font-size: clamp(.68rem, 1.3vw, .86rem) !important;
+  }
+  #experience-choice .experience-choice-card-mount,
+  #experience-choice #choose-normal {
+    height: clamp(112px, 20vh, 148px) !important;
+  }
+}
+
+/* Narrow phones stack compact choices so labels never get cut off. */
+@media (max-width: 640px) {
+  #experience-choice.experience-choice {
+    padding: max(12px, env(safe-area-inset-top)) 14px max(12px, env(safe-area-inset-bottom)) !important;
+  }
+  #experience-choice .experience-choice-panel {
+    width: 100% !important;
+    max-width: 440px !important;
+  }
+  #experience-choice .experience-choice-panel h1 {
+    font-size: clamp(2.15rem, 9.7vw, 3.15rem) !important;
+  }
+  #experience-choice .experience-choice-role {
+    margin: 7px 0 14px !important;
+    font-size: clamp(.62rem, 2.5vw, .78rem) !important;
+    letter-spacing: .035em !important;
+  }
+  #experience-choice .experience-choice-grid {
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 9px !important;
+  }
+  #experience-choice .experience-choice-card-mount,
+  #experience-choice #choose-normal {
+    height: clamp(88px, 14vh, 112px) !important;
+  }
+  #experience-choice .animation-mode-3d-button,
+  #experience-choice #choose-normal {
+    border-radius: 14px !important;
+    padding: 11px 14px !important;
+  }
+  #experience-choice .animation-mode-3d-button .button3d-card-content {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+  }
+  #experience-choice .animation-mode-3d-button .button3d-card-heading {
+    flex: 1 1 auto !important;
+  }
+  #experience-choice .animation-mode-3d-button .button3d-sparkle {
+    width: 18px !important;
+    height: 18px !important;
+    font-size: 1rem !important;
+  }
+  #experience-choice .animation-mode-3d-button .button3d-wrap {
+    flex: 0 0 44% !important;
+    width: 44% !important;
+    min-width: 0 !important;
+    height: 34px !important;
+    min-height: 34px !important;
+    margin: 0 !important;
+  }
+  #experience-choice .animation-mode-3d-button .button3d-content {
+    font-size: .51rem !important;
+    letter-spacing: .035em !important;
+  }
+  #experience-choice #choose-normal {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    grid-template-rows: auto !important;
+    gap: 8px !important;
+  }
+  #experience-choice #choose-normal .experience-choice-icon {
+    display: none !important;
+  }
+  #experience-choice #choose-normal .experience-choice-card-title {
+    grid-row: 1 !important;
+    font-size: 1rem !important;
+  }
+  #experience-choice #choose-normal .experience-choice-card-action {
+    grid-row: 1 !important;
+  }
+}
+@media (max-width: 380px) {
+  #experience-choice .experience-choice-panel h1 {
+    font-size: 2rem !important;
+  }
+  #experience-choice .experience-choice-role {
+    font-size: .58rem !important;
+    letter-spacing: .015em !important;
+  }
+  #experience-choice .animation-mode-3d-button .button3d-card-heading {
+    gap: 5px !important;
+  }
+  #experience-choice .animation-mode-3d-button .experience-choice-card-title,
+  #experience-choice #choose-normal .experience-choice-card-title {
+    font-size: .86rem !important;
+  }
+  #experience-choice .animation-mode-3d-button .button3d-wrap {
+    flex-basis: 42% !important;
+    width: 42% !important;
+  }
+}
+@media (max-height: 430px) and (min-width: 641px) {
+  #experience-choice.experience-choice {
+    padding-block: 10px !important;
+  }
+  #experience-choice .experience-choice-panel h1 {
+    font-size: clamp(2rem, 5vh, 2.7rem) !important;
+  }
+  #experience-choice .experience-choice-role {
+    margin: 5px 0 9px !important;
+    font-size: .65rem !important;
+  }
+  #experience-choice .experience-choice-card-mount,
+  #experience-choice #choose-normal {
+    height: 96px !important;
+  }
+}
 
