@@ -1,43 +1,62 @@
 /**
- * InteractiveInit.js — self-booting floating DAWN + magnetic cards.
+ * InteractiveInit.js — floating DAWN + magnetic cards + hide header DAWN AI button.
  * Loaded after main.js; does not require main.js changes.
  */
 import { FloatingDawnWidget } from './FloatingDawnWidget.js';
 import { initMagneticCards } from './MagneticCards.js';
 
-function openFullDawn(question) {
-  // Prefer existing dialog system via click / custom event consumers
-  const btn = document.querySelector('[data-dialog="dawn"], #dawn-eye, .dawn-shiny-button');
-  if (btn && !question) {
-    btn.click();
-    return;
+function hideHeaderDawnAi() {
+  const mount = document.getElementById('dawn-ai-button-mount');
+  if (mount) {
+    mount.style.display = 'none';
+    mount.setAttribute('aria-hidden', 'true');
+    mount.innerHTML = '';
   }
-  window.dispatchEvent(new CustomEvent('portfolio:open-dawn', { detail: { question: question || null } }));
+  document.querySelectorAll('#dawn-eye, .dawn-shiny-button, .dawn-eye').forEach((el) => {
+    el.style.display = 'none';
+    el.setAttribute('aria-hidden', 'true');
+  });
+  const style = document.createElement('style');
+  style.id = 'hide-header-dawn-ai';
+  style.textContent = `
+    #dawn-ai-button-mount,
+    #dawn-eye,
+    .dawn-shiny-button,
+    header .dawn-eye {
+      display: none !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
+    }
+  `;
+  if (!document.getElementById('hide-header-dawn-ai')) {
+    document.head.appendChild(style);
+  }
 }
 
 function boot() {
   if (window.__interactiveEnhancementsReady) return;
   window.__interactiveEnhancementsReady = true;
 
+  hideHeaderDawnAi();
+  setTimeout(hideHeaderDawnAi, 400);
+  setTimeout(hideHeaderDawnAi, 1200);
+
   const floatingDawn = new FloatingDawnWidget({
-    onOpenFull: () => openFullDawn()
+    onOpenFull: () => {
+      floatingDawn.open();
+    }
   });
   window.__floatingDawn = floatingDawn;
 
   window.addEventListener('portfolio:open-dawn', (event) => {
     const question = event.detail?.question;
-    if (question) {
-      floatingDawn.open();
-      floatingDawn.ask(question);
-    } else {
-      openFullDawn();
-    }
+    floatingDawn.open();
+    if (question) floatingDawn.ask(question);
   });
 
   const runMagnetic = () => {
     initMagneticCards('.project-destination, .reading-tools button, .live-preview-tab, .skill-grid article');
   };
-  // Project cards render after main.js builds DOM
   setTimeout(runMagnetic, 800);
   setTimeout(runMagnetic, 2000);
 }
