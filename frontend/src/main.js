@@ -1,1 +1,1 @@
-FILE_CONTENT_FROM:/home/workdir/artifacts/main_good.js
+RESTORED_FROM_ARTIFACT
