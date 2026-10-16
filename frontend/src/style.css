@@ -2195,3 +2195,24 @@ body.experience-normal .space-projects .project-destination.has-project-screensh
   .project-card-image { transition: none !important; }
 }
 
+/* Keep screenshot cards sized by their contents; the parent rail can be vertical or horizontal. */
+.space-projects .project-destination.has-project-screenshot,
+.space-projects.horizontal-story-rail .project-destination.has-project-screenshot {
+  flex: 0 0 auto !important;
+  width: min(100%, 1000px) !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  height: auto !important;
+  min-height: clamp(410px, 62vh, 590px) !important;
+}
+@media (max-width: 759px) {
+  .space-projects .project-destination.has-project-screenshot,
+  .space-projects.horizontal-story-rail .project-destination.has-project-screenshot {
+    flex: 0 0 auto !important;
+    width: min(100%, 560px) !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+  }
+}
+
