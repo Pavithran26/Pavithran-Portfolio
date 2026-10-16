@@ -1335,3 +1335,256 @@ body.experience-mode-pending {
   }
 }
 
+
+
+/* Professional mode — editorial white and emerald treatment inspired by the selected-work reference. */
+body.experience-normal {
+  --pro-bg: #f4f9f5;
+  --pro-surface: #ffffff;
+  --pro-surface-soft: #eaf4ed;
+  --pro-ink: #183b2a;
+  --pro-green: #14834b;
+  --pro-muted: #587362;
+  --pro-border: #d5e6da;
+  --pro-shadow: 0 18px 42px rgba(24, 59, 42, .07);
+  background: var(--pro-bg) !important;
+  color: var(--pro-ink) !important;
+}
+body.experience-normal::before,
+body.experience-normal::after {
+  opacity: .18 !important;
+  filter: blur(110px) !important;
+}
+body.experience-normal #app {
+  background: var(--pro-bg);
+}
+body.experience-normal .space-header {
+  background: rgba(248, 252, 249, .92) !important;
+  border-bottom: 1px solid var(--pro-border) !important;
+  box-shadow: 0 5px 24px rgba(24, 59, 42, .04) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  backdrop-filter: blur(18px) !important;
+}
+body.experience-normal .space-signature,
+body.experience-normal .space-nav a {
+  color: var(--pro-ink) !important;
+}
+body.experience-normal .space-nav a:hover,
+body.experience-normal .space-nav a[aria-current="page"] {
+  color: var(--pro-green) !important;
+}
+body.experience-normal .space-intro,
+body.experience-normal .space-section,
+body.experience-normal .motion-stats-strip,
+body.experience-normal .space-content {
+  color: var(--pro-ink) !important;
+}
+body.experience-normal .space-intro {
+  background: linear-gradient(180deg, #f7fbf8 0%, var(--pro-bg) 100%) !important;
+}
+body.experience-normal .space-kicker {
+  color: #367d53 !important;
+  text-shadow: none !important;
+  font-weight: 600 !important;
+  letter-spacing: .15em !important;
+}
+body.experience-normal .space-content > h2,
+body.experience-normal .intro-identity h1,
+body.experience-normal .section-title,
+body.experience-normal .space-content h3,
+body.experience-normal .project-copy h3 {
+  color: var(--pro-ink) !important;
+  text-shadow: none !important;
+}
+body.experience-normal .space-content > h2 em,
+body.experience-normal .intro-identity h1 em,
+body.experience-normal .gradient-text,
+body.experience-normal .space-content h3 em {
+  color: var(--pro-green) !important;
+  background: none !important;
+  -webkit-text-fill-color: currentColor !important;
+}
+body.experience-normal .intro-statement,
+body.experience-normal .intro-statement-support,
+body.experience-normal .section-intro,
+body.experience-normal .project-summary,
+body.experience-normal .project-tagline,
+body.experience-normal .intro-caption,
+body.experience-normal .motion-stat-label {
+  color: var(--pro-muted) !important;
+}
+body.experience-normal .intro-enter,
+body.experience-normal .space-text-link,
+body.experience-normal .project-index a,
+body.experience-normal .live-preview-tab {
+  color: var(--pro-green) !important;
+  border-color: var(--pro-border) !important;
+}
+body.experience-normal .intro-enter,
+body.experience-normal .project-index a,
+body.experience-normal .live-preview-tab {
+  border: 1px solid var(--pro-border) !important;
+  border-radius: 999px !important;
+  background: var(--pro-surface) !important;
+  box-shadow: 0 4px 14px rgba(24, 59, 42, .035) !important;
+  transition: background .2s ease, border-color .2s ease, transform .2s ease !important;
+}
+body.experience-normal .intro-enter:hover,
+body.experience-normal .project-index a:hover,
+body.experience-normal .live-preview-tab:hover,
+body.experience-normal .live-preview-tab.is-active {
+  background: #e5f4e9 !important;
+  border-color: #a9d4b7 !important;
+  color: #126c3d !important;
+}
+body.experience-normal .space-text-link {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  text-decoration-color: #9bc8a9 !important;
+}
+body.experience-normal .space-text-link[data-dialog="dossier"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 46px !important;
+  padding: 11px 20px !important;
+  border: 1px solid #b9d9c3 !important;
+  border-radius: 999px !important;
+  background: #fff !important;
+  color: #187846 !important;
+  font: 500 .9rem/1.3 'Fira Code', monospace !important;
+  box-shadow: 0 4px 16px rgba(24, 59, 42, .05) !important;
+}
+body.experience-normal .space-text-link[data-dialog="dossier"]:hover {
+  background: #e8f5ec !important;
+  border-color: #82bd96 !important;
+}
+body.experience-normal .motion-stats-strip {
+  background: #edf6ef !important;
+  border-block: 1px solid var(--pro-border) !important;
+}
+body.experience-normal .motion-stat {
+  background: transparent !important;
+  border-color: var(--pro-border) !important;
+  box-shadow: none !important;
+}
+body.experience-normal .motion-stat-value {
+  color: var(--pro-green) !important;
+  -webkit-text-fill-color: currentColor !important;
+  background: none !important;
+}
+body.experience-normal .project-destination,
+body.experience-normal .archive-project,
+body.experience-normal .space-experience article,
+body.experience-normal .education-milestone,
+body.experience-normal .space-recognition article,
+body.experience-normal .live-preview-shell,
+body.experience-normal .project-image-collage {
+  background: var(--pro-surface) !important;
+  color: var(--pro-ink) !important;
+  border: 1px solid var(--pro-border) !important;
+  border-radius: 24px !important;
+  box-shadow: var(--pro-shadow) !important;
+}
+body.experience-normal .project-destination::before,
+body.experience-normal .project-destination::after,
+body.experience-normal .archive-project::before,
+body.experience-normal .archive-project::after {
+  opacity: .12 !important;
+}
+body.experience-normal .project-copy,
+body.experience-normal .project-copy p,
+body.experience-normal .project-copy li,
+body.experience-normal .project-destination .project-tagline,
+body.experience-normal .project-destination .project-summary,
+body.experience-normal .space-experience article,
+body.experience-normal .education-milestone,
+body.experience-normal .space-recognition article {
+  color: var(--pro-muted) !important;
+}
+body.experience-normal .project-destination .space-project-title,
+body.experience-normal .project-destination .space-project-title span,
+body.experience-normal .archive-project h2,
+body.experience-normal .archive-project h2 button {
+  color: var(--pro-ink) !important;
+}
+body.experience-normal .project-card-media {
+  background: #e7f1e9 !important;
+  border: 1px solid var(--pro-border) !important;
+  border-radius: 18px !important;
+  overflow: hidden !important;
+}
+body.experience-normal .project-card-media-badge {
+  color: #1a7544 !important;
+  background: rgba(250, 255, 251, .92) !important;
+  border-color: #c9e3d1 !important;
+}
+body.experience-normal .project-tech-tag,
+body.experience-normal .live-preview-status,
+body.experience-normal .space-experience .project-tech-tag,
+body.experience-normal .education-milestone .project-tech-tag {
+  background: #edf7ef !important;
+  color: #276e43 !important;
+  border: 1px solid #d5e8da !important;
+  box-shadow: none !important;
+}
+body.experience-normal .project-links a,
+body.experience-normal .live-preview-open,
+body.experience-normal .project-link-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 40px !important;
+  padding: 9px 15px !important;
+  border: 1px solid #c6dfce !important;
+  border-radius: 999px !important;
+  background: #fff !important;
+  color: #167544 !important;
+  box-shadow: none !important;
+}
+body.experience-normal .project-links a:hover,
+body.experience-normal .live-preview-open:hover,
+body.experience-normal .project-link-btn:hover {
+  background: #e8f5ec !important;
+  border-color: #90c5a1 !important;
+  color: #0f6638 !important;
+}
+body.experience-normal .live-preview-toolbar,
+body.experience-normal .project-collage-toolbar {
+  color: var(--pro-ink) !important;
+  border-color: var(--pro-border) !important;
+}
+body.experience-normal .project-collage-image {
+  border: 1px solid var(--pro-border) !important;
+  box-shadow: 0 12px 28px rgba(24, 59, 42, .09) !important;
+}
+body.experience-normal .space-section {
+  border-color: var(--pro-border) !important;
+}
+body.experience-normal .space-section::before,
+body.experience-normal .space-section::after {
+  opacity: .1 !important;
+}
+body.experience-normal .space-section a:focus-visible,
+body.experience-normal .space-section button:focus-visible {
+  outline: 3px solid #66b782 !important;
+  outline-offset: 3px !important;
+}
+body.experience-normal .dawn-eye {
+  border-color: #b8d9c1 !important;
+  box-shadow: 0 8px 28px rgba(24, 59, 42, .12) !important;
+}
+@media (max-width: 760px) {
+  body.experience-normal .space-content > h2 {
+    font-size: clamp(2.6rem, 12vw, 4.5rem) !important;
+    line-height: .98 !important;
+  }
+  body.experience-normal .project-index {
+    gap: 10px !important;
+  }
+  body.experience-normal .project-index a,
+  body.experience-normal .space-text-link[data-dialog="dossier"] {
+    min-height: 42px !important;
+  }
+}
