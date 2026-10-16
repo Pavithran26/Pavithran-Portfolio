@@ -2216,3 +2216,136 @@ body.experience-normal .space-projects .project-destination.has-project-screensh
   }
 }
 
+
+/* Spotlight navigation for the four technology layers */
+.spotlight-stack-nav {
+  --spot-x: 50%;
+  --spot-y: 50%;
+  position: fixed;
+  z-index: 120;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 30px);
+  width: max-content;
+  max-width: calc(100vw - 28px);
+  padding: 8px 10px 8px 14px;
+  border: 1px solid rgba(137, 193, 153, .42);
+  border-radius: 999px;
+  color: #183b28;
+  background: rgba(248, 253, 249, .88);
+  box-shadow: 0 12px 36px rgba(12, 62, 31, .12), inset 0 1px 0 rgba(255,255,255,.9);
+  backdrop-filter: blur(18px) saturate(145%);
+  -webkit-backdrop-filter: blur(18px) saturate(145%);
+  isolation: isolate;
+}
+.spotlight-stack-nav::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0;
+  background: radial-gradient(150px circle at var(--spot-x) var(--spot-y), rgba(69, 203, 121, .22), transparent 72%);
+  transition: opacity .25s ease;
+}
+.spotlight-stack-nav:hover::before,
+.spotlight-stack-nav:focus-within::before { opacity: 1; }
+.spotlight-stack-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 8px;
+  color: #135c34 !important;
+  text-decoration: none !important;
+  font: 800 .83rem/1 var(--font-mono, monospace);
+  letter-spacing: .07em;
+  white-space: nowrap;
+}
+.spotlight-stack-brand span {
+  color: #43865a;
+  font-size: .72rem;
+  font-weight: 600;
+}
+.spotlight-stack-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.spotlight-stack-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 clamp(10px, 1.35vw, 18px);
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: #476552 !important;
+  text-decoration: none !important;
+  font-size: .83rem;
+  font-weight: 650;
+  white-space: nowrap;
+  transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease, box-shadow .2s ease;
+}
+.spotlight-stack-links a:hover,
+.spotlight-stack-links a:focus-visible,
+.spotlight-stack-links a.is-active {
+  color: #105d32 !important;
+  border-color: rgba(37, 148, 78, .2);
+  background: rgba(224, 246, 230, .88);
+  box-shadow: 0 3px 12px rgba(21, 116, 55, .09), inset 0 1px 0 rgba(255,255,255,.95);
+  transform: translateY(-1px);
+  outline: none;
+}
+body.experience-animation .spotlight-stack-nav {
+  color: #eaffef;
+  border-color: rgba(110, 238, 159, .3);
+  background: rgba(3, 20, 13, .72);
+  box-shadow: 0 12px 38px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(159, 255, 193, .08);
+}
+body.experience-animation .spotlight-stack-nav::before {
+  background: radial-gradient(150px circle at var(--spot-x) var(--spot-y), rgba(75, 255, 143, .19), transparent 72%);
+}
+body.experience-animation .spotlight-stack-brand { color: #a4f4bd !important; }
+body.experience-animation .spotlight-stack-brand span { color: #6fb88a; }
+body.experience-animation .spotlight-stack-links a { color: #b4d5bf !important; }
+body.experience-animation .spotlight-stack-links a:hover,
+body.experience-animation .spotlight-stack-links a:focus-visible,
+body.experience-animation .spotlight-stack-links a.is-active {
+  color: #d7ffe2 !important;
+  border-color: rgba(101, 235, 148, .28);
+  background: rgba(24, 94, 52, .52);
+  box-shadow: 0 3px 16px rgba(24, 180, 80, .13), inset 0 1px 0 rgba(199,255,215,.09);
+}
+@media (max-width: 620px) {
+  .spotlight-stack-nav {
+    top: 10px;
+    gap: 4px;
+    padding: 6px;
+    max-width: calc(100vw - 16px);
+  }
+  .spotlight-stack-brand {
+    padding: 0 5px;
+    font-size: .72rem;
+  }
+  .spotlight-stack-brand span { display: none; }
+  .spotlight-stack-links { gap: 2px; }
+  .spotlight-stack-links a {
+    min-height: 34px;
+    padding: 0 clamp(7px, 2.1vw, 12px);
+    font-size: clamp(.66rem, 2.7vw, .78rem);
+  }
+}
+@media (max-width: 360px) {
+  .spotlight-stack-brand { display: none; }
+  .spotlight-stack-nav { gap: 0; }
+  .spotlight-stack-links { width: 100%; justify-content: space-between; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-stack-nav::before,
+  .spotlight-stack-links a { transition: none !important; }
+}
