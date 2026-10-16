@@ -176,21 +176,42 @@ export function ShinyButton({
     .${scope} > span { position: relative; z-index: 1; }
     .${scope} > .shiny-button-content { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; }
     .${scope} .shiny-button-content > span:first-child { position: relative; z-index: 2; }
-    .${scope} span::before {
+    .${scope} > .shiny-button-content::before {
       --size: calc(100% + 1rem);
       width: var(--size);
       height: var(--size);
       box-shadow: inset 0 -1ex 2rem 4px var(--gleam-accent);
       opacity: 0;
       transition: opacity var(--transition);
-      animation: calc(var(--duration) * 1.5) breathe-${instanceId} linear infinite;
+      animation: calc(var(--duration) * 1.5) breathe-${instanceId} linear infinite paused;
     }
 
     .${scope},
     .${scope}::before,
     .${scope}::after {
-      animation: var(--animation) var(--duration), var(--animation) calc(var(--duration) / 0.4) reverse paused;
+      animation: var(--animation) var(--duration) paused, var(--animation) calc(var(--duration) / 0.4) reverse paused;
       animation-composition: add;
+    }
+    .${scope} > .shiny-button-content {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+    }
+    .${scope} > .shiny-button-content > span:first-child {
+      display: inline-block;
+      position: relative;
+      z-index: 3;
+      color: var(--gleam-label);
+      opacity: 1;
+      visibility: visible;
+      white-space: nowrap;
+    }
+    .${scope}:not(:hover):not(:focus-visible)::before,
+    .${scope}:not(:hover):not(:focus-visible)::after {
+      opacity: 0;
     }
 
     .${scope}:is(:hover, :focus-visible) {
@@ -201,7 +222,9 @@ export function ShinyButton({
     .${scope}:is(:hover, :focus-visible),
     .${scope}:is(:hover, :focus-visible)::before,
     .${scope}:is(:hover, :focus-visible)::after { animation-play-state: running; }
-    .${scope}:is(:hover, :focus-visible) span::before { opacity: 1; }
+    .${scope}:is(:hover, :focus-visible)::before { opacity: ${showSpeckle ? speckleOpacity : 0}; }
+    .${scope}:is(:hover, :focus-visible)::after { opacity: ${showSheen ? 0.6 : 0}; }
+    .${scope}:is(:hover, :focus-visible) > .shiny-button-content::before { opacity: 1; }
 
     @keyframes gradient-angle-${instanceId} { to { --gradient-angle-${instanceId}: 360deg; } }
     @keyframes shimmer-${instanceId} { to { rotate: 360deg; } }
@@ -214,11 +237,11 @@ export function ShinyButton({
       .${scope},
       .${scope}::before,
       .${scope}::after,
-      .${scope} span::before { animation: none !important; }
+      .${scope} > .shiny-button-content::before { animation: none !important; }
       .${scope}:is(:hover, :focus-visible),
       .${scope}:is(:hover, :focus-visible)::before,
       .${scope}:is(:hover, :focus-visible)::after { animation-play-state: paused !important; }
-      .${scope}:is(:hover, :focus-visible) span::before { opacity: 0; }
+      .${scope}:is(:hover, :focus-visible) > .shiny-button-content::before { opacity: 0; }
       .${scope} { transition: none; }
     }
   `;
