@@ -1984,3 +1984,32 @@ body.experience-normal .dawn-shiny-button.dawn-eye:focus-visible {
   body.experience-normal .vx-liquid-text { animation: none !important; }
 }
 
+/* The Professional mode option previews its own white-and-emerald visual identity. */
+#experience-choice #choose-normal {
+  color: #1b432b !important;
+  border: 1px solid #a8d3b3 !important;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(112,223,161,.18), transparent 55%),
+    linear-gradient(145deg, #ffffff 0%, #f5fbf6 54%, #eaf6ed 100%) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.98), 0 8px 24px rgba(23,86,44,.08) !important;
+}
+#experience-choice #choose-normal .experience-choice-icon,
+#experience-choice #choose-normal .experience-choice-card-title,
+#experience-choice #choose-normal .experience-choice-card-action {
+  color: #176c3d !important;
+}
+#experience-choice #choose-normal .experience-choice-card-action {
+  background: #e2f3e7 !important;
+  border-color: #c2e0ca !important;
+}
+#experience-choice #choose-normal:hover,
+#experience-choice #choose-normal:focus-visible {
+  border-color: #16834b !important;
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(112,223,161,.28), transparent 55%),
+    linear-gradient(145deg, #ffffff 0%, #f1faf3 54%, #e2f3e7 100%) !important;
+  box-shadow: inset 0 1px 0 #fff, 0 12px 30px rgba(23,86,44,.13) !important;
+  outline: 2px solid rgba(22,131,75,.16) !important;
+  outline-offset: 3px !important;
+}
+
