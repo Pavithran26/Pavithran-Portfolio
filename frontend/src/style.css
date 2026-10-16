@@ -1117,3 +1117,73 @@ html[data-appearance='light'] .dawn-shiny-button.dawn-eye {
   .dawn-shiny-button.dawn-eye .dawn-katana-video { display: none; }
 }
 
+/* Always-visible rotating emerald edge for the DAWN AI button */
+@property --dawn-shine-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.dawn-shiny-button.dawn-eye {
+  --dawn-shine-angle: 0deg;
+  background:
+    linear-gradient(#07140b, #07140b) padding-box,
+    conic-gradient(
+      from var(--dawn-shine-angle),
+      #123d22 0deg,
+      #70dfa1 56deg,
+      #d3ffe0 98deg,
+      #0b2917 164deg,
+      #70dfa1 238deg,
+      #0c311b 316deg,
+      #123d22 360deg
+    ) border-box !important;
+  border: 1.5px solid transparent !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(5, 22, 10, .9),
+    0 0 11px rgba(112,223,161,.28),
+    0 0 24px rgba(54,190,100,.12) !important;
+  animation: dawn-shiny-edge-rotate 5s linear infinite !important;
+}
+@keyframes dawn-shiny-edge-rotate {
+  to { --dawn-shine-angle: 360deg; }
+}
+.dawn-shiny-button.dawn-eye .shiny-button-content {
+  position: static !important;
+  display: flex !important;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.dawn-shiny-button.dawn-eye .dawn-katana-video {
+  inset: 0;
+  z-index: 0;
+  opacity: .09;
+}
+.dawn-shiny-button.dawn-eye:hover,
+.dawn-shiny-button.dawn-eye:focus-visible {
+  background:
+    linear-gradient(#092013, #07140b) padding-box,
+    conic-gradient(
+      from var(--dawn-shine-angle),
+      #70dfa1 0deg,
+      #e5ffed 65deg,
+      #22964e 135deg,
+      #a9f5c2 220deg,
+      #70dfa1 300deg,
+      #e5ffed 360deg
+    ) border-box !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(5, 22, 10, .7),
+    0 0 16px rgba(112,223,161,.44),
+    0 0 32px rgba(54,190,100,.25) !important;
+  animation: dawn-shiny-edge-rotate 2.8s linear infinite !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dawn-shiny-button.dawn-eye {
+    animation: none !important;
+    --dawn-shine-angle: 45deg;
+  }
+}
+
