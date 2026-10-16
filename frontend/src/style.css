@@ -1187,3 +1187,96 @@ html[data-appearance='light'] .dawn-shiny-button.dawn-eye {
   }
 }
 
+/* DAWN AI label-first idle state; shine only on hover/focus */
+.dawn-shiny-button.dawn-eye {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  position: relative !important;
+  isolation: isolate !important;
+  color: #baf4cc !important;
+  background:
+    linear-gradient(#07140b, #07140b) padding-box,
+    linear-gradient(135deg, rgba(112,223,161,.58), rgba(112,223,161,.22), rgba(112,223,161,.42)) border-box !important;
+  border: 1px solid transparent !important;
+  box-shadow: inset 0 0 0 1px rgba(5,22,10,.75) !important;
+  animation: none !important;
+}
+.dawn-shiny-button.dawn-eye::before,
+.dawn-shiny-button.dawn-eye::after {
+  opacity: 0 !important;
+  animation: none !important;
+}
+.dawn-shiny-button.dawn-eye > .shiny-button-content {
+  display: inline-flex !important;
+  position: relative !important;
+  z-index: 4 !important;
+  width: auto !important;
+  max-width: 100% !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  color: #baf4cc !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  white-space: nowrap !important;
+}
+.dawn-shiny-button.dawn-eye .shiny-button-content > span:first-child {
+  display: inline-block !important;
+  position: relative !important;
+  z-index: 5 !important;
+  color: #baf4cc !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  text-indent: 0 !important;
+  font: 600 12px/1.2 var(--font-mono, monospace) !important;
+  letter-spacing: .12em !important;
+  white-space: nowrap !important;
+}
+.dawn-shiny-button.dawn-eye .dawn-katana-video {
+  z-index: -1 !important;
+  opacity: .07 !important;
+}
+.dawn-shiny-button.dawn-eye:hover,
+.dawn-shiny-button.dawn-eye:focus-visible {
+  background:
+    linear-gradient(#092013, #07140b) padding-box,
+    conic-gradient(
+      from var(--dawn-shine-angle),
+      #70dfa1 0deg,
+      #e5ffed 65deg,
+      #22964e 135deg,
+      #a9f5c2 220deg,
+      #70dfa1 300deg,
+      #e5ffed 360deg
+    ) border-box !important;
+  box-shadow:
+    inset 0 0 0 1px rgba(5,22,10,.6),
+    0 0 16px rgba(112,223,161,.44),
+    0 0 32px rgba(54,190,100,.25) !important;
+  animation: dawn-shiny-edge-rotate 2.8s linear infinite !important;
+}
+.dawn-shiny-button.dawn-eye:hover::before,
+.dawn-shiny-button.dawn-eye:focus-visible::before {
+  opacity: .22 !important;
+  animation: none !important;
+}
+.dawn-shiny-button.dawn-eye:hover::after,
+.dawn-shiny-button.dawn-eye:focus-visible::after {
+  opacity: .38 !important;
+  animation: dawn-shiny-edge-rotate 3.2s linear infinite !important;
+}
+.dawn-shiny-button.dawn-eye:hover > .shiny-button-content,
+.dawn-shiny-button.dawn-eye:focus-visible > .shiny-button-content,
+.dawn-shiny-button.dawn-eye:hover .shiny-button-content > span:first-child,
+.dawn-shiny-button.dawn-eye:focus-visible .shiny-button-content > span:first-child {
+  color: #f0fff4 !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dawn-shiny-button.dawn-eye,
+  .dawn-shiny-button.dawn-eye:hover,
+  .dawn-shiny-button.dawn-eye:focus-visible {
+    animation: none !important;
+  }
+}
+
