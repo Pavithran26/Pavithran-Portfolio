@@ -1588,3 +1588,119 @@ body.experience-normal .dawn-eye {
     min-height: 42px !important;
   }
 }
+
+/* Editorial layout refinements: keep Professional mode bright across every section. */
+body.experience-normal .space-section {
+  background: var(--pro-bg) !important;
+}
+body.experience-normal .space-work .space-content,
+body.experience-normal #about .space-content,
+body.experience-normal #education .space-content {
+  background: transparent !important;
+}
+body.experience-normal .space-work .space-kicker {
+  margin-bottom: 22px !important;
+}
+body.experience-normal .space-work .space-content > h2 {
+  max-width: 880px !important;
+  margin: 0 0 24px !important;
+  font-size: clamp(3.5rem, 7.2vw, 6.5rem) !important;
+  line-height: 1.05 !important;
+  letter-spacing: -.055em !important;
+  text-align: left !important;
+}
+body.experience-normal .space-work .section-intro {
+  max-width: 850px !important;
+  margin: 0 0 42px !important;
+  font-size: clamp(1rem, 1.4vw, 1.25rem) !important;
+  line-height: 1.8 !important;
+  text-align: left !important;
+}
+body.experience-normal .project-index {
+  display: flex !important;
+  justify-content: flex-start !important;
+  align-items: center !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  margin-bottom: 28px !important;
+}
+body.experience-normal .project-index a {
+  min-height: 48px !important;
+  padding: 11px 20px !important;
+  font-size: .95rem !important;
+}
+body.experience-normal .space-projects {
+  gap: clamp(22px, 3vw, 38px) !important;
+}
+body.experience-normal .project-destination {
+  padding: clamp(16px, 2.5vw, 28px) !important;
+}
+body.experience-normal .project-card-media img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+body.experience-normal .space-experience,
+body.experience-normal .space-recognition,
+body.experience-normal .space-education,
+body.experience-normal .space-stack,
+body.experience-normal .space-about {
+  color: var(--pro-ink) !important;
+  background: var(--pro-bg) !important;
+}
+body.experience-normal .space-experience h2,
+body.experience-normal .space-experience h3,
+body.experience-normal .space-recognition h2,
+body.experience-normal .space-recognition h3,
+body.experience-normal .space-education h2,
+body.experience-normal .space-education h3,
+body.experience-normal .space-stack h2,
+body.experience-normal .space-stack h3,
+body.experience-normal .space-about h2,
+body.experience-normal .space-about h3 {
+  color: var(--pro-ink) !important;
+  text-shadow: none !important;
+}
+body.experience-normal .space-experience p,
+body.experience-normal .space-recognition p,
+body.experience-normal .space-education p,
+body.experience-normal .space-stack p,
+body.experience-normal .space-about p {
+  color: var(--pro-muted) !important;
+  text-shadow: none !important;
+}
+body.experience-normal .space-experience article,
+body.experience-normal .space-recognition article,
+body.experience-normal .education-milestone,
+body.experience-normal .space-stack article,
+body.experience-normal .space-about article {
+  background: var(--pro-surface) !important;
+  border: 1px solid var(--pro-border) !important;
+  border-radius: 20px !important;
+  box-shadow: var(--pro-shadow) !important;
+}
+body.experience-normal .live-preview-lab .space-kicker,
+body.experience-normal .live-preview-lab h3 {
+  text-align: left !important;
+}
+body.experience-normal .live-preview-intro {
+  max-width: 800px !important;
+  margin-left: 0 !important;
+  color: var(--pro-muted) !important;
+}
+body.experience-normal .live-preview-tabs {
+  justify-content: flex-start !important;
+}
+body.experience-normal .project-collage-label {
+  color: var(--pro-ink) !important;
+}
+@media (max-width: 640px) {
+  body.experience-normal .space-work .space-content > h2 {
+    font-size: clamp(2.8rem, 13vw, 4.1rem) !important;
+    margin-bottom: 18px !important;
+  }
+  body.experience-normal .space-work .section-intro {
+    margin-bottom: 28px !important;
+  }
+}
