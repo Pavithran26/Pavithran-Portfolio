@@ -15,6 +15,9 @@ import { TransformersBackground } from './components/TransformersBackground.js';
 import { ScrollDepthController } from './components/ScrollDepthController.js';
 import { GlitterTextEngine } from './components/GlitterTextEngine.js';
 import { FramerMotionPhysics } from './utils/FramerMotionPhysics.js';
+import { createElement } from 'react';
+import { createRoot } from 'react-dom/client';
+import { Component as Animation3DButton } from './components/ui/3d-button.tsx';
 
 
 const root = document.querySelector('#portfolio');
@@ -655,7 +658,6 @@ let introStartedAt = 0;
 let preloadWatchdog = null;
 
 const experienceChoice = document.getElementById('experience-choice');
-const animationChoiceButton = document.getElementById('choose-animation');
 const normalChoiceButton = document.getElementById('choose-normal');
 
 function openExperienceChoice() {
@@ -663,7 +665,7 @@ function openExperienceChoice() {
   experienceChoice.hidden = false;
   experienceChoice.classList.remove('is-dismissed');
   experienceChoice.setAttribute('aria-hidden', 'false');
-  window.setTimeout(() => animationChoiceButton?.focus({ preventScroll: true }), 30);
+  window.setTimeout(() => document.getElementById('choose-animation')?.focus({ preventScroll: true }), 60);
 }
 
 function closeExperienceChoice() {
@@ -699,7 +701,13 @@ function chooseAnimationMode() {
   lenis.start();
 }
 
-on(animationChoiceButton, 'click', chooseAnimationMode);
+// Mount the React 3D button into the existing vanilla-Vite portfolio shell.
+const animationModeMount = document.getElementById('animation-mode-mount');
+let animationButtonRoot = null;
+if (animationModeMount) {
+  animationButtonRoot = createRoot(animationModeMount);
+  animationButtonRoot.render(createElement(Animation3DButton, { onSelect: chooseAnimationMode }));
+}
 on(normalChoiceButton, 'click', chooseNormalMode);
 
 function sendLoadingProgress() {
@@ -836,6 +844,7 @@ if (import.meta.hot) {
     if (lenisRafId) cancelAnimationFrame(lenisRafId);
     lenis.destroy();
     events.abort();
+    animationButtonRoot?.unmount();
     horizontalStoryResizeObserver?.disconnect();
     if (horizontalStoryFrame !== null) cancelAnimationFrame(horizontalStoryFrame);
     document.documentElement.classList.remove('has-side-scroll-reveals');
