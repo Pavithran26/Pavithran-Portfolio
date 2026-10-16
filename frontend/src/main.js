@@ -20,6 +20,7 @@ import { createRoot } from 'react-dom/client';
 import { Component as Animation3DButton } from './components/ui/3d-button.tsx';
 import ShinyButton from './components/ui/shiny-button.tsx';
 import { flushSync } from 'react-dom';
+import { TextEffectsController } from './components/TextEffectsController.js';
 
 
 const root = document.querySelector('#portfolio');
@@ -28,12 +29,27 @@ root.innerHTML = `
     <div class="intro-identity">
       <p class="space-kicker">TAMIL NADU, INDIA · FORWARD DEPLOYED ENGINEER (FDE)</p>
       <h1 id="intro-title">Pavithran <em>S</em></h1>
-      <p class="intro-statement">Thoughtful interfaces.<br>Dependable systems.<br>A little intelligence in between.</p>
+      <p class="intro-statement"><span class="vx-morph-phrase" data-morph-phrases="Thoughtful interfaces.|Applied AI &amp; RAG.|Dependable systems.|From idea to production.">Thoughtful interfaces.</span><br><span class="intro-statement-support">A little intelligence in between.</span></p>
       <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
         <a class="intro-enter" href="#work">Explore my work <span aria-hidden="true">↓</span></a>
       </div>
     </div>
-    <p class="intro-caption">A SMALL PART OF<br>A MUCH BIGGER UNIVERSE</p>
+    <p class="intro-caption" data-flip-phrases="A SMALL PART OF A MUCH BIGGER UNIVERSE|BUILD · DEPLOY · LEARN|AI INTO REAL-WORLD SYSTEMS"><span class="vx-flip-fade-current">A SMALL PART OF A MUCH BIGGER UNIVERSE</span></p>
+  </section>
+
+  <section class="motion-stats-strip" aria-label="Portfolio at a glance">
+    <div class="motion-stat">
+      <span class="motion-stat-value" data-count-to="${PROJECTS_DATA.length}">0</span>
+      <span class="motion-stat-label">Projects</span>
+    </div>
+    <div class="motion-stat">
+      <span class="motion-stat-value" data-count-to="${profile.experience.length}">0</span>
+      <span class="motion-stat-label">Experience roles</span>
+    </div>
+    <div class="motion-stat">
+      <span class="motion-stat-value" data-count-to="${profile.education.length}">0</span>
+      <span class="motion-stat-label">Study stages</span>
+    </div>
   </section>
 
   <section class="space-work space-section" id="work" aria-labelledby="work-title">
@@ -65,6 +81,19 @@ root.innerHTML = `
           </article>
         `).join('')}
       </div>
+
+      <section class="project-image-collage" aria-label="Interactive project image collage">
+        <div class="project-collage-toolbar">
+          <span class="project-collage-label">Project snapshots</span>
+          <button type="button" class="project-collage-toggle" aria-pressed="false">Arrange snapshots ↗</button>
+        </div>
+        <div class="project-collage-stage" aria-label="Four featured project screenshots">
+          <img class="project-collage-image" src="/images/projects/clansure-768.webp" alt="ClanSure insurance management interface" width="768" height="480" loading="lazy" decoding="async" style="--scatter-x:-54%;--scatter-y:-12%;--scatter-rotate:-8deg">
+          <img class="project-collage-image" src="/images/projects/gt-companion-768.webp" alt="GT Companion learning platform interface" width="768" height="480" loading="lazy" decoding="async" style="--scatter-x:-18%;--scatter-y:8%;--scatter-rotate:5deg">
+          <img class="project-collage-image" src="/images/projects/sattam-ai-768.webp" alt="Sattam AI legal assistant interface" width="768" height="480" loading="lazy" decoding="async" style="--scatter-x:19%;--scatter-y:-13%;--scatter-rotate:-4deg">
+          <img class="project-collage-image" src="/images/projects/srk-erp-768.webp" alt="SRK ERP coconut business interface" width="768" height="480" loading="lazy" decoding="async" style="--scatter-x:53%;--scatter-y:12%;--scatter-rotate:8deg">
+        </div>
+      </section>
 
       <section class="live-preview-lab" aria-labelledby="live-preview-title">
         <p class="space-kicker">LIVE APP WALKTHROUGH</p>
@@ -227,6 +256,7 @@ let transformersBg = null;
 let scrollDepth = null;
 let glitterEngine = null;
 let motionPhysics = null;
+let textEffects = null;
 let experienceMode = null;
 let animationScrollListenerBound = false;
 
@@ -740,6 +770,8 @@ function chooseNormalMode() {
     speedometerOverlay.setAttribute('aria-hidden', 'true');
   }
   closeExperienceChoice();
+  // Count-up, text reveals and image collage are lightweight in both modes.
+  textEffects = textEffects || new TextEffectsController({ root, mode: 'normal' });
   // Keep the page usable with native-feeling scrolling and no media preloader.
   lenis.start();
 }
@@ -752,6 +784,7 @@ function chooseAnimationMode() {
   closeExperienceChoice();
   // The speedometer already ran before this choice. Start cinematic effects only now.
   initializeAnimationExperience();
+  textEffects = textEffects || new TextEffectsController({ root, mode: 'animation' });
   lenis.start();
 }
 
@@ -899,6 +932,7 @@ if (import.meta.hot) {
     lenis.destroy();
     events.abort();
     animationButtonRoot?.unmount();
+    textEffects?.dispose();
     horizontalStoryResizeObserver?.disconnect();
     if (horizontalStoryFrame !== null) cancelAnimationFrame(horizontalStoryFrame);
     document.documentElement.classList.remove('has-side-scroll-reveals');
