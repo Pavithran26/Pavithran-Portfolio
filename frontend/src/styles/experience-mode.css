@@ -1704,3 +1704,56 @@ body.experience-normal .project-collage-label {
     margin-bottom: 28px !important;
   }
 }
+
+
+/* PerspectiveGrid background for the Animation / Professional chooser */
+.experience-choice { isolation: isolate; }
+.perspective-grid-mount {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: .78;
+}
+.perspective-grid-root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #03060c;
+  perspective: 2000px;
+  transform-style: preserve-3d;
+}
+.perspective-grid-plane {
+  position: absolute;
+  left: 50%;
+  top: 53%;
+  width: min(120rem, 170vw);
+  height: min(120rem, 170vw);
+  display: grid;
+  transform: translate(-50%, -50%) rotateX(59deg) rotateZ(-8deg) scale(1.2);
+  transform-origin: center;
+  transform-style: preserve-3d;
+}
+.perspective-grid-tile {
+  min-width: 1px;
+  min-height: 1px;
+  border: 1px solid rgba(75, 210, 137, .20);
+  background: rgba(25, 125, 76, .025);
+  transition: background-color 1.5s ease, border-color 1.5s ease;
+}
+.perspective-grid-tile:hover {
+  background: rgba(52, 216, 120, .18);
+  border-color: rgba(95, 255, 167, .75);
+  transition-duration: 0s;
+}
+.perspective-grid-fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle, transparent 15%, rgba(3, 6, 12, .55) 64%, #03060c 100%);
+}
+.experience-choice-panel { position: relative; z-index: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .perspective-grid-tile { transition: none; }
+}
