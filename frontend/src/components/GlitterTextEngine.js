@@ -19,11 +19,11 @@ export class GlitterTextEngine {
 
     // Word rotation sequence for Hero
     this.heroPhrases = [
-      "Thoughtful Interfaces.",
-      "Dependable Systems.",
-      "Autonomous AI & ML Solutions.",
-      "High-Performance Architecture.",
-      "Next-Gen Visual Experiences."
+      "Thoughtful interfaces.",
+      "Applied AI & RAG.",
+      "Dependable systems.",
+      "From idea to production.",
+      "Products built for people."
     ];
     this.currentPhraseIndex = 0;
     this.isMorphing = false;
@@ -74,12 +74,12 @@ export class GlitterTextEngine {
     if (rect.bottom < -50 || rect.top > window.innerHeight + 50) return;
 
     const colors = [
-      '#ffffff',               // Pure diamond white
-      '#00e5ff',               // Energon Cyan
-      '#7bf2ff',               // Bright sky cyan
-      '#ffd700',               // Golden sparkle
-      '#ffaa00',               // Amber glow
-      '#ff4d4d'                // Autobot crimson spark
+      '#ffffff',               // Diamond white
+      '#70dfa1',               // Emerald green
+      '#a0f5bd',               // Mint highlight
+      '#d6ffe1',               // Soft green-white
+      '#39b96b',               // Deep emerald glow
+      '#21884d'                // Forest green
     ];
 
     for (let i = 0; i < count; i++) {
