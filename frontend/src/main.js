@@ -18,6 +18,8 @@ import { FramerMotionPhysics } from './utils/FramerMotionPhysics.js';
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component as Animation3DButton } from './components/ui/3d-button.tsx';
+import ShinyButton from './components/ui/shiny-button.tsx';
+import { flushSync } from 'react-dom';
 
 
 const root = document.querySelector('#portfolio');
@@ -265,9 +267,59 @@ function rafLoop(time) {
 }
 lenisRafId = requestAnimationFrame(rafLoop);
 
-const eyeButton = document.querySelector('#dawn-eye');
-
 const dialogs = new PortfolioDialogs();
+
+// Mount the emerald ShinyButton while retaining DAWN's existing dialog target
+// and the optional katana video that only loads in Animation mode.
+const dawnAiMount = document.querySelector('#dawn-ai-button-mount');
+let dawnAiButtonRoot = null;
+if (dawnAiMount) {
+  dawnAiButtonRoot = createRoot(dawnAiMount);
+  flushSync(() => {
+    dawnAiButtonRoot.render(createElement(ShinyButton, {
+      id: 'dawn-eye',
+      dataDialog: 'dawn',
+      ariaLabel: 'Open DAWN AI guide',
+      label: 'DAWN AI',
+      className: 'dawn-eye dawn-shiny-button',
+      fillColor: '#07140b',
+      labelColor: '#eaf8ee',
+      accentColor: '#70dfa1',
+      accentSoftColor: '#b9f8ce',
+      sweepDuration: 4.2,
+      easeDuration: 0.55,
+      arcWidth: 5,
+      cornerRadius: 32,
+      showSpeckle: true,
+      showSheen: true,
+      speckleOpacity: 0.2,
+      style: {
+        minWidth: '120px',
+        minHeight: '42px',
+        padding: '8px 17px',
+        fontSize: '12px',
+        fontFamily: 'var(--font-mono)',
+        letterSpacing: '.12em',
+        textTransform: 'uppercase',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '8px',
+      },
+      children: createElement('video', {
+        className: 'dawn-katana-video',
+        'data-src': '/videos/katana-blade.mp4',
+        loop: true,
+        muted: true,
+        playsInline: true,
+        preload: 'none',
+        disablePictureInPicture: true,
+        'aria-hidden': true,
+      }),
+    }));
+  });
+}
+const eyeButton = document.querySelector('#dawn-eye');
 const events = new AbortController();
 const on = (target, type, handler, options = {}) => {
   if (target) target.addEventListener(type, handler, { signal: events.signal, ...options });
