@@ -2349,3 +2349,76 @@ body.experience-animation .spotlight-stack-links a.is-active {
   .spotlight-stack-nav::before,
   .spotlight-stack-links a { transition: none !important; }
 }
+
+
+/* ── Homepage polish: green cinematic grade + separated navigation rows ── */
+body.experience-animation .transformers-veil::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg,
+    rgba(34, 116, 54, .92) 0%,
+    rgba(30, 104, 49, .7) 42%,
+    rgba(34, 132, 57, .68) 100%);
+  mix-blend-mode: color;
+  opacity: .48;
+}
+
+/* Keep the primary site navigation readable over moving footage. */
+body.experience-animation .space-header {
+  z-index: 140 !important;
+  background: linear-gradient(180deg,
+    rgba(2, 13, 8, .98) 0%,
+    rgba(3, 18, 10, .94) 72%,
+    rgba(3, 18, 10, .88) 100%) !important;
+  border-bottom: 1px solid rgba(112, 223, 161, .26) !important;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .2) !important;
+  -webkit-backdrop-filter: blur(22px) saturate(125%) !important;
+  backdrop-filter: blur(22px) saturate(125%) !important;
+}
+body.experience-animation .space-nav a,
+body.experience-animation .space-header-actions button {
+  color: #d6eadc !important;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .6);
+}
+body.experience-animation .space-nav a:hover,
+body.experience-animation .space-header-actions button:hover {
+  color: #8cf0b0 !important;
+}
+
+/* The technology-layer bar is a second row, not a duplicate over the header. */
+body.experience-animation .spotlight-stack-nav {
+  top: 128px !important;
+  z-index: 80 !important;
+  background: rgba(3, 21, 12, .9) !important;
+  border-color: rgba(112, 223, 161, .34) !important;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(180, 255, 200, .06) !important;
+}
+body.experience-animation .spotlight-stack-links a {
+  color: #c9e4d1 !important;
+}
+body.experience-animation .spotlight-stack-links a:hover,
+body.experience-animation .spotlight-stack-links a:focus-visible,
+body.experience-animation .spotlight-stack-links a.is-active {
+  color: #e5ffec !important;
+  background: rgba(30, 112, 57, .55) !important;
+  border-color: rgba(112, 223, 161, .38) !important;
+  box-shadow: 0 3px 16px rgba(24, 130, 64, .2), inset 0 1px 0 rgba(199, 255, 215, .08) !important;
+}
+
+@media (max-width: 1050px) {
+  body.experience-animation .spotlight-stack-nav {
+    top: 118px !important;
+    max-width: calc(100vw - 24px);
+  }
+}
+@media (max-width: 620px) {
+  body.experience-animation .spotlight-stack-nav {
+    top: 82px !important;
+    z-index: 80 !important;
+  }
+  body.experience-animation .space-header {
+    background: rgba(2, 13, 8, .97) !important;
+  }
+}
