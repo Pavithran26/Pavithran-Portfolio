@@ -287,3 +287,98 @@
   .animation-mode-3d-button .button3d-char.state-2 { display: none; }
   .animation-mode-3d-button .button3d-char.state-1 { opacity: 1; }
 }
+
+/* Idle selector card stays quiet; reveal the 3D CTA only on hover/focus. */
+.animation-mode-3d-button {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.055), transparent 42%),
+    linear-gradient(150deg, rgba(21,34,25,.92), rgba(6,13,8,.97)) !important;
+  border-color: rgba(170,205,182,.3) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.09),
+    0 12px 30px rgba(0,0,0,.2) !important;
+  filter: none !important;
+}
+.animation-mode-3d-button .button3d-bg {
+  opacity: 0;
+}
+.animation-mode-3d-button .button3d-sparkle {
+  color: #b7cfbe;
+  text-shadow: none;
+  transform: none;
+}
+.animation-mode-3d-button .button3d-path,
+.animation-mode-3d-button .button3d-outline {
+  opacity: 0;
+  box-shadow: none;
+}
+.animation-mode-3d-button .button3d-content {
+  color: #c4d8ca;
+}
+.animation-mode-3d-button .button3d-arrow {
+  color: #a9cdb4;
+  animation: none;
+}
+.animation-mode-3d-button .button3d-wrap {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .25s ease, transform .25s ease;
+}
+.animation-mode-3d-button .button3d-char.state-1 > span {
+  animation: none !important;
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+.animation-mode-3d-button .button3d-char.state-2 {
+  opacity: 0;
+}
+.animation-mode-3d-button.is-hovered,
+.animation-mode-3d-button:hover,
+.animation-mode-3d-button:focus-visible {
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.10), transparent 42%),
+    linear-gradient(145deg, rgba(8,72,39,.94), rgba(5,15,9,.98)) !important;
+  border-color: rgba(112,223,161,.88) !important;
+  box-shadow:
+    inset 1px 1px 1px rgba(255,255,255,.2),
+    inset -1px -1px 1px rgba(0,0,0,.4),
+    0 18px 40px rgba(0,0,0,.34),
+    0 0 28px rgba(54,199,113,.18) !important;
+  filter: brightness(1.04) !important;
+}
+.animation-mode-3d-button.is-hovered .button3d-bg,
+.animation-mode-3d-button:hover .button3d-bg,
+.animation-mode-3d-button:focus-visible .button3d-bg {
+  opacity: 1;
+}
+.animation-mode-3d-button.is-hovered .button3d-sparkle,
+.animation-mode-3d-button:hover .button3d-sparkle,
+.animation-mode-3d-button:focus-visible .button3d-sparkle {
+  color: #a6f5bd;
+  text-shadow: 0 0 18px rgba(112,223,161,.62);
+}
+.animation-mode-3d-button.is-hovered .button3d-path,
+.animation-mode-3d-button.is-hovered .button3d-outline,
+.animation-mode-3d-button:hover .button3d-path,
+.animation-mode-3d-button:hover .button3d-outline,
+.animation-mode-3d-button:focus-visible .button3d-path,
+.animation-mode-3d-button:focus-visible .button3d-outline {
+  opacity: 1;
+}
+.animation-mode-3d-button.is-hovered .button3d-wrap,
+.animation-mode-3d-button:hover .button3d-wrap,
+.animation-mode-3d-button:focus-visible .button3d-wrap {
+  transform: translateY(0);
+}
+.animation-mode-3d-button.is-hovered .button3d-content,
+.animation-mode-3d-button:hover .button3d-content,
+.animation-mode-3d-button:focus-visible .button3d-content {
+  color: #a4f4bd;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animation-mode-3d-button .button3d-wrap {
+    transition: none !important;
+  }
+}
+
