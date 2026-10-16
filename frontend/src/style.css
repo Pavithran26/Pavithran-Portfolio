@@ -12,6 +12,7 @@
 @import './shaders/threeui.css';
 @import './styles/transformers-bg.css';
 @import './styles/experience-mode.css';
+@import './styles/text-effects.css';
 
 /* Unified Single-Page Natural Scroll Layout */
 html {
