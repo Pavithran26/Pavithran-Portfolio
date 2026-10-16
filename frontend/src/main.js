@@ -88,10 +88,10 @@ root.innerHTML = `
           <button type="button" class="project-collage-toggle" aria-pressed="false">Arrange snapshots ↗</button>
         </div>
         <div class="project-collage-stage" aria-label="Four featured project screenshots">
-          <img class="project-collage-image" src="/images/projects/clansure-768.webp" alt="ClanSure insurance management interface" width="768" height="480" loading="lazy" decoding="async" style="--scatter-x:-54%;--scatter-y:-12%;--scatter-rotate:-8deg">
-          <img class="project-collage-image" src="/images/projects/gt-companion-768.webp" alt="GT Companion learning platform interface" width="768" height="480" loading="lazy" decoding="async" style="--scatter-x:-18%;--scatter-y:8%;--scatter-rotate:5deg">
-          <img class="project-collage-image" src="/images/projects/sattam-ai-768.webp" alt="Sattam AI legal assistant interface" width="768" height="480" loading="lazy" decoding="async" style="--scatter-x:19%;--scatter-y:-13%;--scatter-rotate:-4deg">
-          <img class="project-collage-image" src="/images/projects/srk-erp-768.webp" alt="SRK ERP coconut business interface" width="768" height="480" loading="lazy" decoding="async" style="--scatter-x:53%;--scatter-y:12%;--scatter-rotate:8deg">
+          <img class="project-collage-image" src="/images/projects/clansure-768.webp" alt="ClanSure insurance management interface" width="768" height="480" loading="lazy" decoding="async">
+          <img class="project-collage-image" src="/images/projects/gt-companion-768.webp" alt="GT Companion learning platform interface" width="768" height="480" loading="lazy" decoding="async">
+          <img class="project-collage-image" src="/images/projects/sattam-ai-768.webp" alt="Sattam AI legal assistant interface" width="768" height="480" loading="lazy" decoding="async">
+          <img class="project-collage-image" src="/images/projects/srk-erp-768.webp" alt="SRK ERP coconut business interface" width="768" height="480" loading="lazy" decoding="async">
         </div>
       </section>
 
