@@ -465,3 +465,55 @@
   }
 }
 
+/* Use one emerald outline only; disable overlapping SVG border path. */
+@property --button3d-outline-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.animation-mode-3d-button .button3d-path {
+  display: none !important;
+  opacity: 0 !important;
+  animation: none !important;
+  filter: none !important;
+}
+.animation-mode-3d-button .button3d-outline {
+  inset: 0 !important;
+  display: block !important;
+  border: 1px solid transparent !important;
+  border-radius: 999px !important;
+  background:
+    linear-gradient(rgba(4,20,10,.9), rgba(4,20,10,.9)) padding-box,
+    conic-gradient(
+      from var(--button3d-outline-angle),
+      rgba(112,223,161,.18) 0deg,
+      rgba(112,223,161,.34) 70deg,
+      #c9ffda 118deg,
+      #70dfa1 158deg,
+      rgba(112,223,161,.22) 220deg,
+      rgba(112,223,161,.14) 360deg
+    ) border-box !important;
+  box-shadow: none !important;
+  opacity: 0 !important;
+  transform: none !important;
+  animation: none !important;
+  transition: opacity .2s ease !important;
+  pointer-events: none !important;
+}
+.animation-mode-3d-button:is(:hover, :focus-visible, .is-hovered) .button3d-outline {
+  opacity: 1 !important;
+  animation: button3d-single-outline-sweep 2.6s linear infinite !important;
+  box-shadow: 0 0 12px rgba(112,223,161,.1) !important;
+}
+@keyframes button3d-single-outline-sweep {
+  from { --button3d-outline-angle: 0deg; }
+  to { --button3d-outline-angle: 360deg; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .animation-mode-3d-button .button3d-outline,
+  .animation-mode-3d-button:is(:hover, :focus-visible, .is-hovered) .button3d-outline {
+    animation: none !important;
+    --button3d-outline-angle: 130deg;
+  }
+}
+
