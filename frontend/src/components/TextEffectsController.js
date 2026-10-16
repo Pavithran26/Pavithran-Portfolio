@@ -18,6 +18,7 @@ export class TextEffectsController {
     this.initGooeyReveal();
     this.initLiquidText();
     this.initFlipText();
+    this.initProjectGlitch();
     this.initFlipFadeText();
     this.initImageCollage();
     if (mode !== "animation") this.initMorphText();
@@ -161,7 +162,23 @@ export class TextEffectsController {
 
     // The large FDE headline gets a gentle 3D entrance rather than a constant flip.
     const heroTitle = this.root.querySelector("#intro-title");
-    if (heroTitle) heroTitle.classList.add("vx-flip-heading");
+    if (heroTitle && !this.reducedMotion.matches) {
+      heroTitle.classList.add("vx-flip-heading");
+      const finishFlip = (event) => {
+        if (event.animationName !== "vx-heading-flip-in") return;
+        heroTitle.classList.remove("vx-flip-heading");
+        heroTitle.removeEventListener("animationend", finishFlip);
+      };
+      heroTitle.addEventListener("animationend", finishFlip);
+      this.events.signal.addEventListener("abort", () => heroTitle.removeEventListener("animationend", finishFlip), { once: true });
+    }
+  }
+
+  initProjectGlitch() {
+    this.root.querySelectorAll(".space-project-title > span:first-child").forEach((title) => {
+      title.dataset.vxText = title.textContent.trim();
+      title.classList.add("vx-ascii-glitch");
+    });
   }
 
   initFlipFadeText() {
