@@ -313,3 +313,48 @@ body.book-portfolio .project-collage-toggle { color: #176c3d; background: #edf8f
   .project-collage-stage { height: 155px; }
   .project-collage-image { width: 130px; }
 }
+
+
+/* Align the existing cinematic glitter-morph system with the green identity. */
+.glitter-morph-wrapper { gap: 10px; }
+.glitter-morph-prefix {
+  color: #9af0b5;
+  background: rgba(112,223,161,.09);
+  border-color: rgba(112,223,161,.3);
+}
+.glitter-char-visible {
+  text-shadow: 0 2px 10px rgba(0,0,0,.8), 0 0 16px rgba(112,223,161,.2);
+}
+.glitter-char-entering {
+  color: #a0f5bd;
+  text-shadow: 0 0 22px rgba(112,223,161,.6), 0 0 35px #ffffff;
+}
+.glitter-char-erasing {
+  text-shadow: 0 0 22px rgba(112,223,161,.62);
+}
+.glitter-scroll-erased {
+  text-shadow: 0 0 20px rgba(112,223,161,.48) !important;
+}
+
+/* Scattered thumbnails spread across the viewport instead of overlapping in one pile. */
+.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(1) { --scatter-x: -27vw; --scatter-y: -12px; --scatter-rotate: -8deg; }
+.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(2) { --scatter-x: -9vw; --scatter-y: 8px; --scatter-rotate: 5deg; }
+.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(3) { --scatter-x: 9vw; --scatter-y: -13px; --scatter-rotate: -4deg; }
+.project-collage-stage:not(.is-organized) .project-collage-image:nth-child(4) { --scatter-x: 27vw; --scatter-y: 12px; --scatter-rotate: 8deg; }
+
+@keyframes vx-heading-flip-in {
+  from { opacity: 0; transform: perspective(900px) rotateX(-35deg) translateY(18px); filter: blur(8px); }
+  to { opacity: 1; transform: perspective(900px) rotateX(0) translateY(0); filter: blur(0); }
+}
+#intro-title.vx-flip-heading {
+  animation: vx-heading-flip-in .9s cubic-bezier(.2,.75,.2,1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  #intro-title.vx-flip-heading { animation: none !important; }
+}
+@media (max-width: 759px) {
+  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(1) { --scatter-x: -27vw; }
+  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(2) { --scatter-x: -9vw; }
+  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(3) { --scatter-x: 9vw; }
+  .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(4) { --scatter-x: 27vw; }
+}
