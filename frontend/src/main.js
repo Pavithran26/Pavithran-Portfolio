@@ -269,6 +269,44 @@ const lenis = new Lenis({
   infinite: false,
 });
 
+// Spotlight hover follows the pointer; active state tracks the current technology layer.
+const spotlightStackNav = document.querySelector('.spotlight-stack-nav');
+if (spotlightStackNav) {
+  const spotlightLinks = [...spotlightStackNav.querySelectorAll('[data-spotlight-nav]')];
+  spotlightStackNav.addEventListener('pointermove', event => {
+    if (event.pointerType === 'touch') return;
+    const bounds = spotlightStackNav.getBoundingClientRect();
+    spotlightStackNav.style.setProperty('--spot-x', `${event.clientX - bounds.left}px`);
+    spotlightStackNav.style.setProperty('--spot-y', `${event.clientY - bounds.top}px`);
+  }, { passive: true });
+  spotlightStackNav.addEventListener('pointerleave', () => {
+    spotlightStackNav.style.setProperty('--spot-x', '50%');
+    spotlightStackNav.style.setProperty('--spot-y', '50%');
+  });
+  spotlightLinks.forEach(link => link.addEventListener('click', event => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (!target) return;
+    event.preventDefault();
+    lenis.scrollTo(target, { offset: -24, duration: 1.05 });
+    history.replaceState(null, '', link.getAttribute('href'));
+  }));
+  const stackObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      spotlightLinks.forEach(link => {
+        const active = link.hash === `#${entry.target.id}`;
+        link.classList.toggle('is-active', active);
+        if (active) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    });
+  }, { rootMargin: '-28% 0px -48% 0px', threshold: 0 });
+  spotlightLinks.forEach(link => {
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) stackObserver.observe(target);
+  });
+}
+
 // Initially pause scrolling while the speedometer on-load sequence is running
 lenis.stop();
 
