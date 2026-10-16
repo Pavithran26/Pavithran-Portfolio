@@ -1,1 +1,1 @@
-PLACEHOLDER
+FILE_CONTENT_FROM:/home/workdir/artifacts/main_good.js
