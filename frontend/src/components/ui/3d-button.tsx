@@ -25,7 +25,7 @@ export const Component = ({ onSelect, className }: ComponentProps) => {
     <button
       id="choose-animation"
       type="button"
-      aria-label="Choose Animation mode and enter the cinematic portfolio"
+      aria-label="Animation"
       className={cn(
         "experience-choice-card experience-choice-card-animated animation-mode-3d-button",
         className,
@@ -63,7 +63,7 @@ export const Component = ({ onSelect, className }: ComponentProps) => {
       <span className="button3d-card-content">
         <span className="button3d-card-heading">
           <span className="button3d-sparkle" aria-hidden="true">✦</span>
-          <span className="experience-choice-card-title">Animation mode</span>
+          <span className="experience-choice-card-title">Animation</span>
         </span>
         <span className="button3d-wrap" aria-hidden="true">
           <svg
