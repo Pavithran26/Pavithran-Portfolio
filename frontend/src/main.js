@@ -25,6 +25,15 @@ import { TextEffectsController } from './components/TextEffectsController.js';
 
 const root = document.querySelector('#portfolio');
 root.innerHTML = `
+  <nav class="spotlight-stack-nav" aria-label="Technology layers">
+    <a class="spotlight-stack-brand" href="#top" aria-label="Pavithran home">PS<span> / FDE</span></a>
+    <div class="spotlight-stack-links">
+      <a href="#stack-frontend" data-spotlight-nav>Frontend</a>
+      <a href="#stack-backend" data-spotlight-nav>Backend</a>
+      <a href="#stack-databases" data-spotlight-nav>Database</a>
+      <a href="#stack-ai" data-spotlight-nav>AI Service</a>
+    </div>
+  </nav>
   <section class="space-intro" id="top" aria-labelledby="intro-title">
     <div class="intro-identity">
       <p class="space-kicker">TAMIL NADU, INDIA · FORWARD DEPLOYED ENGINEER (FDE)</p>
