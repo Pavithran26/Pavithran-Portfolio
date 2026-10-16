@@ -2013,3 +2013,185 @@ body.experience-normal .dawn-shiny-button.dawn-eye:focus-visible {
   outline-offset: 3px !important;
 }
 
+/* Render actual UI screenshots inside each featured project card. */
+.space-projects.horizontal-story-rail .project-destination.has-project-screenshot,
+.space-projects .project-destination.has-project-screenshot {
+  display: grid !important;
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr) !important;
+  align-items: center !important;
+  gap: clamp(22px, 3vw, 42px) !important;
+  flex: 0 0 min(78vw, 1000px) !important;
+  width: min(78vw, 1000px) !important;
+  max-width: min(78vw, 1000px) !important;
+  min-width: 0 !important;
+  min-height: clamp(410px, 62vh, 590px) !important;
+  height: auto !important;
+  padding: clamp(24px, 3.4vw, 46px) !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+.project-card-media {
+  position: relative;
+  display: block;
+  align-self: center;
+  width: 100%;
+  min-width: 0;
+  aspect-ratio: 16 / 10;
+  margin: 0;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid rgba(112,223,161,.3);
+  border-radius: 16px;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(112,223,161,.12), transparent 65%),
+    linear-gradient(145deg, #0b1710, #101d15);
+  box-shadow: 0 14px 36px rgba(0,0,0,.23), inset 0 1px 0 rgba(255,255,255,.1);
+}
+.project-card-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  object-position: top center;
+  background: transparent;
+  transition: transform .5s cubic-bezier(.2,.75,.2,1), filter .35s ease;
+}
+.project-card-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(2,9,5,.26), transparent 28%, transparent 80%, rgba(2,9,5,.16));
+  opacity: .72;
+  transition: opacity .3s ease;
+}
+.project-card-media-badge {
+  position: absolute;
+  z-index: 2;
+  top: 11px;
+  left: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: calc(100% - 22px);
+  padding: 6px 9px;
+  border: 1px solid rgba(196,244,211,.22);
+  border-radius: 999px;
+  color: #e6f9ec;
+  background: rgba(4,20,10,.72);
+  box-shadow: 0 4px 16px rgba(0,0,0,.16);
+  font: 500 .58rem/1.25 var(--font-mono, monospace);
+  letter-spacing: .12em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.project-card-media-dot {
+  width: 6px;
+  height: 6px;
+  flex: 0 0 6px;
+  border-radius: 50%;
+  background: #70dfa1;
+  box-shadow: 0 0 9px rgba(112,223,161,.7);
+}
+.space-projects .project-destination.has-project-screenshot:hover .project-card-image,
+.space-projects .project-destination.has-project-screenshot:focus-within .project-card-image {
+  transform: scale(1.025);
+  filter: saturate(1.06);
+}
+.space-projects .project-destination.has-project-screenshot:hover .project-card-media {
+  border-color: rgba(112,223,161,.62);
+  box-shadow: 0 18px 40px rgba(0,0,0,.28), 0 0 24px rgba(112,223,161,.08);
+}
+.space-projects .project-destination.has-project-screenshot .project-copy {
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+.space-projects .project-destination.has-project-screenshot .space-project-title {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 14px;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.space-projects .project-destination.has-project-screenshot .project-summary {
+  max-width: 55ch;
+}
+body.experience-normal .project-card-media {
+  border-color: #d4e5d9;
+  background: linear-gradient(145deg, #f9fcfa, #e8f3eb);
+  box-shadow: 0 12px 26px rgba(24,80,44,.09), inset 0 1px 0 #fff;
+}
+body.experience-normal .project-card-media::after {
+  background: linear-gradient(180deg, rgba(16,66,34,.13), transparent 30%, transparent 78%, rgba(16,66,34,.08));
+  opacity: .9;
+}
+body.experience-normal .project-card-media-badge {
+  color: #176c3d;
+  background: rgba(248,253,249,.88);
+  border-color: #cee4d4;
+  box-shadow: 0 4px 14px rgba(24,83,44,.07);
+}
+body.experience-normal .project-card-media-dot {
+  background: #16834b;
+  box-shadow: 0 0 8px rgba(22,131,75,.3);
+}
+body.experience-normal .space-projects .project-destination.has-project-screenshot {
+  background: linear-gradient(145deg, #ffffff, #f0f8f2) !important;
+  border-color: #d4e5d9 !important;
+  box-shadow: 0 14px 36px rgba(24,80,44,.075), inset 0 1px 0 #fff !important;
+}
+body.experience-normal .space-projects .project-destination.has-project-screenshot:hover {
+  border-color: #9fcdae !important;
+  box-shadow: 0 18px 42px rgba(24,80,44,.11), inset 0 1px 0 #fff !important;
+}
+
+@media (max-width: 759px) {
+  .space-projects.horizontal-story-rail .project-destination.has-project-screenshot,
+  .space-projects .project-destination.has-project-screenshot {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    flex: 0 0 min(86vw, 560px) !important;
+    width: min(86vw, 560px) !important;
+    max-width: min(86vw, 560px) !important;
+    min-height: 0 !important;
+    height: auto !important;
+    gap: 22px !important;
+    padding: 18px !important;
+  }
+  .project-card-media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 12px;
+  }
+  .project-card-image { aspect-ratio: 16 / 9; }
+  .project-card-media-badge {
+    top: 8px;
+    left: 8px;
+    padding: 5px 7px;
+    font-size: .52rem;
+  }
+  .space-projects .project-destination.has-project-screenshot .project-links {
+    flex-wrap: wrap;
+    gap: 9px;
+  }
+}
+@media (max-width: 380px) {
+  .space-projects.horizontal-story-rail .project-destination.has-project-screenshot,
+  .space-projects .project-destination.has-project-screenshot {
+    flex-basis: 88vw !important;
+    width: 88vw !important;
+    max-width: 88vw !important;
+    padding: 14px !important;
+    gap: 16px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-card-image { transition: none !important; }
+}
+
