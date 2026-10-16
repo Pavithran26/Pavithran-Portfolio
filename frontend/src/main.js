@@ -98,7 +98,7 @@ root.innerHTML = `
       <section class="live-preview-lab" aria-labelledby="live-preview-title">
         <p class="space-kicker">LIVE APP WALKTHROUGH</p>
         <h3 id="live-preview-title">Step inside the <em>live work.</em></h3>
-        <p class="live-preview-intro">Explore the real deployed apps without leaving this page. Previews load only when you ask, so Normal mode stays quick and lightweight.</p>
+        <p class="live-preview-intro">Explore the real deployed apps without leaving this page. Previews load only when you ask, so Professional mode stays quick and lightweight.</p>
         <div class="live-preview-tabs" role="group" aria-label="Choose a live project to preview">
           <button type="button" class="live-preview-tab is-active" data-preview-select="clansure" aria-pressed="true">ClanSure</button>
           <button type="button" class="live-preview-tab" data-preview-select="gt-companion" aria-pressed="false">GT Companion</button>
