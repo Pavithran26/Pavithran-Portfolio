@@ -2467,3 +2467,29 @@ body.experience-animation .world-section .spotlight-stack-nav {
     max-width: calc(100vw - 16px);
   }
 }
+
+
+/* Placement applies in both Animation and Professional experiences. */
+.world-section {
+  position: relative !important;
+}
+.world-section .spotlight-stack-nav {
+  position: absolute !important;
+  top: 142px !important;
+  left: 50% !important;
+  right: auto !important;
+  transform: translateX(-50%) !important;
+  margin: 0 !important;
+  z-index: 125 !important;
+  width: max-content;
+  max-width: calc(100vw - 28px);
+}
+@media (max-width: 1050px) {
+  .world-section .spotlight-stack-nav { top: 136px !important; }
+}
+@media (max-width: 620px) {
+  .world-section .spotlight-stack-nav {
+    top: 82px !important;
+    max-width: calc(100vw - 16px);
+  }
+}
