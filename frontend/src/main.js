@@ -18,6 +18,7 @@ import { FramerMotionPhysics } from './utils/FramerMotionPhysics.js';
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component as Animation3DButton } from './components/ui/3d-button.tsx';
+import { PerspectiveGrid } from './components/ui/perspective-grid.jsx';
 import ShinyButton from './components/ui/shiny-button.tsx';
 import { flushSync } from 'react-dom';
 import { TextEffectsController } from './components/TextEffectsController.js';
@@ -849,6 +850,12 @@ function chooseAnimationMode() {
 
 // Mount the React 3D button into the existing vanilla-Vite portfolio shell.
 const animationModeMount = document.getElementById('animation-mode-mount');
+const perspectiveGridMount = document.getElementById('perspective-grid-mount');
+let perspectiveGridRoot = null;
+if (perspectiveGridMount) {
+  perspectiveGridRoot = createRoot(perspectiveGridMount);
+  perspectiveGridRoot.render(createElement(PerspectiveGrid, { rows: 20, cols: 20 }));
+}
 let animationButtonRoot = null;
 if (animationModeMount) {
   animationButtonRoot = createRoot(animationModeMount);
@@ -991,6 +998,7 @@ if (import.meta.hot) {
     lenis.destroy();
     events.abort();
     animationButtonRoot?.unmount();
+    perspectiveGridRoot?.unmount();
     textEffects?.dispose();
     horizontalStoryResizeObserver?.disconnect();
     if (horizontalStoryFrame !== null) cancelAnimationFrame(horizontalStoryFrame);
