@@ -66,7 +66,19 @@ root.innerHTML = `
       <!-- Featured Flagship Showcase -->
       <div class="space-projects">
         ${featuredProjects.map(project => `
-          <article id="project-${project.id}" class="project-destination" data-card-project="${project.id}">
+          <article id="project-${project.id}" class="project-destination has-project-screenshot" data-card-project="${project.id}">
+            <figure class="project-card-media">
+              <img
+                class="project-card-image"
+                src="/images/projects/${project.id}-1440.webp"
+                alt="${html(PROJECT_SCENES[project.id] || `${project.title} application interface preview`)}"
+                width="960"
+                height="540"
+                loading="lazy"
+                decoding="async"
+              >
+              <figcaption class="project-card-media-badge"><span class="project-card-media-dot" aria-hidden="true"></span>PROJECT UI PREVIEW</figcaption>
+            </figure>
             <div class="project-copy">
               <button class="space-project-title" type="button" data-project="${project.id}">
                 <span>${html(project.title)}</span><span aria-hidden="true">↗</span>
