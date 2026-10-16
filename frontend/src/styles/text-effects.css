@@ -358,3 +358,26 @@ body.book-portfolio .project-collage-toggle { color: #176c3d; background: #edf8f
   .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(3) { --scatter-x: 45%; }
   .project-collage-stage:not(.is-organized) .project-collage-image:nth-child(4) { --scatter-x: 140%; }
 }
+
+/* Keep ASCII glitch purely visual so button names remain single and accessible. */
+.space-project-title > span:first-child::before,
+.space-project-title > span:first-child::after {
+  content: none !important;
+  display: none !important;
+}
+.space-project-title:hover > span:first-child,
+.space-project-title:focus-visible > span:first-child {
+  animation: vx-ascii-glitch-text .48s steps(2, end) both;
+  text-shadow:
+    -1.5px 0 rgba(112,223,161,.68),
+    1.5px 0 rgba(214,255,225,.42),
+    0 0 14px rgba(112,223,161,.14);
+}
+@keyframes vx-ascii-glitch-text {
+  0% { transform: translateX(0) skewX(0); clip-path: inset(0); }
+  18% { transform: translateX(-1px) skewX(-1.4deg); clip-path: inset(0 0 38% 0); }
+  36% { transform: translateX(1.5px) skewX(1.2deg); clip-path: inset(32% 0 24% 0); }
+  55% { transform: translateX(-.5px) skewX(0); clip-path: inset(12% 0 0 0); }
+  100% { transform: translateX(0) skewX(0); clip-path: inset(0); }
+}
+
