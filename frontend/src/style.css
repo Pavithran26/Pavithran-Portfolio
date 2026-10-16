@@ -1027,3 +1027,93 @@ body.book-portfolio .space-recognition.horizontal-story-rail > article {
   .horizontal-rail-controls button { width: 30px; height: 30px; }
 }
 
+/* DAWN AI shiny header launch button */
+.dawn-ai-button-mount {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  position: relative;
+  z-index: 2;
+}
+.dawn-shiny-button.dawn-eye {
+  position: relative !important;
+  isolation: isolate !important;
+  flex: 0 0 auto !important;
+  min-width: 120px !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+  padding: 8px 17px !important;
+  border: 1px solid transparent !important;
+  border-radius: 32px !important;
+  background-color: #07140b !important;
+  color: #eaf8ee !important;
+  font: 500 12px/1.2 var(--font-mono, monospace) !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+.dawn-shiny-button.dawn-eye .shiny-button-content {
+  display: inline-flex !important;
+  position: relative !important;
+  z-index: 2 !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+}
+.dawn-shiny-button.dawn-eye .dawn-katana-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: inherit;
+  opacity: .12;
+  pointer-events: none;
+}
+.dawn-shiny-button.dawn-eye:hover,
+.dawn-shiny-button.dawn-eye:focus-visible {
+  border-color: transparent !important;
+  box-shadow: inset 0 0 0 1px #0b1b10, 0 0 24px rgba(112,223,161,.2) !important;
+  color: #ffffff !important;
+  outline: 2px solid rgba(112,223,161,.34) !important;
+  outline-offset: 3px !important;
+}
+.dawn-shiny-button.dawn-eye:focus-visible {
+  outline-color: #70dfa1 !important;
+}
+html[data-appearance='light'] .dawn-shiny-button.dawn-eye {
+  --gleam-base: #eff8f1;
+  --gleam-inset: #d0e5d5;
+  --gleam-label: #17482a;
+}
+@media (max-width: 759px) {
+  .dawn-ai-button-mount {
+    order: 3;
+    margin-left: auto;
+  }
+  .dawn-shiny-button.dawn-eye {
+    min-width: 100px !important;
+    min-height: 38px !important;
+    padding: 7px 12px !important;
+    font-size: 10px !important;
+    letter-spacing: .08em !important;
+  }
+}
+@media (max-width: 380px) {
+  .dawn-shiny-button.dawn-eye {
+    min-width: 88px !important;
+    padding: 6px 9px !important;
+    font-size: 9px !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dawn-shiny-button.dawn-eye .dawn-katana-video { display: none; }
+}
+
