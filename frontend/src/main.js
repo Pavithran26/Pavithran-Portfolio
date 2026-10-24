@@ -811,8 +811,49 @@ function closeExperienceChoice() {
   document.querySelector('.space-signature')?.focus({ preventScroll: true });
 }
 
+function restoreWorkExperienceTimeline() {
+  const stageIndex = horizontalStoryStages.findIndex(({ rail }) => rail.matches('.space-experience'));
+  if (stageIndex < 0) return;
+
+  const { stage, rail, toolbar } = horizontalStoryStages[stageIndex];
+  const parent = stage.parentNode;
+  if (!parent) return;
+
+  // Remove the horizontal-only helper from the experience section. Other
+  // chapters keep their existing horizontal storytelling in Animation mode.
+  horizontalStoryResizeObserver?.unobserve(rail);
+  horizontalStoryResizeObserver?.unobserve(toolbar);
+
+  const heading = document.createElement('div');
+  heading.className = 'experience-timeline-heading';
+  heading.innerHTML = '<p class="space-kicker">CAREER TIMELINE</p><h3>Work experience</h3>';
+  parent.insertBefore(heading, stage);
+  parent.insertBefore(rail, stage);
+  stage.remove();
+
+  rail.classList.remove('horizontal-story-rail');
+  rail.classList.add('vertical-experience-timeline');
+  rail.setAttribute('role', 'list');
+  rail.setAttribute('aria-label', 'Work experience timeline');
+  rail.removeAttribute('tabindex');
+  rail.style.removeProperty('scroll-snap-type');
+  rail.style.removeProperty('scroll-behavior');
+  rail.scrollLeft = 0;
+
+  rail.querySelectorAll('article').forEach(card => {
+    card.setAttribute('role', 'listitem');
+    card.classList.remove('side-scroll-entry', 'is-side-revealed');
+    card.style.removeProperty('--side-entry-x');
+  });
+
+  horizontalStoryRails.splice(horizontalStoryRails.indexOf(rail), 1);
+  horizontalStoryStages.splice(stageIndex, 1);
+  scheduleHorizontalStoryLayout();
+}
+
 function chooseNormalMode() {
   if (experienceMode) return;
+  restoreWorkExperienceTimeline();
   experienceMode = 'normal';
   document.body.classList.remove('experience-mode-pending', 'experience-animation');
   document.body.classList.add('experience-normal');
