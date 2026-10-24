@@ -333,7 +333,7 @@ export function InteractiveParticles({
     // ── build particles from the image ───────────────────────────────────────
     const loader = new THREE.TextureLoader();
     loader.setCrossOrigin("anonymous");
-    container.classList.remove("is-failed");
+    container.classList.remove("is-ready", "is-failed");
     loader.load(effectiveSrc, (texture) => {
       if (disposed) {
         texture.dispose();
@@ -435,9 +435,9 @@ export function InteractiveParticles({
       applyScale();
 
       // Intro animation.
-      gsap.fromTo(uniforms.uSize, { value: 0.5 }, { value: size, duration: 1.0 });
+      gsap.fromTo(uniforms.uSize, { value: 0.8 }, { value: size, duration: 0.9 });
       gsap.to(uniforms.uRandom, { value: randomness, duration: 1.0 });
-      gsap.fromTo(uniforms.uDepth, { value: 40.0 }, { value: depth, duration: 1.5 });
+      gsap.fromTo(uniforms.uDepth, { value: Math.max(depth * 3, 0.55) }, { value: depth, duration: 1.1 });
       container.classList.add("is-ready");
       container.classList.remove("is-failed");
     }, undefined, () => {
