@@ -112,27 +112,6 @@ root.innerHTML = `
         </div>
       </section>
 
-      <section class="live-preview-lab" aria-labelledby="live-preview-title">
-        <p class="space-kicker">LIVE APP WALKTHROUGH</p>
-        <h3 id="live-preview-title">Step inside the <em>live work.</em></h3>
-        <p class="live-preview-intro">Explore the real deployed apps without leaving this page. Previews load only when you ask, so Professional mode stays quick and lightweight.</p>
-        <div class="live-preview-tabs" role="group" aria-label="Choose a live project to preview">
-          <button type="button" class="live-preview-tab is-active" data-preview-select="clansure" aria-pressed="true">ClanSure</button>
-          <button type="button" class="live-preview-tab" data-preview-select="gt-companion" aria-pressed="false">GT Companion</button>
-          <button type="button" class="live-preview-tab" data-preview-select="prismiq" aria-pressed="false">PrismIQ</button>
-        </div>
-        <div class="live-preview-shell">
-          <div class="live-preview-toolbar">
-            <div><span class="live-preview-status-dot" aria-hidden="true"></span><strong id="live-preview-name">ClanSure</strong><span class="live-preview-caption">LIVE ENVIRONMENT</span></div>
-            <div class="live-preview-toolbar-actions">
-              <a id="live-preview-open" class="space-text-link" href="https://clansure.vercel.app/" target="_blank" rel="noopener noreferrer">Open full app ↗</a>
-              <button id="live-preview-toggle" class="live-preview-load" type="button" data-live-preview aria-expanded="false" aria-controls="live-preview-frame">Load preview</button>
-            </div>
-          </div>
-          <div id="live-preview-frame" class="live-preview-frame-wrap" hidden></div>
-          <p class="live-preview-help">If a live app refuses to display inside the frame, use <strong>Open full app</strong>. Each app controls whether other websites may embed it, and sign-in popups or third-party cookies may work better in a separate tab.</p>
-        </div>
-      </section>
     </div>
   </section>
 
@@ -143,7 +122,15 @@ root.innerHTML = `
       <p class="section-intro">I'm Pavithran S, a Forward Deployed Engineer (FDE) from Tamil Nadu. I like making complicated things feel simple, from the first interaction to the systems underneath.</p>
       <div class="space-experience" id="experience">
         ${profile.experience.map((job, index) => `
-          <article id="experience-${index}">
+          <article id="experience-${index}" class="experience-timeline-card">
+            <img
+              class="experience-company-watermark"
+              src="${index === 0 ? 'https://owlsure.com/wp-content/uploads/2025/08/owlsure-logo.png' : 'https://www.adhocsoftwares.com/assets/logo-dark-new-D-s7BgCx.png'}"
+              alt=""
+              aria-hidden="true"
+              loading="lazy"
+              decoding="async"
+            >
             <p class="space-kicker">${html(job.period)}</p>
             <h3>${html(job.role)}</h3>
             <p class="experience-company">${html(job.company)} · ${html(job.location)}</p>
@@ -692,71 +679,9 @@ if (dialogEl) {
 }
 
 // Click delegation for dialogs, projects, skills, chapters, DAWN
-const livePreviewApps = {
-  clansure: { title: 'ClanSure', url: 'https://clansure.vercel.app/' },
-  'gt-companion': { title: 'GT Companion', url: 'https://gt-companion.vercel.app/' },
-  prismiq: { title: 'PrismIQ', url: 'https://prismiq26.vercel.app/' },
-};
-let activeLivePreview = 'clansure';
-
 on(document, 'click', event => {
-  const action = event.target.closest('[data-dialog], [data-project], [data-ask], [data-technology], [data-inspect-world], [data-preview-select], [data-live-preview]');
+  const action = event.target.closest('[data-dialog], [data-project], [data-ask], [data-technology], [data-inspect-world]');
   if (!action) return;
-
-  if (action.dataset.previewSelect) {
-    const id = action.dataset.previewSelect;
-    if (!livePreviewApps[id]) return;
-    activeLivePreview = id;
-    document.querySelectorAll('[data-preview-select]').forEach(button => {
-      const selected = button.dataset.previewSelect === id;
-      button.classList.toggle('is-active', selected);
-      button.setAttribute('aria-pressed', String(selected));
-    });
-    const app = livePreviewApps[id];
-    const name = document.querySelector('#live-preview-name');
-    const openLink = document.querySelector('#live-preview-open');
-    const holder = document.querySelector('#live-preview-frame');
-    const toggle = document.querySelector('#live-preview-toggle');
-    if (name) name.textContent = app.title;
-    if (openLink) openLink.href = app.url;
-    const iframe = holder?.querySelector('iframe');
-    if (iframe) {
-      iframe.src = app.url;
-      iframe.title = app.title + ' live preview';
-    } else if (toggle) {
-      toggle.textContent = 'Load preview';
-      toggle.setAttribute('aria-expanded', 'false');
-    }
-    return;
-  }
-
-  if (action.hasAttribute('data-live-preview')) {
-    const holder = document.querySelector('#live-preview-frame');
-    if (!holder) return;
-    const existing = holder.querySelector('iframe');
-    if (existing) {
-      holder.replaceChildren();
-      holder.hidden = true;
-      action.textContent = 'Load preview';
-      action.setAttribute('aria-expanded', 'false');
-    } else {
-      const app = livePreviewApps[activeLivePreview];
-      if (!app) return;
-      const iframe = document.createElement('iframe');
-      iframe.className = 'live-preview-frame';
-      iframe.src = app.url;
-      iframe.title = app.title + ' live preview';
-      iframe.loading = 'lazy';
-      iframe.referrerPolicy = 'strict-origin-when-cross-origin';
-      iframe.setAttribute('allowfullscreen', '');
-      iframe.allow = 'fullscreen; clipboard-read; clipboard-write';
-      holder.replaceChildren(iframe);
-      holder.hidden = false;
-      action.textContent = 'Hide preview';
-      action.setAttribute('aria-expanded', 'true');
-    }
-    return;
-  }
 
   if (action.dataset.dialog) dialogs.open(action.dataset.dialog);
   else if (action.dataset.project) dialogs.openProject(action.dataset.project);
