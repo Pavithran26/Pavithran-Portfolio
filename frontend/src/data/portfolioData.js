@@ -80,7 +80,7 @@ export const PORTFOLIO_DATA = {
   ],
   "experience": [
     {
-      "role": "Forward Deployed Engineer (FDE)",
+      "role": "Software Engineer",
       "company": "OWLSure, a business unit of ValueMomentum",
       "period": "June 8, 2026 – Present",
       "location": "Coimbatore / Hybrid",
@@ -112,17 +112,6 @@ export const PORTFOLIO_DATA = {
         "Replaced manual Excel-heavy workflows with a centralized web application, giving leadership real-time KPI visibility and approval workflows.",
         "Integrated Redis caching, PostgreSQL database optimization, JWT authentication, and mobile API endpoints.",
         "Collaborated with UI/UX designers using Figma to implement responsive client-side experiences in React and Next.js."
-      ]
-    },
-    {
-      "role": "Software Development Intern",
-      "company": "Cognifyz Technologies",
-      "period": "April – May 2025",
-      "location": "",
-      "domain": "Software Development",
-      "projects": [],
-      "responsibilities": [
-        "Worked with Python and Java, developing problem-solving and teamwork skills."
       ]
     }
   ],
