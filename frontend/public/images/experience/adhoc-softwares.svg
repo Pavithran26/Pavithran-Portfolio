@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="440" viewBox="0 0 920 440" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Adhoc Softwares</title>
+  <desc id="desc">Adhoc Softwares brand wordmark with an abstract connected A symbol.</desc>
+  <defs>
+    <linearGradient id="adhoc-green" x1="248" y1="84" x2="396" y2="258" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4DBA7A"/>
+      <stop offset="1" stop-color="#17653D"/>
+    </linearGradient>
+    <linearGradient id="adhoc-leaf" x1="281" y1="123" x2="359" y2="214" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#DFF9E8"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(42 20)">
+    <rect x="226" y="92" width="164" height="164" rx="38" fill="url(#adhoc-green)"/>
+    <path d="M269 207L307.5 128L346 207" stroke="url(#adhoc-leaf)" stroke-width="17" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M287 177H328" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
+    <circle cx="307.5" cy="128" r="9" fill="#C8F5D8"/>
+    <circle cx="269" cy="207" r="8" fill="#C8F5D8"/>
+    <circle cx="346" cy="207" r="8" fill="#C8F5D8"/>
+    <path d="M307.5 128L346 207M307.5 128L269 207" stroke="#B8EDCA" stroke-width="2.5" opacity=".8"/>
+    <text x="418" y="168" font-family="Arial, Helvetica, sans-serif" font-size="76" font-weight="800" letter-spacing="-3.5" fill="#173D29">ADHOC</text>
+    <text x="424" y="216" font-family="Arial, Helvetica, sans-serif" font-size="26" font-weight="700" letter-spacing="9" fill="#3E7653">SOFTWARES</text>
+    <path d="M422 239H770" stroke="#72B78B" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+    <circle cx="784" cy="239" r="4.5" fill="#4DBA7A"/>
+  </g>
+</svg>
