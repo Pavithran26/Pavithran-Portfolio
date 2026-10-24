@@ -18,8 +18,8 @@ export const SPACE_CHAPTERS = [
       { label: 'Frontend & mobile', items: ['React.js', 'Next.js', 'Vue.js', 'Angular', 'React Native', 'Expo', 'Three.js', 'Tailwind CSS', 'Material UI', 'Vite'] },
       { label: 'Backend & APIs', items: ['Django', 'Django REST Framework', 'FastAPI', 'Flask', 'Node.js', 'Express.js', 'Spring Boot', 'ASP.NET Core', '.NET Web API', 'REST APIs', 'SOAP APIs', 'Microservices'] },
       { label: 'AI, ML & RAG', items: ['RAG', 'LangChain / LCEL', 'Google Gemini', 'OpenAI', 'Hugging Face Transformers', 'Vector Embeddings', 'pgvector', 'HNSW', 'Fine-tuning', 'QLoRA', 'Reinforcement Learning', 'PyTorch', 'TensorFlow', 'Keras', 'scikit-learn', 'XGBoost', 'NumPy', 'Pandas', 'Matplotlib', 'ChromaDB'] },
-      { label: 'Data, cloud & delivery', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Supabase', 'Firebase', 'AWS S3', 'Apache Spark', 'Apache Kafka', 'Docker', 'Kubernetes', 'Linux', 'Git', 'GitHub Actions', 'AWS', 'Azure', 'Vercel', 'Render', 'Railway', 'Netlify', 'Cloudflare'] },
-      { label: 'Developer, testing & design tools', items: ['Antigravity', 'Cursor', 'VS Code', 'Slack', 'Postman', 'Playwright', 'Selenium', 'Figma', 'Serilog', 'Pega', 'Clerk', 'Axios', 'Babel', 'Ember.js', 'Typography', 'SEO'] }
+      { label: 'Data, cloud & delivery', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Supabase', 'Firebase', 'Cloud Firestore', 'AWS S3', 'Apache Spark', 'Apache Kafka', 'Docker', 'Kubernetes', 'Linux', 'Git', 'GitHub Actions', 'AWS', 'Azure', 'Vercel', 'Render', 'Hostinger', 'Railway', 'Netlify', 'Cloudflare'] },
+      { label: 'Developer, testing & design tools', items: ['Antigravity', 'Cursor', 'VS Code', 'Slack', 'Postman', 'Playwright', 'Selenium', 'Figma', 'VengeanceUI', 'Serilog', 'Pega', 'Clerk', 'Axios', 'Babel', 'Ember.js', 'Typography', 'SEO'] }
     ],
     highlights: [
       { mark: 'PY', name: 'Python', role: 'Backend, data and applied AI', search: 'Python' },
