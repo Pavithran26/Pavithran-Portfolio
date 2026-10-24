@@ -17,7 +17,7 @@ body{display:grid;place-items:center;padding:16px}
 .letter-p-effect{color:#baf8d0;text-shadow:0 0 22px rgba(52,216,120,.7);transform-origin:50% 50%;animation:ktl-first-p-pop 1800ms cubic-bezier(.25,.23,.73,.75) infinite;will-change:transform}
 .dot{position:absolute;z-index:2;top:8px;left:calc(50% + 54px);width:6px;height:6px;border-radius:50%;background:#d5ffe2;box-shadow:0 0 12px rgba(117,240,162,.9);animation:ktl-dotMove 1800ms cubic-bezier(.25,.25,.75,.75) infinite}
 @keyframes ktl-dotMove{0%,100%{transform:rotate(180deg) translate(-80px,-10px) rotate(-180deg)}50%{transform:rotate(0deg) translate(-81px,10px) rotate(0deg)}}
-@keyframes ktl-first-p-pop{0%,100%{transform:translateY(0) scale(1)}12%{transform:translateY(-3px) scale(1.14)}24%{transform:translateY(0) scale(.97)}36%{transform:translateY(-1px) scale(1.04)}48%,88%{transform:translateY(0) scale(1)}}
+@keyframes ktl-first-p-pop{0%,100%{transform:translateY(0) scale(1)}12%{transform:translateY(-3px) scale(1.16)}24%{transform:translateY(0) scale(.96)}36%{transform:translateY(-1px) scale(1.05)}48%,88%{transform:translateY(0) scale(1)}}
 @media(min-width:560px){.kinetic{transform:scale(.9)}}
 @media(prefers-reduced-motion:reduce){.dot,.letter-p-effect{animation:none}}
 </style>
