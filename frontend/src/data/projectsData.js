@@ -157,17 +157,17 @@ export const PROJECTS_DATA = [
     "category": "Mobile & Agriculture",
     "badge": "Mobile Application",
     "accentColor": "#70dfa1",
-    "overview": "A dairy-herd management project with cow and calf records, pregnancy history, and monthly milestone reminders. The repositories include React Native and Flutter interfaces and a Django backend variant.",
+    "overview": "A dairy-herd management project designed to help small dairy farmers organize cows, calves, pregnancy history, and monthly milestone reminders. The repository includes a React + Vite web experience being prepared for Capacitor packaging alongside the existing React Native app.",
     "challenge": "Keep animal records and pregnancy milestones organized without relying on scattered notes.",
-    "solution": "Built herd screens and Firestore services for creating, updating, and deleting records, alongside date-based reminder calculations.",
+    "solution": "Provides herd-management screens for cow registration, herd search, calving records, and pregnancy milestones, with a React web experience and a separate native app that includes Firestore services.",
     "technologies": [
-      "React Native",
-      "Expo",
+      "React",
+      "Vite",
+      "Capacitor",
       "Firebase",
       "Cloud Firestore",
-      "Flutter",
-      "Django",
-      "Python"
+      "React Native",
+      "Expo"
     ],
     "highlights": [
       "Manage cow records and view a searchable herd directory.",
@@ -177,7 +177,7 @@ export const PROJECTS_DATA = [
     ],
     "liveUrl": "https://mycow-pavithran26.web.app/",
     "githubUrl": null,
-    "implementationNote": "The React Native app integrates directly with Firestore; a separate Django backend variant also exists. Vaccination scheduling, feeding inventory, and reporting are listed as planned in the reviewed README. Source repositories are private."
+    "implementationNote": "The current web frontend uses preview-only herd data; its Firestore cow-data sync is pending model-mapping and security-rule verification. The existing React Native app includes Firestore integration. Source repositories are private."
   },
   {
     "id": "product-demand-forecast",
