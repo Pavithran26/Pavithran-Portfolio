@@ -1,5 +1,5 @@
 // Unified technology inventory for the portfolio's Tools & Technologies section.
-// Skill Icons IDs are added only when skillicons.dev supports that technology.
+// Skill Icons IDs are used where the official skillicons.dev set supports the technology.
 export const ALL_TECHNOLOGIES = [
   {
     "title": "Python",
@@ -548,10 +548,17 @@ export const ALL_TECHNOLOGIES = [
     "iconId": "supabase"
   },
   {
-    "title": "Firebase / Cloud Firestore",
+    "title": "Firebase",
     "category": "Data & Storage",
-    "description": "Firebase application data and cloud document storage.",
-    "search": "Firebase / Cloud Firestore",
+    "description": "Firebase application platform, authentication integrations and app services.",
+    "search": "Firebase",
+    "iconId": "firebase"
+  },
+  {
+    "title": "Cloud Firestore",
+    "category": "Data & Storage",
+    "description": "Cloud-hosted NoSQL document database for application data.",
+    "search": "Cloud Firestore",
     "iconId": "firebase"
   },
   {
@@ -632,9 +639,16 @@ export const ALL_TECHNOLOGIES = [
     "iconId": "vercel"
   },
   {
+    "title": "Hostinger",
+    "category": "Cloud & DevOps",
+    "description": "Web hosting, domains and hosting management workflows.",
+    "search": "Hostinger",
+    "iconId": null
+  },
+  {
     "title": "Render",
     "category": "Cloud & DevOps",
-    "description": "Deploying web services and APIs.",
+    "description": "Cloud platform for deploying web services, APIs and application workloads.",
     "search": "Render",
     "iconId": null
   },
@@ -728,6 +742,13 @@ export const ALL_TECHNOLOGIES = [
     "description": "Interface exploration, prototyping and design hand-off.",
     "search": "Figma",
     "iconId": "figma"
+  },
+  {
+    "title": "VengeanceUI",
+    "category": "Frontend & UI",
+    "description": "Animated React UI components, staggered layouts and interaction patterns.",
+    "search": "VengeanceUI",
+    "iconId": null
   }
 ];
 
