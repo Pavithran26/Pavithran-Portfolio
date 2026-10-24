@@ -68,9 +68,9 @@ root.innerHTML = `
       <div class="space-projects">
         ${featuredProjects.map(project => `
           <article id="project-${project.id}" class="project-destination has-project-screenshot" data-card-project="${project.id}">
-            <figure class="project-card-media">
+            <figure class="project-card-media project-card-media-live">
               <img
-                class="project-card-image"
+                class="project-card-image project-card-fallback"
                 src="/images/projects/${project.id}-1440.webp"
                 alt="${html(PROJECT_SCENES[project.id] || `${project.title} application interface preview`)}"
                 width="960"
@@ -78,7 +78,8 @@ root.innerHTML = `
                 loading="lazy"
                 decoding="async"
               >
-              <figcaption class="project-card-media-badge"><span class="project-card-media-dot" aria-hidden="true"></span>PROJECT UI PREVIEW</figcaption>
+              ${project.liveUrl ? `<iframe class="project-card-live-frame" src="${html(project.liveUrl)}" title="${html(project.title)} live website preview" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>` : ''}
+              <span class="project-card-preview-shade" aria-hidden="true"></span>
             </figure>
             <div class="project-copy">
               <button class="space-project-title" type="button" data-project="${project.id}">
