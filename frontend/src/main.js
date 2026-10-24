@@ -67,21 +67,22 @@ root.innerHTML = `
       <!-- Featured Flagship Showcase -->
       <div class="space-projects">
         ${featuredProjects.map(project => `
-          <article id="project-${project.id}" class="project-destination has-project-screenshot" data-card-project="${project.id}">
-            <figure class="project-card-media project-card-media-live">
+          <article id="project-${project.id}" class="project-destination has-project-screenshot project-card-background-preview" data-card-project="${project.id}">
+            <figure class="project-card-media project-card-media-live" aria-label="${html(project.title)} website background">
               <img
                 class="project-card-image project-card-fallback"
                 src="/images/projects/${project.id}-1440.webp"
-                alt="${html(PROJECT_SCENES[project.id] || `${project.title} application interface preview`)}"
-                width="960"
-                height="540"
+                alt=""
+                width="1440"
+                height="900"
                 loading="lazy"
                 decoding="async"
               >
-              ${project.liveUrl ? `<iframe class="project-card-live-frame" data-project-frame-src="${html(project.liveUrl)}" title="${html(project.title)} application screen" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>` : ''}
+              ${project.liveUrl ? `<iframe class="project-card-live-frame" data-project-frame-src="${html(project.liveUrl)}" title="${html(project.title)} website background preview" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>` : ''}
               <span class="project-card-preview-shade" aria-hidden="true"></span>
             </figure>
             <div class="project-copy">
+              <p class="project-card-eyebrow">${html(project.category || 'Featured project')}</p>
               <button class="space-project-title" type="button" data-project="${project.id}">
                 <span>${html(project.title)}</span><span aria-hidden="true">↗</span>
               </button>
@@ -92,7 +93,7 @@ root.innerHTML = `
               </div>
               <div class="project-links">
                 <button class="space-text-link" type="button" data-project="${project.id}">Explore technical dossier ↗</button>
-                ${project.liveUrl ? `<a class="space-text-link" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit live app ↗</a>` : ''}
+                ${project.liveUrl ? `<a class="space-text-link project-live-cta" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit live app ↗</a>` : ''}
               </div>
             </div>
           </article>
