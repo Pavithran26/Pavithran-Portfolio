@@ -201,9 +201,7 @@ body.light-appearance .paper-giant-wordmark {
 .space-projects article:hover,
 .space-projects article:focus-within,
 .project-index a:hover,
-.project-index a:focus-visible,
-.live-preview-tab:hover,
-.live-preview-tab.is-active {
+.project-index a:focus-visible {
   border-color: var(--accent);
 }
 .dawn-questions button:hover,
@@ -1587,7 +1585,6 @@ body.experience-normal .space-education article > p,
 body.experience-normal .space-recognition article > p,
 body.experience-normal .project-summary,
 body.experience-normal .project-tagline,
-body.experience-normal .live-preview-intro,
 body.experience-normal .experience-company {
   color: #536b5b !important;
   text-shadow: none !important;
@@ -1727,45 +1724,6 @@ body.experience-normal .project-collage-image {
   border-color: #a7cdb2 !important;
   box-shadow: 0 13px 30px rgba(24,80,44,.16) !important;
 }
-
-/* Preview toolbar and controls use white surfaces with an emerald action color. */
-body.experience-normal .live-preview-shell {
-  color: #193b28 !important;
-  border-color: #d2e4d7 !important;
-  background: #ffffff !important;
-  box-shadow: 0 12px 32px rgba(24,83,44,.06) !important;
-}
-body.experience-normal .live-preview-toolbar {
-  color: #234d34 !important;
-  background: #f0f7f2 !important;
-  border-color: #d9e8dd !important;
-}
-body.experience-normal .live-preview-caption,
-body.experience-normal .live-preview-help {
-  color: #5c7664 !important;
-}
-body.experience-normal .live-preview-tab {
-  color: #356448 !important;
-  border-color: #cce0d2 !important;
-  background: #ffffff !important;
-}
-body.experience-normal .live-preview-tab.is-active,
-body.experience-normal .live-preview-tab:hover {
-  color: #ffffff !important;
-  border-color: #16834b !important;
-  background: #16834b !important;
-}
-body.experience-normal .live-preview-load {
-  color: #ffffff !important;
-  border-color: #16834b !important;
-  background: #16834b !important;
-}
-body.experience-normal .live-preview-load:hover,
-body.experience-normal .live-preview-load:focus-visible {
-  background: #116c3c !important;
-}
-body.experience-normal .live-preview-frame-wrap { background: #f7faf8 !important; }
-body.experience-normal .live-preview-status-dot { background: #16834b !important; }
 
 /* Skill, orbit, contact and dialog surfaces stay white and green in Professional mode. */
 body.experience-normal .world-section {
