@@ -76,13 +76,56 @@ const definitions = [
   ['figma', /\bfigma\b/i, '#ad8bff']
 ];
 
+const skillIconRules = [
+  [/^react$/i, 'react'],
+  [/^typescript$/i, 'ts'],
+  [/^javascript$/i, 'js'],
+  [/^next(?:\.js)?$/i, 'nextjs'],
+  [/^tailwind(?: css)?$/i, 'tailwind'],
+  [/^three(?:\.js)?$/i, 'threejs'],
+  [/^python$/i, 'py'],
+  [/^c#$/i, 'cs'],
+  [/^java$/i, 'java'],
+  [/^asp\.net core$|^\.net(?: core)?$/i, 'dotnet'],
+  [/^fastapi$/i, 'fastapi'],
+  [/^django$/i, 'django'],
+  [/^vite$/i, 'vite'],
+  [/^postgres(?:ql)?$/i, 'postgres'],
+  [/^mysql$/i, 'mysql'],
+  [/^mongodb$/i, 'mongodb'],
+  [/^redis$/i, 'redis'],
+  [/^firebase$/i, 'firebase'],
+  [/^supabase$/i, 'supabase'],
+  [/^docker$/i, 'docker'],
+  [/^aws$|^amazon web services$/i, 'aws'],
+  [/^node(?:\.js)?$/i, 'nodejs'],
+  [/^express(?:\.js)?$/i, 'express'],
+  [/^flask$/i, 'flask'],
+  [/^spring(?: boot)?$/i, 'spring'],
+  [/^kotlin$/i, 'kotlin'],
+  [/^cplusplus$|^c\+\+$/i, 'cpp']
+];
+
+function skillIconFor(label) {
+  const value = String(label || '').trim();
+  return skillIconRules.find(([pattern]) => pattern.test(value))?.[1] || null;
+}
+
 export function getTechnologyIcons(label) {
   return definitions.filter(([, pattern]) => pattern.test(label)).map(([id, , glow]) => ({ id, glow, src: `/icons/technologies/${id}.svg` }));
 }
 
-/** The adjacent technology name labels these decorative logo images. */
+/** Local logos are preferred; SkillIcons supplies a fallback when a brand mark is missing. */
 export function technologyIcons(label, { eager = false } = {}) {
   const icons = getTechnologyIcons(label);
-  if (!icons.length) return '';
-  return `<span class="tech-icons" aria-hidden="true">${icons.map(icon => `<span class="tech-icon-frame" data-icon="${icon.id}" style="--logo-glow:${icon.glow}"><img class="tech-logo" src="${html(icon.src)}" alt="" width="32" height="32" loading="${eager ? 'eager' : 'lazy'}" decoding="async" draggable="false"></span>`).join('')}</span>`;
+  const fallbackId = skillIconFor(label);
+  const fallbackUrl = fallbackId ? `https://skillicons.dev/icons?i=${fallbackId}&theme=dark` : '';
+  if (!icons.length) {
+    if (!fallbackUrl) return '';
+    return `<span class="tech-icons" aria-hidden="true"><span class="tech-icon-frame skill-icon-frame" data-icon="skill-${fallbackId}"><img class="tech-logo" src="${html(fallbackUrl)}" alt="" width="32" height="32" loading="${eager ? 'eager' : 'lazy'}" decoding="async" draggable="false"></span></span>`;
+  }
+  const fallbackAttrs = fallbackUrl
+    ? ` data-fallback="${html(fallbackUrl)}" onerror="if(this.dataset.fallback){this.onerror=null;this.src=this.dataset.fallback;}"`
+    : '';
+  return `<span class="tech-icons" aria-hidden="true">${icons.map(icon => `<span class="tech-icon-frame" data-icon="${icon.id}" style="--logo-glow:${icon.glow}"><img class="tech-logo" src="${html(icon.src)}" alt="" width="32" height="32" loading="${eager ? 'eager' : 'lazy'}" decoding="async" draggable="false"${fallbackAttrs}></span>`).join('')}</span>`;
 }
