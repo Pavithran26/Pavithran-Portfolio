@@ -78,7 +78,7 @@ root.innerHTML = `
                 loading="lazy"
                 decoding="async"
               >
-              ${project.liveUrl ? `<iframe class="project-card-live-frame" src="${html(project.liveUrl)}" title="${html(project.title)} live website preview" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>` : ''}
+              ${project.liveUrl ? `<iframe class="project-card-live-frame" data-project-frame-src="${html(project.liveUrl)}" title="${html(project.title)} application screen" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>` : ''}
               <span class="project-card-preview-shade" aria-hidden="true"></span>
             </figure>
             <div class="project-copy">
@@ -87,6 +87,9 @@ root.innerHTML = `
               </button>
               <p class="project-tagline">${html(project.tagline)}</p>
               <p class="project-summary">${html(project.overview)}</p>
+              <div class="project-tech-tags" aria-label="Technologies used">
+                ${project.technologies.slice(0, 4).map(technology => `<span class="project-tech-tag">${html(technology)}</span>`).join('')}
+              </div>
               <div class="project-links">
                 <button class="space-text-link" type="button" data-project="${project.id}">Explore technical dossier ↗</button>
                 ${project.liveUrl ? `<a class="space-text-link" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit live app ↗</a>` : ''}
@@ -258,6 +261,33 @@ root.innerHTML = `
     </div>
   </footer>
 `;
+
+// Load real project sites as their cards approach the viewport, keeping the page fast.
+// The project screenshot remains underneath the frame while it loads and for projects
+// that do not have a public live URL.
+function mountProjectCardFrame(frame) {
+  if (!frame || frame.dataset.projectFrameMounted === 'true') return;
+  const source = frame.dataset.projectFrameSrc;
+  if (!source) return;
+
+  frame.dataset.projectFrameMounted = 'true';
+  frame.addEventListener('load', () => frame.classList.add('is-loaded'), { once: true });
+  frame.src = source;
+}
+
+const projectCardFrames = [...root.querySelectorAll('.project-card-live-frame')];
+if ('IntersectionObserver' in window) {
+  const projectCardFrameObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      projectCardFrameObserver.unobserve(entry.target);
+      mountProjectCardFrame(entry.target);
+    });
+  }, { rootMargin: '320px 0px' });
+  projectCardFrames.forEach(frame => projectCardFrameObserver.observe(frame));
+} else {
+  projectCardFrames.forEach(mountProjectCardFrame);
+}
 
 // ─── INITIALIZE LENIS ULTRA-SMOOTH VIRTUAL SCROLL ENGINE ───────────
 const lenis = new Lenis({
