@@ -2972,3 +2972,138 @@ body.experience-normal .space-experience .experience-company-watermark {
 @media (prefers-reduced-motion: reduce) {
   .space-experience .experience-company-watermark { transition: none !important; }
 }
+
+/* Staggered technology cards for the Frontend and Backend chapters. */
+.world-section .reading-tools.staggered-grid-mount {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-top: 28px !important;
+  overflow: visible !important;
+}
+.staggered-tech-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 11px;
+  width: 100%;
+  overflow: visible;
+}
+.staggered-tech-card {
+  position: relative;
+  display: flex !important;
+  flex-direction: column;
+  align-items: flex-start !important;
+  gap: 8px;
+  width: 100% !important;
+  min-width: 0;
+  min-height: 132px;
+  padding: 13px 14px 15px !important;
+  border: 1px solid rgba(139, 174, 120, .25) !important;
+  border-radius: 14px !important;
+  background: linear-gradient(148deg, rgba(19, 31, 19, .97), rgba(7, 14, 9, .96)) !important;
+  color: #edf5e9 !important;
+  box-shadow: inset 0 1px 0 rgba(239, 255, 228, .055), 0 12px 25px rgba(0, 0, 0, .14) !important;
+  text-align: left !important;
+  white-space: normal !important;
+  overflow: hidden;
+  isolation: isolate;
+  transform: translateY(var(--stagger-offset, 0px));
+  animation: staggered-tech-enter 620ms cubic-bezier(.2, .75, .2, 1) both;
+  animation-delay: calc(var(--stagger-index, 0) * 65ms);
+  transition: transform 220ms ease, border-color 220ms ease, background 220ms ease, box-shadow 220ms ease;
+}
+.staggered-tech-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: .72;
+  pointer-events: none;
+  background: radial-gradient(circle at 100% 0, rgba(194, 249, 112, .13), transparent 56%);
+}
+.staggered-tech-card:hover,
+.staggered-tech-card:focus-visible {
+  transform: translateY(calc(var(--stagger-offset, 0px) - 4px)) !important;
+  border-color: rgba(194, 249, 112, .65) !important;
+  background: linear-gradient(148deg, rgba(27, 43, 25, .99), rgba(8, 18, 11, .98)) !important;
+  box-shadow: inset 0 1px 0 rgba(239, 255, 228, .09), 0 17px 32px rgba(0, 0, 0, .24), 0 0 20px rgba(194, 249, 112, .07) !important;
+  outline: none;
+}
+.staggered-tech-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  min-width: 0;
+}
+.staggered-tech-card__icon {
+  display: inline-flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 30px;
+}
+.staggered-tech-card__icon .tech-icons { gap: 4px; }
+.staggered-tech-card__icon .tech-icon-frame,
+.staggered-tech-card__icon .skill-icon-frame {
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  border-radius: 9px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, .16);
+}
+.staggered-tech-card__index {
+  color: rgba(194, 249, 112, .64);
+  font: 500 .58rem/1.2 var(--font-mono, monospace);
+  letter-spacing: .12em;
+}
+.staggered-tech-card__title {
+  display: block;
+  max-width: 100%;
+  color: #edf5e9;
+  font: 600 .88rem/1.35 var(--font-body, sans-serif);
+  letter-spacing: -.015em;
+  overflow-wrap: anywhere;
+}
+.staggered-tech-card__description {
+  display: block;
+  max-width: 100%;
+  padding-right: 5px;
+  color: #a7b7a0;
+  font: 400 .68rem/1.48 var(--font-body, sans-serif);
+  overflow-wrap: anywhere;
+}
+.staggered-tech-card__arrow {
+  position: absolute;
+  right: 12px;
+  bottom: 11px;
+  color: #c2f970;
+  font: 500 .8rem/1 var(--font-mono, monospace);
+  opacity: .76;
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+.staggered-tech-card:hover .staggered-tech-card__arrow,
+.staggered-tech-card:focus-visible .staggered-tech-card__arrow {
+  transform: translate(2px, -2px);
+  opacity: 1;
+}
+@keyframes staggered-tech-enter {
+  from { opacity: 0; transform: translateY(calc(var(--stagger-offset, 0px) + 13px)); }
+  to { opacity: 1; transform: translateY(var(--stagger-offset, 0px)); }
+}
+@media (max-width: 759px) {
+  .world-section .reading-tools.staggered-grid-mount { margin-top: 22px !important; }
+  .staggered-tech-grid { gap: 9px; }
+  .staggered-tech-card { min-height: 119px; padding: 11px 10px 14px !important; border-radius: 12px !important; }
+  .staggered-tech-card__title { font-size: .8rem; }
+  .staggered-tech-card__description { font-size: .64rem; line-height: 1.42; }
+  .staggered-tech-card__index { font-size: .54rem; }
+  .staggered-tech-card__icon .tech-icon-frame,
+  .staggered-tech-card__icon .skill-icon-frame { width: 28px; height: 28px; padding: 4px; }
+  .staggered-tech-card__arrow { right: 9px; bottom: 9px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .staggered-tech-card { animation: none !important; transition: none !important; }
+  .staggered-tech-card:hover,
+  .staggered-tech-card:focus-visible { transform: translateY(var(--stagger-offset, 0px)) !important; }
+}
