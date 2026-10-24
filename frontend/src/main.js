@@ -9,6 +9,7 @@ import { SPACE_CHAPTERS as chapters } from './data/spaceJourneyData.js';
 import { PortfolioDialogs } from './components/PortfolioDialogs.js';
 import { projectVisual, PROJECT_SCENES } from './components/ProjectVisuals.js';
 import { technologyIcons } from './components/TechnologyIcons.js';
+import { StaggeredGrid } from './components/ui/staggered-grid.jsx';
 import { getClaraEyeAvatarHtml } from './components/ClaraWidget.js';
 import { escapeHtml as html } from './utils/helpers.js';
 import { TransformersBackground } from './components/TransformersBackground.js';
@@ -163,9 +164,9 @@ root.innerHTML = `
         <p class="world-tagline">${html(chapter.tagline)}</p>
         <p class="world-description">${html(chapter.description)}</p>
         <button class="space-text-link" type="button" data-inspect-world="${index}">Explore this part of my work <span aria-hidden="true">↗</span></button>
-        <div class="reading-tools" aria-label="${chapter.name} technologies">
-          ${chapter.tools.map(tool => `<button type="button" data-technology="${html(tool.search)}">${technologyIcons(tool.name)}<span>${html(tool.name)}</span></button>`).join('')}
-        </div>
+        \${index < 2
+          ? \`<div class="reading-tools staggered-grid-mount" data-staggered-grid="\${index}" aria-label="\${html(chapter.name)} technologies"></div>\`
+          : \`<div class="reading-tools" aria-label="\${html(chapter.name)} technologies">\${chapter.tools.map(tool => \`<button type="button" data-technology="\${html(tool.search)}">\${technologyIcons(tool.name)}<span>\${html(tool.name)}</span></button>\`).join('')}</div>\`}
       </div>
     </section>
   `).join('')}
@@ -248,6 +249,19 @@ root.innerHTML = `
     </div>
   </footer>
 `;
+
+// Render the reusable staggered technology grid in the Frontend and Backend chapters.
+chapters.slice(0, 2).forEach((chapter, index) => {
+  const mount = root.querySelector(`[data-staggered-grid="${index}"]`);
+  if (!mount) return;
+  createRoot(mount).render(createElement(StaggeredGrid, {
+    items: chapter.tools.map(tool => ({
+      title: tool.name,
+      description: tool.description || 'A practical building block in the stack.',
+      search: tool.search
+    }))
+  }));
+});
 
 // Load real project sites as their cards approach the viewport, keeping the page fast.
 // The project screenshot remains underneath the frame while it loads and for projects
