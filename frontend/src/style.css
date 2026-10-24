@@ -4851,3 +4851,46 @@ html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]
     grid-template-columns: 1fr !important;
   }
 }
+
+
+/* Scroll-driven StaggeredGrid reveal.
+   Cards start their motion when they enter the viewport, not when React mounts
+   the entire 107-card catalogue far above the fold. */
+.staggered-tech-grid .staggered-tech-card {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transform: translateY(calc(var(--stagger-offset, 0px) + 18px)) !important;
+  animation: none !important;
+  animation-delay: 0ms !important;
+  transition:
+    opacity 480ms cubic-bezier(.2, .75, .2, 1) var(--stagger-delay, 0ms),
+    transform 600ms cubic-bezier(.2, .75, .2, 1) var(--stagger-delay, 0ms),
+    border-color 220ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease,
+    visibility 0s linear !important;
+  will-change: opacity, transform;
+}
+.staggered-tech-grid .staggered-tech-card.is-in-view {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(var(--stagger-offset, 0px)) !important;
+}
+.staggered-tech-grid .staggered-tech-card.is-in-view:hover,
+.staggered-tech-grid .staggered-tech-card.is-in-view:focus-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: translateY(calc(var(--stagger-offset, 0px) - 4px)) !important;
+  transition-delay: 0ms !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .staggered-tech-grid .staggered-tech-card,
+  .staggered-tech-grid .staggered-tech-card.is-in-view {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+    will-change: auto !important;
+  }
+}
