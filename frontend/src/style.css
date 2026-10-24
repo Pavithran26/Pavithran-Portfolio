@@ -4522,3 +4522,149 @@ body.experience-normal .staggered-tech-card__arrow { color: #16834b; }
 }
 @media (max-width: 365px) { .staggered-tech-grid { grid-template-columns: 1fr !important; } }
 @media (prefers-reduced-motion: reduce) { .staggered-tech-card { animation: none !important; transition: none !important; } }
+
+
+/* Fix Tools & Technologies detail popup contrast: solid foreground on the white dialog. */
+dialog.portfolio-dialog[data-view="tool-detail"] {
+  --accent: #16834b !important;
+  --ink: #193b28 !important;
+  --white: #193b28 !important;
+  --muted: #526b5b !important;
+  --line: #d7e6db !important;
+  color: #193b28 !important;
+  color-scheme: light !important;
+  background: #ffffff !important;
+  border: 1px solid #d5e5d9 !important;
+  text-shadow: none !important;
+  filter: none !important;
+  box-shadow: 0 24px 80px rgba(16, 58, 31, .2) !important;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] #detail-title {
+  color: #183b28 !important;
+  -webkit-text-fill-color: #183b28 !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  opacity: 1 !important;
+  filter: none !important;
+  text-shadow: none !important;
+  font-size: clamp(2.35rem, 5vw, 4.25rem) !important;
+  font-weight: 750 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.045em !important;
+  margin: 0 0 28px !important;
+  overflow-wrap: anywhere;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] #detail-label,
+dialog.portfolio-dialog[data-view="tool-detail"] .tool-card-detail__identity .eyebrow {
+  color: #16834b !important;
+  -webkit-text-fill-color: #16834b !important;
+  background: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] #detail-body,
+dialog.portfolio-dialog[data-view="tool-detail"] #detail-body *,
+dialog.portfolio-dialog[data-view="tool-detail"] #detail-body p,
+dialog.portfolio-dialog[data-view="tool-detail"] #detail-body .detail-lead {
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] #detail-body {
+  color: #385443 !important;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] .tool-card-detail {
+  display: grid;
+  gap: 22px;
+  max-width: 900px;
+  color: #385443 !important;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] .tool-card-detail__identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] .tool-card-detail__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] .tool-card-detail p,
+dialog.portfolio-dialog[data-view="tool-detail"] #detail-body > p {
+  color: #4b6554 !important;
+  -webkit-text-fill-color: #4b6554 !important;
+  background: none !important;
+  font-size: clamp(1rem, 1.35vw, 1.18rem) !important;
+  font-weight: 450 !important;
+  line-height: 1.75 !important;
+  margin: 0 !important;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] #detail-body .detail-lead {
+  color: #254b34 !important;
+  -webkit-text-fill-color: #254b34 !important;
+  font-size: clamp(1.15rem, 1.7vw, 1.42rem) !important;
+  line-height: 1.65 !important;
+  font-weight: 550 !important;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] .dialog-close {
+  color: #244b32 !important;
+  -webkit-text-fill-color: #244b32 !important;
+  text-shadow: none !important;
+  filter: none !important;
+  background: #f3f8f4 !important;
+  border: 1px solid #d4e6d9 !important;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] .dialog-close:hover,
+dialog.portfolio-dialog[data-view="tool-detail"] .dialog-close:focus-visible {
+  color: #0f6b3a !important;
+  background: #e8f5ec !important;
+  border-color: #91c7a0 !important;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] .detail-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] .detail-actions .button,
+dialog.portfolio-dialog[data-view="tool-detail"] .detail-actions .button.button-light {
+  min-height: 48px !important;
+  padding: 13px 20px !important;
+  border: 1px solid #176b3c !important;
+  border-radius: 0 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: #183b28 !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  font-weight: 600 !important;
+}
+dialog.portfolio-dialog[data-view="tool-detail"] .detail-actions .button:hover,
+dialog.portfolio-dialog[data-view="tool-detail"] .detail-actions .button.button-light:hover,
+dialog.portfolio-dialog[data-view="tool-detail"] .detail-actions .button:focus-visible {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: #116b3b !important;
+  border-color: #116b3b !important;
+  transform: translateY(-1px);
+}
+@media (max-width: 620px) {
+  dialog.portfolio-dialog[data-view="tool-detail"] #detail-title {
+    font-size: clamp(2rem, 9vw, 3.15rem) !important;
+    margin-bottom: 22px !important;
+  }
+  dialog.portfolio-dialog[data-view="tool-detail"] .tool-card-detail {
+    gap: 18px;
+  }
+  dialog.portfolio-dialog[data-view="tool-detail"] .detail-actions .button,
+  dialog.portfolio-dialog[data-view="tool-detail"] .detail-actions .button.button-light {
+    width: 100% !important;
+    justify-content: center;
+  }
+}
