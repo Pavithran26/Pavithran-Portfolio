@@ -3390,3 +3390,373 @@ body.experience-normal .space-experience.vertical-experience-timeline .experienc
     opacity: .075 !important;
   }
 }
+
+/* Learning, layer by layer — correctly sized education cards with real campus imagery. */
+.space-education.horizontal-story-rail > .education-milestone {
+  position: relative !important;
+  display: block !important;
+  flex: 0 0 min(70vw, 1000px) !important;
+  width: min(70vw, 1000px) !important;
+  max-width: min(70vw, 1000px) !important;
+  min-width: 0 !important;
+  min-height: clamp(360px, 48svh, 460px) !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: clamp(24px, 3vw, 38px) !important;
+  overflow: hidden !important;
+  isolation: isolate !important;
+  border: 1px solid rgba(112,223,161,.28) !important;
+  border-radius: 24px !important;
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba(112,223,161,.09), transparent 48%),
+    linear-gradient(135deg, rgba(14,36,21,.98), rgba(4,14,8,.98)) !important;
+  box-shadow: 0 20px 46px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.08) !important;
+  box-sizing: border-box !important;
+  scroll-snap-align: center !important;
+  scroll-snap-stop: always !important;
+}
+.space-education.horizontal-story-rail > .education-milestone::before,
+.space-education.horizontal-story-rail > .education-milestone::after {
+  display: none !important;
+  content: none !important;
+}
+.space-education.horizontal-story-rail > .education-milestone > .education-copy {
+  position: relative !important;
+  z-index: 3 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  width: min(66%, 650px) !important;
+  max-width: 66% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  justify-content: center !important;
+  gap: 0 !important;
+}
+.space-education .education-copy > .space-kicker {
+  margin: 0 0 14px !important;
+  padding: 0 !important;
+  color: #94dca9 !important;
+  font-size: .74rem !important;
+  line-height: 1.5 !important;
+  font-weight: 700 !important;
+  letter-spacing: .13em !important;
+  text-transform: uppercase !important;
+}
+.space-education .education-copy h3 {
+  max-width: 100% !important;
+  margin: 0 0 12px !important;
+  color: #f0fbf3 !important;
+  font-family: var(--font-display, 'Outfit', sans-serif) !important;
+  font-size: clamp(1.55rem, 2.35vw, 2.3rem) !important;
+  line-height: 1.12 !important;
+  font-weight: 600 !important;
+  letter-spacing: -.025em !important;
+  text-wrap: balance !important;
+}
+.space-education .education-copy .experience-company {
+  max-width: 100% !important;
+  margin: 0 0 16px !important;
+  color: #bfddc7 !important;
+  font-size: clamp(.92rem, 1.2vw, 1.06rem) !important;
+  line-height: 1.5 !important;
+  font-weight: 500 !important;
+}
+.space-education .education-copy .education-highlights {
+  max-width: 100% !important;
+  margin: 0 !important;
+  color: #c4d9ca !important;
+  font-size: clamp(.88rem, 1.05vw, .98rem) !important;
+  line-height: 1.7 !important;
+  overflow-wrap: anywhere !important;
+}
+.space-education .education-level-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  width: fit-content !important;
+  max-width: 100% !important;
+  margin-top: 18px !important;
+  padding: 7px 11px !important;
+  border: 1px solid rgba(140,240,176,.24) !important;
+  border-radius: 999px !important;
+  background: rgba(112,223,161,.08) !important;
+  color: #a9ebbc !important;
+  font-size: .69rem !important;
+  line-height: 1.25 !important;
+  font-weight: 600 !important;
+  letter-spacing: .07em !important;
+  text-transform: uppercase !important;
+}
+.space-education .education-visual {
+  position: absolute !important;
+  z-index: 1 !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 43% !important;
+  min-width: 0 !important;
+  overflow: hidden !important;
+  border-radius: 0 23px 23px 0 !important;
+  background:
+    radial-gradient(ellipse at 72% 28%, rgba(120,225,153,.32), transparent 45%),
+    linear-gradient(145deg, #173c25, #07170d) !important;
+}
+.space-education .education-campus-image {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  opacity: .84 !important;
+  filter: saturate(.82) contrast(1.04) brightness(.82) !important;
+  transform: scale(1.02) !important;
+  transition: transform .5s ease, filter .5s ease !important;
+}
+.space-education .education-visual::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  display: block !important;
+  background:
+    linear-gradient(90deg, rgba(5,14,8,.98) 0%, rgba(5,14,8,.58) 18%, rgba(5,14,8,.08) 62%, rgba(5,14,8,.18) 100%),
+    linear-gradient(0deg, rgba(3,12,7,.78), transparent 46%) !important;
+  pointer-events: none !important;
+}
+.space-education .education-visual-glow {
+  position: absolute !important;
+  z-index: 2 !important;
+  inset: 12% 10% !important;
+  border: 1px solid rgba(222,255,232,.26) !important;
+  border-radius: 16px !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 12px 28px rgba(0,0,0,.12) !important;
+  pointer-events: none !important;
+}
+.space-education .education-visual-mark {
+  position: absolute !important;
+  z-index: 3 !important;
+  top: 50% !important;
+  left: 56% !important;
+  display: block !important;
+  max-width: 95% !important;
+  color: rgba(233,255,239,.94) !important;
+  font-family: var(--font-display, 'Outfit', sans-serif) !important;
+  font-size: clamp(2.6rem, 5.5vw, 5.4rem) !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  letter-spacing: -.06em !important;
+  text-shadow: 0 5px 25px rgba(0,0,0,.32) !important;
+  opacity: .8 !important;
+  transform: translate(-50%, -50%) rotate(-6deg) !important;
+  pointer-events: none !important;
+}
+.space-education .education-visual-caption {
+  position: absolute !important;
+  z-index: 3 !important;
+  right: 18px !important;
+  bottom: 42px !important;
+  left: 18px !important;
+  display: block !important;
+  color: #f0fff4 !important;
+  font-size: .76rem !important;
+  font-weight: 700 !important;
+  line-height: 1.4 !important;
+  letter-spacing: .1em !important;
+  text-align: right !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 2px 12px rgba(0,0,0,.62) !important;
+}
+.space-education .education-image-source {
+  position: absolute !important;
+  z-index: 4 !important;
+  right: 16px !important;
+  bottom: 14px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  max-width: calc(100% - 24px) !important;
+  color: #f1fff5 !important;
+  font-size: .64rem !important;
+  line-height: 1.2 !important;
+  font-weight: 600 !important;
+  text-decoration: none !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,.65) !important;
+  opacity: .86 !important;
+  pointer-events: auto !important;
+}
+.space-education .education-image-source:hover,
+.space-education .education-image-source:focus-visible {
+  opacity: 1 !important;
+  text-decoration: underline !important;
+}
+.space-education .education-visual-note {
+  position: absolute !important;
+  z-index: 3 !important;
+  right: 18px !important;
+  bottom: 16px !important;
+  color: rgba(233,255,239,.76) !important;
+  font: 600 .68rem/1.2 var(--font-mono, monospace) !important;
+  letter-spacing: .12em !important;
+}
+.space-education .education-visual.is-academic-illustration,
+.space-education .education-visual.is-image-fallback {
+  background:
+    radial-gradient(ellipse at 72% 26%, rgba(112,223,161,.2), transparent 40%),
+    repeating-linear-gradient(135deg, rgba(184,246,199,.045) 0 1px, transparent 1px 18px),
+    linear-gradient(145deg, #153a24, #06170d) !important;
+}
+.space-education .education-visual.is-academic-illustration .education-visual-mark,
+.space-education .education-visual.is-image-fallback .education-visual-mark {
+  display: grid !important;
+  place-items: center !important;
+  width: clamp(110px, 16vw, 180px) !important;
+  height: clamp(110px, 16vw, 180px) !important;
+  left: 56% !important;
+  border: 1px solid rgba(200,255,215,.32) !important;
+  border-radius: 28px !important;
+  background: linear-gradient(145deg, rgba(138,232,163,.14), rgba(255,255,255,.025)) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 18px 38px rgba(0,0,0,.16) !important;
+  font-size: clamp(1.8rem, 3vw, 3rem) !important;
+  letter-spacing: -.035em !important;
+  opacity: 1 !important;
+  transform: translate(-50%, -50%) rotate(-5deg) !important;
+}
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone {
+  border-color: #d5e7da !important;
+  background: linear-gradient(110deg, #ffffff 0%, #f8fcf9 52%, #edf7f0 100%) !important;
+  box-shadow: 0 16px 36px rgba(24,80,44,.075), inset 0 1px 0 rgba(255,255,255,.97) !important;
+  color: #193b28 !important;
+}
+body.experience-normal .space-education .education-copy > .space-kicker {
+  color: #287447 !important;
+}
+body.experience-normal .space-education .education-copy h3 {
+  color: #183b28 !important;
+}
+body.experience-normal .space-education .education-copy .experience-company {
+  color: #42684e !important;
+}
+body.experience-normal .space-education .education-copy .education-highlights {
+  color: #536b5b !important;
+}
+body.experience-normal .space-education .education-level-badge {
+  border-color: #d1e5d6 !important;
+  background: #eef7f0 !important;
+  color: #236b3e !important;
+}
+body.experience-normal .space-education .education-visual::before {
+  background:
+    linear-gradient(90deg, rgba(248,252,249,.98) 0%, rgba(248,252,249,.76) 18%, rgba(248,252,249,.1) 63%, rgba(248,252,249,.12) 100%),
+    linear-gradient(0deg, rgba(5,30,13,.52), transparent 46%) !important;
+}
+body.experience-normal .space-education .education-campus-image {
+  opacity: .88 !important;
+  filter: saturate(.88) contrast(1.02) brightness(.96) !important;
+}
+body.experience-normal .space-education .education-visual-mark {
+  color: rgba(255,255,255,.96) !important;
+  text-shadow: 0 3px 20px rgba(0,0,0,.48) !important;
+}
+body.experience-normal .space-education .education-visual-caption,
+body.experience-normal .space-education .education-image-source,
+body.experience-normal .space-education .education-visual-note {
+  color: #fff !important;
+}
+@media (min-width: 760px) {
+  .space-education.horizontal-story-rail > .education-milestone:hover .education-campus-image {
+    transform: scale(1.06) !important;
+    filter: saturate(.95) contrast(1.06) brightness(.9) !important;
+  }
+}
+@media (max-width: 759px) {
+  .space-education.horizontal-story-rail > .education-milestone {
+    flex-basis: 84vw !important;
+    width: 84vw !important;
+    max-width: 84vw !important;
+    min-height: 0 !important;
+    height: auto !important;
+    padding: 16px !important;
+    border-radius: 18px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 18px !important;
+  }
+  .space-education .education-visual {
+    position: relative !important;
+    inset: auto !important;
+    order: -1 !important;
+    width: 100% !important;
+    height: 156px !important;
+    min-height: 156px !important;
+    flex: 0 0 156px !important;
+    border-radius: 13px !important;
+  }
+  .space-education .education-visual::before {
+    background: linear-gradient(0deg, rgba(4,14,8,.65), transparent 78%) !important;
+  }
+  body.experience-normal .space-education .education-visual::before {
+    background: linear-gradient(0deg, rgba(4,14,8,.6), transparent 78%) !important;
+  }
+  .space-education .education-visual-mark {
+    font-size: 3.3rem !important;
+    left: 50% !important;
+  }
+  .space-education .education-visual.is-academic-illustration .education-visual-mark,
+  .space-education .education-visual.is-image-fallback .education-visual-mark {
+    width: 94px !important;
+    height: 94px !important;
+    left: 50% !important;
+    font-size: 1.75rem !important;
+  }
+  .space-education .education-visual-caption {
+    right: 13px !important;
+    bottom: 28px !important;
+    left: 13px !important;
+    font-size: .65rem !important;
+  }
+  .space-education .education-image-source {
+    right: 11px !important;
+    bottom: 10px !important;
+    font-size: .58rem !important;
+  }
+  .space-education .education-visual-note {
+    right: 13px !important;
+    bottom: 10px !important;
+    font-size: .58rem !important;
+  }
+  .space-education.horizontal-story-rail > .education-milestone > .education-copy {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  .space-education .education-copy > .space-kicker {
+    margin-bottom: 9px !important;
+    font-size: .67rem !important;
+  }
+  .space-education .education-copy h3 {
+    font-size: clamp(1.3rem, 5.4vw, 1.7rem) !important;
+    margin-bottom: 9px !important;
+  }
+  .space-education .education-copy .experience-company {
+    font-size: .92rem !important;
+    margin-bottom: 11px !important;
+  }
+  .space-education .education-copy .education-highlights {
+    font-size: .88rem !important;
+    line-height: 1.6 !important;
+  }
+  .space-education .education-level-badge {
+    margin-top: 13px !important;
+    font-size: .62rem !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .space-education .education-campus-image { transition: none !important; }
+}
