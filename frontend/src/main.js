@@ -253,14 +253,13 @@ if (socialFlipMount) {
   socialFlipRoot = createRoot(socialFlipMount);
   socialFlipRoot.render(createElement(SocialFlipButton, {
     items: [
-      { letter: 'G', icon: 'github', label: 'GitHub', href: profile.links.github, external: true },
-      { letter: 'in', icon: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/pavithran26s/', external: true },
-      { letter: 'L', icon: 'leetcode', label: 'LeetCode', href: profile.links.leetcode, external: true },
-      { letter: 'H', icon: 'hackerrank', label: 'HackerRank', href: profile.links.hackerrank, external: true },
-      { letter: 'C', icon: 'codechef', label: 'CodeChef', href: profile.links.codechef, external: true },
-      { letter: 'G', icon: 'geeksforgeeks', label: 'GeeksforGeeks', href: profile.links.geeksforgeeks, external: true },
-      { letter: 'Y', icon: 'youtube', label: 'YouTube', href: profile.links.youtube, external: true },
-      { letter: '@', icon: 'email', label: 'Email', href: `mailto:${profile.email}`, external: false }
+      { letter: 'C', icon: 'github', label: 'GitHub', href: profile.links.github, external: true },
+      { letter: 'O', icon: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/pavithran26s/', external: true },
+      { letter: 'N', icon: 'leetcode', label: 'LeetCode', href: profile.links.leetcode, external: true },
+      { letter: 'T', icon: 'hackerrank', label: 'HackerRank', href: profile.links.hackerrank, external: true },
+      { letter: 'A', icon: 'codechef', label: 'CodeChef', href: profile.links.codechef, external: true },
+      { letter: 'C', icon: 'geeksforgeeks', label: 'GeeksforGeeks', href: profile.links.geeksforgeeks, external: true },
+      { letter: 'T', icon: 'youtube', label: 'YouTube', href: profile.links.youtube, external: true }
     ]
   }));
 }
