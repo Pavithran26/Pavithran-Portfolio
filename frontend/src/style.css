@@ -3141,58 +3141,54 @@ body.experience-normal .space-experience .experience-company-watermark {
   }
 }
 
-/* Employer logos should read as logos, not nearly invisible background watermarks. */
+/* Employer logos are full-card background watermarks, not corner badges. */
 .space-experience .experience-company-watermark {
-  top: 50% !important;
-  right: 22px !important;
-  bottom: auto !important;
-  width: clamp(175px, 28%, 280px) !important;
-  max-width: 32% !important;
-  height: 78px !important;
-  max-height: 78px !important;
-  padding: 10px 14px !important;
-  box-sizing: border-box !important;
-  border: 1px solid rgba(25, 91, 52, .16) !important;
-  border-radius: 14px !important;
-  background: rgba(255, 255, 255, .96) !important;
-  box-shadow: 0 5px 16px rgba(22, 76, 39, .11) !important;
-  opacity: 1 !important;
-  filter: none !important;
-  transform: translateY(-50%) !important;
-  object-fit: contain !important;
-  z-index: 3 !important;
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 100% !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: inherit !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  opacity: .20 !important;
+  mix-blend-mode: multiply !important;
+  filter: saturate(1.05) contrast(1.08) !important;
+  transform: none !important;
+  pointer-events: none !important;
+  user-select: none !important;
 }
-.space-experience .experience-timeline-card .space-kicker {
-  max-width: 60% !important;
+.space-experience .experience-timeline-card > :not(.experience-company-watermark) {
+  position: relative !important;
+  z-index: 2 !important;
 }
 .space-experience .experience-timeline-card h3,
 .space-experience .experience-timeline-card .experience-company,
+.space-experience .experience-timeline-card .space-kicker,
 .space-experience .experience-timeline-card > p:last-child {
-  max-width: 64% !important;
+  max-width: min(78%, 860px) !important;
 }
 body.experience-normal .space-experience .experience-company-watermark {
-  opacity: 1 !important;
-  filter: none !important;
+  opacity: .20 !important;
+  mix-blend-mode: multiply !important;
+  filter: saturate(1.05) contrast(1.08) !important;
 }
 @media (max-width: 759px) {
   .space-experience .experience-company-watermark {
-    top: 14px !important;
-    right: 14px !important;
-    bottom: auto !important;
-    width: 42% !important;
-    max-width: 44% !important;
-    height: 60px !important;
-    max-height: 60px !important;
-    padding: 7px 9px !important;
-    border-radius: 10px !important;
-    transform: none !important;
-  }
-  .space-experience .experience-timeline-card .space-kicker {
-    max-width: 48% !important;
-    min-height: 58px !important;
+    opacity: .15 !important;
+    object-position: center !important;
   }
   .space-experience .experience-timeline-card h3,
   .space-experience .experience-timeline-card .experience-company,
+  .space-experience .experience-timeline-card .space-kicker,
   .space-experience .experience-timeline-card > p:last-child {
     max-width: 100% !important;
   }
