@@ -24,6 +24,7 @@ import { LandingInteractiveParticles } from './components/LandingInteractivePart
 import ShinyButton from './components/ui/shiny-button.tsx';
 import { flushSync } from 'react-dom';
 import { TextEffectsController } from './components/TextEffectsController.js';
+import SocialFlipButton from './components/ui/social-flip-button.jsx';
 
 
 const root = document.querySelector('#portfolio');
@@ -231,14 +232,8 @@ root.innerHTML = `
       <p class="space-kicker">THE NEXT CHAPTER</p>
       <h2>Let's make<br><em>something matter.</em></h2>
       <a class="space-email" href="mailto:${html(profile.email)}">${html(profile.email)} <span aria-hidden="true">↗</span></a>
-      <div class="space-socials">
-        <a href="${profile.links.github}" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
-        <a href="${profile.links.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
-        <a href="${profile.links.leetcode}" target="_blank" rel="noopener noreferrer">LeetCode ↗</a>
-        <a href="${profile.links.hackerrank}" target="_blank" rel="noopener noreferrer">HackerRank ↗</a>
-        <a href="${profile.links.codechef}" target="_blank" rel="noopener noreferrer">CodeChef ↗</a>
-        <a href="${profile.links.geeksforgeeks}" target="_blank" rel="noopener noreferrer">GeeksforGeeks ↗</a>
-        <a href="${profile.links.youtube}" target="_blank" rel="noopener noreferrer">YouTube ↗</a>
+      <div class="space-socials social-flip-section">
+        <div id="social-flip-mount" aria-label="Social and developer profiles"></div>
         <button type="button" id="copy-email">Copy email</button>
       </div>
       <p id="copy-feedback" role="status"></p>
@@ -250,6 +245,25 @@ root.innerHTML = `
     </div>
   </footer>
 `;
+
+// Render the SocialFlipButton with the real social and developer profile links.
+const socialFlipMount = document.getElementById('social-flip-mount');
+let socialFlipRoot = null;
+if (socialFlipMount) {
+  socialFlipRoot = createRoot(socialFlipMount);
+  socialFlipRoot.render(createElement(SocialFlipButton, {
+    items: [
+      { letter: 'G', icon: 'github', label: 'GitHub', href: profile.links.github, external: true },
+      { letter: 'in', icon: 'linkedin', label: 'LinkedIn', href: 'https://www.linkedin.com/in/pavithran26s/', external: true },
+      { letter: 'L', icon: 'leetcode', label: 'LeetCode', href: profile.links.leetcode, external: true },
+      { letter: 'H', icon: 'hackerrank', label: 'HackerRank', href: profile.links.hackerrank, external: true },
+      { letter: 'C', icon: 'codechef', label: 'CodeChef', href: profile.links.codechef, external: true },
+      { letter: 'G', icon: 'geeksforgeeks', label: 'GeeksforGeeks', href: profile.links.geeksforgeeks, external: true },
+      { letter: 'Y', icon: 'youtube', label: 'YouTube', href: profile.links.youtube, external: true },
+      { letter: '@', icon: 'email', label: 'Email', href: `mailto:${profile.email}`, external: false }
+    ]
+  }));
+}
 
 // Render the reusable staggered technology grid in the Frontend and Backend chapters.
 chapters.slice(0, 2).forEach((chapter, index) => {
@@ -983,6 +997,7 @@ if (import.meta.hot) {
     animationButtonRoot?.unmount();
     perspectiveGridRoot?.unmount();
     interactiveParticlesRoot?.unmount();
+    socialFlipRoot?.unmount();
     textEffects?.dispose();
     horizontalStoryResizeObserver?.disconnect();
     if (horizontalStoryFrame !== null) cancelAnimationFrame(horizontalStoryFrame);
