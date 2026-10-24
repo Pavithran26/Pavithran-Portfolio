@@ -3760,3 +3760,166 @@ body.experience-normal .space-education .education-visual-note {
 @media (prefers-reduced-motion: reduce) {
   .space-education .education-campus-image { transition: none !important; }
 }
+
+
+/* The school cards use their own uploaded campus photos as full-bleed backgrounds. */
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"],
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background: #081a0e !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] > .education-visual,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] > .education-visual {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: none !important;
+  flex: none !important;
+  order: 0 !important;
+  border-radius: inherit !important;
+  overflow: hidden !important;
+  background: #102b19 !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-campus-image,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-campus-image {
+  opacity: 1 !important;
+  filter: saturate(.98) contrast(1.04) brightness(.8) !important;
+  object-fit: cover !important;
+  object-position: center !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual::before,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual::before {
+  background:
+    linear-gradient(90deg, rgba(3,12,6,.94) 0%, rgba(3,12,6,.84) 31%, rgba(3,12,6,.58) 54%, rgba(3,12,6,.16) 100%),
+    linear-gradient(0deg, rgba(2,9,4,.7) 0%, transparent 48%) !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] > .education-copy,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] > .education-copy {
+  position: relative !important;
+  z-index: 3 !important;
+  width: min(72%, 680px) !important;
+  max-width: 72% !important;
+  min-height: 300px !important;
+  height: auto !important;
+  justify-content: center !important;
+  padding-block: 16px !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy > .space-kicker,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy > .space-kicker,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy h3,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy h3,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy .experience-company,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy .experience-company,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy .education-highlights,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy .education-highlights {
+  color: #f4fff6 !important;
+  text-shadow: 0 1px 12px rgba(0,0,0,.38) !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-level-badge,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-level-badge {
+  color: #f1fff4 !important;
+  border-color: rgba(220,255,228,.48) !important;
+  background: rgba(7,30,14,.55) !important;
+  backdrop-filter: blur(8px) !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual-glow,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual-glow {
+  inset: 10px !important;
+  border-radius: 19px !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual-mark,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual-mark {
+  display: none !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual-caption,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual-caption {
+  right: 25px !important;
+  bottom: 38px !important;
+  color: #f4fff6 !important;
+  text-shadow: 0 2px 14px rgba(0,0,0,.72) !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual-note,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual-note {
+  color: #fff !important;
+  text-shadow: 0 2px 10px rgba(0,0,0,.8) !important;
+}
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"],
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] {
+  border-color: rgba(208,238,216,.7) !important;
+  background: #081a0e !important;
+  box-shadow: 0 18px 40px rgba(23,75,40,.16) !important;
+}
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual::before,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual::before {
+  background:
+    linear-gradient(90deg, rgba(3,12,6,.91) 0%, rgba(3,12,6,.79) 34%, rgba(3,12,6,.5) 57%, rgba(3,12,6,.12) 100%),
+    linear-gradient(0deg, rgba(2,9,4,.66) 0%, transparent 52%) !important;
+}
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy > .space-kicker,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy > .space-kicker,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy h3,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy h3,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy .experience-company,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy .experience-company,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy .education-highlights,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy .education-highlights {
+  color: #f4fff6 !important;
+}
+@media (max-width: 759px) {
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"],
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] {
+    position: relative !important;
+    min-height: 390px !important;
+    height: auto !important;
+    padding: 22px !important;
+    gap: 0 !important;
+  }
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] > .education-visual,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] > .education-visual {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    flex: none !important;
+    order: 0 !important;
+    border-radius: inherit !important;
+  }
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] > .education-copy,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] > .education-copy {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 345px !important;
+    height: auto !important;
+    justify-content: center !important;
+    padding-block: 0 !important;
+  }
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy h3,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy h3 {
+    font-size: clamp(1.35rem, 5.5vw, 1.75rem) !important;
+  }
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual-caption,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual-caption {
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 29px !important;
+    font-size: .6rem !important;
+  }
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual-note,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual-note {
+    bottom: 12px !important;
+    right: 14px !important;
+    font-size: .55rem !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-campus-image,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-campus-image {
+    transition: none !important;
+  }
+}
