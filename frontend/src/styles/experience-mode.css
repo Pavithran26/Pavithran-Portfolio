@@ -1757,3 +1757,39 @@ body.experience-normal .project-collage-label {
 @media (prefers-reduced-motion: reduce) {
   .perspective-grid-tile { transition: none; }
 }
+
+/* VengeanceUI InteractiveParticles — brand-shaped cursor-reactive particle layer. */
+#interactive-particles-mount {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  opacity: .48;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+#interactive-particles-mount .fde-interactive-particles {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  background: transparent !important;
+}
+#interactive-particles-mount .fde-interactive-particles canvas {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: none !important;
+}
+#experience-choice .experience-choice-panel {
+  position: relative !important;
+  z-index: 2 !important;
+}
+@media (max-width: 640px) {
+  #interactive-particles-mount { opacity: .31; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #interactive-particles-mount { display: none !important; }
+}
