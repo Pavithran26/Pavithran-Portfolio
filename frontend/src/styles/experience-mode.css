@@ -1759,13 +1759,14 @@ body.experience-normal .project-collage-label {
 }
 
 
-/* VengeanceUI InteractiveParticles — directly animates the existing FDE title. */
+
+/* VengeanceUI InteractiveParticles — make the particle glyphs the title, not a second backdrop. */
 #interactive-particles-mount {
   position: absolute;
   inset: 0;
   z-index: 1;
   overflow: hidden;
-  opacity: .58;
+  opacity: .94;
   pointer-events: none;
   mix-blend-mode: screen;
 }
@@ -1784,13 +1785,24 @@ body.experience-normal .project-collage-label {
   height: 100% !important;
   pointer-events: none !important;
 }
-/* Keep the existing heading and FDE subtitle readable above the particles. */
+/* Preserve the real DOM title for layout/accessibility, but show the particle-shaped title when ready. */
+@media (prefers-reduced-motion: no-preference) {
+  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-panel h1,
+  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-panel h1 em,
+  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-role,
+  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-role span {
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: none !important;
+    background: none !important;
+  }
+}
 #experience-choice .experience-choice-panel {
   position: relative !important;
   z-index: 2 !important;
 }
 @media (max-width: 640px) {
-  #interactive-particles-mount { opacity: .43; }
+  #interactive-particles-mount { opacity: .85; }
 }
 @media (prefers-reduced-motion: reduce) {
   #interactive-particles-mount { display: none !important; }
