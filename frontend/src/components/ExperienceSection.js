@@ -14,15 +14,24 @@ export function renderExperienceSection(containerId) {
   const experienceHtml = PORTFOLIO_DATA.experience.map(exp => {
     const bulletsHtml = exp.responsibilities.map(r => `<li>${escapeHtml(r)}</li>`).join('');
     const projectBadges = exp.projects ? exp.projects.map(p => `<span class="project-tech-tag" style="margin-right: 6px;">${escapeHtml(p)}</span>`).join('') : '';
+    const companyLogo = exp.company === 'Adhoc Softwares' ? `
+      <div class="experience-company-logo" style="flex: 0 1 210px; min-width: 160px; display: flex; align-items: center; justify-content: center; padding: 0.55rem 0.7rem; border-radius: 14px; background: linear-gradient(135deg, rgba(248,255,250,0.98), rgba(224,245,232,0.96)); border: 1px solid rgba(112,223,161,0.4); box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 22px rgba(0,0,0,0.18);">
+        <img src="/images/experience/adhoc-softwares.svg" alt="Adhoc Softwares logo" width="230" height="110" loading="lazy" decoding="async" style="display: block; width: 100%; max-width: 190px; height: auto; max-height: 78px; object-fit: contain;">
+      </div>` : '';
 
     return `
       <div class="timeline-block experience-card">
         <div class="timeline-dot" style="border-color: var(--cyan-accent); box-shadow: 0 0 12px var(--cyan-accent);"></div>
-        <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
-          <h3 class="timeline-role">${escapeHtml(exp.role)}</h3>
-          <span class="timeline-period" style="font-weight: 600;">${escapeHtml(exp.period)}</span>
+        <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 0.5rem;">
+          ${companyLogo}
+          <div style="flex: 1 1 180px; min-width: 0;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px;">
+              <h3 class="timeline-role">${escapeHtml(exp.role)}</h3>
+              <span class="timeline-period" style="font-weight: 600;">${escapeHtml(exp.period)}</span>
+            </div>
+            <div class="timeline-org" style="color: var(--cyan-accent); font-weight: 600;">${escapeHtml(exp.company)} • ${escapeHtml(exp.location)}</div>
+          </div>
         </div>
-        <div class="timeline-org" style="color: var(--cyan-accent); font-weight: 600;">${escapeHtml(exp.company)} • ${escapeHtml(exp.location)}</div>
         <div style="font-size: 0.8rem; color: #94a3b8; margin: 0.3rem 0 0.6rem 0;">
           <strong>Domain:</strong> ${escapeHtml(exp.domain)}
         </div>
