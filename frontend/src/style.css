@@ -3923,3 +3923,63 @@ body.experience-normal .space-education.horizontal-story-rail > .education-miles
     transition: none !important;
   }
 }
+
+
+/* Government school photo: keep the original square photo crisp and uncropped. */
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-campus-image {
+  inset: auto !important;
+  top: 50% !important;
+  right: 16px !important;
+  bottom: auto !important;
+  left: auto !important;
+  width: 180px !important;
+  max-width: 180px !important;
+  height: 180px !important;
+  max-height: 180px !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: translateY(-50%) !important;
+  image-rendering: auto !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual::before {
+  background:
+    linear-gradient(90deg, rgba(3,12,6,.92) 0%, rgba(3,12,6,.72) 40%, rgba(3,12,6,.2) 62%, transparent 76%) !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual-glow {
+  inset: 8px !important;
+  border-radius: 16px !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy {
+  width: min(72%, 680px) !important;
+  max-width: 72% !important;
+}
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-campus-image {
+  opacity: 1 !important;
+  filter: none !important;
+}
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual::before {
+  background:
+    linear-gradient(90deg, rgba(3,12,6,.92) 0%, rgba(3,12,6,.72) 40%, rgba(3,12,6,.2) 62%, transparent 76%) !important;
+}
+@media (max-width: 759px) {
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-campus-image {
+    top: 50% !important;
+    right: 12px !important;
+    width: min(43%, 150px) !important;
+    max-width: 150px !important;
+    height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 1 / 1 !important;
+    transform: translateY(-50%) !important;
+  }
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy {
+    width: 72% !important;
+    max-width: 72% !important;
+    min-height: 345px !important;
+  }
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual-glow {
+    inset: 6px !important;
+  }
+}
