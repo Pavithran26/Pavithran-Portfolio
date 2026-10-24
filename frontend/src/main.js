@@ -164,9 +164,9 @@ root.innerHTML = `
         <p class="world-tagline">${html(chapter.tagline)}</p>
         <p class="world-description">${html(chapter.description)}</p>
         <button class="space-text-link" type="button" data-inspect-world="${index}">Explore this part of my work <span aria-hidden="true">↗</span></button>
-        \${index < 2
-          ? \`<div class="reading-tools staggered-grid-mount" data-staggered-grid="\${index}" aria-label="\${html(chapter.name)} technologies"></div>\`
-          : \`<div class="reading-tools" aria-label="\${html(chapter.name)} technologies">\${chapter.tools.map(tool => \`<button type="button" data-technology="\${html(tool.search)}">\${technologyIcons(tool.name)}<span>\${html(tool.name)}</span></button>\`).join('')}</div>\`}
+        ${index < 2
+          ? `<div class="reading-tools staggered-grid-mount" data-staggered-grid="${index}" aria-label="${html(chapter.name)} technologies"></div>`
+          : `<div class="reading-tools" aria-label="${html(chapter.name)} technologies">${chapter.tools.map(tool => `<button type="button" data-technology="${html(tool.search)}">${technologyIcons(tool.name)}<span>${html(tool.name)}</span></button>`).join('')}</div>`}
       </div>
     </section>
   `).join('')}
