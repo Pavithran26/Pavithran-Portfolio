@@ -3983,3 +3983,163 @@ body.experience-normal .space-education.horizontal-story-rail > .education-miles
     inset: 6px !important;
   }
 }
+
+
+/* Education cards: every campus photo fills the entire card, not just the right panel. */
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"],
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"],
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"],
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+  background: #08170d !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] > .education-visual,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] > .education-visual,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] > .education-visual,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] > .education-visual {
+  position: absolute !important;
+  inset: 0 !important;
+  z-index: 1 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  max-height: none !important;
+  flex: none !important;
+  order: 0 !important;
+  border-radius: inherit !important;
+  overflow: hidden !important;
+  background: #102b19 !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] .education-campus-image,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] .education-campus-image,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-campus-image,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-campus-image {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: 100% !important;
+  max-height: none !important;
+  margin: 0 !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] .education-visual::before,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] .education-visual::before,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual::before,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual::before {
+  background:
+    linear-gradient(90deg, rgba(2,10,5,.88) 0%, rgba(2,10,5,.75) 30%, rgba(2,10,5,.39) 58%, rgba(2,10,5,.08) 100%),
+    linear-gradient(0deg, rgba(2,9,4,.72) 0%, rgba(2,9,4,.08) 42%, transparent 70%) !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] > .education-copy,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] > .education-copy,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] > .education-copy,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] > .education-copy {
+  position: relative !important;
+  z-index: 3 !important;
+  width: min(72%, 680px) !important;
+  max-width: 72% !important;
+  height: 100% !important;
+  min-height: 300px !important;
+  justify-content: center !important;
+  padding-block: 12px !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] .education-copy > .space-kicker,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] .education-copy > .space-kicker,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy > .space-kicker,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy > .space-kicker,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] .education-copy h3,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] .education-copy h3,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy h3,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy h3,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] .education-copy .experience-company,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] .education-copy .experience-company,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy .experience-company,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy .experience-company,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] .education-copy .education-highlights,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] .education-copy .education-highlights,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-copy .education-highlights,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-copy .education-highlights {
+  color: #f4fff6 !important;
+  text-shadow: 0 1px 12px rgba(0,0,0,.46) !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] .education-level-badge,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] .education-level-badge,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-level-badge,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-level-badge {
+  color: #f1fff4 !important;
+  border-color: rgba(220,255,228,.52) !important;
+  background: rgba(7,30,14,.62) !important;
+  backdrop-filter: none !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] .education-visual-mark,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] .education-visual-mark,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual-mark,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual-mark {
+  display: none !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] .education-visual-glow,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] .education-visual-glow,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual-glow,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual-glow {
+  inset: 10px !important;
+  border-radius: 18px !important;
+}
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="0"],
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="1"],
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"],
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] {
+  background: #08170d !important;
+  border-color: rgba(208,238,216,.62) !important;
+}
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] .education-visual::before,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] .education-visual::before,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual::before,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual::before {
+  background:
+    linear-gradient(90deg, rgba(2,10,5,.88) 0%, rgba(2,10,5,.75) 30%, rgba(2,10,5,.39) 58%, rgba(2,10,5,.08) 100%),
+    linear-gradient(0deg, rgba(2,9,4,.72) 0%, rgba(2,9,4,.08) 42%, transparent 70%) !important;
+}
+@media (max-width: 759px) {
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="0"],
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="1"],
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"],
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] {
+    min-height: 390px !important;
+    height: auto !important;
+    padding: 22px !important;
+    gap: 0 !important;
+  }
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] > .education-visual,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] > .education-visual,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] > .education-visual,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] > .education-visual {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    min-height: 100% !important;
+    flex: none !important;
+    order: 0 !important;
+    border-radius: inherit !important;
+  }
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="0"] > .education-copy,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="1"] > .education-copy,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] > .education-copy,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] > .education-copy {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 345px !important;
+    height: auto !important;
+    justify-content: center !important;
+    padding-block: 0 !important;
+  }
+}
