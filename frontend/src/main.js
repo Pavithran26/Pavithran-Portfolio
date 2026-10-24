@@ -130,7 +130,7 @@ root.innerHTML = `
           <article id="experience-${index}" class="experience-timeline-card">
             <img
               class="experience-company-watermark"
-              src="${index === 0 ? 'https://owlsure.com/wp-content/uploads/2025/08/owlsure-logo.png' : 'https://www.adhocsoftwares.com/assets/logo-dark-new-D-s7BgCx.png'}"
+              src="${index === 0 ? 'https://owlsure.com/wp-content/uploads/2025/08/owlsure-logo.png' : '/images/experience/adhoc-softwares.svg'}"
               alt=""
               aria-hidden="true"
               loading="eager"
