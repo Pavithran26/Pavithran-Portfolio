@@ -3107,3 +3107,33 @@ body.experience-normal .space-experience .experience-company-watermark {
   .staggered-tech-card:hover,
   .staggered-tech-card:focus-visible { transform: translateY(var(--stagger-offset, 0px)) !important; }
 }
+
+/* Keep experience cards compact: the rail's flex-basis is horizontal, not vertical. */
+.space-experience.horizontal-story-rail {
+  flex-direction: row !important;
+  align-items: stretch !important;
+}
+.space-experience.horizontal-story-rail > .experience-timeline-card {
+  flex: 0 0 min(68vw, 720px) !important;
+  width: min(68vw, 720px) !important;
+  max-width: min(68vw, 720px) !important;
+  min-height: clamp(320px, 38svh, 400px) !important;
+  height: auto !important;
+  max-height: none !important;
+  padding: clamp(24px, 2.6vw, 34px) !important;
+  box-sizing: border-box !important;
+}
+@media (max-width: 759px), (prefers-reduced-motion: reduce) {
+  .space-experience.horizontal-story-rail {
+    flex-direction: row !important;
+    align-items: stretch !important;
+  }
+  .space-experience.horizontal-story-rail > .experience-timeline-card {
+    flex: 0 0 82vw !important;
+    width: 82vw !important;
+    max-width: 82vw !important;
+    min-height: 330px !important;
+    height: auto !important;
+    padding: 24px !important;
+  }
+}
