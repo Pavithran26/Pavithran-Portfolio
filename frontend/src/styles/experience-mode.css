@@ -1807,3 +1807,17 @@ body.experience-normal .project-collage-label {
 @media (prefers-reduced-motion: reduce) {
   #interactive-particles-mount { display: none !important; }
 }
+
+/* Increase the FDE role line only; the particle mask measures this live text geometry. */
+#experience-choice .experience-choice-role {
+  font-size: clamp(1.05rem, 1.65vw, 1.5rem) !important;
+  line-height: 1.4 !important;
+  letter-spacing: clamp(.02em, .12vw, .085em) !important;
+}
+@media (max-width: 640px) {
+  #experience-choice .experience-choice-role {
+    font-size: clamp(.82rem, 3.5vw, 1.05rem) !important;
+    line-height: 1.4 !important;
+    letter-spacing: .025em !important;
+  }
+}
