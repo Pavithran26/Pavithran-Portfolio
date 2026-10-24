@@ -133,9 +133,11 @@ root.innerHTML = `
               src="${index === 0 ? 'https://owlsure.com/wp-content/uploads/2025/08/owlsure-logo.png' : 'https://www.adhocsoftwares.com/assets/logo-dark-new-D-s7BgCx.png'}"
               alt=""
               aria-hidden="true"
-              loading="lazy"
+              loading="eager"
+              fetchpriority="high"
               decoding="async"
             >
+            <span class="experience-company-watermark-fallback" aria-hidden="true" hidden>${index === 0 ? 'OWLSure' : 'ADHOC SOFTWARES'}</span>
             <p class="space-kicker">${html(job.period)}</p>
             <h3>${html(job.role)}</h3>
             <p class="experience-company">${html(job.company)} · ${html(job.location)}</p>
@@ -507,6 +509,18 @@ on(root, 'error', event => {
   if (!(image instanceof HTMLImageElement) || !image.matches('.education-campus-image')) return;
   image.remove();
   image.closest('.education-visual')?.classList.add('is-image-fallback');
+}, { capture: true });
+
+// Keep work-company logos visible and provide a clean branded fallback if the
+// remote logo host fails, especially for the Adhoc Softwares timeline entry.
+on(root, 'error', event => {
+  const image = event.target;
+  if (!(image instanceof HTMLImageElement) || !image.matches('.experience-company-watermark')) return;
+  image.hidden = true;
+  const fallback = image.nextElementSibling;
+  if (fallback?.classList.contains('experience-company-watermark-fallback')) {
+    fallback.hidden = false;
+  }
 }, { capture: true });
 
 // Build explicit horizontal story stages for Projects, Work, Studies, and recognition.
