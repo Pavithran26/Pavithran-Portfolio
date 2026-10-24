@@ -20,6 +20,7 @@ import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component as Animation3DButton } from './components/ui/3d-button.tsx';
 import { PerspectiveGrid } from './components/ui/perspective-grid.jsx';
+import { LandingInteractiveParticles } from './components/LandingInteractiveParticles.jsx';
 import ShinyButton from './components/ui/shiny-button.tsx';
 import { flushSync } from 'react-dom';
 import { TextEffectsController } from './components/TextEffectsController.js';
@@ -832,6 +833,12 @@ if (perspectiveGridMount) {
   perspectiveGridRoot = createRoot(perspectiveGridMount);
   perspectiveGridRoot.render(createElement(PerspectiveGrid, { rows: 20, cols: 20 }));
 }
+const interactiveParticlesMount = document.getElementById('interactive-particles-mount');
+let interactiveParticlesRoot = null;
+if (interactiveParticlesMount) {
+  interactiveParticlesRoot = createRoot(interactiveParticlesMount);
+  interactiveParticlesRoot.render(createElement(LandingInteractiveParticles));
+}
 let animationButtonRoot = null;
 if (animationModeMount) {
   animationButtonRoot = createRoot(animationModeMount);
@@ -975,6 +982,7 @@ if (import.meta.hot) {
     events.abort();
     animationButtonRoot?.unmount();
     perspectiveGridRoot?.unmount();
+    interactiveParticlesRoot?.unmount();
     textEffects?.dispose();
     horizontalStoryResizeObserver?.disconnect();
     if (horizontalStoryFrame !== null) cancelAnimationFrame(horizontalStoryFrame);
