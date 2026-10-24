@@ -2908,7 +2908,7 @@ body.experience-normal .space-work .project-card-background-preview .project-lin
 }
 
 
-/* Company identity watermarks on experience timeline cards. The real logo sits behind the copy. */
+/* Company identity watermarks: visible enough to recognize, while copy stays readable. */
 .space-experience .experience-timeline-card {
   position: relative !important;
   isolation: isolate !important;
@@ -2931,8 +2931,8 @@ body.experience-normal .space-work .project-card-background-preview .project-lin
   border: 0 !important;
   border-radius: 0 !important;
   transform: translateY(-50%) !important;
-  opacity: .13 !important;
-  filter: saturate(.82) !important;
+  opacity: .25 !important;
+  filter: saturate(1) contrast(1.12) brightness(.96) drop-shadow(0 1px 1px rgba(0, 0, 0, .12)) !important;
   box-shadow: none !important;
   pointer-events: none !important;
   user-select: none !important;
@@ -2948,8 +2948,8 @@ body.experience-normal .space-work .project-card-background-preview .project-lin
   max-width: min(78%, 860px);
 }
 body.experience-normal .space-experience .experience-company-watermark {
-  opacity: .12 !important;
-  filter: saturate(.82) contrast(.92) !important;
+  opacity: .24 !important;
+  filter: saturate(1) contrast(1.12) brightness(.96) drop-shadow(0 1px 1px rgba(0, 0, 0, .12)) !important;
 }
 @media (max-width: 759px) {
   .space-experience .experience-company-watermark {
@@ -2960,7 +2960,10 @@ body.experience-normal .space-experience .experience-company-watermark {
     max-width: 48% !important;
     max-height: 48% !important;
     transform: none !important;
-    opacity: .12 !important;
+    opacity: .22 !important;
+  }
+  body.experience-normal .space-experience .experience-company-watermark {
+    opacity: .22 !important;
   }
   .space-experience .experience-timeline-card h3,
   .space-experience .experience-timeline-card .experience-company,
