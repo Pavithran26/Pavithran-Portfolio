@@ -1,0 +1,217 @@
+/* SocialFlipButton — emerald, glassy 3D tiles for the portfolio's real profiles. */
+#social-flip-mount {
+  width: 100%;
+  min-width: 0;
+}
+.social-flip-group {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: clamp(7px, 1vw, 11px);
+  width: fit-content;
+  max-width: 100%;
+  padding: 13px;
+  border: 1px solid rgba(112, 223, 161, .23);
+  border-radius: 19px;
+  background: linear-gradient(145deg, rgba(16, 39, 25, .88), rgba(4, 13, 8, .91));
+  box-shadow: 0 14px 36px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255,255,255,.09);
+  -webkit-backdrop-filter: blur(14px) saturate(135%);
+  backdrop-filter: blur(14px) saturate(135%);
+}
+.social-flip-group::before,
+.social-flip-group::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 0;
+  width: 38%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(140, 240, 176, .95), transparent);
+  animation: social-flip-border-flow 3s linear infinite;
+}
+.social-flip-group::before { top: -1px; }
+.social-flip-group::after {
+  bottom: -1px;
+  animation-direction: reverse;
+  animation-delay: -1.5s;
+}
+@keyframes social-flip-border-flow {
+  from { transform: translateX(-20%); }
+  to { transform: translateX(280%); }
+}
+.social-flip-tile {
+  position: relative;
+  display: block;
+  flex: 0 0 44px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 12px;
+  color: #e7f7ec !important;
+  text-decoration: none !important;
+  perspective: 900px;
+  -webkit-tap-highlight-color: transparent;
+}
+.social-flip-inner {
+  position: absolute;
+  inset: 0;
+  display: block;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  transition: transform .68s cubic-bezier(.2,.72,.18,1);
+}
+.social-flip-tile:hover .social-flip-inner,
+.social-flip-tile:focus-visible .social-flip-inner {
+  transform: rotateY(180deg);
+}
+.social-flip-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid rgba(140, 240, 176, .19);
+  border-radius: inherit;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  box-sizing: border-box;
+}
+.social-flip-front {
+  color: #b8f7ca;
+  background: linear-gradient(145deg, rgba(28, 66, 42, .96), rgba(6, 21, 12, .98));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.09), 0 3px 10px rgba(0,0,0,.18);
+  font: 650 1.05rem/1 'Outfit', sans-serif;
+  letter-spacing: -.02em;
+}
+.social-flip-back {
+  transform: rotateY(180deg);
+  color: #062311;
+  border-color: rgba(167, 255, 194, .72);
+  background: linear-gradient(145deg, #a8f3be, #56d98b);
+  box-shadow: 0 0 20px rgba(70, 220, 127, .19), inset 0 1px 0 rgba(255,255,255,.66);
+}
+.social-flip-tooltip {
+  position: absolute;
+  z-index: 20;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  padding: 6px 9px;
+  border: 1px solid rgba(112,223,161,.25);
+  border-radius: 8px;
+  background: #07150c;
+  color: #e9fff0;
+  font: 600 .72rem/1.2 'Outfit', sans-serif;
+  white-space: nowrap;
+  box-shadow: 0 8px 22px rgba(0,0,0,.22);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 5px) scale(.96);
+  transition: opacity .18s ease, transform .18s ease;
+}
+.social-flip-tooltip::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 7px;
+  height: 7px;
+  border-right: 1px solid rgba(112,223,161,.25);
+  border-bottom: 1px solid rgba(112,223,161,.25);
+  background: #07150c;
+  transform: translateX(-50%) rotate(45deg);
+}
+.social-flip-tile:hover .social-flip-tooltip,
+.social-flip-tile:focus-visible .social-flip-tooltip {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+}
+.social-flip-tile:focus-visible {
+  outline: 2px solid #70dfa1;
+  outline-offset: 4px;
+}
+.social-flip-section {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  flex-wrap: wrap !important;
+  gap: 12px !important;
+  margin-top: 28px !important;
+}
+.social-flip-section #copy-email {
+  min-height: 40px;
+  padding: 9px 14px;
+  border: 1px solid rgba(112,223,161,.27);
+  border-radius: 10px;
+  background: rgba(112,223,161,.08);
+  color: #c9f7d6;
+  font: 500 .82rem/1.3 'Outfit', sans-serif;
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+.social-flip-section #copy-email:hover,
+.social-flip-section #copy-email:focus-visible {
+  border-color: rgba(112,223,161,.75);
+  background: rgba(112,223,161,.16);
+}
+body.experience-normal .social-flip-group {
+  border-color: #c7dfce;
+  background: linear-gradient(145deg, rgba(255,255,255,.96), rgba(232,246,236,.98));
+  box-shadow: 0 12px 28px rgba(22, 79, 42, .08), inset 0 1px 0 #fff;
+}
+body.experience-normal .social-flip-front {
+  color: #176438;
+  border-color: #d4e7da;
+  background: linear-gradient(145deg, #fff, #e9f6ed);
+  box-shadow: inset 0 1px 0 #fff, 0 3px 9px rgba(24,80,44,.08);
+}
+body.experience-normal .social-flip-back {
+  color: #f2fff6;
+  border-color: #16834b;
+  background: linear-gradient(145deg, #239d5b, #12653a);
+  box-shadow: 0 0 16px rgba(35,157,91,.15), inset 0 1px 0 rgba(255,255,255,.25);
+}
+body.experience-normal .social-flip-tooltip {
+  border-color: #c5dfce;
+  background: #fff;
+  color: #183b28;
+  box-shadow: 0 8px 22px rgba(24,59,42,.13);
+}
+body.experience-normal .social-flip-tooltip::after {
+  border-color: #c5dfce;
+  background: #fff;
+}
+body.experience-normal .social-flip-section #copy-email {
+  border-color: #b9d9c3;
+  background: #edf7f0;
+  color: #176c3d;
+}
+@media (max-width: 640px) {
+  .social-flip-group {
+    width: 100%;
+    padding: 10px;
+    justify-content: center;
+    gap: 8px;
+    border-radius: 16px;
+  }
+  .social-flip-tile {
+    flex-basis: 40px;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+  }
+  .social-flip-section {
+    align-items: stretch !important;
+  }
+  .social-flip-section #copy-email { margin-inline: auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .social-flip-group::before,
+  .social-flip-group::after { animation: none !important; }
+  .social-flip-inner,
+  .social-flip-tooltip { transition: none !important; }
+}
