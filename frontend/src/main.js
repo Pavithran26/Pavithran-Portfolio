@@ -21,6 +21,7 @@ import { createRoot } from 'react-dom/client';
 import { Component as Animation3DButton } from './components/ui/3d-button.tsx';
 import { PerspectiveGrid } from './components/ui/perspective-grid.jsx';
 import { LandingInteractiveParticles } from './components/LandingInteractiveParticles.jsx';
+import { LiquidMetalSurface } from './components/ui/liquid-metal.jsx';
 import ShinyButton from './components/ui/shiny-button.tsx';
 import { flushSync } from 'react-dom';
 import { TextEffectsController } from './components/TextEffectsController.js';
@@ -857,6 +858,12 @@ if (animationModeMount) {
   animationButtonRoot = createRoot(animationModeMount);
   animationButtonRoot.render(createElement(Animation3DButton, { onSelect: chooseAnimationMode }));
 }
+const professionalLiquidMetalMount = document.getElementById('professional-liquid-metal-mount');
+let professionalLiquidMetalRoot = null;
+if (professionalLiquidMetalMount) {
+  professionalLiquidMetalRoot = createRoot(professionalLiquidMetalMount);
+  professionalLiquidMetalRoot.render(createElement(LiquidMetalSurface, { variant: 'professional' }));
+}
 on(normalChoiceButton, 'click', chooseNormalMode);
 
 function sendLoadingProgress() {
@@ -996,6 +1003,7 @@ if (import.meta.hot) {
     animationButtonRoot?.unmount();
     perspectiveGridRoot?.unmount();
     interactiveParticlesRoot?.unmount();
+    professionalLiquidMetalRoot?.unmount();
     socialFlipRoot?.unmount();
     textEffects?.dispose();
     horizontalStoryResizeObserver?.disconnect();
