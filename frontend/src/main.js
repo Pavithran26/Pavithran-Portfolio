@@ -223,7 +223,7 @@ root.innerHTML = `
                 <span class="education-level-badge">${html(education.badge || 'Education')}</span>
               </div>
               <div class="education-visual ${visualClass}">
-                ${educationPhoto ? `<img class="education-campus-image" src="${educationPhoto.src}" alt="${html(educationPhoto.alt || education.institution)}" loading="lazy" decoding="async">` : ''}
+                ${educationPhoto ? `<img class="education-campus-image" src="${educationPhoto.src}" alt="${html(educationPhoto.alt || education.institution)}" loading="eager" fetchpriority="high" decoding="async">` : ''}
                 <span class="education-visual-glow" aria-hidden="true"></span>
                 <span class="education-visual-mark" aria-hidden="true">${visualMark}</span>
                 <span class="education-visual-caption" aria-hidden="true">${html(education.badge || 'Learning journey')}</span>
