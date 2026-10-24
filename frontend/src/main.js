@@ -69,7 +69,7 @@ root.innerHTML = `
         ${featuredProjects.map(project => `
           <article id="project-${project.id}" class="project-destination has-project-screenshot project-card-background-preview" data-card-project="${project.id}">
             <figure class="project-card-media project-card-media-live" aria-label="${html(project.title)} website background">
-              <img
+              ${project.id !== 'my-cow' ? `<img
                 class="project-card-image project-card-fallback"
                 src="/images/projects/${project.id}-1440.webp"
                 alt=""
@@ -77,12 +77,11 @@ root.innerHTML = `
                 height="900"
                 loading="lazy"
                 decoding="async"
-              >
+              >` : ''}
               ${project.liveUrl ? `<iframe class="project-card-live-frame" data-project-frame-src="${html(project.liveUrl)}" title="${html(project.title)} website background preview" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>` : ''}
               <span class="project-card-preview-shade" aria-hidden="true"></span>
             </figure>
             <div class="project-copy">
-              <p class="project-card-eyebrow">${html(project.category || 'Featured project')}</p>
               <button class="space-project-title" type="button" data-project="${project.id}">
                 <span>${html(project.title)}</span><span aria-hidden="true">↗</span>
               </button>
