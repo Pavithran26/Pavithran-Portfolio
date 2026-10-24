@@ -4253,3 +4253,12 @@ body.experience-normal .space-education.horizontal-story-rail > .education-miles
     min-height: 0 !important;
   }
 }
+
+
+/* Ensure both school images paint as the card background even in horizontal-scroll layouts. */
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] > .education-visual {
+  background: #102b19 url("/images/education/kongu-school.svg") center / cover no-repeat !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] > .education-visual {
+  background: #102b19 url("/images/education/government-school.svg") center / cover no-repeat !important;
+}
