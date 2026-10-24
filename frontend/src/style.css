@@ -3141,7 +3141,7 @@ body.experience-normal .space-experience .experience-company-watermark {
   }
 }
 
-/* Employer logos are full-card background watermarks, not corner badges. */
+/* Full company logo as a subtle, uncropped background across the whole experience card. */
 .space-experience .experience-company-watermark {
   position: absolute !important;
   inset: 0 !important;
@@ -3157,11 +3157,11 @@ body.experience-normal .space-experience .experience-company-watermark {
   border-radius: inherit !important;
   background: transparent !important;
   box-shadow: none !important;
-  object-fit: cover !important;
+  object-fit: contain !important;
   object-position: center !important;
-  opacity: .20 !important;
+  opacity: .13 !important;
   mix-blend-mode: multiply !important;
-  filter: saturate(1.05) contrast(1.08) !important;
+  filter: saturate(.88) contrast(.94) !important;
   transform: none !important;
   pointer-events: none !important;
   user-select: none !important;
@@ -3177,13 +3177,14 @@ body.experience-normal .space-experience .experience-company-watermark {
   max-width: min(78%, 860px) !important;
 }
 body.experience-normal .space-experience .experience-company-watermark {
-  opacity: .20 !important;
+  opacity: .13 !important;
   mix-blend-mode: multiply !important;
-  filter: saturate(1.05) contrast(1.08) !important;
+  filter: saturate(.88) contrast(.94) !important;
 }
 @media (max-width: 759px) {
   .space-experience .experience-company-watermark {
-    opacity: .15 !important;
+    opacity: .10 !important;
+    object-fit: contain !important;
     object-position: center !important;
   }
   .space-experience .experience-timeline-card h3,
