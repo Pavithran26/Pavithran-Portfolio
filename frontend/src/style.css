@@ -13,6 +13,7 @@
 @import './styles/transformers-bg.css';
 @import './styles/experience-mode.css';
 @import './styles/text-effects.css';
+@import './styles/social-flip-button.css';
 
 /* Unified Single-Page Natural Scroll Layout */
 html {
