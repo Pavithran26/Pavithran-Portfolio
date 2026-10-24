@@ -42,128 +42,6 @@ body.space-portfolio {
   box-sizing: border-box !important;
 }
 
-/* On-demand embedded live-app previews (keeps normal-mode initial load light). */
-.live-preview-lab {
-  margin-top: clamp(44px, 7vw, 84px);
-  padding-top: 32px;
-  border-top: 1px solid var(--line);
-}
-.live-preview-lab > h3 {
-  margin: 14px 0;
-  font: 400 clamp(2rem, 4vw, 3.2rem)/1.12 var(--font-display);
-  color: var(--white);
-}
-.live-preview-lab > h3 em { color: var(--accent); }
-.live-preview-intro,
-.live-preview-help {
-  color: var(--muted);
-  line-height: 1.7;
-  max-width: 64ch;
-}
-.live-preview-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 9px;
-  margin: 26px 0 14px;
-}
-.live-preview-tab {
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  background: rgba(255,255,255,.035);
-  color: var(--muted);
-  padding: 10px 16px;
-  font: 500 .88rem/1.2 var(--font-body);
-  cursor: pointer;
-  transition: color .2s ease, border-color .2s ease, background .2s ease;
-}
-.live-preview-tab:hover,
-.live-preview-tab.is-active {
-  color: var(--white);
-  background: rgba(255,255,255,.09);
-  border-color: var(--accent);
-}
-.live-preview-shell {
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  overflow: hidden;
-  background: rgba(3, 7, 12, .85);
-  box-shadow: 0 18px 48px rgba(0,0,0,.2);
-}
-.live-preview-toolbar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 14px;
-  padding: 14px 16px;
-  background: rgba(255,255,255,.035);
-  border-bottom: 1px solid var(--line);
-}
-.live-preview-toolbar > div:first-child,
-.live-preview-toolbar-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 12px;
-}
-.live-preview-status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #38c98a;
-  box-shadow: 0 0 12px rgba(56,201,138,.5);
-}
-.live-preview-caption {
-  font: 10px/1 var(--font-mono);
-  letter-spacing: .12em;
-  color: var(--muted);
-}
-.live-preview-load {
-  border: 1px solid var(--accent);
-  border-radius: 999px;
-  color: var(--white);
-  background: transparent;
-  padding: 9px 14px;
-  font: 500 .84rem/1.2 var(--font-body);
-  cursor: pointer;
-}
-.live-preview-load:hover { background: rgba(255,255,255,.08); }
-.live-preview-frame-wrap[hidden] { display: none !important; }
-.live-preview-frame-wrap {
-  height: clamp(420px, 64vw, 680px);
-  min-height: 360px;
-  background: #f4f0e6;
-}
-.live-preview-frame {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 360px;
-  border: 0;
-  background: #f4f0e6;
-}
-.live-preview-help {
-  margin: 0;
-  padding: 12px 16px 16px;
-  font-size: .8rem;
-}
-.live-preview-help strong { color: var(--white); }
-body.light-appearance .live-preview-shell { background: #e8e2d6; box-shadow: 0 18px 48px rgba(40,32,20,.10); }
-body.light-appearance .live-preview-toolbar { background: rgba(255,255,255,.48); }
-body.light-appearance .live-preview-tab { background: rgba(30,30,30,.035); }
-body.light-appearance .live-preview-tab:hover,
-body.light-appearance .live-preview-tab.is-active { color: #14171c; background: rgba(40,40,40,.08); }
-body.light-appearance .live-preview-load { color: #14171c; }
-body.light-appearance .live-preview-help strong { color: #14171c; }
-@media (max-width: 640px) {
-  .live-preview-toolbar { align-items: flex-start; }
-  .live-preview-toolbar-actions { width: 100%; justify-content: space-between; }
-  .live-preview-frame-wrap { height: 65vh; min-height: 360px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .live-preview-tab { transition: none; }
-}
-
 /* Reading Tools (Technology Badges in Chapters) */
 .reading-tools {
   display: flex !important;
@@ -3069,4 +2947,70 @@ body.experience-normal .space-work .project-card-background-preview .project-lin
   .space-work .project-card-background-preview,
   .space-work .project-card-background-preview .project-links .space-text-link,
   .space-work .project-card-background-preview .space-project-title > span:last-child { transition: none !important; }
+}
+
+
+/* Company identity watermarks on experience timeline cards. The real logo sits behind the copy. */
+.space-experience .experience-timeline-card {
+  position: relative !important;
+  isolation: isolate !important;
+  overflow: hidden !important;
+}
+.space-experience .experience-company-watermark {
+  position: absolute !important;
+  z-index: 0 !important;
+  top: 50% !important;
+  right: clamp(18px, 4.5vw, 68px) !important;
+  display: block !important;
+  width: clamp(190px, 34%, 440px) !important;
+  max-width: 46% !important;
+  max-height: 72% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  transform: translateY(-50%) !important;
+  opacity: .13 !important;
+  filter: saturate(.82) !important;
+  box-shadow: none !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+.space-experience .experience-timeline-card > :not(.experience-company-watermark) {
+  position: relative;
+  z-index: 2;
+}
+.space-experience .experience-timeline-card h3,
+.space-experience .experience-timeline-card .experience-company,
+.space-experience .experience-timeline-card .space-kicker,
+.space-experience .experience-timeline-card > p:last-child {
+  max-width: min(78%, 860px);
+}
+body.experience-normal .space-experience .experience-company-watermark {
+  opacity: .12 !important;
+  filter: saturate(.82) contrast(.92) !important;
+}
+@media (max-width: 759px) {
+  .space-experience .experience-company-watermark {
+    top: auto !important;
+    right: 14px !important;
+    bottom: 14px !important;
+    width: clamp(145px, 43%, 240px) !important;
+    max-width: 48% !important;
+    max-height: 48% !important;
+    transform: none !important;
+    opacity: .12 !important;
+  }
+  .space-experience .experience-timeline-card h3,
+  .space-experience .experience-timeline-card .experience-company,
+  .space-experience .experience-timeline-card .space-kicker,
+  .space-experience .experience-timeline-card > p:last-child {
+    max-width: 100%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .space-experience .experience-company-watermark { transition: none !important; }
 }
