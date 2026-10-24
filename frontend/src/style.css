@@ -3195,3 +3195,198 @@ body.experience-normal .space-experience .experience-company-watermark {
     max-width: 100% !important;
   }
 }
+
+/* Professional mode: a true vertical tree timeline for work experience. */
+body.experience-normal .experience-timeline-heading {
+  width: min(100%, 920px) !important;
+  margin: clamp(24px, 3vw, 38px) 0 18px !important;
+  padding: 0 !important;
+}
+body.experience-normal .experience-timeline-heading .space-kicker {
+  margin: 0 0 7px !important;
+  color: #16834b !important;
+  font-size: .72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .16em !important;
+  text-transform: uppercase !important;
+}
+body.experience-normal .experience-timeline-heading h3 {
+  margin: 0 !important;
+  color: #183b28 !important;
+  font-size: clamp(1.35rem, 2.2vw, 1.8rem) !important;
+  line-height: 1.2 !important;
+  letter-spacing: -.025em !important;
+}
+body.experience-normal .space-experience.vertical-experience-timeline {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: clamp(20px, 2.6vw, 30px) !important;
+  width: min(100%, 920px) !important;
+  max-width: 920px !important;
+  margin: 0 !important;
+  padding: 8px 0 8px 34px !important;
+  overflow: visible !important;
+  scroll-snap-type: none !important;
+  scroll-behavior: auto !important;
+  overscroll-behavior: auto !important;
+  touch-action: pan-y !important;
+  box-sizing: border-box !important;
+}
+body.experience-normal .space-experience.vertical-experience-timeline::before {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 1 !important;
+  top: 19px !important;
+  bottom: 44px !important;
+  left: 10px !important;
+  width: 2px !important;
+  display: block !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(180deg, #16834b 0%, #87c99d 72%, rgba(135,201,157,.12) 100%) !important;
+  box-shadow: 0 0 0 1px rgba(22,131,75,.035) !important;
+}
+body.experience-normal .space-experience.vertical-experience-timeline > .experience-timeline-card {
+  position: relative !important;
+  display: block !important;
+  flex: 0 1 auto !important;
+  align-self: stretch !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  min-height: 0 !important;
+  height: auto !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: clamp(22px, 2.8vw, 34px) !important;
+  overflow: hidden !important;
+  border: 1px solid #d6e7db !important;
+  border-radius: 18px !important;
+  background: linear-gradient(135deg, rgba(255,255,255,.99), rgba(242,249,244,.98)) !important;
+  box-shadow: 0 12px 30px rgba(24,59,42,.065), inset 0 1px 0 #fff !important;
+  scroll-snap-align: none !important;
+  scroll-snap-stop: normal !important;
+  text-align: left !important;
+  box-sizing: border-box !important;
+}
+body.experience-normal .space-experience.vertical-experience-timeline > .experience-timeline-card::before {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 4 !important;
+  left: -31px !important;
+  right: auto !important;
+  top: 34px !important;
+  width: 13px !important;
+  height: 13px !important;
+  display: block !important;
+  border: 3px solid #f5faf6 !important;
+  border-radius: 50% !important;
+  background: #16834b !important;
+  box-shadow: 0 0 0 2px rgba(22,131,75,.18), 0 0 13px rgba(22,131,75,.18) !important;
+  transform: none !important;
+  box-sizing: border-box !important;
+}
+body.experience-normal .space-experience.vertical-experience-timeline > .experience-timeline-card::after {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 3 !important;
+  left: -18px !important;
+  right: auto !important;
+  top: 42px !important;
+  width: 18px !important;
+  height: 1px !important;
+  display: block !important;
+  background: linear-gradient(90deg, rgba(22,131,75,.75), rgba(22,131,75,.18)) !important;
+  border: 0 !important;
+  transform: none !important;
+}
+body.experience-normal .space-experience.vertical-experience-timeline .experience-timeline-card > .space-kicker {
+  max-width: 76% !important;
+  margin: 0 0 12px !important;
+  color: #267446 !important;
+  font-size: .76rem !important;
+  font-weight: 700 !important;
+  letter-spacing: .12em !important;
+  line-height: 1.45 !important;
+  text-transform: uppercase !important;
+}
+body.experience-normal .space-experience.vertical-experience-timeline .experience-timeline-card h3 {
+  max-width: 78% !important;
+  margin: 0 0 10px !important;
+  color: #183b28 !important;
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem) !important;
+  font-weight: 700 !important;
+  line-height: 1.16 !important;
+  letter-spacing: -.035em !important;
+}
+body.experience-normal .space-experience.vertical-experience-timeline .experience-company {
+  max-width: 78% !important;
+  margin: 0 0 18px !important;
+  color: #466b53 !important;
+  font-size: clamp(.95rem, 1.4vw, 1.08rem) !important;
+  line-height: 1.5 !important;
+}
+body.experience-normal .space-experience.vertical-experience-timeline .experience-timeline-card > p:last-child {
+  max-width: 80% !important;
+  margin: 0 !important;
+  color: #506b59 !important;
+  font-size: .98rem !important;
+  line-height: 1.7 !important;
+}
+body.experience-normal .space-experience.vertical-experience-timeline .experience-company-watermark {
+  opacity: .12 !important;
+  mix-blend-mode: multiply !important;
+  filter: saturate(.9) contrast(.98) !important;
+}
+@media (max-width: 640px) {
+  body.experience-normal .experience-timeline-heading {
+    margin: 24px 0 14px !important;
+  }
+  body.experience-normal .space-experience.vertical-experience-timeline {
+    width: 100% !important;
+    padding-left: 26px !important;
+    gap: 18px !important;
+  }
+  body.experience-normal .space-experience.vertical-experience-timeline::before {
+    left: 7px !important;
+    top: 16px !important;
+    bottom: 35px !important;
+  }
+  body.experience-normal .space-experience.vertical-experience-timeline > .experience-timeline-card {
+    padding: 20px 18px !important;
+    border-radius: 16px !important;
+  }
+  body.experience-normal .space-experience.vertical-experience-timeline > .experience-timeline-card::before {
+    left: -25px !important;
+    top: 28px !important;
+    width: 11px !important;
+    height: 11px !important;
+    border-width: 2px !important;
+  }
+  body.experience-normal .space-experience.vertical-experience-timeline > .experience-timeline-card::after {
+    left: -14px !important;
+    top: 33px !important;
+    width: 14px !important;
+  }
+  body.experience-normal .space-experience.vertical-experience-timeline .experience-timeline-card > .space-kicker,
+  body.experience-normal .space-experience.vertical-experience-timeline .experience-timeline-card h3,
+  body.experience-normal .space-experience.vertical-experience-timeline .experience-company,
+  body.experience-normal .space-experience.vertical-experience-timeline .experience-timeline-card > p:last-child {
+    max-width: 100% !important;
+  }
+  body.experience-normal .space-experience.vertical-experience-timeline .experience-timeline-card h3 {
+    font-size: clamp(1.35rem, 6vw, 1.75rem) !important;
+  }
+  body.experience-normal .space-experience.vertical-experience-timeline .experience-company {
+    font-size: .9rem !important;
+    margin-bottom: 14px !important;
+  }
+  body.experience-normal .space-experience.vertical-experience-timeline .experience-timeline-card > p:last-child {
+    font-size: .92rem !important;
+  }
+  body.experience-normal .space-experience.vertical-experience-timeline .experience-company-watermark {
+    opacity: .075 !important;
+  }
+}
