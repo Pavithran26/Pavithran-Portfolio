@@ -4,9 +4,44 @@ import { technologyIcons } from '../TechnologyIcons.js';
 /** Filterable staggered technology explorer based on the VengeanceUI reference. */
 export function StaggeredGrid({ items = [], className = '' }) {
   const [activeCategory, setActiveCategory] = React.useState('All');
+  const gridRef = React.useRef(null);
   const categories = ['All', ...new Set(items.map(item => item.category).filter(Boolean))];
   const visibleItems = activeCategory === 'All' ? items : items.filter(item => item.category === activeCategory);
   const countFor = category => category === 'All' ? items.length : items.filter(item => item.category === category).length;
+
+  // Reveal each row as it enters the real viewport instead of animating every
+  // card at page load (the whole section sits far below the fold).
+  React.useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return undefined;
+    const cards = [...grid.querySelectorAll('.staggered-tech-card')];
+    if (!cards.length) return undefined;
+
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion || !('IntersectionObserver' in window)) {
+      cards.forEach(card => card.classList.add('is-in-view'));
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-in-view');
+        observer.unobserve(entry.target);
+      });
+    }, {
+      threshold: 0.06,
+      rootMargin: '0px 0px -7% 0px'
+    });
+
+    cards.forEach((card, index) => {
+      card.classList.remove('is-in-view');
+      card.style.setProperty('--stagger-delay', `${(index % 5) * 62}ms`);
+      observer.observe(card);
+    });
+
+    return () => observer.disconnect();
+  }, [activeCategory, items]);
 
   return (
     <div className={`staggered-tech-explorer ${className}`.trim()}>
@@ -31,7 +66,7 @@ export function StaggeredGrid({ items = [], className = '' }) {
         </div>
       </div>
 
-      <div className="staggered-tech-grid" aria-live="polite">
+      <div ref={gridRef} className="staggered-tech-grid" aria-live="polite">
         {visibleItems.map((item, index) => {
           const localIcon = technologyIcons(item.title, { eager: index < 10 });
           const monogram = item.title.replace(/[^a-z0-9]/gi, '').slice(0, 2).toUpperCase() || 'T';
@@ -47,7 +82,7 @@ export function StaggeredGrid({ items = [], className = '' }) {
               style={{
                 '--stagger-index': index,
                 '--stagger-offset': `${(index % 4) * 5}px`,
-                '--stagger-delay': `${(index % 14) * 24}ms`
+                '--stagger-delay': `${(index % 5) * 62}ms`
               }}
               aria-label={`Open ${item.title} details`}
             >
