@@ -1758,13 +1758,14 @@ body.experience-normal .project-collage-label {
   .perspective-grid-tile { transition: none; }
 }
 
-/* VengeanceUI InteractiveParticles — brand-shaped cursor-reactive particle layer. */
+
+/* VengeanceUI InteractiveParticles — directly animates the existing FDE title. */
 #interactive-particles-mount {
   position: absolute;
   inset: 0;
   z-index: 1;
   overflow: hidden;
-  opacity: .48;
+  opacity: .58;
   pointer-events: none;
   mix-blend-mode: screen;
 }
@@ -1783,12 +1784,24 @@ body.experience-normal .project-collage-label {
   height: 100% !important;
   pointer-events: none !important;
 }
+/* Keep the source text semantic and laid out, but show the particle version once ready. */
+@media (prefers-reduced-motion: no-preference) {
+  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-panel h1,
+  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-panel h1 em,
+  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-role,
+  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-role span {
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: none !important;
+    background: none !important;
+  }
+}
 #experience-choice .experience-choice-panel {
   position: relative !important;
   z-index: 2 !important;
 }
 @media (max-width: 640px) {
-  #interactive-particles-mount { opacity: .31; }
+  #interactive-particles-mount { opacity: .43; }
 }
 @media (prefers-reduced-motion: reduce) {
   #interactive-particles-mount { display: none !important; }
