@@ -1,5 +1,6 @@
 import { useState, type CSSProperties } from "react";
 import { cn } from "@/lib/utils";
+import { LiquidMetalSurface } from "./liquid-metal.jsx";
 import "./3d-button.css";
 
 type ComponentProps = {
@@ -37,6 +38,7 @@ export const Component = ({ onSelect, className }: ComponentProps) => {
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
     >
+      <LiquidMetalSurface variant="animation" />
       <span className="button3d-bg" aria-hidden="true" />
       <svg
         xmlns="http://www.w3.org/2000/svg"
