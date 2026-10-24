@@ -1784,18 +1784,7 @@ body.experience-normal .project-collage-label {
   height: 100% !important;
   pointer-events: none !important;
 }
-/* Keep the source text semantic and laid out, but show the particle version once ready. */
-@media (prefers-reduced-motion: no-preference) {
-  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-panel h1,
-  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-panel h1 em,
-  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-role,
-  #experience-choice:has(#interactive-particles-mount .fde-interactive-particles.is-ready:not(.is-failed)) .experience-choice-role span {
-    color: transparent !important;
-    -webkit-text-fill-color: transparent !important;
-    text-shadow: none !important;
-    background: none !important;
-  }
-}
+/* Keep the existing heading and FDE subtitle readable above the particles. */
 #experience-choice .experience-choice-panel {
   position: relative !important;
   z-index: 2 !important;
