@@ -117,13 +117,13 @@ export function LandingInteractiveParticles() {
       src={src || undefined}
       allowUpload={false}
       background="transparent"
-      color="#e3ffec"
-      size={1.4}
-      randomness={0.18}
-      depth={0.16}
+      color="#edfff2"
+      size={0.92}
+      randomness={0.12}
+      depth={0.12}
       touchRadius={0.16}
-      maxDimension={760}
-      threshold={12}
+      maxDimension={1440}
+      threshold={24}
       className="fde-interactive-particles"
     />
   );
