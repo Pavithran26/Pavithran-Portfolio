@@ -1,13 +1,13 @@
 import { STACK_CHAPTERS } from './stackJourney.js';
 
-const tools = entries => entries.map(([name, search = name]) => ({ name, search }));
+const tools = entries => entries.map(([name, search = name, description = 'A practical building block in the stack.']) => ({ name, search, description }));
 
 export const SPACE_CHAPTERS = [
   { ...STACK_CHAPTERS[0], orbit: '01 / THE EXPERIENCE', headline: 'Frontend.', side: 'left', tools: tools([
-    ['React', 'React 18'], ['TypeScript'], ['JavaScript'], ['Next.js'], ['Tailwind CSS', 'Tailwind'], ['Three.js']
+    ['React', 'React 18', 'Component-driven interfaces'], ['TypeScript', 'TypeScript', 'Typed interfaces at scale'], ['JavaScript', 'JavaScript', 'Browser-side interaction logic'], ['Next.js', 'Next.js', 'React routing and rendering'], ['Tailwind CSS', 'Tailwind', 'Responsive design systems'], ['Three.js', 'Three.js', 'Interactive 3D visuals']
   ]) },
   { ...STACK_CHAPTERS[1], orbit: '02 / THE LOGIC', headline: 'Backend.', side: 'right', tools: tools([
-    ['Python'], ['C#'], ['Java'], ['ASP.NET Core', 'ASP.NET'], ['FastAPI'], ['Django']
+    ['Python', 'Python', 'API services and automation'], ['C#', 'C#', 'Strongly typed service logic'], ['Java', 'Java', 'Enterprise application services'], ['ASP.NET Core', 'ASP.NET', 'REST APIs and business rules'], ['FastAPI', 'FastAPI', 'Fast Python APIs'], ['Django', 'Django', 'Structured web backends']
   ]) },
   { ...STACK_CHAPTERS[2], orbit: '03 / THE MEMORY', headline: 'Databases.', side: 'left', tools: tools([
     ['PostgreSQL'], ['pgvector'], ['Redis'], ['MongoDB'], ['MySQL'], ['Supabase']
