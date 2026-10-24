@@ -181,16 +181,41 @@ root.innerHTML = `
       <p class="space-kicker">THE FOUNDATIONS</p>
       <h2 id="education-title">Learning,<br><em>layer by layer.</em></h2>
       <div class="space-education">
-        ${profile.education.map((education, index) => `
-          <article id="education-${index}" class="education-milestone">
-            <div class="education-copy">
-              <p class="space-kicker">${html(education.period)}</p>
-              <h3>${html(education.degree)}</h3>
-              <p class="experience-company">${html(education.institution)}</p>
-              <p>${html(education.highlights)}</p>
-            </div>
-          </article>
-        `).join('')}
+        ${profile.education.map((education, index) => {
+          const educationPhoto = index === 0
+            ? {
+                src: 'https://cache.careers360.mobi/media/colleges/social-media/media-gallery/15415/2018/9/25/Campus%20view%20of%20Dr%20NGP%20Arts%20and%20Science%20College%20Coimbatore_Campus-view.jpg',
+                source: 'https://www.careers360.com/colleges/dr-ngp-arts-and-science-college-coimbatore',
+                sourceName: 'Careers360'
+              }
+            : index === 1
+              ? {
+                  src: 'https://images.bhaskarassets.com/web2images/521/2024/09/13/uvpvt2sgaug1edlj_1726243861.jpeg',
+                  source: 'https://www.bhaskar.com/career/news/top-10-commerce-colleges-in-the-country-133638088.html',
+                  sourceName: 'Dainik Bhaskar'
+                }
+              : null;
+          const visualMark = ['NGP', 'PSG', 'KONGU', 'MV'][index] || 'EDU';
+          const visualClass = educationPhoto ? 'has-campus-photo' : 'is-academic-illustration';
+          return `
+            <article id="education-${index}" class="education-milestone education-milestone--${education.visualStage || 'foundation'}" data-education-index="${index}">
+              <div class="education-copy">
+                <p class="space-kicker">${html(education.period)}</p>
+                <h3>${html(education.degree)}</h3>
+                <p class="experience-company">${html(education.institution)}</p>
+                <p class="education-highlights">${html(education.highlights)}</p>
+                <span class="education-level-badge">${html(education.badge || 'Education')}</span>
+              </div>
+              <div class="education-visual ${visualClass}">
+                ${educationPhoto ? `<img class="education-campus-image" src="${educationPhoto.src}" alt="" loading="lazy" decoding="async">` : ''}
+                <span class="education-visual-glow" aria-hidden="true"></span>
+                <span class="education-visual-mark" aria-hidden="true">${visualMark}</span>
+                <span class="education-visual-caption" aria-hidden="true">${html(education.badge || 'Learning journey')}</span>
+                ${educationPhoto ? `<a class="education-image-source" href="${educationPhoto.source}" target="_blank" rel="noopener noreferrer" aria-label="Open ${educationPhoto.sourceName} campus image source">Campus photo · ${educationPhoto.sourceName} ↗</a>` : `<span class="education-visual-note" aria-hidden="true">FOUNDATION / ${index + 1}</span>`}
+              </div>
+            </article>
+          `;
+        }).join('')}
       </div>
       <h3 class="story-subheading" id="recognition" style="margin-top: 48px; font-family: var(--font-display); font-size: 2.2rem; font-weight: 400;">Training & recognition</h3>
       <div class="space-recognition">
@@ -467,6 +492,15 @@ const events = new AbortController();
 const on = (target, type, handler, options = {}) => {
   if (target) target.addEventListener(type, handler, { signal: events.signal, ...options });
 };
+
+// Keep external campus photos resilient: an unavailable host falls back to the
+// designed academic side panel instead of leaving a broken image icon.
+on(root, 'error', event => {
+  const image = event.target;
+  if (!(image instanceof HTMLImageElement) || !image.matches('.education-campus-image')) return;
+  image.remove();
+  image.closest('.education-visual')?.classList.add('is-image-fallback');
+}, { capture: true });
 
 // Build explicit horizontal story stages for Projects, Work, Studies, and recognition.
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
