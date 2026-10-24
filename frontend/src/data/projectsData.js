@@ -152,7 +152,7 @@ export const PROJECTS_DATA = [
   },
   {
     "id": "my-cow",
-    "title": "My COW / ZyberCow",
+    "title": "My COW",
     "tagline": "A clearer picture of every cow, calf, and milestone.",
     "category": "Mobile & Agriculture",
     "badge": "Mobile Application",
@@ -175,7 +175,7 @@ export const PROJECTS_DATA = [
       "Track injection history and calculate monthly pregnancy milestones.",
       "Use Firestore subscriptions to update the React Native herd list."
     ],
-    "liveUrl": null,
+    "liveUrl": "https://mycow-pavithran26.web.app/",
     "githubUrl": null,
     "implementationNote": "The React Native app integrates directly with Firestore; a separate Django backend variant also exists. Vaccination scheduling, feeding inventory, and reporting are listed as planned in the reviewed README. Source repositories are private."
   },
@@ -464,4 +464,4 @@ export const PROJECTS_DATA = [
 ];
 
 // Homepage and camera route must use the same curated selection.
-export const FEATURED_PROJECTS = ['clansure', 'gt-companion', 'srk-erp', 'sattam-ai'].map(id => PROJECTS_DATA.find(project => project.id === id));
+export const FEATURED_PROJECTS = ['clansure', 'gt-companion', 'srk-erp', 'my-cow', 'sattam-ai'].map(id => PROJECTS_DATA.find(project => project.id === id));
