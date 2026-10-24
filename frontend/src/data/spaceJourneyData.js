@@ -3,18 +3,36 @@ import { STACK_CHAPTERS } from './stackJourney.js';
 const tools = entries => entries.map(([name, search = name, description = 'A practical building block in the stack.']) => ({ name, search, description }));
 
 export const SPACE_CHAPTERS = [
-  { ...STACK_CHAPTERS[0], orbit: '01 / THE EXPERIENCE', headline: 'Frontend.', side: 'left', tools: tools([
-    ['React', 'React 18', 'Component-driven interfaces'], ['TypeScript', 'TypeScript', 'Typed interfaces at scale'], ['JavaScript', 'JavaScript', 'Browser-side interaction logic'], ['Next.js', 'Next.js', 'React routing and rendering'], ['Tailwind CSS', 'Tailwind', 'Responsive design systems'], ['Three.js', 'Three.js', 'Interactive 3D visuals']
-  ]) },
-  { ...STACK_CHAPTERS[1], orbit: '02 / THE LOGIC', headline: 'Backend.', side: 'right', tools: tools([
-    ['Python', 'Python', 'API services and automation'], ['C#', 'C#', 'Strongly typed service logic'], ['Java', 'Java', 'Enterprise application services'], ['ASP.NET Core', 'ASP.NET', 'REST APIs and business rules'], ['FastAPI', 'FastAPI', 'Fast Python APIs'], ['Django', 'Django', 'Structured web backends']
-  ]) },
-  { ...STACK_CHAPTERS[2], orbit: '03 / THE MEMORY', headline: 'Databases.', side: 'left', tools: tools([
-    ['PostgreSQL'], ['pgvector'], ['Redis'], ['MongoDB'], ['MySQL'], ['Supabase']
-  ]) },
-  { ...STACK_CHAPTERS[3], orbit: '04 / THE INTELLIGENCE', headline: 'Applied AI.', side: 'left', tools: tools([
-    ['LangChain'], ['Gemini'], ['OpenAI'], ['Embeddings'], ['RAG', 'AI, RAG'], ['Hugging Face']
-  ]) }
+  {
+    ...STACK_CHAPTERS[0],
+    id: 'tools',
+    name: 'Tools & Technologies',
+    number: '01',
+    orbit: '01 / THE TOOLKIT',
+    headline: 'Tools & Technologies.',
+    side: 'left',
+    tagline: 'One toolkit, from interface to intelligence.',
+    description: 'Explore the languages, frameworks, AI and machine-learning methods, data platforms, cloud services, and developer tools I use across full-stack products and applied AI systems.',
+    groups: [
+      { label: 'Languages', items: ['Python', 'JavaScript', 'TypeScript', 'Java', 'C#', 'C / C++', 'Kotlin', 'R', 'SQL', 'Assembly'] },
+      { label: 'Frontend & mobile', items: ['React.js', 'Next.js', 'Vue.js', 'Angular', 'React Native', 'Expo', 'Three.js', 'Tailwind CSS', 'Material UI', 'Vite'] },
+      { label: 'Backend & APIs', items: ['Django', 'Django REST Framework', 'FastAPI', 'Flask', 'Node.js', 'Express.js', 'Spring Boot', 'ASP.NET Core', '.NET Web API', 'REST APIs', 'SOAP APIs', 'Microservices'] },
+      { label: 'AI, ML & RAG', items: ['RAG', 'LangChain / LCEL', 'Google Gemini', 'OpenAI', 'Hugging Face Transformers', 'Vector Embeddings', 'pgvector', 'HNSW', 'Fine-tuning', 'QLoRA', 'Reinforcement Learning', 'PyTorch', 'TensorFlow', 'Keras', 'scikit-learn', 'XGBoost', 'NumPy', 'Pandas', 'Matplotlib', 'ChromaDB'] },
+      { label: 'Data, cloud & delivery', items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Supabase', 'Firebase', 'AWS S3', 'Apache Spark', 'Apache Kafka', 'Docker', 'Kubernetes', 'Linux', 'Git', 'GitHub Actions', 'AWS', 'Azure', 'Vercel', 'Render', 'Railway', 'Netlify', 'Cloudflare'] },
+      { label: 'Developer, testing & design tools', items: ['Antigravity', 'Cursor', 'VS Code', 'Slack', 'Postman', 'Playwright', 'Selenium', 'Figma', 'Serilog', 'Pega', 'Clerk', 'Axios', 'Babel', 'Ember.js', 'Typography', 'SEO'] }
+    ],
+    highlights: [
+      { mark: 'PY', name: 'Python', role: 'Backend, data and applied AI', search: 'Python' },
+      { mark: 'WEB', name: 'Modern web stack', role: 'React, Next.js, Vue and 3D interfaces', search: 'React' },
+      { mark: 'RAG', name: 'AI / RAG systems', role: 'Retrieval, embeddings and grounded generation', search: 'RAG' },
+      { mark: 'OPS', name: 'Cloud & delivery', role: 'Containers, CI/CD and deployments', search: 'Docker' }
+    ],
+    application: 'Full-stack products, AI/RAG systems, enterprise applications and cloud delivery',
+    sceneLabel: 'LANGUAGES / FRAMEWORKS / AI / DATA / CLOUD',
+    layerIndexes: [0, 1, 2, 3, 4, 5],
+    detail: 'Inspect tools and technologies',
+    next: 'Next: selected work'
+  }
 ];
 
 export const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));

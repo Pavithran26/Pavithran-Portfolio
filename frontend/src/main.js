@@ -6,6 +6,7 @@ import 'lenis/dist/lenis.css';
 import { PORTFOLIO_DATA as profile } from './data/portfolioData.js';
 import { FEATURED_PROJECTS as featuredProjects, PROJECTS_DATA } from './data/projectsData.js';
 import { SPACE_CHAPTERS as chapters } from './data/spaceJourneyData.js';
+import { ALL_TECHNOLOGIES } from './data/allTechnologies.js';
 import { PortfolioDialogs } from './components/PortfolioDialogs.js';
 import { projectVisual, PROJECT_SCENES } from './components/ProjectVisuals.js';
 import { technologyIcons } from './components/TechnologyIcons.js';
@@ -151,14 +152,11 @@ root.innerHTML = `
   </section>
 
   ${chapters.map((chapter, index) => `
-    <section class="world-section world-section-${chapter.side}" id="stack-${chapter.id}" data-world-section="${index + 1}" aria-labelledby="world-title-${chapter.id}">
-      <nav class="spotlight-stack-nav" aria-label="Technology layers">
+    <section class="world-section world-section-${chapter.side} world-section-tools" id="stack-${chapter.id}" data-world-section="${index + 1}" aria-labelledby="world-title-${chapter.id}">
+      <nav class="spotlight-stack-nav" aria-label="Tools and technologies navigation">
         <a class="spotlight-stack-brand" href="#top" aria-label="Pavithran home">PS<span> / FDE</span></a>
         <div class="spotlight-stack-links">
-          <a href="#stack-frontend" data-spotlight-nav>Frontend</a>
-          <a href="#stack-backend" data-spotlight-nav>Backend</a>
-          <a href="#stack-databases" data-spotlight-nav>Database</a>
-          <a href="#stack-ai" data-spotlight-nav>AI Service</a>
+          <a href="#stack-tools" data-spotlight-nav>Tools &amp; Technologies</a>
         </div>
       </nav>
       <div class="world-copy">
@@ -306,18 +304,11 @@ if (socialFlipMount) {
   }));
 }
 
-// Render the reusable staggered technology grid in the Frontend and Backend chapters.
-chapters.slice(0, 2).forEach((chapter, index) => {
-  const mount = root.querySelector(`[data-staggered-grid="${index}"]`);
-  if (!mount) return;
-  createRoot(mount).render(createElement(StaggeredGrid, {
-    items: chapter.tools.map(tool => ({
-      title: tool.name,
-      description: tool.description || 'A practical building block in the stack.',
-      search: tool.search
-    }))
-  }));
-});
+// Render one filterable staggered grid with the full Tools & Technologies inventory.
+const technologyMount = root.querySelector('[data-staggered-grid="0"]');
+if (technologyMount) {
+  createRoot(technologyMount).render(createElement(StaggeredGrid, { items: ALL_TECHNOLOGIES }));
+}
 
 // Load real project sites as their cards approach the viewport, keeping the page fast.
 // The project screenshot remains underneath the frame while it loads and for projects
@@ -759,12 +750,17 @@ if (dialogEl) {
 
 // Click delegation for dialogs, projects, skills, chapters, DAWN
 on(document, 'click', event => {
-  const action = event.target.closest('[data-dialog], [data-project], [data-ask], [data-technology], [data-inspect-world]');
+  const action = event.target.closest('[data-dialog], [data-project], [data-ask], [data-technology], [data-inspect-world], [data-tool-card]');
   if (!action) return;
 
   if (action.dataset.dialog) dialogs.open(action.dataset.dialog);
   else if (action.dataset.project) dialogs.openProject(action.dataset.project);
   else if (action.dataset.ask) dialogs.openDawn(action.dataset.ask);
+  else if (action.hasAttribute('data-tool-card')) dialogs.openToolCard({
+    title: action.dataset.toolTitle,
+    category: action.dataset.toolCategory,
+    description: action.dataset.toolDescription
+  });
   else if (action.dataset.technology) dialogs.openSkills(action.dataset.technology);
   else if (action.dataset.inspectWorld !== undefined) dialogs.openChapter(chapters[Number(action.dataset.inspectWorld)]);
 });

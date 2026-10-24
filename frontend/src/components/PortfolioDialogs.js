@@ -111,6 +111,24 @@ export class PortfolioDialogs {
     `);
   }
 
+  openToolCard({ title = 'Technology', category = 'Tools & Technologies', description = '' } = {}) {
+    const icon = technologyIcons(title, { eager: true });
+    const monogram = String(title).replace(/[^a-z0-9]/gi, '').slice(0, 2).toUpperCase() || 'T';
+    this.show('TOOLS & TECHNOLOGIES / ' + category.toUpperCase(), title, `
+      <div class="tool-card-detail">
+        <div class="tool-card-detail__identity">
+          <span class="tool-card-detail__icon">${icon || `<span class="staggered-tech-card__monogram">${html(monogram)}</span>`}</span>
+          <span class="eyebrow">${html(category)}</span>
+        </div>
+        <p class="detail-lead">${html(description)}</p>
+        <p>This item is part of the toolkit represented across full-stack development, AI/RAG, data workflows and application deployment.</p>
+        <div class="detail-actions">
+          <button class="button button-light" type="button" data-dialog="skills">Browse the full skills catalogue ↗</button>
+        </div>
+      </div>
+    `, 'tool-detail');
+  }
+
   openSkills(initialQuery = '') {
     this.show('CAPABILITIES / TECHNICAL SKILLS', 'The tools behind the work.', `
       <div class="skill-controls"><div><label for="skill-search">Search skills</label><input id="skill-search" type="search" placeholder="React, FastAPI, Docker…" autocomplete="off"></div><div><label for="skill-category">Category</label><select id="skill-category"><option value="all" selected>All categories</option>${categories.map(category => `<option value="${category.id}">${html(category.name)}</option>`).join('')}</select></div></div><p id="skill-count" class="eyebrow" role="status"></p><div id="skills-results"></div>
