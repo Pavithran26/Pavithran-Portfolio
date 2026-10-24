@@ -185,17 +185,33 @@ root.innerHTML = `
           const educationPhoto = index === 0
             ? {
                 src: 'https://cache.careers360.mobi/media/colleges/social-media/media-gallery/15415/2018/9/25/Campus%20view%20of%20Dr%20NGP%20Arts%20and%20Science%20College%20Coimbatore_Campus-view.jpg',
+                alt: 'Dr. N.G.P. Arts and Science College campus',
                 source: 'https://www.careers360.com/colleges/dr-ngp-arts-and-science-college-coimbatore',
                 sourceName: 'Careers360'
               }
             : index === 1
               ? {
                   src: 'https://images.bhaskarassets.com/web2images/521/2024/09/13/uvpvt2sgaug1edlj_1726243861.jpeg',
+                  alt: 'PSG College of Arts and Science campus',
                   source: 'https://www.bhaskar.com/career/news/top-10-commerce-colleges-in-the-country-133638088.html',
                   sourceName: 'Dainik Bhaskar'
                 }
-              : null;
-          const visualMark = ['NGP', 'PSG', 'KONGU', 'MV'][index] || 'EDU';
+              : index === 2
+                ? {
+                    src: '/images/education/kongu-school.svg',
+                    alt: 'Kongu Matric Higher Secondary School, Morappur campus',
+                    source: null,
+                    sourceName: null
+                  }
+                : index === 3
+                  ? {
+                      src: '/images/education/government-school.svg',
+                      alt: 'Government school campus',
+                      source: null,
+                      sourceName: null
+                    }
+                  : null;
+          const visualMark = ['NGP', 'PSG', 'KONGU', 'GOVT'][index] || 'EDU';
           const visualClass = educationPhoto ? 'has-campus-photo' : 'is-academic-illustration';
           return `
             <article id="education-${index}" class="education-milestone education-milestone--${education.visualStage || 'foundation'}" data-education-index="${index}">
@@ -207,11 +223,11 @@ root.innerHTML = `
                 <span class="education-level-badge">${html(education.badge || 'Education')}</span>
               </div>
               <div class="education-visual ${visualClass}">
-                ${educationPhoto ? `<img class="education-campus-image" src="${educationPhoto.src}" alt="" loading="lazy" decoding="async">` : ''}
+                ${educationPhoto ? `<img class="education-campus-image" src="${educationPhoto.src}" alt="${html(educationPhoto.alt || education.institution)}" loading="lazy" decoding="async">` : ''}
                 <span class="education-visual-glow" aria-hidden="true"></span>
                 <span class="education-visual-mark" aria-hidden="true">${visualMark}</span>
                 <span class="education-visual-caption" aria-hidden="true">${html(education.badge || 'Learning journey')}</span>
-                ${educationPhoto ? `<a class="education-image-source" href="${educationPhoto.source}" target="_blank" rel="noopener noreferrer" aria-label="Open ${educationPhoto.sourceName} campus image source">Campus photo · ${educationPhoto.sourceName} ↗</a>` : `<span class="education-visual-note" aria-hidden="true">FOUNDATION / ${index + 1}</span>`}
+                ${educationPhoto?.source ? `<a class="education-image-source" href="${educationPhoto.source}" target="_blank" rel="noopener noreferrer" aria-label="Open ${educationPhoto.sourceName} campus image source">Campus photo · ${educationPhoto.sourceName} ↗</a>` : `<span class="education-visual-note" aria-hidden="true">${educationPhoto ? 'CAMPUS PHOTO' : `FOUNDATION / ${index + 1}`}</span>`}
               </div>
             </article>
           `;
