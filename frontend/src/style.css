@@ -4668,3 +4668,186 @@ dialog.portfolio-dialog[data-view="tool-detail"] .detail-actions .button:focus-v
     justify-content: center;
   }
 }
+
+
+/* Shared light-dialog accessibility fix for every portfolio detail modal.
+   The earlier text contrast fix covered tool-detail only; projects, layers, skills
+   and profile dialogs use the same #detail-title/#detail-body shell. */
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]),
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]),
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) {
+  --accent: #16834b !important;
+  --ink: #193b28 !important;
+  --white: #193b28 !important;
+  --muted: #526b5b !important;
+  --line: #d7e6db !important;
+  color: #193b28 !important;
+  color-scheme: light !important;
+  background: #ffffff !important;
+  border: 1px solid #d5e5d9 !important;
+  text-shadow: none !important;
+  filter: none !important;
+  box-shadow: 0 24px 80px rgba(16, 58, 31, .2) !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title {
+  color: #183b28 !important;
+  -webkit-text-fill-color: #183b28 !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  opacity: 1 !important;
+  filter: none !important;
+  text-shadow: none !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-label,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-label,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-label {
+  color: #16834b !important;
+  -webkit-text-fill-color: #16834b !important;
+  background: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body {
+  color: #385443 !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body p,
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body li,
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h3,
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h4,
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h5,
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body strong,
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .project-scope-note,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body p,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body li,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h3,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h4,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h5,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body strong,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .project-scope-note,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body p,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body li,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h3,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h4,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h5,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body strong,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .project-scope-note {
+  color: #385443 !important;
+  -webkit-text-fill-color: #385443 !important;
+  background-image: none !important;
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-lead,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-lead,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-lead {
+  color: #254b34 !important;
+  -webkit-text-fill-color: #254b34 !important;
+  font-size: clamp(1.05rem, 1.45vw, 1.25rem) !important;
+  line-height: 1.7 !important;
+  font-weight: 550 !important;
+  text-shadow: none !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .eyebrow,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .eyebrow,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .eyebrow {
+  color: #16834b !important;
+  -webkit-text-fill-color: #16834b !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns > div,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns > div,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns > div,
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-entry,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-entry,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-entry,
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-grid article,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-grid article,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-grid article {
+  color: #385443 !important;
+  background: #f5faf6 !important;
+  border-color: #d6e7db !important;
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-tag,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-tag,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-tag {
+  color: #28513a !important;
+  -webkit-text-fill-color: #28513a !important;
+  text-shadow: none !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-level,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-level,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-level {
+  color: #237544 !important;
+  -webkit-text-fill-color: #237544 !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close {
+  color: #244b32 !important;
+  -webkit-text-fill-color: #244b32 !important;
+  text-shadow: none !important;
+  filter: none !important;
+  background: #f3f8f4 !important;
+  border: 1px solid #d4e6d9 !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:hover,
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:focus-visible,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:hover,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:focus-visible,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:hover,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:focus-visible {
+  color: #0f6b3a !important;
+  -webkit-text-fill-color: #0f6b3a !important;
+  background: #e8f5ec !important;
+  border-color: #91c7a0 !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button,
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button.button-light,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button.button-light,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button.button-light {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: #183b28 !important;
+  border-color: #176b3c !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:hover,
+body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:focus-visible,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:hover,
+body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:focus-visible,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:hover,
+html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:focus-visible {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  background: #116b3b !important;
+  border-color: #116b3b !important;
+}
+@media (max-width: 620px) {
+  body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title,
+  body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title,
+  html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title {
+    font-size: clamp(2rem, 8.5vw, 3.2rem) !important;
+    line-height: 1.1 !important;
+  }
+  body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns,
+  body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns,
+  html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns {
+    grid-template-columns: 1fr !important;
+  }
+}
