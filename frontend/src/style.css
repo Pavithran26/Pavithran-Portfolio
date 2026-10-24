@@ -4143,3 +4143,34 @@ body.experience-normal .space-education.horizontal-story-rail > .education-miles
     padding-block: 0 !important;
   }
 }
+
+
+/* Improve perceived clarity on the two school photos without changing the college cards. */
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-campus-image,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-campus-image {
+  filter: contrast(1.12) saturate(1.08) brightness(1.06) !important;
+  image-rendering: -webkit-optimize-contrast;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual::before,
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual::before {
+  background:
+    linear-gradient(90deg, rgba(2,10,5,.70) 0%, rgba(2,10,5,.54) 30%, rgba(2,10,5,.18) 58%, rgba(2,10,5,.02) 100%),
+    linear-gradient(0deg, rgba(2,9,4,.42) 0%, rgba(2,9,4,.03) 48%, transparent 70%) !important;
+}
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual::before,
+body.experience-normal .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual::before {
+  background:
+    linear-gradient(90deg, rgba(2,10,5,.70) 0%, rgba(2,10,5,.54) 30%, rgba(2,10,5,.18) 58%, rgba(2,10,5,.02) 100%),
+    linear-gradient(0deg, rgba(2,9,4,.42) 0%, rgba(2,9,4,.03) 48%, transparent 70%) !important;
+}
+.space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-campus-image {
+  object-position: center 48% !important;
+}
+@media (max-width: 759px) {
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="2"] .education-visual::before,
+  .space-education.horizontal-story-rail > .education-milestone[data-education-index="3"] .education-visual::before {
+    background:
+      linear-gradient(90deg, rgba(2,10,5,.70) 0%, rgba(2,10,5,.26) 65%, rgba(2,10,5,.08) 100%),
+      linear-gradient(0deg, rgba(2,9,4,.44) 0%, transparent 64%) !important;
+  }
+}
