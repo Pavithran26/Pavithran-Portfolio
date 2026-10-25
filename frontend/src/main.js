@@ -236,46 +236,45 @@ root.innerHTML = `
     <div class="space-content">
       <p class="space-kicker">CREDENTIALS & CONTINUOUS LEARNING</p>
       <h2 id="certifications-title">Certifications,<br><em>earned and documented.</em></h2>
-      <p class="section-intro">Certificate images and recorded training credentials in one place. Open an original image to read the certificate directly; details not recorded in the portfolio are left unassumed.</p>
-      <div class="space-certifications-rail">
-        ${profile.training.map(item => `
-          <article class="certification-card certification-card-no-image">
-            <div class="certification-preview certification-preview-icon" aria-hidden="true">
-              <svg viewBox="0 0 48 48"><circle cx="24" cy="17" r="11"/><path d="m16 26-2 17 10-5 10 5-2-17"/></svg>
-              <span>TRAINING CERTIFICATE</span>
-            </div>
-            <div class="certification-copy">
-              <p class="certification-type">Training credential</p>
-              <h3>${html(item.title)}</h3>
-              <p class="certification-issuer">${html(item.organization)}</p>
-              <p class="certification-description">${html(item.description)}</p>
-              <div class="certification-meta"><span>Completion</span><strong>${html(item.date)}</strong></div>
-              <div class="certification-meta"><span>Certificate ID</span><strong>${html(item.certificate)}</strong></div>
-            </div>
-          </article>
-        `).join('')}
-        ${[...profile.certifications, ...profile.certificationsPdf].map(item => `
-          <article class="certification-card ${item.kind === 'pdf' ? 'certification-card-pdf' : 'certification-card-image'}">
-            ${item.kind === 'pdf' ? `
-              <div class="certification-preview certification-preview-pdf" role="img" aria-label="Anthropic certificate preview: ${html(item.title)}">
-                <span class="certification-pdf-mark" aria-hidden="true">CERTIFICATE</span>
-                <span class="certification-pdf-brand">ANTHROPIC</span>
-                <span class="certification-pdf-recipient">Pavithran S</span>
-                <span class="certification-pdf-caption">has completed</span>
-                <span class="certification-pdf-title">${html(item.title)}</span>
+      <p class="section-intro">Explore certificates from AI, agent workflows, developer tools, and technical training. Select a card to reveal its details.</p>
+      <div class="space-certifications-rail certification-reveal-grid" aria-label="Certificate gallery">
+        ${[
+          ...profile.certificationsPdf.map(item => ({ ...item, kind: 'pdf' })),
+          ...profile.certifications.map(item => ({ ...item, kind: 'image' })),
+          ...profile.training.map(item => ({ ...item, kind: 'training', issuer: item.organization }))
+        ].map((item, index) => `
+          <article class="certification-card ${item.kind === 'pdf' ? 'certification-card-pdf' : item.kind === 'image' ? 'certification-card-image' : 'certification-card-training'} ${index === 0 ? 'is-active' : ''}" data-certification-card>
+            <button class="certification-reveal-trigger" type="button" data-certification-trigger aria-expanded="${index === 0 ? 'true' : 'false'}" aria-controls="certification-details-${index}">
+              <div class="certification-preview ${item.kind === 'pdf' ? 'certification-preview-pdf' : item.kind === 'training' ? 'certification-preview-icon' : 'certification-preview-image'}" aria-hidden="true">
+                ${item.kind === 'pdf' ? `
+                  <span class="certification-pdf-mark">CERTIFICATE</span>
+                  <span class="certification-pdf-brand">ANTHROPIC</span>
+                  <span class="certification-pdf-recipient">Pavithran S</span>
+                  <span class="certification-pdf-caption">has completed</span>
+                  <span class="certification-pdf-title">${html(item.title)}</span>
+                ` : item.kind === 'image' ? `
+                  <img src="${html(item.image)}" alt="" loading="lazy" decoding="async">
+                  <span class="certification-pdf-mark certification-image-mark">${html(item.issuer || 'CERTIFICATE')}</span>
+                ` : `
+                  <svg viewBox="0 0 48 48"><circle cx="24" cy="17" r="11"/><path d="m16 26-2 17 10-5 10 5-2-17"/></svg>
+                  <span class="certification-training-mark">TRAINING CREDENTIAL</span>
+                  <span class="certification-pdf-title">${html(item.title)}</span>
+                `}
+                <span class="certification-preview-shade"></span>
+                <span class="certification-preview-index">${String(index + 1).padStart(2, '0')} / ${String(profile.certificationsPdf.length + profile.certifications.length + profile.training.length).padStart(2, '0')}</span>
               </div>
-            ` : `
-              <a class="certification-preview" href="${html(item.sourceUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Open original certificate: ${html(item.title)}">
-                <img src="${html(item.image)}" alt="${html(item.alt)}" loading="lazy" decoding="async">
-                <span class="certification-preview-open">Open original <span aria-hidden="true">↗</span></span>
-              </a>
-            `}
-            <div class="certification-copy">
-              <p class="certification-type">${item.kind === 'pdf' ? 'Certificate of completion' : 'Certificate image'}</p>
-              <h3>${html(item.title)}</h3>
-              ${item.issuer ? `<p class="certification-issuer">${html(item.issuer)}</p>` : `<p class="certification-issuer">Issuer details in original image</p>`}
-              <p class="certification-description">${html(item.description)}</p>
-              ${item.kind === 'pdf' ? '<span class="certification-view-link certification-view-link-static">Certificate of completion</span>' : `<a class="certification-view-link" href="${html(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">View original certificate <span aria-hidden="true">↗</span></a>`}
+              <span class="certification-card-heading">
+                <span class="certification-type">${item.kind === 'pdf' ? 'Certificate of completion' : item.kind === 'training' ? 'Training credential' : 'Certificate image'}</span>
+                <span class="certification-card-title">${html(item.title)}</span>
+                <span class="certification-issuer">${html(item.issuer || 'Issuer details on certificate')}</span>
+              </span>
+              <span class="certification-trigger-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+              </span>
+            </button>
+            <div class="certification-details" id="certification-details-${index}" aria-hidden="${index === 0 ? 'false' : 'true'}">
+              <p class="certification-description">${html(item.description || 'Original certificate record.')}</p>
+              ${item.kind === 'image' ? `<a class="certification-view-link" href="${html(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">View original certificate <span aria-hidden="true">↗</span></a>` : item.kind === 'training' ? `<div class="certification-detail-meta"><span>Completion</span><strong>${html(item.date)}</strong></div><div class="certification-detail-meta"><span>Certificate ID</span><strong>${html(item.certificate)}</strong></div>` : `<span class="certification-view-link certification-view-link-static">Anthropic certificate record</span>`}
             </div>
           </article>
         `).join('')}
@@ -548,6 +547,36 @@ on(root, 'error', event => {
   }
 }, { capture: true });
 
+// TeamRevealGrid-inspired certificate selection: hover, focus, or tap to reveal a card.
+const certificationGrid = root.querySelector('.certification-reveal-grid');
+if (certificationGrid) {
+  const certificationCards = [...certificationGrid.querySelectorAll('[data-certification-card]')];
+  const activateCertificationCard = (card) => {
+    if (!card) return;
+    certificationCards.forEach(candidate => {
+      const isActive = candidate === card;
+      candidate.classList.toggle('is-active', isActive);
+      const trigger = candidate.querySelector('[data-certification-trigger]');
+      const details = candidate.querySelector('.certification-details');
+      trigger?.setAttribute('aria-expanded', String(isActive));
+      details?.setAttribute('aria-hidden', String(!isActive));
+    });
+  };
+  certificationGrid.addEventListener('pointerover', event => {
+    if (event.pointerType !== 'mouse') return;
+    const card = event.target.closest('[data-certification-card]');
+    if (card && certificationGrid.contains(card)) activateCertificationCard(card);
+  });
+  certificationGrid.addEventListener('focusin', event => {
+    const card = event.target.closest('[data-certification-card]');
+    if (card && certificationGrid.contains(card)) activateCertificationCard(card);
+  });
+  certificationGrid.addEventListener('click', event => {
+    const trigger = event.target.closest('[data-certification-trigger]');
+    if (trigger) activateCertificationCard(trigger.closest('[data-certification-card]'));
+  });
+}
+
 // Build explicit horizontal story stages for Projects, Work, Studies, and recognition.
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const horizontalRailDefinitions = [
@@ -555,7 +584,7 @@ const horizontalRailDefinitions = [
   ['.space-experience', 'WORK EXPERIENCE'],
   ['.space-education', 'STUDIES'],
   ['.space-recognition', 'RECOGNITION & ACHIEVEMENTS'],
-  ['.space-certifications-rail', 'CERTIFICATIONS'],
+
 ];
 const horizontalStoryRails = [];
 const horizontalStoryStages = [];
