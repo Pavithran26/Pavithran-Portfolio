@@ -254,18 +254,27 @@ root.innerHTML = `
             </div>
           </article>
         `).join('')}
-        ${profile.certifications.map(item => `
-          <article class="certification-card">
-            <a class="certification-preview" href="${html(item.sourceUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Open original certificate: ${html(item.title)}">
-              <img src="${html(item.image)}" alt="${html(item.alt)}" loading="lazy" decoding="async">
-              <span class="certification-preview-open">Open original <span aria-hidden="true">↗</span></span>
-            </a>
+        ${[...profile.certifications, ...profile.certificationsPdf].map(item => `
+          <article class="certification-card ${item.kind === 'pdf' ? 'certification-card-pdf' : 'certification-card-image'}">
+            ${item.kind === 'pdf' ? `
+              <a class="certification-preview certification-preview-pdf" href="${html(item.documentUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Open PDF certificate: ${html(item.title)}">
+                <span class="certification-pdf-mark" aria-hidden="true">PDF</span>
+                <span class="certification-pdf-brand">ANTHROPIC</span>
+                <span class="certification-pdf-title">${html(item.title)}</span>
+                <span class="certification-preview-open">Open PDF <span aria-hidden="true">↗</span></span>
+              </a>
+            ` : `
+              <a class="certification-preview" href="${html(item.sourceUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Open original certificate: ${html(item.title)}">
+                <img src="${html(item.image)}" alt="${html(item.alt)}" loading="lazy" decoding="async">
+                <span class="certification-preview-open">Open original <span aria-hidden="true">↗</span></span>
+              </a>
+            `}
             <div class="certification-copy">
-              <p class="certification-type">Certificate image</p>
+              <p class="certification-type">${item.kind === 'pdf' ? 'Certificate of completion' : 'Certificate image'}</p>
               <h3>${html(item.title)}</h3>
               ${item.issuer ? `<p class="certification-issuer">${html(item.issuer)}</p>` : `<p class="certification-issuer">Issuer details in original image</p>`}
               <p class="certification-description">${html(item.description)}</p>
-              <a class="certification-view-link" href="${html(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">View original certificate <span aria-hidden="true">↗</span></a>
+              <a class="certification-view-link" href="${html(item.kind === 'pdf' ? item.documentUrl : item.sourceUrl)}" target="_blank" rel="noopener noreferrer">${item.kind === 'pdf' ? 'Open PDF certificate' : 'View original certificate'} <span aria-hidden="true">↗</span></a>
             </div>
           </article>
         `).join('')}
