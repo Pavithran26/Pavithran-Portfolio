@@ -35,12 +35,12 @@ root.innerHTML = `
     <div class="intro-identity">
       <p class="space-kicker">TAMIL NADU, INDIA · FORWARD DEPLOYED ENGINEER (FDE)</p>
       <h1 id="intro-title">Pavithran <em>S</em></h1>
-      <p class="intro-statement"><span class="vx-morph-phrase" data-morph-phrases="Thoughtful interfaces.|Applied AI &amp; RAG.|Dependable systems.|From idea to production.">Thoughtful interfaces.</span><br><span class="intro-statement-support">A little intelligence in between.</span></p>
+      <p class="intro-statement" data-flip-phrases="THOUGHTFUL INTERFACES|APPLIED AI &amp; RAG|DEPENDABLE SYSTEMS|FROM IDEA TO PRODUCTION"><span class="vx-flip-fade-current intro-flip-line">THOUGHTFUL INTERFACES</span><br><span class="intro-statement-support">A little intelligence in between.</span></p>
       <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
         <a class="intro-enter" href="#work">Explore my work <span aria-hidden="true">↓</span></a>
       </div>
     </div>
-    <p class="intro-caption" data-flip-phrases="A SMALL PART OF A MUCH BIGGER UNIVERSE|BUILD · DEPLOY · LEARN|AI INTO REAL-WORLD SYSTEMS"><span class="vx-flip-fade-current">A SMALL PART OF A MUCH BIGGER UNIVERSE</span></p>
+    <p class="intro-caption">A SMALL PART OF A MUCH BIGGER UNIVERSE</p>
   </section>
 
   <section class="motion-stats-strip" aria-label="Portfolio at a glance">
@@ -60,7 +60,7 @@ root.innerHTML = `
 
   <section class="space-work space-section" id="work" aria-labelledby="work-title">
     <div class="space-content work-wide-content">
-      <p class="space-kicker">IDEAS, BUILT INTO REAL THINGS</p>
+      <p class="space-kicker" data-flip-phrases="IDEAS, BUILT INTO REAL THINGS|IDEA → ARCHITECTURE → PRODUCTION|REAL PROBLEMS. WORKING SYSTEMS."><span class="vx-flip-fade-current">IDEAS, BUILT INTO REAL THINGS</span></p>
       <h2 id="work-title">Selected <em>work & projects.</em></h2>
       <p class="section-intro">Different problems. The same relentless curiosity. Every application below was architected, written, and deployed to solve tangible challenges.</p>
 
@@ -271,7 +271,7 @@ root.innerHTML = `
 
   <footer class="space-contact space-section" id="contact">
     <div class="space-content">
-      <p class="space-kicker">THE NEXT CHAPTER</p>
+      <p class="space-kicker" data-flip-phrases="THE NEXT CHAPTER|FROM IDEA TO IMPACT|LET'S BUILD WHAT'S NEXT"><span class="vx-flip-fade-current">THE NEXT CHAPTER</span></p>
       <h2>Let's make<br><em>something matter.</em></h2>
       <a class="space-email" href="mailto:${html(profile.email)}">${html(profile.email)} <span aria-hidden="true">↗</span></a>
       <div class="space-socials social-flip-section">
