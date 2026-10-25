@@ -210,42 +210,49 @@ export const PORTFOLIO_DATA = {
       "kind": "pdf",
       "title": "Claude 101",
       "issuer": "Anthropic",
+      "backgroundImage": "/images/certifications/claude-101.webp",
       "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "Claude with the Anthropic API",
       "issuer": "Anthropic",
+      "backgroundImage": "/images/certifications/claude-with-anthropic-api.webp",
       "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "AI Fluency: Framework & Foundations",
       "issuer": "Anthropic",
+      "backgroundImage": "/images/certifications/ai-fluency-framework-foundations.webp",
       "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "Introduction to Model Context Protocol",
       "issuer": "Anthropic",
+      "backgroundImage": "/images/certifications/introduction-to-mcp.webp",
       "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "Model Context Protocol: Advanced Topics",
       "issuer": "Anthropic",
+      "backgroundImage": "/images/certifications/mcp-advanced-topics.webp",
       "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "Introduction to subagents",
       "issuer": "Anthropic",
+      "backgroundImage": "/images/certifications/introduction-to-subagents.webp",
       "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "Introduction to agent skills",
       "issuer": "Anthropic",
+      "backgroundImage": "/images/certifications/introduction-to-agent-skills.webp",
       "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     }
   ],
