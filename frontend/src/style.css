@@ -4763,17 +4763,10 @@ body.experience-animation #experience-1 > .experience-company-watermark-fallback
 
   .space-header-actions button,
   #menu-toggle,
-  #appearance-toggle,
   .dawn-eye {
     min-width: 42px !important;
     min-height: 44px !important;
     box-sizing: border-box !important;
-  }
-
-  #appearance-toggle {
-    width: 42px !important;
-    justify-content: center !important;
-    padding-inline: 4px !important;
   }
 
   #menu-toggle {
