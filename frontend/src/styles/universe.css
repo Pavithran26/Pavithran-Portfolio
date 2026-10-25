@@ -23,8 +23,6 @@ button { font-weight: inherit; }
 .space-nav a, .space-header-actions button { font: 400 .875rem/1.4 var(--font-mono); text-transform: uppercase; letter-spacing: .13em; padding: 13px 0; color: var(--muted); }
 .space-nav a:hover, .space-header-actions button:hover { color: var(--white); }
 .space-header-actions { display: flex; gap: 24px; }
-#appearance-toggle { display: flex; align-items: center; gap: 8px; }
-#appearance-toggle > span { font-size: 1.15rem; }
 #menu-toggle { display: none; }
 .space-intro { min-height: 740px; height: 145svh; position: relative; }
 .intro-identity { padding-top: 34svh; margin-left: 8vw; max-width: 680px; }
@@ -121,11 +119,6 @@ button { font-weight: inherit; }
 .space-reading .intro-caption, .space-reading .flight-scroll { display: none; }
 .space-reading .intro-identity { padding-top: 27svh; padding-bottom: 70px; }
 html:has(.space-reading) { scroll-behavior: auto; }
-html[data-appearance='light'] { color-scheme: light; --ink: #e7e9ed; --white: #172333; --muted: #4e5b6e; --line: #182f512b; --accent: #284b79; }
-html[data-appearance='light'] .world-art { filter: saturate(.75); }
-html[data-appearance='light'] .universe-darkness { background: #e7e9ed73; }
-html[data-appearance='light'] .intro-statement, html[data-appearance='light'] .intro-caption { color: #37465b; }
-html[data-appearance='light'] .orbit-tool-name { color: #172333; text-shadow: 0 1px 6px #e7e9ed, 0 0 15px #e7e9ed; }
 @media (max-width: 1050px) {
   .space-header { gap: 28px; }
   .space-nav { gap: 24px; }
@@ -225,7 +218,6 @@ body.book-portfolio .flight-nav { right: max(18px, calc((100vw - 1280px) / 2)); 
 body.book-portfolio .flight-nav a[aria-current] span { background: #18824b; box-shadow: 0 0 9px #18824b; }
 body.book-portfolio .flight-nav a span { background: #748e7b; }
 body.book-portfolio .orbit-interface { opacity: .18; mix-blend-mode: multiply; }
-html[data-appearance='light'] body.book-portfolio { background: #d0e0d2; }
 @media (max-width: 759px) {
  body.book-portfolio #portfolio, body.book-portfolio .space-header, body.book-portfolio .flight-footer { width: calc(100% - 18px); }
  body.book-portfolio #portfolio { margin-top: 76px; padding: 0 18px; }
@@ -393,8 +385,6 @@ html[data-appearance='light'] body.book-portfolio { background: #d0e0d2; }
 .space-header { gap: 24px; }
 .space-projects .project-destination { min-height: 100svh; }
 .space-experience article, .space-education article { min-height: 75svh; }
-html[data-appearance='light'] .universe-darkness { background: linear-gradient(90deg, #e7e9edef, #e7e9ed55 45%, #e7e9ed20); }
-html[data-appearance='light'] .universe-darkness::after { background: linear-gradient(90deg, transparent, #e7e9dee8); }
 @media (max-width: 1100px) { .space-nav { gap: 16px; } .space-header { gap: 18px; } .space-nav a { font-size: 12px; letter-spacing: .05em; } }
 @media (max-width: 759px) {
   .space-header { gap: 8px; padding: 12px 4vw; }
@@ -402,8 +392,6 @@ html[data-appearance='light'] .universe-darkness::after { background: linear-gra
   .dawn-eye { padding: 4px; min-width: 46px; justify-content: center; }
   .eye-label { display: none; }
   .space-header-actions { margin-left: auto; gap: 10px; }
-  #appearance-toggle { font-size: 11px; letter-spacing: 0; }
-  #appearance-toggle > span { display: inline-block; font-size: 1.15rem; line-height: 1; }
   #menu-toggle { font-size: 12px; }
   .terminal-launch { top: 77px; right: 4vw; font-size: 11px; }
   .universe-darkness { background: linear-gradient(180deg, #05080ee8, #05080edb 40%, #05080e30 75%, #05080e70); }
@@ -441,7 +429,6 @@ html[data-appearance='light'] .universe-darkness::after { background: linear-gra
 .story-motion .is-revealed .project-workflow li:nth-child(2) { animation-delay: .15s; }
 .story-motion .is-revealed .project-workflow li:nth-child(3) { animation-delay: .3s; }
 @keyframes project-step-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-html[data-appearance='light'] .project-visual { color: var(--accent); }
 .space-reading .space-projects .project-destination { width: 100%; max-width: none; min-height: 0; padding: 60px 0; }
 .space-reading .project-visual { transform: none; opacity: 1; transition: none; }
 .space-reading .project-workflow li { animation: none; }
@@ -664,36 +651,5 @@ body:not(.space-reading):not(.project-archive) #portfolio { translate: var(--cam
 .dawn-eye:hover {
   border-color: #8df5b8;
   box-shadow: 0 0 24px #38d9762b;
-}
-
-html[data-appearance='light'] {
-  color-scheme: light;
-  --ink: #edf3ee;
-  --white: #1a3022;
-  --muted: #526a5a;
-  --line: #1b4b302b;
-  --accent: #18824b;
-  --emerald-accent: #18824b;
-  --text-muted: #526a5a;
-}
-
-html[data-appearance='light'] .universe-darkness {
-  background:
-    radial-gradient(ellipse at 18% 38%, #4db4771c 0%, transparent 48%),
-    #edf3ee73;
-}
-
-html[data-appearance='light'] .world-art {
-  filter: hue-rotate(-100deg) saturate(.78);
-}
-
-html[data-appearance='light'] .intro-statement,
-html[data-appearance='light'] .intro-caption {
-  color: #334f3d;
-}
-
-html[data-appearance='light'] .orbit-tool-name {
-  color: #1a3022;
-  text-shadow: 0 1px 6px #edf3ee, 0 0 15px #edf3ee;
 }
 
