@@ -182,26 +182,38 @@ export class TextEffectsController {
   }
 
   initFlipFadeText() {
-    const caption = this.root.querySelector("[data-flip-phrases]");
-    if (!caption) return;
-    const phrases = (caption.dataset.flipPhrases || "").split("|").map((word) => word.trim()).filter(Boolean);
-    if (phrases.length < 2) return;
-    let index = 0;
-    const target = caption.querySelector(".vx-flip-fade-current") || caption;
-    if (!target.textContent.trim()) target.textContent = phrases[0];
-    if (this.reducedMotion.matches) return;
+    const captions = [...this.root.querySelectorAll("[data-flip-phrases]")];
+    if (!captions.length || this.reducedMotion.matches) return;
 
-    const cycle = () => {
-      target.classList.add("is-vx-flipping");
-      this.addTimer(() => {
-        index = (index + 1) % phrases.length;
-        target.textContent = phrases[index];
-        target.classList.remove("is-vx-flipping");
-        target.classList.add("is-vx-flipped");
-        this.addTimer(() => target.classList.remove("is-vx-flipped"), 420);
-      }, 300);
-    };
-    this.addInterval(cycle, 4600);
+    // Start each phrase cycle when its section enters view, not while it sits offscreen.
+    this.observe(captions, (caption) => {
+      const phrases = (caption.dataset.flipPhrases || "")
+        .split("|")
+        .map((phrase) => phrase.trim())
+        .filter(Boolean);
+      if (phrases.length < 2) return;
+
+      const target = caption.querySelector(".vx-flip-fade-current") || caption;
+      const currentIndex = phrases.indexOf(target.textContent.trim());
+      let index = currentIndex >= 0 ? currentIndex : 0;
+      if (!target.textContent.trim()) target.textContent = phrases[index];
+
+      const cycle = () => {
+        if (!target.isConnected) return;
+        target.classList.remove("is-vx-flipped");
+        target.classList.add("is-vx-flipping");
+        this.addTimer(() => {
+          if (!target.isConnected) return;
+          index = (index + 1) % phrases.length;
+          target.textContent = phrases[index];
+          target.classList.remove("is-vx-flipping");
+          target.classList.add("is-vx-flipped");
+          this.addTimer(() => target.classList.remove("is-vx-flipped"), 420);
+        }, 300);
+      };
+
+      this.addInterval(cycle, 4600);
+    }, { threshold: 0.18, rootMargin: "0px 0px -6% 0px" });
   }
 
   initMorphText() {
