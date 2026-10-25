@@ -403,7 +403,7 @@ html[data-appearance='light'] .universe-darkness::after { background: linear-gra
   .eye-label { display: none; }
   .space-header-actions { margin-left: auto; gap: 10px; }
   #appearance-toggle { font-size: 11px; letter-spacing: 0; }
-  #appearance-toggle > span { display: none; }
+  #appearance-toggle > span { display: inline-block; font-size: 1.15rem; line-height: 1; }
   #menu-toggle { font-size: 12px; }
   .terminal-launch { top: 77px; right: 4vw; font-size: 11px; }
   .universe-darkness { background: linear-gradient(180deg, #05080ee8, #05080edb 40%, #05080e30 75%, #05080e70); }
