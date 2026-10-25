@@ -132,30 +132,6 @@ body.space-portfolio {
   padding-top: 20px;
 }
 
-/* Light Appearance Theme Overrides */
-body.light-appearance {
-  --ink: #f5f2ec;
-  --white: #14171c;
-  --paper: #14171c;
-  --muted: #5e6673;
-  --accent: #9e4b10;
-  --line: #d8d0c2;
-  background: #f4f0e6 !important;
-  color: #14171c !important;
-}
-
-body.light-appearance .universe-darkness {
-  background: linear-gradient(180deg, rgba(245, 242, 236, 0.95), rgba(240, 235, 225, 0.98)) !important;
-}
-
-body.light-appearance .space-header {
-  background: linear-gradient(#f4f0e6, transparent);
-}
-
-body.light-appearance .paper-giant-wordmark {
-  color: rgba(60, 45, 25, 0.065);
-}
-
 /* Cohesive green finish across every portfolio surface. */
 :root {
   --ink: #050b08;
@@ -323,49 +299,6 @@ body.light-appearance .paper-giant-wordmark {
   background: #27874c !important;
 }
 
-/* Keep the light appearance green as well; no return to orange/blue accents. */
-html[data-appearance='light'] {
-  --ink: #edf3ee;
-  --paper: #f3f8f3;
-  --white: #1a3022;
-  --muted: #526a5a;
-  --line: #c3d8c9;
-  --accent: #18824b;
-  --emerald-accent: #18824b;
-  --cyan-accent: #2a9e5b;
-  --purple-accent: #21884d;
-  --blue-accent: #18824b;
-  --amber-accent: #398d58;
-}
-html[data-appearance='light'] .universe-darkness {
-  background:
-    radial-gradient(ellipse at 18% 38%, rgba(68, 171, 105, .1), transparent 48%),
-    linear-gradient(180deg, rgba(237, 243, 238, .92), rgba(237, 243, 238, .97));
-}
-html[data-appearance='light'] .intro-statement,
-html[data-appearance='light'] .intro-caption,
-html[data-appearance='light'] .section-intro,
-html[data-appearance='light'] .world-description {
-  color: #334f3d;
-}
-html[data-appearance='light'] .project-link-btn {
-  color: #176c3d !important;
-  background: rgba(24, 130, 75, .08) !important;
-  border-color: rgba(24, 130, 75, .3) !important;
-}
-html[data-appearance='light'] .terminal-floating-wrapper[data-theme],
-html[data-appearance='light'] .terminal-embedded-wrapper[data-theme] {
-  --term-bg: rgba(238, 248, 240, .95);
-  --term-header: rgba(221, 241, 226, .96);
-  --term-border: rgba(24, 130, 75, .3);
-  --term-text: #173523;
-  --term-prompt-user: #18824b;
-  --term-prompt-host: #247c49;
-  --term-cyan: #18824b;
-  --term-highlight: #18824b;
-  --term-accent: #247c49;
-}
-
 /* The archive's paper remains paper, but all interface trim stays green. */
 .project-archive h1 em,
 .project-archive .archive-copy h2 span,
@@ -376,41 +309,6 @@ html[data-appearance='light'] .terminal-embedded-wrapper[data-theme] {
 .project-archive .archive-home:hover {
   color: var(--accent);
 }
-
-/* Final light-mode and filter polish for the green brand. */
-body.light-appearance {
-  --ink: #edf3ee;
-  --paper: #f3f8f3;
-  --white: #1a3022;
-  --muted: #526a5a;
-  --accent: #18824b;
-  --emerald-accent: #18824b;
-  --cyan-accent: #2a9e5b;
-  --purple-accent: #21884d;
-  --blue-accent: #18824b;
-  --amber-accent: #398d58;
-  --line: #c3d8c9;
-  --text-muted: #526a5a;
-  background: #edf3ee !important;
-  color: #1a3022 !important;
-}
-body.light-appearance .space-header {
-  background: linear-gradient(#edf3ee, transparent) !important;
-}
-body.light-appearance .flight-footer {
-  background: linear-gradient(transparent, #edf3ee) !important;
-}
-body.light-appearance .universe-darkness {
-  background:
-    radial-gradient(ellipse at 18% 38%, rgba(68,171,105,.1), transparent 48%),
-    linear-gradient(180deg, rgba(237,243,238,.92), rgba(237,243,238,.97)) !important;
-}
-body.light-appearance .project-link-btn,
-body.light-appearance .hero-btn-3d {
-  color: #176c3d !important;
-  background: rgba(24,130,75,.08) !important;
-  border-color: rgba(24,130,75,.3) !important;
-}
 .filter-tab:hover,
 .filter-tab.active {
   background: linear-gradient(180deg, #174d2d 0%, #0d321d 52%, #092213 100%) !important;
@@ -418,26 +316,12 @@ body.light-appearance .hero-btn-3d {
   border-color: rgba(112,223,161,.72) !important;
   box-shadow: 0 4px 14px rgba(0,0,0,.38), inset 0 1px 1px rgba(206,255,222,.16) !important;
 }
-body.light-appearance .filter-tab:hover,
-body.light-appearance .filter-tab.active {
-  background: linear-gradient(180deg, #dff3e5 0%, #cfead8 100%) !important;
-  color: #176c3d !important;
-  border-color: rgba(24,130,75,.55) !important;
-  box-shadow: 0 4px 14px rgba(20,78,42,.1) !important;
-}
 .portfolio-dialog {
   --accent: #70dfa1;
   --ink: #07110b;
   --white: #edf5ef;
   --muted: #a1b4a7;
   --line: #294b36;
-}
-body.light-appearance .portfolio-dialog {
-  --accent: #18824b;
-  --ink: #edf3ee;
-  --white: #1a3022;
-  --muted: #526a5a;
-  --line: #c3d8c9;
 }
 
 /* Horizontal scroll storytelling: projects, work and studies */
@@ -618,20 +502,6 @@ body.experience-normal .space-recognition.horizontal-story-rail > article {
   background: linear-gradient(145deg, rgba(19, 47, 28, .92), rgba(5, 12, 7, .97)) !important;
   border-color: rgba(112,223,161,.25) !important;
   box-shadow: 0 16px 38px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.09) !important;
-}
-
-html[data-appearance='light'] .space-projects.horizontal-story-rail .project-destination,
-html[data-appearance='light'] .space-experience.horizontal-story-rail > article,
-html[data-appearance='light'] .space-education.horizontal-story-rail > article,
-html[data-appearance='light'] .space-recognition.horizontal-story-rail > article {
-  background: linear-gradient(145deg, #f4faf5, #e4f1e7);
-  border-color: #b8d7c1;
-  box-shadow: 0 14px 30px rgba(24, 83, 44, .08), inset 0 1px 0 #fff;
-}
-html[data-appearance='light'] .space-experience.horizontal-story-rail h3,
-html[data-appearance='light'] .space-education.horizontal-story-rail h3,
-html[data-appearance='light'] .space-recognition.horizontal-story-rail h3 {
-  color: #203b2a;
 }
 
 @media (max-width: 759px) {
@@ -842,16 +712,6 @@ html[data-appearance='light'] .space-recognition.horizontal-story-rail h3 {
   background: rgba(255,255,255,.045);
   border-radius: 99px;
 }
-
-html[data-appearance='light'] .horizontal-rail-toolbar {
-  color: #206b3e;
-  background: linear-gradient(90deg, rgba(237,245,239,.97), rgba(237,245,239,.86) 76%, rgba(237,245,239,.08));
-}
-html[data-appearance='light'] .horizontal-rail-controls button {
-  color: #176c3d;
-  background: linear-gradient(145deg, #e1f2e5, #f5faf6);
-  border-color: rgba(24,130,75,.3);
-}
 body.book-portfolio .horizontal-rail-toolbar {
   color: #206b3e;
   background: linear-gradient(90deg, rgba(237,245,239,.98), rgba(237,245,239,.85) 76%, rgba(237,245,239,.08));
@@ -965,11 +825,6 @@ body.book-portfolio .space-recognition.horizontal-story-rail > article {
 }
 .dawn-shiny-button.dawn-eye:focus-visible {
   outline-color: #70dfa1 !important;
-}
-html[data-appearance='light'] .dawn-shiny-button.dawn-eye {
-  --gleam-base: #eff8f1;
-  --gleam-inset: #d0e5d5;
-  --gleam-label: #17482a;
 }
 @media (max-width: 759px) {
   .dawn-ai-button-mount {
@@ -4668,188 +4523,7 @@ dialog.portfolio-dialog[data-view="tool-detail"] .detail-actions .button:focus-v
     justify-content: center;
   }
 }
-
-
-/* Shared light-dialog accessibility fix for every portfolio detail modal.
-   The earlier text contrast fix covered tool-detail only; projects, layers, skills
-   and profile dialogs use the same #detail-title/#detail-body shell. */
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]),
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]),
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) {
-  --accent: #16834b !important;
-  --ink: #193b28 !important;
-  --white: #193b28 !important;
-  --muted: #526b5b !important;
-  --line: #d7e6db !important;
-  color: #193b28 !important;
-  color-scheme: light !important;
-  background: #ffffff !important;
-  border: 1px solid #d5e5d9 !important;
-  text-shadow: none !important;
-  filter: none !important;
-  box-shadow: 0 24px 80px rgba(16, 58, 31, .2) !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title {
-  color: #183b28 !important;
-  -webkit-text-fill-color: #183b28 !important;
-  background: none !important;
-  background-image: none !important;
-  -webkit-background-clip: border-box !important;
-  background-clip: border-box !important;
-  opacity: 1 !important;
-  filter: none !important;
-  text-shadow: none !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-label,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-label,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-label {
-  color: #16834b !important;
-  -webkit-text-fill-color: #16834b !important;
-  background: none !important;
-  text-shadow: none !important;
-  filter: none !important;
-  opacity: 1 !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body {
-  color: #385443 !important;
-  text-shadow: none !important;
-  filter: none !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body p,
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body li,
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h3,
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h4,
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h5,
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body strong,
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .project-scope-note,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body p,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body li,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h3,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h4,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h5,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body strong,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .project-scope-note,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body p,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body li,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h3,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h4,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h5,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body strong,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .project-scope-note {
-  color: #385443 !important;
-  -webkit-text-fill-color: #385443 !important;
-  background-image: none !important;
-  text-shadow: none !important;
-  filter: none !important;
-  opacity: 1 !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-lead,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-lead,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-lead {
-  color: #254b34 !important;
-  -webkit-text-fill-color: #254b34 !important;
-  font-size: clamp(1.05rem, 1.45vw, 1.25rem) !important;
-  line-height: 1.7 !important;
-  font-weight: 550 !important;
-  text-shadow: none !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .eyebrow,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .eyebrow,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .eyebrow {
-  color: #16834b !important;
-  -webkit-text-fill-color: #16834b !important;
-  text-shadow: none !important;
-  filter: none !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns > div,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns > div,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns > div,
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-entry,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-entry,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-entry,
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-grid article,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-grid article,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-grid article {
-  color: #385443 !important;
-  background: #f5faf6 !important;
-  border-color: #d6e7db !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-tag,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-tag,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-tag {
-  color: #28513a !important;
-  -webkit-text-fill-color: #28513a !important;
-  text-shadow: none !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-level,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-level,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .skill-level {
-  color: #237544 !important;
-  -webkit-text-fill-color: #237544 !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close {
-  color: #244b32 !important;
-  -webkit-text-fill-color: #244b32 !important;
-  text-shadow: none !important;
-  filter: none !important;
-  background: #f3f8f4 !important;
-  border: 1px solid #d4e6d9 !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:hover,
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:focus-visible,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:hover,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:focus-visible,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:hover,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close:focus-visible {
-  color: #0f6b3a !important;
-  -webkit-text-fill-color: #0f6b3a !important;
-  background: #e8f5ec !important;
-  border-color: #91c7a0 !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button,
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button.button-light,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button.button-light,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button.button-light {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  background: #183b28 !important;
-  border-color: #176b3c !important;
-  text-shadow: none !important;
-  filter: none !important;
-}
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:hover,
-body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:focus-visible,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:hover,
-body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:focus-visible,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:hover,
-html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) .detail-actions .button:focus-visible {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff !important;
-  background: #116b3b !important;
-  border-color: #116b3b !important;
-}
 @media (max-width: 620px) {
-  body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title,
-  body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title,
-  html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title {
-    font-size: clamp(2rem, 8.5vw, 3.2rem) !important;
-    line-height: 1.1 !important;
-  }
-  body.experience-normal dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns,
-  body.light-appearance dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns,
-  html[data-appearance="light"] dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns {
-    grid-template-columns: 1fr !important;
-  }
 }
 
 
@@ -5670,4 +5344,221 @@ body.experience-animation #experience-1 > .experience-company-watermark-fallback
   .space-recognition.horizontal-story-rail {
     scroll-behavior: auto !important;
   }
+}
+
+
+/* GlassDock-inspired navigation: compact icons, frosted glass, and hover labels. */
+body .space-header .space-nav.glass-dock {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 5px !important;
+  margin-left: auto;
+  padding: 7px;
+  border: 1px solid rgba(139, 215, 166, .27);
+  border-radius: 20px;
+  background: rgba(3, 17, 9, .74);
+  -webkit-backdrop-filter: blur(24px) saturate(155%);
+  backdrop-filter: blur(24px) saturate(155%);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, .23), inset 0 1px 0 rgba(255, 255, 255, .12);
+  isolation: isolate;
+}
+body .space-header .space-nav.glass-dock .dock-item {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex: 0 0 43px;
+  width: 43px;
+  height: 43px;
+  padding: 0 !important;
+  border: 1px solid transparent;
+  border-radius: 13px;
+  color: #a5c9b0;
+  text-decoration: none;
+  transition: transform .24s cubic-bezier(.2,.75,.3,1), color .2s ease, background .2s ease, border-color .2s ease;
+}
+body .space-header .space-nav.glass-dock .dock-item svg {
+  display: block;
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .24s cubic-bezier(.2,.75,.3,1);
+}
+body .space-header .space-nav.glass-dock .dock-item:hover,
+body .space-header .space-nav.glass-dock .dock-item:focus-visible {
+  transform: translateY(-3px) scale(1.07);
+  color: #8cf0b0 !important;
+  background: rgba(112, 223, 161, .12);
+  border-color: rgba(112, 223, 161, .28);
+  outline-offset: 4px;
+}
+body .space-header .space-nav.glass-dock .dock-tooltip {
+  position: absolute;
+  z-index: 250;
+  left: 50%;
+  top: calc(100% + 12px);
+  transform: translate(-50%, -4px) scale(.95);
+  padding: 9px 13px;
+  border: 1px solid rgba(139, 215, 166, .28);
+  border-radius: 10px;
+  background: rgba(2, 13, 7, .94);
+  color: #edfff2;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .26), inset 0 1px 0 rgba(255, 255, 255, .09);
+  font: 500 .72rem/1 var(--font-mono);
+  letter-spacing: .08em;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .2s ease, transform .2s ease, visibility .2s ease;
+}
+body .space-header .space-nav.glass-dock .dock-item:hover .dock-tooltip,
+body .space-header .space-nav.glass-dock .dock-item:focus-visible .dock-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0) scale(1);
+}
+body.experience-normal .space-header .space-nav.glass-dock {
+  background: rgba(245, 251, 246, .88);
+  border-color: rgba(24, 130, 75, .2);
+  box-shadow: 0 12px 32px rgba(20, 75, 39, .09), inset 0 1px 0 #fff;
+}
+body.experience-normal .space-header .space-nav.glass-dock .dock-item {
+  color: #355f43 !important;
+}
+body.experience-normal .space-header .space-nav.glass-dock .dock-item:hover,
+body.experience-normal .space-header .space-nav.glass-dock .dock-item:focus-visible {
+  color: #147942 !important;
+  background: rgba(24, 130, 75, .09);
+  border-color: rgba(24, 130, 75, .2);
+}
+body.experience-normal .space-header .space-nav.glass-dock .dock-tooltip {
+  color: #eaffef;
+  background: rgba(18, 58, 34, .96);
+  border-color: rgba(24, 130, 75, .27);
+}
+
+/* A matching glass side-sheet keeps the mobile menu practical and tap-friendly. */
+body .mobile-menu[open] {
+  position: fixed;
+  inset: 0 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: min(440px, 100vw);
+  max-width: 100vw;
+  height: 100dvh;
+  min-height: 100dvh;
+  max-height: 100dvh;
+  box-sizing: border-box;
+  margin: 0;
+  padding: calc(26px + env(safe-area-inset-top)) clamp(22px, 5vw, 38px) calc(24px + env(safe-area-inset-bottom));
+  overflow-y: auto;
+  color: #effff4;
+  background: rgba(2, 14, 7, .88);
+  border: 1px solid rgba(139, 215, 166, .25);
+  border-right: 0;
+  border-radius: 24px 0 0 24px;
+  -webkit-backdrop-filter: blur(28px) saturate(155%);
+  backdrop-filter: blur(28px) saturate(155%);
+  box-shadow: -24px 0 80px rgba(0, 0, 0, .32), inset 0 1px 0 rgba(255,255,255,.1);
+}
+body .mobile-menu::backdrop {
+  background: rgba(0, 8, 4, .52);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+body .mobile-menu .mobile-menu-top {
+  margin-bottom: 30px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(139, 215, 166, .22);
+  color: #9ee9b8;
+}
+body .mobile-menu .mobile-menu-top button {
+  padding: 9px 12px;
+  border: 1px solid rgba(139, 215, 166, .25);
+  border-radius: 10px;
+  color: inherit;
+  background: rgba(139, 215, 166, .08);
+}
+body .mobile-menu nav {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+body .mobile-menu nav a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 56px;
+  padding: 11px 14px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  color: #d8e8dc;
+  text-decoration: none;
+  font: 500 .91rem/1.4 var(--font-mono);
+  letter-spacing: .075em;
+  text-transform: uppercase;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease, color .2s ease;
+}
+body .mobile-menu nav a svg {
+  flex: 0 0 23px;
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+body .mobile-menu nav a:hover,
+body .mobile-menu nav a:focus-visible {
+  transform: translateX(4px);
+  color: #8cf0b0;
+  border-color: rgba(112, 223, 161, .2);
+  background: rgba(112, 223, 161, .09);
+  outline-offset: 3px;
+}
+body.experience-normal .mobile-menu[open] {
+  color: #193b28;
+  background: rgba(245, 251, 246, .92);
+  border-color: rgba(24, 130, 75, .2);
+  box-shadow: -24px 0 80px rgba(20, 75, 39, .13), inset 0 1px 0 #fff;
+}
+body.experience-normal .mobile-menu .mobile-menu-top {
+  color: #16834b;
+  border-color: #d3e6d9;
+}
+body.experience-normal .mobile-menu .mobile-menu-top button {
+  color: #234d34;
+  border-color: #c5decc;
+  background: rgba(24, 130, 75, .06);
+}
+body.experience-normal .mobile-menu nav a {
+  color: #234d34;
+}
+body.experience-normal .mobile-menu nav a:hover,
+body.experience-normal .mobile-menu nav a:focus-visible {
+  color: #16834b;
+  background: rgba(24, 130, 75, .07);
+  border-color: rgba(24, 130, 75, .18);
+}
+@media (max-width: 950px) {
+  body .space-header .space-nav.glass-dock { display: none !important; }
+}
+@media (max-width: 759px) {
+  body .space-header .space-nav.glass-dock { display: none !important; }
+  body .space-header-actions { gap: 8px !important; }
+  body .space-header .space-header-actions #menu-toggle { display: block !important; }
+  body .space-header .space-signature { font-size: clamp(1.12rem, 4.9vw, 1.5rem) !important; }
+  body .mobile-menu[open] { width: min(100vw, 420px); border-radius: 20px 0 0 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body .space-header .space-nav.glass-dock .dock-item,
+  body .space-header .space-nav.glass-dock .dock-item svg,
+  body .space-header .space-nav.glass-dock .dock-tooltip,
+  body .mobile-menu nav a { transition: none !important; }
 }
