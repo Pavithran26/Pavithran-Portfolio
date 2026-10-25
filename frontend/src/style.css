@@ -4987,3 +4987,49 @@ body.experience-animation #experience-1 > .experience-company-watermark-fallback
     transition: none !important;
   }
 }
+
+
+/* Training & recognition cards: keep the desktop rail cards compact and consistently sized. */
+.space-recognition.horizontal-story-rail > article {
+  flex: 0 0 min(50vw, 520px) !important;
+  width: min(50vw, 520px) !important;
+  max-width: min(50vw, 520px) !important;
+  min-width: 0 !important;
+  min-height: clamp(280px, 34svh, 340px) !important;
+  height: auto !important;
+  box-sizing: border-box !important;
+  align-self: stretch !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  gap: 8px !important;
+  padding: clamp(22px, 2.5vw, 30px) !important;
+}
+
+.space-recognition.horizontal-story-rail > article h3 {
+  margin-block: 8px 10px !important;
+  line-height: 1.2 !important;
+  overflow-wrap: anywhere;
+}
+
+.space-recognition.horizontal-story-rail > article > p:not(.space-kicker) {
+  line-height: 1.65 !important;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 759px) {
+  .space-recognition.horizontal-story-rail > article {
+    flex-basis: 78vw !important;
+    width: 78vw !important;
+    max-width: 78vw !important;
+    min-height: 260px !important;
+    height: auto !important;
+    padding: 22px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .space-recognition.horizontal-story-rail > article {
+    scroll-snap-align: start;
+  }
+}
