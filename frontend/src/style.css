@@ -5606,3 +5606,206 @@ body.experience-normal .space-header .space-header-actions #menu-toggle.menu-ico
   body .space-header .menu-icon > span,
   body .space-header .space-header-actions #menu-toggle.menu-icon-toggle { transition: none !important; }
 }
+
+
+/* Certification library: original scans, readable metadata, and horizontal glass cards. */
+body .space-certifications .space-content { width: 100%; max-width: none; }
+body .space-certifications .section-intro { max-width: 760px; }
+body .space-certifications.horizontal-story-rail {
+  width: calc(100% + 16vw);
+  margin: 34px 0 0 -8vw;
+  padding: 12px 8vw 34px;
+}
+body .space-certifications.horizontal-story-rail > .certification-card {
+  flex: 0 0 min(50vw, 520px);
+  width: min(50vw, 520px);
+  max-width: min(50vw, 520px);
+  min-width: 0;
+  min-height: 480px;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(112,223,161,.24);
+  border-radius: 22px;
+  background: linear-gradient(145deg, rgba(19,47,28,.94), rgba(5,12,7,.97));
+  box-shadow: 0 18px 42px rgba(0,0,0,.2), inset 0 1px 0 rgba(255,255,255,.08);
+  scroll-snap-align: center;
+}
+body .space-certifications .certification-preview {
+  position: relative;
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: clamp(190px, 26svh, 260px);
+  overflow: hidden;
+  padding: 14px;
+  box-sizing: border-box;
+  background: linear-gradient(135deg, rgba(231,246,235,.96), rgba(191,224,201,.92));
+  border-bottom: 1px solid rgba(112,223,161,.22);
+  text-decoration: none;
+}
+body .space-certifications .certification-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 7px;
+  filter: none;
+  transition: transform .35s ease;
+}
+body .space-certifications .certification-preview:hover img,
+body .space-certifications .certification-preview:focus-visible img { transform: scale(1.035); }
+body .space-certifications .certification-preview-open {
+  position: absolute;
+  right: 13px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 11px;
+  border: 1px solid rgba(112,223,161,.33);
+  border-radius: 999px;
+  color: #eaffef;
+  background: rgba(3,17,9,.88);
+  font: 500 .68rem/1.2 var(--font-mono);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+body .space-certifications .certification-preview:hover .certification-preview-open,
+body .space-certifications .certification-preview:focus-visible .certification-preview-open { opacity: 1; transform: none; }
+body .space-certifications .certification-preview-icon {
+  flex-direction: column;
+  gap: 12px;
+  color: #1b7240;
+  font: 500 .7rem/1.3 var(--font-mono);
+  letter-spacing: .12em;
+  text-align: center;
+}
+body .space-certifications .certification-preview-icon svg {
+  width: 62px;
+  height: 62px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 6px 12px rgba(22,131,75,.15));
+}
+body .space-certifications .certification-copy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 22px 24px 24px;
+  color: #edf5ef;
+}
+body .space-certifications .certification-type {
+  margin: 0;
+  color: #8cf0b0;
+  font: 500 .66rem/1.5 var(--font-mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+body .space-certifications .certification-copy h3 {
+  margin: 0;
+  color: #f4fff7;
+  font-family: var(--font-display);
+  font-size: clamp(1.55rem, 2.3vw, 2rem);
+  font-weight: 400;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+body .space-certifications .certification-issuer {
+  margin: 0;
+  color: #b2dbbd;
+  font-size: .89rem;
+  font-weight: 500;
+}
+body .space-certifications .certification-description {
+  margin: 0;
+  color: #b7cdbd;
+  font-size: .88rem;
+  line-height: 1.7;
+}
+body .space-certifications .certification-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 5px 12px;
+  width: 100%;
+  padding-top: 8px;
+  border-top: 1px solid rgba(139,215,166,.16);
+  color: #a6c5af;
+  font-size: .78rem;
+}
+body .space-certifications .certification-meta strong {
+  color: #e6f7eb;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+body .space-certifications .certification-view-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 42px;
+  margin-top: auto;
+  padding-top: 12px;
+  color: #9cf2b6;
+  font: 500 .75rem/1.4 var(--font-mono);
+  text-decoration: none;
+}
+body .space-certifications .certification-view-link:hover,
+body .space-certifications .certification-view-link:focus-visible { color: #e4ffed; }
+body.experience-normal .space-certifications.horizontal-story-rail > .certification-card {
+  background: linear-gradient(145deg, #ffffff, #f0f8f2);
+  border-color: #c8e1cf;
+  box-shadow: 0 16px 36px rgba(24,83,44,.08), inset 0 1px 0 #fff;
+}
+body.experience-normal .space-certifications .certification-copy { color: #193b28; }
+body.experience-normal .space-certifications .certification-copy h3 { color: #183b28; }
+body.experience-normal .space-certifications .certification-issuer,
+body.experience-normal .space-certifications .certification-description,
+body.experience-normal .space-certifications .certification-meta { color: #526a5a; }
+body.experience-normal .space-certifications .certification-meta { border-color: #d5e7da; }
+body.experience-normal .space-certifications .certification-meta strong { color: #234d34; }
+body.experience-normal .space-certifications .certification-view-link { color: #16834b; }
+body.experience-normal .space-certifications .certification-preview-open { color: #effff4; }
+body.experience-normal .space-certifications .certification-preview-icon { color: #1b7240; }
+@media (max-width: 759px) {
+  body .space-certifications.horizontal-story-rail {
+    width: calc(100% + 12vw);
+    margin: 24px 0 0 -6vw;
+    padding: 10px 6vw 26px;
+    gap: 14px;
+  }
+  body .space-certifications.horizontal-story-rail > .certification-card {
+    flex-basis: 82vw;
+    width: 82vw;
+    max-width: 82vw;
+    min-height: 0;
+    border-radius: 18px;
+  }
+  body .space-certifications .certification-preview { height: clamp(165px, 48vw, 220px); padding: 10px; }
+  body .space-certifications .certification-copy { padding: 18px 18px 20px; }
+  body .space-certifications .certification-copy h3 { font-size: 1.55rem; }
+  body .space-certifications .certification-preview-open { opacity: 1; transform: none; }
+}
+@media (max-width: 380px) {
+  body .space-certifications.horizontal-story-rail > .certification-card {
+    flex-basis: 86vw;
+    width: 86vw;
+    max-width: 86vw;
+  }
+  body .space-certifications .certification-copy { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body .space-certifications .certification-preview img,
+  body .space-certifications .certification-preview-open { transition: none !important; }
+}
