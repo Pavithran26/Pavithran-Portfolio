@@ -218,16 +218,8 @@ root.innerHTML = `
           `;
         }).join('')}
       </div>
-      <h3 class="story-subheading" id="recognition" style="margin-top: 48px; font-family: var(--font-display); font-size: 2.2rem; font-weight: 400;">Training & recognition</h3>
+      <h3 class="story-subheading" id="recognition" style="margin-top: 48px; font-family: var(--font-display); font-size: 2.2rem; font-weight: 400;">Recognition & achievements</h3>
       <div class="space-recognition">
-        ${profile.training.map(item => `
-          <article>
-            <p class="space-kicker">${html(item.date)}</p>
-            <h3>${html(item.title)}</h3>
-            <p>${html(item.organization)} · ${html(item.description)}</p>
-            <p class="training-certificate">Certificate: ${html(item.certificate)}</p>
-          </article>
-        `).join('')}
         ${profile.achievements.map(item => `
           <article>
             <p class="space-kicker">${html(item.date)}</p>
@@ -237,8 +229,46 @@ root.innerHTML = `
           </article>
         `).join('')}
       </div>
-      <div style="margin-top: 24px;">
-        <a class="space-text-link" href="${profile.links.certifications}" target="_blank" rel="noopener noreferrer">View certificate gallery <span aria-hidden="true">↗</span></a>
+    </div>
+  </section>
+
+  <section class="space-certifications space-section" id="certifications" aria-labelledby="certifications-title">
+    <div class="space-content">
+      <p class="space-kicker">CREDENTIALS & CONTINUOUS LEARNING</p>
+      <h2 id="certifications-title">Certifications,<br><em>earned and documented.</em></h2>
+      <p class="section-intro">Certificate images and recorded training credentials in one place. Open an original image to read the certificate directly; details not recorded in the portfolio are left unassumed.</p>
+      <div class="space-certifications-rail">
+        ${profile.training.map(item => `
+          <article class="certification-card certification-card-no-image">
+            <div class="certification-preview certification-preview-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48"><circle cx="24" cy="17" r="11"/><path d="m16 26-2 17 10-5 10 5-2-17"/></svg>
+              <span>TRAINING CERTIFICATE</span>
+            </div>
+            <div class="certification-copy">
+              <p class="certification-type">Training credential</p>
+              <h3>${html(item.title)}</h3>
+              <p class="certification-issuer">${html(item.organization)}</p>
+              <p class="certification-description">${html(item.description)}</p>
+              <div class="certification-meta"><span>Completion</span><strong>${html(item.date)}</strong></div>
+              <div class="certification-meta"><span>Certificate ID</span><strong>${html(item.certificate)}</strong></div>
+            </div>
+          </article>
+        `).join('')}
+        ${profile.certifications.map(item => `
+          <article class="certification-card">
+            <a class="certification-preview" href="${html(item.sourceUrl)}" target="_blank" rel="noopener noreferrer" aria-label="Open original certificate: ${html(item.title)}">
+              <img src="${html(item.image)}" alt="${html(item.alt)}" loading="lazy" decoding="async">
+              <span class="certification-preview-open">Open original <span aria-hidden="true">↗</span></span>
+            </a>
+            <div class="certification-copy">
+              <p class="certification-type">Certificate image</p>
+              <h3>${html(item.title)}</h3>
+              ${item.issuer ? `<p class="certification-issuer">${html(item.issuer)}</p>` : `<p class="certification-issuer">Issuer details in original image</p>`}
+              <p class="certification-description">${html(item.description)}</p>
+              <a class="certification-view-link" href="${html(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">View original certificate <span aria-hidden="true">↗</span></a>
+            </div>
+          </article>
+        `).join('')}
       </div>
     </div>
   </section>
@@ -514,7 +544,8 @@ const horizontalRailDefinitions = [
   ['.space-projects', 'PROJECTS'],
   ['.space-experience', 'WORK EXPERIENCE'],
   ['.space-education', 'STUDIES'],
-  ['.space-recognition', 'TRAINING & RECOGNITION'],
+  ['.space-recognition', 'RECOGNITION & ACHIEVEMENTS'],
+  ['.space-certifications', 'CERTIFICATIONS'],
 ];
 const horizontalStoryRails = [];
 const horizontalStoryStages = [];
