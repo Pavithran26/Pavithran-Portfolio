@@ -5611,12 +5611,12 @@ body.experience-normal .space-header .space-header-actions #menu-toggle.menu-ico
 /* Certification library: original scans, readable metadata, and horizontal glass cards. */
 body .space-certifications .space-content { width: 100%; max-width: none; }
 body .space-certifications .section-intro { max-width: 760px; }
-body .space-certifications.horizontal-story-rail {
+body .space-certifications .space-certifications-rail.horizontal-story-rail {
   width: calc(100% + 16vw);
   margin: 34px 0 0 -8vw;
   padding: 12px 8vw 34px;
 }
-body .space-certifications.horizontal-story-rail > .certification-card {
+body .space-certifications .space-certifications-rail.horizontal-story-rail > .certification-card {
   flex: 0 0 min(50vw, 520px);
   width: min(50vw, 520px);
   max-width: min(50vw, 520px);
@@ -5763,7 +5763,7 @@ body .space-certifications .certification-view-link {
 }
 body .space-certifications .certification-view-link:hover,
 body .space-certifications .certification-view-link:focus-visible { color: #e4ffed; }
-body.experience-normal .space-certifications.horizontal-story-rail > .certification-card {
+body.experience-normal .space-certifications .space-certifications-rail.horizontal-story-rail > .certification-card {
   background: linear-gradient(145deg, #ffffff, #f0f8f2);
   border-color: #c8e1cf;
   box-shadow: 0 16px 36px rgba(24,83,44,.08), inset 0 1px 0 #fff;
@@ -5779,13 +5779,13 @@ body.experience-normal .space-certifications .certification-view-link { color: #
 body.experience-normal .space-certifications .certification-preview-open { color: #effff4; }
 body.experience-normal .space-certifications .certification-preview-icon { color: #1b7240; }
 @media (max-width: 759px) {
-  body .space-certifications.horizontal-story-rail {
+  body .space-certifications .space-certifications-rail.horizontal-story-rail {
     width: calc(100% + 12vw);
     margin: 24px 0 0 -6vw;
     padding: 10px 6vw 26px;
     gap: 14px;
   }
-  body .space-certifications.horizontal-story-rail > .certification-card {
+  body .space-certifications .space-certifications-rail.horizontal-story-rail > .certification-card {
     flex-basis: 82vw;
     width: 82vw;
     max-width: 82vw;
@@ -5798,7 +5798,7 @@ body.experience-normal .space-certifications .certification-preview-icon { color
   body .space-certifications .certification-preview-open { opacity: 1; transform: none; }
 }
 @media (max-width: 380px) {
-  body .space-certifications.horizontal-story-rail > .certification-card {
+  body .space-certifications .space-certifications-rail.horizontal-story-rail > .certification-card {
     flex-basis: 86vw;
     width: 86vw;
     max-width: 86vw;
