@@ -6293,3 +6293,14 @@ body.experience-normal .space-certifications .certification-view-link-static {
     transition: none !important;
   }
 }
+
+
+/* Keep collapsed reveal content out of keyboard navigation until it is active. */
+body .space-certifications .certification-details {
+  visibility: hidden;
+  transition: visibility 0s linear .48s, max-height .48s cubic-bezier(.16,1,.3,1), opacity .3s ease, transform .35s ease, padding .35s ease;
+}
+body .space-certifications .certification-card.is-active .certification-details {
+  visibility: visible;
+  transition-delay: 0s;
+}
