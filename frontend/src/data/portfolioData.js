@@ -22,7 +22,7 @@ export const PORTFOLIO_DATA = {
     "prismiq": "https://prismiq26.vercel.app/",
     "portfolio": "https://pavithran26.vercel.app/",
     "hometownMaps": "https://maps.app.goo.gl/MVpJQWAEyFhyznFK9",
-    "certifications": "https://github.com/Pavithran26/Pavithran26#-certifications"
+    "certifications": "#certifications"
   },
   "stats": [
     {
@@ -179,6 +179,32 @@ export const PORTFOLIO_DATA = {
       "Continuous tech exploration and rapid prototyping"
     ]
   },
+  "certifications": [
+    {
+      "title": "HP LIFE Certificate",
+      "issuer": "HP LIFE",
+      "image": "https://raw.githubusercontent.com/Pavithran26/Pavithran26/main/hplite.jpg",
+      "sourceUrl": "https://github.com/Pavithran26/Pavithran26/blob/main/hplite.jpg",
+      "alt": "HP LIFE certificate image",
+      "description": "Original certificate image from the GitHub profile. The course title and completion date are not listed in the portfolio metadata."
+    },
+    {
+      "title": "Additional Course Certificate",
+      "issuer": "",
+      "image": "https://raw.githubusercontent.com/Pavithran26/Pavithran26/main/IMG-20250107-WA0000.jpg",
+      "sourceUrl": "https://github.com/Pavithran26/Pavithran26/blob/main/IMG-20250107-WA0000.jpg",
+      "alt": "Additional course certificate image",
+      "description": "Original certificate scan from the GitHub profile. Open the image to inspect the course and issuer details."
+    },
+    {
+      "title": "GUVI Certification",
+      "issuer": "GUVI",
+      "image": "https://raw.githubusercontent.com/Pavithran26/Pavithran26/main/guvi-certification.png",
+      "sourceUrl": "https://github.com/Pavithran26/Pavithran26/blob/main/guvi-certification.png",
+      "alt": "GUVI certification image",
+      "description": "Original certification image from the GitHub profile. The course title and completion date are not listed in the portfolio metadata."
+    }
+  ],
   "training": [
     {
       "title": "Java Internship Training",
