@@ -381,3 +381,50 @@ body.book-portfolio .project-collage-toggle { color: #176c3d; background: #edf8f
   100% { transform: translateX(0) skewX(0); clip-path: inset(0); }
 }
 
+/* Stable geometry for the live Flip Fade placements: hero, project transition, contact finish. */
+.intro-statement .vx-flip-fade-current {
+  display: inline-flex;
+  align-items: center;
+  width: min(100%, 30ch);
+  max-width: 100%;
+  min-height: 1.75em;
+  white-space: nowrap;
+  vertical-align: baseline;
+  color: inherit;
+  transform-origin: 0 70%;
+}
+
+.space-kicker .vx-flip-fade-current {
+  display: inline-block;
+  max-width: 100%;
+  min-height: 1.8em;
+  vertical-align: bottom;
+  transform-origin: 0 75%;
+}
+
+body.experience-animation .intro-statement .vx-flip-fade-current {
+  color: #d8ffe4;
+  text-shadow: 0 0 16px rgba(112, 223, 161, .2);
+}
+
+body.experience-normal .intro-statement .vx-flip-fade-current,
+body.book-portfolio .intro-statement .vx-flip-fade-current,
+html[data-appearance='light'] .intro-statement .vx-flip-fade-current {
+  color: #16834b;
+}
+
+@media (max-width: 759px) {
+  .intro-statement .vx-flip-fade-current {
+    width: min(100%, 28ch);
+    font-size: .96em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-statement .vx-flip-fade-current,
+  .space-kicker .vx-flip-fade-current {
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+  }
+}
