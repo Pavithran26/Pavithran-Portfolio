@@ -6304,3 +6304,78 @@ body .space-certifications .certification-card.is-active .certification-details 
   visibility: visible;
   transition-delay: 0s;
 }
+
+
+/* Authentic uploaded certificate pages sit behind the TeamReveal card copy. */
+body .space-certifications .certification-preview-pdf {
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+  background: #0a1b0f;
+}
+body .space-certifications .certification-preview-pdf::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(1,12,5,.72), rgba(3,22,9,.52) 52%, rgba(1,12,5,.70));
+  transition: background .35s ease;
+}
+body .space-certifications .certification-pdf-background {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center;
+  border-radius: inherit;
+  filter: grayscale(1) saturate(.7) contrast(.95);
+  opacity: .68;
+  transition: filter .45s ease, opacity .35s ease, transform .55s cubic-bezier(.16,1,.3,1);
+}
+body .space-certifications .certification-card.is-active .certification-pdf-background {
+  filter: grayscale(0) saturate(.94) contrast(1.02);
+  opacity: .82;
+  transform: scale(1.035);
+}
+body .space-certifications .certification-preview-pdf .certification-pdf-mark,
+body .space-certifications .certification-preview-pdf .certification-pdf-brand,
+body .space-certifications .certification-preview-pdf .certification-pdf-recipient,
+body .space-certifications .certification-preview-pdf .certification-pdf-caption,
+body .space-certifications .certification-preview-pdf .certification-pdf-title {
+  position: relative;
+  z-index: 3;
+}
+body .space-certifications .certification-preview-pdf .certification-pdf-brand {
+  color: #b7f1c5;
+  text-shadow: 0 2px 14px rgba(0,0,0,.62);
+}
+body .space-certifications .certification-preview-pdf .certification-pdf-recipient {
+  color: #ffffff;
+  text-shadow: 0 2px 16px rgba(0,0,0,.72);
+}
+body .space-certifications .certification-preview-pdf .certification-pdf-caption {
+  color: #f1fff4;
+  text-shadow: 0 2px 12px rgba(0,0,0,.76);
+}
+body .space-certifications .certification-preview-pdf .certification-pdf-title {
+  max-width: 96%;
+  color: #f4fff7;
+  font-size: clamp(.96rem, 1.48vw, 1.25rem);
+  font-weight: 600;
+  text-shadow: 0 2px 15px rgba(0,0,0,.85), 0 1px 3px rgba(0,0,0,.95);
+}
+body.experience-normal .space-certifications .certification-preview-pdf::before {
+  background: linear-gradient(135deg, rgba(1,12,5,.70), rgba(3,22,9,.49) 52%, rgba(1,12,5,.68));
+}
+body.experience-normal .space-certifications .certification-preview-pdf .certification-pdf-title {
+  color: #ffffff;
+}
+@media (prefers-reduced-motion: reduce) {
+  body .space-certifications .certification-pdf-background,
+  body .space-certifications .certification-preview-pdf::before { transition: none !important; }
+}
