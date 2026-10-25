@@ -5887,3 +5887,409 @@ body .space-certifications .certification-view-link-static {
 body.experience-normal .space-certifications .certification-view-link-static {
   color: #16834b;
 }
+
+
+/* TeamRevealGrid-inspired interactive certificate grid. */
+body .space-certifications .space-content {
+  width: min(1320px, 100%);
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: clamp(18px, 4vw, 54px);
+  box-sizing: border-box;
+}
+body .space-certifications .space-certifications-rail.certification-reveal-grid {
+  display: grid !important;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(14px, 2.2vw, 26px);
+  width: 100%;
+  margin: clamp(28px, 4vw, 46px) 0 0;
+  padding: 0 0 24px;
+  overflow: visible;
+}
+body .space-certifications .certification-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  min-width: 0;
+  margin: 0;
+  padding: 7px;
+  overflow: hidden;
+  border: 1px solid rgba(139,215,166,.18);
+  border-radius: 23px;
+  background: linear-gradient(145deg, rgba(16,39,23,.93), rgba(5,13,8,.97));
+  box-shadow: 0 12px 35px -24px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.055);
+  transform: translateY(0);
+  transition: border-color .32s ease, box-shadow .32s ease, transform .45s cubic-bezier(.16,1,.3,1), background .3s ease;
+}
+body .space-certifications .certification-card.is-active {
+  border-color: rgba(112,223,161,.64);
+  box-shadow: 0 24px 50px -30px rgba(53,190,109,.42), inset 0 1px 0 rgba(255,255,255,.12);
+  transform: translateY(-4px);
+}
+body .space-certifications .certification-reveal-trigger {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 17px;
+  color: inherit;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+}
+body .space-certifications .certification-reveal-trigger:focus-visible {
+  outline: 2px solid #80e7a4;
+  outline-offset: 3px;
+}
+body .space-certifications .certification-preview {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: clamp(136px, 15vw, 184px);
+  min-height: 0;
+  padding: 16px 12px;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 0;
+  border-radius: 17px;
+  background: linear-gradient(135deg, #ecf5ee, #ccdfd1 76%, #b6d1bd);
+  text-align: center;
+  transition: height .46s cubic-bezier(.16,1,.3,1), border-radius .3s ease;
+}
+body .space-certifications .certification-card.is-active .certification-preview {
+  height: clamp(186px, 19vw, 232px);
+}
+body .space-certifications .certification-preview-image {
+  padding: 8px;
+}
+body .space-certifications .certification-preview img {
+  position: relative;
+  z-index: 1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  border-radius: 7px;
+  filter: grayscale(1) contrast(.93);
+  transform: scale(.985);
+  opacity: .82;
+  transition: filter .48s ease, transform .5s cubic-bezier(.16,1,.3,1), opacity .3s ease;
+}
+body .space-certifications .certification-card.is-active .certification-preview img,
+body .space-certifications .certification-card:hover .certification-preview img {
+  filter: grayscale(0) contrast(1);
+  opacity: 1;
+  transform: scale(1.02);
+}
+body .space-certifications .certification-preview-shade {
+  position: absolute;
+  z-index: 2;
+  inset: 18% 0 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, transparent 38%, rgba(3,14,7,.04) 58%, rgba(3,14,7,.25));
+  pointer-events: none;
+  opacity: .1;
+  transition: opacity .3s ease;
+}
+body .space-certifications .certification-card.is-active .certification-preview-shade {
+  opacity: .62;
+}
+body .space-certifications .certification-preview-index {
+  position: absolute;
+  z-index: 3;
+  right: 10px;
+  bottom: 10px;
+  padding: 5px 7px;
+  border: 1px solid rgba(22,74,39,.2);
+  border-radius: 999px;
+  color: #265c38;
+  background: rgba(244,251,246,.84);
+  font: 500 .58rem/1 var(--font-mono);
+  letter-spacing: .08em;
+  opacity: .74;
+}
+body .space-certifications .certification-card.is-active .certification-preview-index {
+  color: #eaffef;
+  border-color: rgba(151,242,177,.25);
+  background: rgba(3,23,10,.8);
+  opacity: 1;
+}
+body .space-certifications .certification-preview-pdf {
+  color: #163722;
+  background:
+    radial-gradient(circle at 78% 10%, rgba(112,223,161,.25), transparent 37%),
+    linear-gradient(135deg, #f2f7f2, #dae9dd 74%, #c4ddcb);
+}
+body .space-certifications .certification-pdf-mark {
+  display: inline-grid;
+  place-items: center;
+  min-width: 42px;
+  height: 22px;
+  padding: 0 8px;
+  border: 1px solid rgba(13,80,40,.2);
+  border-radius: 5px;
+  color: #176c3d;
+  background: rgba(255,255,255,.62);
+  font: 600 .52rem/1 var(--font-mono);
+  letter-spacing: .09em;
+}
+body .space-certifications .certification-pdf-brand {
+  color: #285f3d;
+  font: 600 .55rem/1.2 var(--font-mono);
+  letter-spacing: .24em;
+}
+body .space-certifications .certification-pdf-recipient {
+  color: #153a22;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1;
+}
+body .space-certifications .certification-pdf-caption {
+  margin-top: 0;
+  color: #56735d;
+  font: 400 .58rem/1 var(--font-mono);
+}
+body .space-certifications .certification-pdf-title {
+  max-width: 95%;
+  color: #12301c;
+  font-family: var(--font-display);
+  font-size: clamp(.92rem, 1.4vw, 1.24rem);
+  font-weight: 500;
+  line-height: 1.18;
+  text-wrap: balance;
+}
+body .space-certifications .certification-preview-icon {
+  color: #176c3d;
+}
+body .space-certifications .certification-preview-icon svg {
+  position: relative;
+  z-index: 1;
+  width: 42px;
+  height: 42px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform .4s cubic-bezier(.16,1,.3,1);
+}
+body .space-certifications .certification-card.is-active .certification-preview-icon svg {
+  transform: scale(1.12) rotate(-5deg);
+}
+body .space-certifications .certification-training-mark {
+  color: #285f3d;
+  font: 600 .55rem/1.2 var(--font-mono);
+  letter-spacing: .12em;
+}
+body .space-certifications .certification-card-heading {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 7px;
+  padding: 16px 12px 13px;
+  text-align: left;
+}
+body .space-certifications .certification-type {
+  display: block;
+  margin: 0;
+  color: #8cf0b0;
+  font: 600 .58rem/1.4 var(--font-mono);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+body .space-certifications .certification-card-title {
+  display: block;
+  max-width: calc(100% - 22px);
+  color: #f4fff7;
+  font-family: var(--font-display);
+  font-size: clamp(.95rem, 1.35vw, 1.22rem);
+  font-weight: 500;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+body .space-certifications .certification-issuer {
+  display: block;
+  margin: 0;
+  color: #aacbb3;
+  font-size: .72rem;
+  line-height: 1.35;
+}
+body .space-certifications .certification-trigger-icon {
+  position: absolute;
+  right: 16px;
+  bottom: 22px;
+  display: grid;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border: 1px solid rgba(139,215,166,.23);
+  border-radius: 50%;
+  color: #9deab4;
+  background: rgba(112,223,161,.06);
+  transition: transform .35s cubic-bezier(.16,1,.3,1), background .25s ease, color .25s ease;
+}
+body .space-certifications .certification-trigger-icon svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+body .space-certifications .certification-card.is-active .certification-trigger-icon {
+  transform: rotate(180deg);
+  color: #05230f;
+  background: #8cf0b0;
+}
+body .space-certifications .certification-details {
+  max-height: 0;
+  padding: 0 19px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(7px);
+  transition: max-height .48s cubic-bezier(.16,1,.3,1), opacity .3s ease, transform .35s ease, padding .35s ease;
+  pointer-events: none;
+}
+body .space-certifications .certification-card.is-active .certification-details {
+  max-height: 320px;
+  padding: 0 19px 21px;
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+body .space-certifications .certification-description {
+  margin: 0 0 10px;
+  color: #b6d0bd;
+  font-size: .79rem;
+  line-height: 1.65;
+}
+body .space-certifications .certification-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 10px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(139,215,166,.17);
+  color: #aacbb3;
+  font-size: .72rem;
+}
+body .space-certifications .certification-detail-meta strong {
+  color: #edf9f0;
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+body .space-certifications .certification-view-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+  color: #95efb0;
+  font: 600 .65rem/1.4 var(--font-mono);
+  text-decoration: none;
+}
+body .space-certifications .certification-view-link:hover,
+body .space-certifications .certification-view-link:focus-visible {
+  color: #effff4;
+}
+body .space-certifications .certification-view-link-static {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  color: #95efb0;
+  font: 600 .65rem/1.4 var(--font-mono);
+  text-transform: uppercase;
+}
+body.experience-normal .space-certifications .certification-card {
+  border-color: rgba(24,130,75,.18);
+  background: linear-gradient(145deg, rgba(255,255,255,.98), rgba(239,248,242,.98));
+  box-shadow: 0 12px 34px -24px rgba(20,75,39,.22), inset 0 1px 0 #fff;
+}
+body.experience-normal .space-certifications .certification-card.is-active {
+  border-color: rgba(24,130,75,.5);
+  box-shadow: 0 22px 42px -28px rgba(24,130,75,.27), inset 0 1px 0 #fff;
+}
+body.experience-normal .space-certifications .certification-type {
+  color: #21834b;
+}
+body.experience-normal .space-certifications .certification-card-title {
+  color: #193b28;
+}
+body.experience-normal .space-certifications .certification-issuer,
+body.experience-normal .space-certifications .certification-description,
+body.experience-normal .space-certifications .certification-detail-meta {
+  color: #577160;
+}
+body.experience-normal .space-certifications .certification-detail-meta {
+  border-color: #d7e8dc;
+}
+body.experience-normal .space-certifications .certification-detail-meta strong {
+  color: #234d34;
+}
+body.experience-normal .space-certifications .certification-trigger-icon {
+  color: #237647;
+  border-color: rgba(24,130,75,.2);
+  background: rgba(24,130,75,.06);
+}
+body.experience-normal .space-certifications .certification-card.is-active .certification-trigger-icon {
+  color: #fff;
+  background: #21834b;
+}
+body.experience-normal .space-certifications .certification-view-link,
+body.experience-normal .space-certifications .certification-view-link-static {
+  color: #16834b;
+}
+@media (max-width: 900px) {
+  body .space-certifications .space-certifications-rail.certification-reveal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+  body .space-certifications .certification-preview { height: clamp(136px, 23vw, 184px); }
+  body .space-certifications .certification-card.is-active .certification-preview { height: clamp(178px, 30vw, 224px); }
+}
+@media (max-width: 520px) {
+  body .space-certifications .space-certifications-rail.certification-reveal-grid {
+    gap: 11px;
+  }
+  body .space-certifications .certification-card { padding: 5px; border-radius: 18px; }
+  body .space-certifications .certification-preview { height: clamp(118px, 31vw, 150px); padding: 9px 7px; }
+  body .space-certifications .certification-card.is-active .certification-preview { height: clamp(156px, 43vw, 198px); }
+  body .space-certifications .certification-card-heading { gap: 6px; padding: 12px 7px 10px; }
+  body .space-certifications .certification-card-title { font-size: .88rem; }
+  body .space-certifications .certification-type { font-size: .5rem; letter-spacing: .07em; }
+  body .space-certifications .certification-issuer { font-size: .65rem; }
+  body .space-certifications .certification-trigger-icon { right: 8px; bottom: 16px; width: 24px; height: 24px; }
+  body .space-certifications .certification-details { padding-inline: 12px; }
+  body .space-certifications .certification-card.is-active .certification-details { padding: 0 12px 15px; }
+  body .space-certifications .certification-pdf-title { font-size: .9rem; }
+}
+@media (max-width: 359px) {
+  body .space-certifications .space-certifications-rail.certification-reveal-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  body .space-certifications .certification-preview { height: 168px; }
+  body .space-certifications .certification-card.is-active .certification-preview { height: 210px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  body .space-certifications .certification-card,
+  body .space-certifications .certification-preview,
+  body .space-certifications .certification-preview img,
+  body .space-certifications .certification-details,
+  body .space-certifications .certification-trigger-icon {
+    transition: none !important;
+  }
+}
