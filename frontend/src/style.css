@@ -1548,18 +1548,13 @@ body.experience-normal .horizontal-story-stage .horizontal-story-rail::-webkit-s
   background: #68ad7c !important;
 }
 
-/* Portfolio stats and interactive collage follow the same professional palette. */
+/* Interactive project collage follows the professional palette. */
 body.experience-normal .motion-stats-strip,
 body.experience-normal .project-image-collage {
   color: #193b28 !important;
   border-color: #d1e4d6 !important;
   background: linear-gradient(145deg, #ffffff, #eff7f1) !important;
   box-shadow: 0 12px 28px rgba(24,83,44,.065), inset 0 1px 0 #fff !important;
-}
-body.experience-normal .motion-stat { border-color: #16834b !important; }
-body.experience-normal .motion-stat-value {
-  color: #16834b !important;
-  text-shadow: none !important;
 }
 body.experience-normal .motion-stat-label,
 body.experience-normal .project-collage-label {
@@ -1661,10 +1656,6 @@ body.experience-normal .dawn-shiny-button.dawn-eye:focus-visible {
     font-size: clamp(3.5rem, 12.5vw, 5.3rem) !important;
   }
   body.experience-normal .space-section { padding: 76px 6vw !important; }
-  body.experience-normal .motion-stats-strip {
-    width: calc(100% - 12vw) !important;
-    margin: 20px auto 54px !important;
-  }
   body.experience-normal .project-destination,
   body.experience-normal .space-projects.horizontal-story-rail .project-destination,
   body.experience-normal .space-experience.horizontal-story-rail > article,
@@ -5304,20 +5295,6 @@ body.experience-animation #experience-1 > .experience-company-watermark-fallback
   body.book-portfolio .space-dawn,
   body.book-portfolio .space-contact {
     padding-inline: 16px !important;
-  }
-
-  .motion-stats-strip {
-    width: calc(100% - 24px) !important;
-    gap: 5px !important;
-    padding-inline: 8px !important;
-  }
-
-  .motion-stat {
-    padding-left: 6px !important;
-  }
-
-  .motion-stat-label {
-    letter-spacing: .025em !important;
   }
 
   .space-projects.horizontal-story-rail > .project-destination,
