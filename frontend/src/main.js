@@ -545,7 +545,7 @@ const horizontalRailDefinitions = [
   ['.space-experience', 'WORK EXPERIENCE'],
   ['.space-education', 'STUDIES'],
   ['.space-recognition', 'RECOGNITION & ACHIEVEMENTS'],
-  ['.space-certifications', 'CERTIFICATIONS'],
+  ['.space-certifications-rail', 'CERTIFICATIONS'],
 ];
 const horizontalStoryRails = [];
 const horizontalStoryStages = [];
