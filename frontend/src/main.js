@@ -798,12 +798,15 @@ on(document, 'keydown', event => {
   dialogs.openTerminal();
 });
 
-// Appearance toggle (Light / Dark mode)
+// Icon-only appearance toggle
 const appearanceToggle = document.querySelector('#appearance-toggle');
 if (appearanceToggle) {
   on(appearanceToggle, 'click', () => {
     const isLight = document.body.classList.toggle('light-appearance');
-    appearanceToggle.innerHTML = isLight ? '<span aria-hidden="true">◑</span> Dark' : '<span aria-hidden="true">◐</span> Light';
+    appearanceToggle.innerHTML = isLight ? '<span aria-hidden="true">◑</span>' : '<span aria-hidden="true">◐</span>';
+    appearanceToggle.setAttribute('aria-pressed', String(isLight));
+    appearanceToggle.setAttribute('aria-label', 'Toggle appearance');
+    appearanceToggle.setAttribute('title', 'Toggle appearance');
   });
 }
 
