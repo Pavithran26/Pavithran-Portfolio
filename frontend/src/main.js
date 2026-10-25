@@ -798,18 +798,30 @@ on(document, 'keydown', event => {
   dialogs.openTerminal();
 });
 
-// Mobile menu toggle
+// Animated glass-menu icon: hamburger morphs into a close mark while the drawer is open.
 const menu = document.querySelector('#mobile-menu');
 const menuToggle = document.querySelector('#menu-toggle');
+const menuClose = document.querySelector('#menu-close');
+const syncMenuToggle = (isOpen) => {
+  if (!menuToggle) return;
+  menuToggle.classList.toggle('is-open', isOpen);
+  menuToggle.setAttribute('aria-expanded', String(isOpen));
+  menuToggle.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+  menuToggle.setAttribute('title', isOpen ? 'Close menu' : 'Open menu');
+};
 if (menu && menuToggle) {
   on(menuToggle, 'click', () => {
-    menu.showModal();
-    menuToggle.setAttribute('aria-expanded', 'true');
-    queueMicrotask(() => document.querySelector('#menu-close')?.focus());
+    if (!menu.open) menu.showModal();
+    syncMenuToggle(true);
+    queueMicrotask(() => menuClose?.focus());
   });
-  on(document.querySelector('#menu-close'), 'click', () => menu.close());
-  on(menu, 'close', () => { menuToggle.setAttribute('aria-expanded', 'false'); menuToggle.focus(); });
+  on(menuClose, 'click', () => menu.close());
+  on(menu, 'close', () => {
+    syncMenuToggle(false);
+    menuToggle.focus();
+  });
   on(menu, 'click', event => { if (event.target.closest('a')) menu.close(); });
+  syncMenuToggle(menu.open);
 }
 
 // Copy email button
