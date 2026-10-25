@@ -5861,3 +5861,29 @@ body.experience-normal .space-certifications .certification-preview-pdf {
   body .space-certifications .certification-preview-pdf { gap: 8px; padding: 16px; }
   body .space-certifications .certification-pdf-title { font-size: 1.2rem; }
 }
+
+
+/* In-page certificate preview typography; not an outbound file link. */
+body .space-certifications .certification-pdf-recipient {
+  color: #193b28;
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  line-height: 1.2;
+}
+body .space-certifications .certification-pdf-caption {
+  color: #3f684d;
+  font-size: .68rem;
+}
+body .space-certifications .certification-view-link-static {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  margin-top: auto;
+  padding-top: 12px;
+  color: #9cf2b6;
+  font: 500 .75rem/1.4 var(--font-mono);
+  text-transform: uppercase;
+}
+body.experience-normal .space-certifications .certification-view-link-static {
+  color: #16834b;
+}
