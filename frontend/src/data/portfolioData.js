@@ -210,50 +210,43 @@ export const PORTFOLIO_DATA = {
       "kind": "pdf",
       "title": "Claude 101",
       "issuer": "Anthropic",
-      "documentUrl": "/certificates/anthropic-claude-101.pdf",
-      "description": "Certificate of completion. Open the uploaded PDF to view the original document."
+      "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "Claude with the Anthropic API",
       "issuer": "Anthropic",
-      "documentUrl": "/certificates/anthropic-claude-with-anthropic-api.pdf",
-      "description": "Certificate of completion. Open the uploaded PDF to view the original document."
+      "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "AI Fluency: Framework & Foundations",
       "issuer": "Anthropic",
-      "documentUrl": "/certificates/anthropic-ai-fluency-framework-foundations.pdf",
-      "description": "Certificate of completion. Open the uploaded PDF to view the original document."
+      "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "Introduction to Model Context Protocol",
       "issuer": "Anthropic",
-      "documentUrl": "/certificates/anthropic-introduction-to-model-context-protocol.pdf",
-      "description": "Certificate of completion. Open the uploaded PDF to view the original document."
+      "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "Model Context Protocol: Advanced Topics",
       "issuer": "Anthropic",
-      "documentUrl": "/certificates/anthropic-model-context-protocol-advanced-topics.pdf",
-      "description": "Certificate of completion. Open the uploaded PDF to view the original document."
+      "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "Introduction to subagents",
       "issuer": "Anthropic",
-      "documentUrl": "/certificates/anthropic-introduction-to-subagents.pdf",
-      "description": "Certificate of completion. Open the uploaded PDF to view the original document."
+      "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     },
     {
       "kind": "pdf",
       "title": "Introduction to agent skills",
       "issuer": "Anthropic",
-      "documentUrl": "/certificates/anthropic-introduction-to-agent-skills.pdf",
-      "description": "Certificate of completion. Open the uploaded PDF to view the original document."
+      "description": "Anthropic certificate of completion. The course title is shown from the uploaded certificate."
     }
   ],
   "training": [
