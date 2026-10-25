@@ -798,18 +798,6 @@ on(document, 'keydown', event => {
   dialogs.openTerminal();
 });
 
-// Icon-only appearance toggle
-const appearanceToggle = document.querySelector('#appearance-toggle');
-if (appearanceToggle) {
-  on(appearanceToggle, 'click', () => {
-    const isLight = document.body.classList.toggle('light-appearance');
-    appearanceToggle.innerHTML = isLight ? '<span aria-hidden="true">◑</span>' : '<span aria-hidden="true">◐</span>';
-    appearanceToggle.setAttribute('aria-pressed', String(isLight));
-    appearanceToggle.setAttribute('aria-label', 'Toggle appearance');
-    appearanceToggle.setAttribute('title', 'Toggle appearance');
-  });
-}
-
 // Mobile menu toggle
 const menu = document.querySelector('#mobile-menu');
 const menuToggle = document.querySelector('#menu-toggle');
