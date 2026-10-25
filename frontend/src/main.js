@@ -43,21 +43,6 @@ root.innerHTML = `
     <p class="intro-caption">A SMALL PART OF A MUCH BIGGER UNIVERSE</p>
   </section>
 
-  <section class="motion-stats-strip" aria-label="Portfolio at a glance">
-    <div class="motion-stat">
-      <span class="motion-stat-value" data-count-to="${PROJECTS_DATA.length}">0</span>
-      <span class="motion-stat-label">Projects</span>
-    </div>
-    <div class="motion-stat">
-      <span class="motion-stat-value" data-count-to="${profile.experience.length}">0</span>
-      <span class="motion-stat-label">Experience roles</span>
-    </div>
-    <div class="motion-stat">
-      <span class="motion-stat-value" data-count-to="${profile.education.length}">0</span>
-      <span class="motion-stat-label">Study stages</span>
-    </div>
-  </section>
-
   <section class="space-work space-section" id="work" aria-labelledby="work-title">
     <div class="space-content work-wide-content">
       <p class="space-kicker" data-flip-phrases="IDEAS, BUILT INTO REAL THINGS|IDEA → ARCHITECTURE → PRODUCTION|REAL PROBLEMS. WORKING SYSTEMS."><span class="vx-flip-fade-current">IDEAS, BUILT INTO REAL THINGS</span></p>
