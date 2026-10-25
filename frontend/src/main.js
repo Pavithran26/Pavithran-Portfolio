@@ -247,6 +247,7 @@ root.innerHTML = `
             <button class="certification-reveal-trigger" type="button" data-certification-trigger aria-expanded="${index === 0 ? 'true' : 'false'}" aria-controls="certification-details-${index}">
               <div class="certification-preview ${item.kind === 'pdf' ? 'certification-preview-pdf' : item.kind === 'training' ? 'certification-preview-icon' : 'certification-preview-image'}" aria-hidden="true">
                 ${item.kind === 'pdf' ? `
+                  <img class="certification-pdf-background" src="${html(item.backgroundImage)}" alt="" aria-hidden="true" loading="lazy" decoding="async">
                   <span class="certification-pdf-mark">CERTIFICATE</span>
                   <span class="certification-pdf-brand">ANTHROPIC</span>
                   <span class="certification-pdf-recipient">Pavithran S</span>
