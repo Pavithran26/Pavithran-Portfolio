@@ -30,9 +30,46 @@ import { TextEffectsController } from './components/TextEffectsController.js';
 import SocialFlipButton from './components/ui/social-flip-button.jsx';
 
 
+const HERO_SHOWCASE_PROJECT_IDS = ['clansure', 'gt-companion', 'sattam-ai'];
+const heroShowcaseProjects = HERO_SHOWCASE_PROJECT_IDS
+  .map(id => PROJECTS_DATA.find(project => project.id === id))
+  .filter(Boolean);
+const heroArchitectureByProject = {
+  clansure: ['React UI', 'ASP.NET Core API', 'FastAPI + Gemini RAG', 'PostgreSQL'],
+  'gt-companion': ['React UI', 'ASP.NET Core API', 'FastAPI + RAG', 'PostgreSQL + pgvector'],
+  'sattam-ai': ['Next.js web', 'FastAPI retrieval', 'ChromaDB', 'Gemini / compatible LLMs']
+};
+const renderHeroArchitecture = (projectId) => (heroArchitectureByProject[projectId] || [])
+  .map((step, index) => (index ? '<span class="hero-architecture-arrow" aria-hidden="true">→</span>' : '')
+    + '<span class="hero-architecture-node">' + html(step) + '</span>')
+  .join('');
+const initialHeroProject = heroShowcaseProjects[0];
+const heroShowcaseMarkup = initialHeroProject ? (
+  '<aside class="hero-project-showcase" data-hero-showcase aria-label="Interactive featured projects">'
+  + '<div class="hero-showcase-topline"><span><i class="hero-live-pulse" aria-hidden="true"></i> FEATURED BUILDS</span><span class="hero-showcase-counter" data-hero-project-counter>01 / ' + String(heroShowcaseProjects.length).padStart(2, '0') + '</span></div>'
+  + '<div class="hero-showcase-main">'
+  + '<figure class="hero-showcase-visual">'
+  + '<img data-hero-project-image src="/images/projects/' + initialHeroProject.id + '-768.webp" alt="' + html(initialHeroProject.title) + ' project interface preview" width="768" height="480" loading="eager" decoding="async">'
+  + '<figcaption><span data-hero-project-category>' + html(initialHeroProject.category) + '</span><span class="hero-visual-badge" data-hero-project-status>' + (initialHeroProject.liveUrl ? 'LIVE PROJECT' : 'PROJECT SOURCE') + '</span></figcaption>'
+  + '</figure>'
+  + '<div class="hero-showcase-copy">'
+  + '<div class="hero-copy-meta"><span>SELECTED SYSTEM</span><span data-hero-project-index>01 / 03</span></div>'
+  + '<h2 data-hero-project-title>' + html(initialHeroProject.title) + '</h2>'
+  + '<p class="hero-project-tagline" data-hero-project-tagline>' + html(initialHeroProject.tagline) + '</p>'
+  + '<div class="hero-architecture-wrap"><span class="hero-architecture-label">UNDER THE HOOD</span><div class="hero-architecture-flow" data-hero-project-architecture aria-label="Project architecture">' + renderHeroArchitecture(initialHeroProject.id) + '</div></div>'
+  + '<div class="hero-showcase-footer"><span class="hero-showcase-footer-note">REAL PROJECT · VERIFIED DETAILS</span><a class="hero-showcase-action" data-hero-project-action href="' + html(initialHeroProject.liveUrl || initialHeroProject.githubUrl || initialHeroProject.sourceUrl || '#work') + '" target="_blank" rel="noopener noreferrer">' + (initialHeroProject.liveUrl ? 'Explore live project' : 'View source repository') + '<span aria-hidden="true">↗</span></a></div>'
+  + '</div></div>'
+  + '<div class="hero-project-choices" role="group" aria-label="Choose a featured project">'
+  + heroShowcaseProjects.map((project, index) => '<button class="hero-project-choice' + (index === 0 ? ' is-active' : '') + '" type="button" data-hero-project-choice="' + html(project.id) + '" aria-pressed="' + String(index === 0) + '">'
+      + '<img src="/images/projects/' + html(project.id) + '-768.webp" alt="" width="768" height="480" loading="lazy" decoding="async">'
+      + '<span class="hero-project-choice-copy"><span class="hero-project-choice-overline">BUILD / ' + String(index + 1).padStart(2, '0') + '</span><strong>' + html(project.title) + '</strong><small>' + html(project.category) + '</small></span>'
+      + '<span class="hero-project-choice-arrow" aria-hidden="true">↗</span></button>').join('')
+  + '</div></aside>'
+) : '';
+
 const root = document.querySelector('#portfolio');
 root.innerHTML = `
-  <section class="space-intro" id="top" aria-labelledby="intro-title">
+  <section class="space-intro has-project-showcase" id="top" aria-labelledby="intro-title">
     <div class="intro-identity">
       <p class="space-kicker">TAMIL NADU, INDIA · FORWARD DEPLOYED ENGINEER (FDE)</p>
       <h1 id="intro-title"><span id="intro-title-flip-mount" role="text" aria-label="Pavithran S">Pavithran S</span></h1>
@@ -41,6 +78,7 @@ root.innerHTML = `
         <a class="intro-enter" href="#work">Explore my work <span aria-hidden="true">↓</span></a>
       </div>
     </div>
+    ${heroShowcaseMarkup}
     <p class="intro-caption">A SMALL PART OF A MUCH BIGGER UNIVERSE</p>
   </section>
 
@@ -998,6 +1036,72 @@ function chooseAnimationMode() {
   initializeAnimationExperience();
   textEffects = textEffects || new TextEffectsController({ root, mode: 'animation' });
   lenis.start();
+}
+
+// Interactive hero showcase: switch between real projects and their real architecture stacks.
+const heroShowcaseRoot = root.querySelector('[data-hero-showcase]');
+if (heroShowcaseRoot) {
+  const heroImage = heroShowcaseRoot.querySelector('[data-hero-project-image]');
+  const heroCategory = heroShowcaseRoot.querySelector('[data-hero-project-category]');
+  const heroStatus = heroShowcaseRoot.querySelector('[data-hero-project-status]');
+  const heroTitle = heroShowcaseRoot.querySelector('[data-hero-project-title]');
+  const heroTagline = heroShowcaseRoot.querySelector('[data-hero-project-tagline]');
+  const heroCounter = heroShowcaseRoot.querySelector('[data-hero-project-counter]');
+  const heroIndex = heroShowcaseRoot.querySelector('[data-hero-project-index]');
+  const heroArchitecture = heroShowcaseRoot.querySelector('[data-hero-project-architecture]');
+  const heroAction = heroShowcaseRoot.querySelector('[data-hero-project-action]');
+  const heroChoices = [...heroShowcaseRoot.querySelectorAll('[data-hero-project-choice]')];
+
+  const activateHeroProject = (projectId) => {
+    const project = heroShowcaseProjects.find(candidate => candidate.id === projectId);
+    if (!project || !heroImage) return;
+    const index = heroShowcaseProjects.findIndex(candidate => candidate.id === projectId);
+    heroImage.classList.add('is-switching');
+    heroImage.src = '/images/projects/' + project.id + '-768.webp';
+    heroImage.alt = project.title + ' project interface preview';
+    heroCategory.textContent = project.category;
+    heroStatus.textContent = project.liveUrl ? 'LIVE PROJECT' : 'SOURCE AVAILABLE';
+    heroTitle.textContent = project.title;
+    heroTagline.textContent = project.tagline;
+    heroCounter.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(heroShowcaseProjects.length).padStart(2, '0');
+    heroIndex.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(heroShowcaseProjects.length).padStart(2, '0');
+
+    if (heroArchitecture) {
+      heroArchitecture.replaceChildren();
+      (heroArchitectureByProject[project.id] || []).forEach((step, stepIndex) => {
+        if (stepIndex > 0) {
+          const arrow = document.createElement('span');
+          arrow.className = 'hero-architecture-arrow';
+          arrow.setAttribute('aria-hidden', 'true');
+          arrow.textContent = '→';
+          heroArchitecture.append(arrow);
+        }
+        const node = document.createElement('span');
+        node.className = 'hero-architecture-node';
+        node.textContent = step;
+        heroArchitecture.append(node);
+      });
+    }
+
+    const targetUrl = project.liveUrl || project.githubUrl || project.sourceUrl || '#work';
+    heroAction.href = targetUrl;
+    heroAction.textContent = project.liveUrl ? 'Explore live project' : 'View source repository';
+    const actionArrow = document.createElement('span');
+    actionArrow.setAttribute('aria-hidden', 'true');
+    actionArrow.textContent = '↗';
+    heroAction.append(actionArrow);
+    heroAction.setAttribute('aria-label', (project.liveUrl ? 'Open live project: ' : 'Open source repository: ') + project.title);
+
+    heroChoices.forEach(button => {
+      const active = button.dataset.heroProjectChoice === project.id;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  };
+
+  heroImage?.addEventListener('load', () => heroImage.classList.remove('is-switching'));
+  heroImage?.addEventListener('error', () => heroImage.classList.remove('is-switching'));
+  heroChoices.forEach(button => on(button, 'click', () => activateHeroProject(button.dataset.heroProjectChoice)));
 }
 
 // Mount the FlipText-inspired character animation in the hero name.
