@@ -7593,3 +7593,57 @@ body.experience-animation .hero-project-showcase-visual-only .hero-project-choic
   }
 }
 @media (prefers-reduced-motion:reduce) { body .hero-live-preview { animation:none !important; } }
+
+
+/* Fix blank/collapsed embedded previews: assign the iframe a definite, responsive height. */
+body .hero-live-preview {
+  height: clamp(360px, 44vh, 470px) !important;
+  min-height: 360px;
+  box-sizing: border-box;
+}
+body .hero-live-preview-toolbar {
+  flex: 0 0 32px !important;
+  min-height: 32px !important;
+  justify-content: flex-end !important;
+  box-sizing: border-box;
+}
+body .hero-live-preview-frame {
+  display: block !important;
+  flex: 1 1 0% !important;
+  width: 100% !important;
+  height: calc(100% - 32px) !important;
+  min-height: 280px !important;
+  max-height: none !important;
+  border: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  background: #fff !important;
+  box-sizing: border-box !important;
+  position: relative;
+  z-index: 1;
+}
+body .hero-live-preview-toolbar .hero-live-preview-open {
+  flex: 0 0 25px;
+  width: 25px;
+  height: 25px;
+  margin: 0;
+}
+@media (max-width: 900px) {
+  body .hero-live-preview {
+    height: clamp(320px, 54vw, 420px) !important;
+    min-height: 320px;
+  }
+  body .hero-live-preview-frame { min-height: 240px !important; }
+}
+@media (max-width: 520px) {
+  body .hero-live-preview {
+    height: 300px !important;
+    min-height: 300px;
+  }
+  body .hero-live-preview-toolbar { flex-basis: 30px !important; min-height: 30px !important; }
+  body .hero-live-preview-frame {
+    height: calc(100% - 30px) !important;
+    min-height: 260px !important;
+  }
+}
