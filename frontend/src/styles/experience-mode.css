@@ -2095,3 +2095,37 @@ body.experience-normal .project-collage-label {
   #experience-choice .animation-mode-3d-button,
   #experience-choice #choose-normal { transition: none !important; }
 }
+
+
+/* Do not reveal the portfolio homepage before the first-visit mode is chosen. */
+body.experience-mode-pending {
+  background:#050b08 !important;
+  color:#edf5ef;
+}
+body.experience-mode-pending #portfolio,
+body.experience-mode-pending .space-header,
+body.experience-mode-pending .universe,
+body.experience-mode-pending .skip-link,
+body.experience-mode-pending #mobile-menu,
+body.experience-mode-pending #dawn-ai-button-mount {
+  visibility:hidden !important;
+  pointer-events:none !important;
+}
+body.experience-mode-pending #experience-choice,
+body.experience-mode-pending #onload-speedometer {
+  visibility:visible;
+  pointer-events:auto;
+}
+body.experience-mode-pending #experience-choice { z-index:100001 !important; }
+body.experience-mode-pending #onload-speedometer { z-index:100002 !important; }
+body.experience-mode-pending::before,
+body.experience-mode-pending::after {
+  opacity:0 !important;
+  animation:none !important;
+}
+@media (prefers-reduced-motion:reduce) {
+  #experience-choice,#experience-choice *,#onload-speedometer {
+    transition-duration:.01ms !important;
+    animation-duration:.01ms !important;
+  }
+}
