@@ -69,7 +69,6 @@ const heroShowcaseMarkup = initialHeroProject ? (
   + '<div class="hero-preview-stage" data-hero-project-preview aria-live="polite">' + renderHeroProjectPreview(initialHeroProject) + '</div>'
   + '<div class="hero-project-choices" role="group" aria-label="Choose a project live preview">'
   + heroShowcaseProjects.map((project, index) => '<button class="hero-project-choice' + (index === 0 ? ' is-active' : '') + '" type="button" data-hero-project-choice="' + html(project.id) + '" aria-label="Show ' + html(project.title) + ' live preview" title="' + html(project.title) + '" aria-pressed="' + String(index === 0) + '">'
-      + '<span class="hero-project-choice-mark" aria-hidden="true">' + renderHeroProjectMonogram(project) + '</span>'
       + '<span class="hero-project-choice-name">' + html(project.title) + '</span>'
       + '</button>').join('')
   + '</div></aside>'
