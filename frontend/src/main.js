@@ -47,29 +47,33 @@ const renderHeroArchitecture = (projectId) => (heroArchitectureByProject[project
 const initialHeroProject = heroShowcaseProjects[0];
 const renderHeroProjectMonogram = (project) => {
   const words = String(project?.title || 'Project').trim().split(/\s+/);
-  return html(words.slice(0, 2).map(word => word[0] || '').join('').toUpperCase());
+  return html(words.map(word => word[0] || '').join('').slice(0, 2).toUpperCase());
 };
+const renderHeroShowcaseTechnologies = (project) => (project?.technologies || [])
+  .slice(0, 3)
+  .map(technology => '<span class="hero-showcase-tech-chip">' + html(technology) + '</span>')
+  .join('');
 const heroShowcaseMarkup = initialHeroProject ? (
   '<aside class="hero-project-showcase" data-hero-showcase aria-label="Interactive featured projects">'
   + '<div class="hero-showcase-topline"><span><i class="hero-live-pulse" aria-hidden="true"></i> FEATURED BUILDS</span><span class="hero-showcase-counter" data-hero-project-counter>01 / ' + String(heroShowcaseProjects.length).padStart(2, '0') + '</span></div>'
   + '<div class="hero-showcase-main">'
-  + '<figure class="hero-showcase-visual' + (initialHeroProject.liveUrl ? '' : ' is-source-only') + '">'
+  + '<figure class="hero-showcase-visual is-text-preview">'
   + '<div class="hero-showcase-placeholder" data-hero-project-fallback>'
-  + '<span class="hero-showcase-placeholder-overline"><span class="hero-placeholder-pulse" aria-hidden="true"></span>' + (initialHeroProject.liveUrl ? 'LIVE SYSTEM PREVIEW' : 'SOURCE REPOSITORY') + '</span>'
+  + '<span class="hero-showcase-placeholder-overline"><span class="hero-placeholder-pulse" aria-hidden="true"></span><span data-hero-project-visual-status>' + (initialHeroProject.liveUrl ? 'LIVE LINK AVAILABLE' : 'SOURCE REPOSITORY') + '</span></span>'
+  + '<div class="hero-showcase-visual-core">'
   + '<span class="hero-showcase-monogram" data-hero-project-monogram>' + renderHeroProjectMonogram(initialHeroProject) + '</span>'
-  + '<strong class="hero-showcase-placeholder-title" data-hero-project-visual-title>' + html(initialHeroProject.title) + '</strong>'
-  + '<span class="hero-showcase-placeholder-tagline" data-hero-project-visual-tagline>' + html(initialHeroProject.tagline) + '</span>'
-  + '<span class="hero-showcase-placeholder-note">REAL PROJECT · NO GENERATED ARTWORK</span>'
+  + '<div class="hero-showcase-tech-stack" data-hero-project-visual-tech aria-label="Key technologies">' + renderHeroShowcaseTechnologies(initialHeroProject) + '</div>'
   + '</div>'
-  + (initialHeroProject.liveUrl ? '<iframe class="hero-showcase-live-frame" data-hero-project-frame src="' + html(initialHeroProject.liveUrl) + '" title="' + html(initialHeroProject.title) + ' live website preview" loading="eager" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>' : '<iframe class="hero-showcase-live-frame" data-hero-project-frame title="Live website preview unavailable for source-only project" hidden tabindex="-1" aria-hidden="true"></iframe>')
-  + '<figcaption><span data-hero-project-category>' + html(initialHeroProject.category) + '</span><span class="hero-visual-badge" data-hero-project-status>' + (initialHeroProject.liveUrl ? 'LIVE PROJECT' : 'SOURCE ONLY') + '</span></figcaption>'
+  + '<span class="hero-showcase-placeholder-note">PROJECT PROFILE · NO GENERATED ARTWORK</span>'
+  + '</div>'
+  + '<figcaption><span data-hero-project-category>' + html(initialHeroProject.category) + '</span><span class="hero-visual-badge" data-hero-project-status>' + (initialHeroProject.liveUrl ? 'LIVE LINK' : 'SOURCE ONLY') + '</span></figcaption>'
   + '</figure>'
   + '<div class="hero-showcase-copy">'
   + '<div class="hero-copy-meta"><span>SELECTED SYSTEM</span><span data-hero-project-index>01 / 03</span></div>'
   + '<h2 data-hero-project-title>' + html(initialHeroProject.title) + '</h2>'
   + '<p class="hero-project-tagline" data-hero-project-tagline>' + html(initialHeroProject.tagline) + '</p>'
   + '<div class="hero-architecture-wrap"><span class="hero-architecture-label">UNDER THE HOOD</span><div class="hero-architecture-flow" data-hero-project-architecture aria-label="Project architecture">' + renderHeroArchitecture(initialHeroProject.id) + '</div></div>'
-  + '<div class="hero-showcase-footer"><span class="hero-showcase-footer-note">REAL PROJECT · VERIFIED DETAILS</span><a class="hero-showcase-action" data-hero-project-action href="' + html(initialHeroProject.liveUrl || initialHeroProject.githubUrl || initialHeroProject.sourceUrl || '#work') + '" target="_blank" rel="noopener noreferrer">' + (initialHeroProject.liveUrl ? 'Explore live project' : 'View source repository') + '<span aria-hidden="true">↗</span></a></div>'
+  + '<div class="hero-showcase-footer"><span class="hero-showcase-footer-note">PROJECT DETAILS</span><a class="hero-showcase-action" data-hero-project-action href="' + html(initialHeroProject.liveUrl || initialHeroProject.githubUrl || initialHeroProject.sourceUrl || '#work') + '" target="_blank" rel="noopener noreferrer">' + (initialHeroProject.liveUrl ? 'Explore live project' : 'View source repository') + '<span aria-hidden="true">↗</span></a></div>'
   + '</div></div>'
   + '<div class="hero-project-choices" role="group" aria-label="Choose a featured project">'
   + heroShowcaseProjects.map((project, index) => '<button class="hero-project-choice' + (index === 0 ? ' is-active' : '') + '" type="button" data-hero-project-choice="' + html(project.id) + '" aria-pressed="' + String(index === 0) + '">'
@@ -119,8 +123,8 @@ root.innerHTML = `
                 loading="lazy"
                 decoding="async"
               >` : ''}
-              ${!project.liveUrl && PROJECTS_WITHOUT_GENERATED_IMAGES.has(project.id) ? `<div class="project-card-no-preview" aria-hidden="true"><span>SOURCE REPOSITORY</span><strong>${html(project.title)}</strong><small>Open the technical dossier for verified details.</small></div>` : ''}
-              ${project.liveUrl ? `<iframe class="project-card-live-frame" data-project-frame-src="${html(project.liveUrl)}" title="${html(project.title)} website background preview" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>` : ''}
+              ${PROJECTS_WITHOUT_GENERATED_IMAGES.has(project.id) ? `<div class="project-card-no-preview" aria-hidden="true"><span>${project.liveUrl ? 'LIVE LINK · NO EMBEDDED PREVIEW' : 'SOURCE REPOSITORY'}</span><strong>${html(project.title)}</strong><small>Explore the technical dossier for verified details.</small></div>` : ''}
+              ${project.liveUrl && !PROJECTS_WITHOUT_GENERATED_IMAGES.has(project.id) ? `<iframe class="project-card-live-frame" data-project-frame-src="${html(project.liveUrl)}" title="${html(project.title)} website background preview" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>` : ''}
               <span class="project-card-preview-shade" aria-hidden="true"></span>
             </figure>
             <div class="project-copy">
@@ -1040,14 +1044,13 @@ function chooseAnimationMode() {
   lenis.start();
 }
 
-// Interactive hero showcase: switch between projects without generated preview images.
+// Interactive hero showcase: change project identity and verified stack without embedding app artwork.
 const heroShowcaseRoot = root.querySelector('[data-hero-showcase]');
 if (heroShowcaseRoot) {
-  const heroFrame = heroShowcaseRoot.querySelector('[data-hero-project-frame]');
   const heroFallback = heroShowcaseRoot.querySelector('[data-hero-project-fallback]');
-  const heroVisualTitle = heroShowcaseRoot.querySelector('[data-hero-project-visual-title]');
-  const heroVisualTagline = heroShowcaseRoot.querySelector('[data-hero-project-visual-tagline]');
+  const heroVisualStatus = heroShowcaseRoot.querySelector('[data-hero-project-visual-status]');
   const heroVisualMonogram = heroShowcaseRoot.querySelector('[data-hero-project-monogram]');
+  const heroVisualTech = heroShowcaseRoot.querySelector('[data-hero-project-visual-tech]');
   const heroCategory = heroShowcaseRoot.querySelector('[data-hero-project-category]');
   const heroStatus = heroShowcaseRoot.querySelector('[data-hero-project-status]');
   const heroTitle = heroShowcaseRoot.querySelector('[data-hero-project-title]');
@@ -1060,26 +1063,26 @@ if (heroShowcaseRoot) {
 
   const activateHeroProject = (projectId) => {
     const project = heroShowcaseProjects.find(candidate => candidate.id === projectId);
-    if (!project || !heroFrame) return;
+    if (!project) return;
     const index = heroShowcaseProjects.findIndex(candidate => candidate.id === projectId);
+    const monogram = String(project.title || 'P').trim().split(/\s+/).map(word => word[0] || '').join('').slice(0, 2).toUpperCase();
+    const hasLiveLink = Boolean(project.liveUrl);
 
-    heroShowcaseRoot.classList.toggle('is-source-only', !project.liveUrl);
-    heroFrame.classList.remove('is-loaded');
-    if (project.liveUrl) {
-      heroFrame.hidden = false;
-      heroFrame.title = project.title + ' live website preview';
-      heroFrame.src = project.liveUrl;
-    } else {
-      heroFrame.removeAttribute('src');
-      heroFrame.hidden = true;
+    heroShowcaseRoot.classList.toggle('is-source-only', !hasLiveLink);
+    if (heroFallback) heroFallback.setAttribute('aria-label', project.title + ' project identity preview');
+    if (heroVisualStatus) heroVisualStatus.textContent = hasLiveLink ? 'LIVE LINK AVAILABLE' : 'SOURCE REPOSITORY';
+    if (heroVisualMonogram) heroVisualMonogram.textContent = monogram;
+    if (heroVisualTech) {
+      heroVisualTech.replaceChildren();
+      (project.technologies || []).slice(0, 3).forEach(technology => {
+        const chip = document.createElement('span');
+        chip.className = 'hero-showcase-tech-chip';
+        chip.textContent = technology;
+        heroVisualTech.append(chip);
+      });
     }
-
-    if (heroFallback) heroFallback.setAttribute('aria-label', project.title + ' project summary');
-    if (heroVisualTitle) heroVisualTitle.textContent = project.title;
-    if (heroVisualTagline) heroVisualTagline.textContent = project.tagline;
-    if (heroVisualMonogram) heroVisualMonogram.textContent = String(project.title || 'P').split(/\s+/).slice(0, 2).map(word => word[0] || '').join('').toUpperCase();
     heroCategory.textContent = project.category;
-    heroStatus.textContent = project.liveUrl ? 'LIVE PROJECT' : 'SOURCE ONLY';
+    heroStatus.textContent = hasLiveLink ? 'LIVE LINK' : 'SOURCE ONLY';
     heroTitle.textContent = project.title;
     heroTagline.textContent = project.tagline;
     heroCounter.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(heroShowcaseProjects.length).padStart(2, '0');
@@ -1104,12 +1107,12 @@ if (heroShowcaseRoot) {
 
     const targetUrl = project.liveUrl || project.githubUrl || project.sourceUrl || '#work';
     heroAction.href = targetUrl;
-    heroAction.textContent = project.liveUrl ? 'Explore live project' : 'View source repository';
+    heroAction.textContent = hasLiveLink ? 'Explore live project' : 'View source repository';
     const actionArrow = document.createElement('span');
     actionArrow.setAttribute('aria-hidden', 'true');
     actionArrow.textContent = '↗';
     heroAction.append(actionArrow);
-    heroAction.setAttribute('aria-label', (project.liveUrl ? 'Open live project: ' : 'Open source repository: ') + project.title);
+    heroAction.setAttribute('aria-label', (hasLiveLink ? 'Open live project: ' : 'Open source repository: ') + project.title);
 
     heroChoices.forEach(button => {
       const active = button.dataset.heroProjectChoice === project.id;
@@ -1118,9 +1121,6 @@ if (heroShowcaseRoot) {
     });
   };
 
-  heroFrame.addEventListener('load', () => {
-    heroFrame.classList.add('is-loaded');
-  });
   heroChoices.forEach(button => on(button, 'click', () => activateHeroProject(button.dataset.heroProjectChoice)));
 }
 
