@@ -152,7 +152,7 @@ export const PROJECTS_DATA = [
   },
   {
     "id": "my-cow",
-    "title": "My COW",
+    "title": "My Cow",
     "tagline": "A clearer picture of every cow, calf, and milestone.",
     "category": "Mobile & Agriculture",
     "badge": "Mobile Application",
