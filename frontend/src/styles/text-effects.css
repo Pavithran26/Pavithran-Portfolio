@@ -428,3 +428,67 @@ html[data-appearance='light'] .intro-statement .vx-flip-fade-current {
     opacity: 1 !important;
   }
 }
+
+
+/* FlipText: subtle, staggered 3D character turns for the hero name. */
+.flip-text-wrapper {
+  display: inline-block;
+  line-height: inherit;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+.flip-text-word {
+  display: inline-block;
+  white-space: nowrap;
+  transform-style: preserve-3d;
+}
+.flip-text-whitespace,
+.flip-text-separator {
+  display: inline-block;
+}
+.flip-char {
+  position: relative;
+  display: inline-block;
+  transform-origin: 50% 58%;
+  transform: perspective(700px) rotateX(0deg) translateY(0);
+  backface-visibility: hidden;
+  animation: intro-name-char-flip var(--flip-duration, 2.2s) cubic-bezier(.2,.75,.2,1) var(--flip-delay, 0s) var(--flip-iteration, infinite) both;
+  will-change: transform;
+}
+.flip-char[data-char="S"] {
+  color: #16834b;
+  -webkit-text-fill-color: #16834b;
+}
+body.experience-animation .flip-char[data-char="S"] {
+  color: #8af0ad;
+  -webkit-text-fill-color: #8af0ad;
+  text-shadow: 0 0 28px rgba(112,223,161,.22);
+}
+@keyframes intro-name-char-flip {
+  0%, 72%, 100% {
+    transform: perspective(700px) rotateX(0deg) translateY(0);
+  }
+  78% {
+    transform: perspective(700px) rotateX(86deg) translateY(-.035em);
+  }
+  84% {
+    transform: perspective(700px) rotateX(-16deg) translateY(.025em);
+  }
+  91% {
+    transform: perspective(700px) rotateX(4deg) translateY(0);
+  }
+  96% {
+    transform: perspective(700px) rotateX(0deg) translateY(0);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flip-char {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+}
+@media (max-width: 759px) {
+  .flip-text-wrapper { white-space: normal; }
+  .flip-text-word { white-space: nowrap; }
+}
