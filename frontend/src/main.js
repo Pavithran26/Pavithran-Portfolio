@@ -17,6 +17,7 @@ import { TransformersBackground } from './components/TransformersBackground.js';
 import { ScrollDepthController } from './components/ScrollDepthController.js';
 import { GlitterTextEngine } from './components/GlitterTextEngine.js';
 import { FramerMotionPhysics } from './utils/FramerMotionPhysics.js';
+import { FlipText } from './components/ui/flip-text.jsx';
 import { createElement } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Component as Animation3DButton } from './components/ui/3d-button.tsx';
@@ -34,7 +35,7 @@ root.innerHTML = `
   <section class="space-intro" id="top" aria-labelledby="intro-title">
     <div class="intro-identity">
       <p class="space-kicker">TAMIL NADU, INDIA · FORWARD DEPLOYED ENGINEER (FDE)</p>
-      <h1 id="intro-title">Pavithran <em>S</em></h1>
+      <h1 id="intro-title"><span id="intro-title-flip-mount" role="text" aria-label="Pavithran S">Pavithran S</span></h1>
       <p class="intro-statement" data-flip-phrases="THOUGHTFUL INTERFACES|APPLIED AI &amp; RAG|DEPENDABLE SYSTEMS|FROM IDEA TO PRODUCTION"><span class="vx-flip-fade-current intro-flip-line">THOUGHTFUL INTERFACES</span><br><span class="intro-statement-support">A little intelligence in between.</span></p>
       <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
         <a class="intro-enter" href="#work">Explore my work <span aria-hidden="true">↓</span></a>
@@ -999,6 +1000,22 @@ function chooseAnimationMode() {
   lenis.start();
 }
 
+// Mount the FlipText-inspired character animation in the hero name.
+const introTitleFlipMount = document.getElementById('intro-title-flip-mount');
+let introNameFlipRoot = null;
+if (introTitleFlipMount) {
+  introNameFlipRoot = createRoot(introTitleFlipMount);
+  introNameFlipRoot.render(createElement(FlipText, {
+    className: 'intro-name-flip',
+    duration: 2.2,
+    delay: 0,
+    loop: true,
+    separator: ' ',
+    together: false,
+    children: 'Pavithran S'
+  }));
+}
+
 // Mount the React 3D button into the existing vanilla-Vite portfolio shell.
 const animationModeMount = document.getElementById('animation-mode-mount');
 const perspectiveGridMount = document.getElementById('perspective-grid-mount');
@@ -1160,6 +1177,7 @@ if (import.meta.hot) {
     if (lenisRafId) cancelAnimationFrame(lenisRafId);
     lenis.destroy();
     events.abort();
+    introNameFlipRoot?.unmount();
     animationButtonRoot?.unmount();
     perspectiveGridRoot?.unmount();
     interactiveParticlesRoot?.unmount();
