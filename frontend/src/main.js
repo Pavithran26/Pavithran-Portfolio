@@ -31,6 +31,7 @@ import SocialFlipButton from './components/ui/social-flip-button.jsx';
 
 
 const HERO_SHOWCASE_PROJECT_IDS = ['clansure', 'gt-companion', 'sattam-ai'];
+const PROJECTS_WITHOUT_GENERATED_IMAGES = new Set(['clansure', 'gt-companion', 'srk-erp', 'sattam-ai']);
 const heroShowcaseProjects = HERO_SHOWCASE_PROJECT_IDS
   .map(id => PROJECTS_DATA.find(project => project.id === id))
   .filter(Boolean);
@@ -44,13 +45,24 @@ const renderHeroArchitecture = (projectId) => (heroArchitectureByProject[project
     + '<span class="hero-architecture-node">' + html(step) + '</span>')
   .join('');
 const initialHeroProject = heroShowcaseProjects[0];
+const renderHeroProjectMonogram = (project) => {
+  const words = String(project?.title || 'Project').trim().split(/\s+/);
+  return html(words.slice(0, 2).map(word => word[0] || '').join('').toUpperCase());
+};
 const heroShowcaseMarkup = initialHeroProject ? (
   '<aside class="hero-project-showcase" data-hero-showcase aria-label="Interactive featured projects">'
   + '<div class="hero-showcase-topline"><span><i class="hero-live-pulse" aria-hidden="true"></i> FEATURED BUILDS</span><span class="hero-showcase-counter" data-hero-project-counter>01 / ' + String(heroShowcaseProjects.length).padStart(2, '0') + '</span></div>'
   + '<div class="hero-showcase-main">'
-  + '<figure class="hero-showcase-visual">'
-  + '<img data-hero-project-image src="/images/projects/' + initialHeroProject.id + '-768.webp" alt="' + html(initialHeroProject.title) + ' project interface preview" width="768" height="480" loading="eager" decoding="async">'
-  + '<figcaption><span data-hero-project-category>' + html(initialHeroProject.category) + '</span><span class="hero-visual-badge" data-hero-project-status>' + (initialHeroProject.liveUrl ? 'LIVE PROJECT' : 'PROJECT SOURCE') + '</span></figcaption>'
+  + '<figure class="hero-showcase-visual' + (initialHeroProject.liveUrl ? '' : ' is-source-only') + '">'
+  + '<div class="hero-showcase-placeholder" data-hero-project-fallback>'
+  + '<span class="hero-showcase-placeholder-overline"><span class="hero-placeholder-pulse" aria-hidden="true"></span>' + (initialHeroProject.liveUrl ? 'LIVE SYSTEM PREVIEW' : 'SOURCE REPOSITORY') + '</span>'
+  + '<span class="hero-showcase-monogram" data-hero-project-monogram>' + renderHeroProjectMonogram(initialHeroProject) + '</span>'
+  + '<strong class="hero-showcase-placeholder-title" data-hero-project-visual-title>' + html(initialHeroProject.title) + '</strong>'
+  + '<span class="hero-showcase-placeholder-tagline" data-hero-project-visual-tagline>' + html(initialHeroProject.tagline) + '</span>'
+  + '<span class="hero-showcase-placeholder-note">REAL PROJECT · NO GENERATED ARTWORK</span>'
+  + '</div>'
+  + (initialHeroProject.liveUrl ? '<iframe class="hero-showcase-live-frame" data-hero-project-frame src="' + html(initialHeroProject.liveUrl) + '" title="' + html(initialHeroProject.title) + ' live website preview" loading="eager" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>' : '<iframe class="hero-showcase-live-frame" data-hero-project-frame title="Live website preview unavailable for source-only project" hidden tabindex="-1" aria-hidden="true"></iframe>')
+  + '<figcaption><span data-hero-project-category>' + html(initialHeroProject.category) + '</span><span class="hero-visual-badge" data-hero-project-status>' + (initialHeroProject.liveUrl ? 'LIVE PROJECT' : 'SOURCE ONLY') + '</span></figcaption>'
   + '</figure>'
   + '<div class="hero-showcase-copy">'
   + '<div class="hero-copy-meta"><span>SELECTED SYSTEM</span><span data-hero-project-index>01 / 03</span></div>'
@@ -61,7 +73,7 @@ const heroShowcaseMarkup = initialHeroProject ? (
   + '</div></div>'
   + '<div class="hero-project-choices" role="group" aria-label="Choose a featured project">'
   + heroShowcaseProjects.map((project, index) => '<button class="hero-project-choice' + (index === 0 ? ' is-active' : '') + '" type="button" data-hero-project-choice="' + html(project.id) + '" aria-pressed="' + String(index === 0) + '">'
-      + '<img src="/images/projects/' + html(project.id) + '-768.webp" alt="" width="768" height="480" loading="lazy" decoding="async">'
+      + '<span class="hero-project-choice-mark" aria-hidden="true">' + renderHeroProjectMonogram(project) + '</span>'
       + '<span class="hero-project-choice-copy"><span class="hero-project-choice-overline">BUILD / ' + String(index + 1).padStart(2, '0') + '</span><strong>' + html(project.title) + '</strong><small>' + html(project.category) + '</small></span>'
       + '<span class="hero-project-choice-arrow" aria-hidden="true">↗</span></button>').join('')
   + '</div></aside>'
@@ -98,7 +110,7 @@ root.innerHTML = `
         ${featuredProjects.map(project => `
           <article id="project-${project.id}" class="project-destination has-project-screenshot project-card-background-preview" data-card-project="${project.id}">
             <figure class="project-card-media project-card-media-live" aria-label="${html(project.title)} website background">
-              ${project.id !== 'my-cow' ? `<img
+              ${project.id !== 'my-cow' && !PROJECTS_WITHOUT_GENERATED_IMAGES.has(project.id) ? `<img
                 class="project-card-image project-card-fallback"
                 src="/images/projects/${project.id}-1440.webp"
                 alt=""
@@ -107,6 +119,7 @@ root.innerHTML = `
                 loading="lazy"
                 decoding="async"
               >` : ''}
+              ${!project.liveUrl && PROJECTS_WITHOUT_GENERATED_IMAGES.has(project.id) ? `<div class="project-card-no-preview" aria-hidden="true"><span>SOURCE REPOSITORY</span><strong>${html(project.title)}</strong><small>Open the technical dossier for verified details.</small></div>` : ''}
               ${project.liveUrl ? `<iframe class="project-card-live-frame" data-project-frame-src="${html(project.liveUrl)}" title="${html(project.title)} website background preview" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>` : ''}
               <span class="project-card-preview-shade" aria-hidden="true"></span>
             </figure>
@@ -128,18 +141,7 @@ root.innerHTML = `
         `).join('')}
       </div>
 
-      <section class="project-image-collage" aria-label="Interactive project image collage">
-        <div class="project-collage-toolbar">
-          <span class="project-collage-label">Project snapshots</span>
-          <button type="button" class="project-collage-toggle" aria-pressed="false">Arrange snapshots ↗</button>
-        </div>
-        <div class="project-collage-stage" aria-label="Four featured project screenshots">
-          <img class="project-collage-image" src="/images/projects/clansure-768.webp" alt="ClanSure insurance management interface" width="768" height="480" loading="lazy" decoding="async">
-          <img class="project-collage-image" src="/images/projects/gt-companion-768.webp" alt="GT Companion learning platform interface" width="768" height="480" loading="lazy" decoding="async">
-          <img class="project-collage-image" src="/images/projects/sattam-ai-768.webp" alt="Sattam AI legal assistant interface" width="768" height="480" loading="lazy" decoding="async">
-          <img class="project-collage-image" src="/images/projects/srk-erp-768.webp" alt="SRK ERP coconut business interface" width="768" height="480" loading="lazy" decoding="async">
-        </div>
-      </section>
+
 
     </div>
   </section>
@@ -1038,10 +1040,14 @@ function chooseAnimationMode() {
   lenis.start();
 }
 
-// Interactive hero showcase: switch between real projects and their real architecture stacks.
+// Interactive hero showcase: switch between projects without generated preview images.
 const heroShowcaseRoot = root.querySelector('[data-hero-showcase]');
 if (heroShowcaseRoot) {
-  const heroImage = heroShowcaseRoot.querySelector('[data-hero-project-image]');
+  const heroFrame = heroShowcaseRoot.querySelector('[data-hero-project-frame]');
+  const heroFallback = heroShowcaseRoot.querySelector('[data-hero-project-fallback]');
+  const heroVisualTitle = heroShowcaseRoot.querySelector('[data-hero-project-visual-title]');
+  const heroVisualTagline = heroShowcaseRoot.querySelector('[data-hero-project-visual-tagline]');
+  const heroVisualMonogram = heroShowcaseRoot.querySelector('[data-hero-project-monogram]');
   const heroCategory = heroShowcaseRoot.querySelector('[data-hero-project-category]');
   const heroStatus = heroShowcaseRoot.querySelector('[data-hero-project-status]');
   const heroTitle = heroShowcaseRoot.querySelector('[data-hero-project-title]');
@@ -1054,13 +1060,26 @@ if (heroShowcaseRoot) {
 
   const activateHeroProject = (projectId) => {
     const project = heroShowcaseProjects.find(candidate => candidate.id === projectId);
-    if (!project || !heroImage) return;
+    if (!project || !heroFrame) return;
     const index = heroShowcaseProjects.findIndex(candidate => candidate.id === projectId);
-    heroImage.classList.add('is-switching');
-    heroImage.src = '/images/projects/' + project.id + '-768.webp';
-    heroImage.alt = project.title + ' project interface preview';
+
+    heroShowcaseRoot.classList.toggle('is-source-only', !project.liveUrl);
+    heroFrame.classList.remove('is-loaded');
+    if (project.liveUrl) {
+      heroFrame.hidden = false;
+      heroFrame.title = project.title + ' live website preview';
+      heroFrame.src = project.liveUrl;
+    } else {
+      heroFrame.removeAttribute('src');
+      heroFrame.hidden = true;
+    }
+
+    if (heroFallback) heroFallback.setAttribute('aria-label', project.title + ' project summary');
+    if (heroVisualTitle) heroVisualTitle.textContent = project.title;
+    if (heroVisualTagline) heroVisualTagline.textContent = project.tagline;
+    if (heroVisualMonogram) heroVisualMonogram.textContent = String(project.title || 'P').split(/\s+/).slice(0, 2).map(word => word[0] || '').join('').toUpperCase();
     heroCategory.textContent = project.category;
-    heroStatus.textContent = project.liveUrl ? 'LIVE PROJECT' : 'SOURCE AVAILABLE';
+    heroStatus.textContent = project.liveUrl ? 'LIVE PROJECT' : 'SOURCE ONLY';
     heroTitle.textContent = project.title;
     heroTagline.textContent = project.tagline;
     heroCounter.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(heroShowcaseProjects.length).padStart(2, '0');
@@ -1099,8 +1118,9 @@ if (heroShowcaseRoot) {
     });
   };
 
-  heroImage?.addEventListener('load', () => heroImage.classList.remove('is-switching'));
-  heroImage?.addEventListener('error', () => heroImage.classList.remove('is-switching'));
+  heroFrame.addEventListener('load', () => {
+    heroFrame.classList.add('is-loaded');
+  });
   heroChoices.forEach(button => on(button, 'click', () => activateHeroProject(button.dataset.heroProjectChoice)));
 }
 
