@@ -30,28 +30,54 @@ import { TextEffectsController } from './components/TextEffectsController.js';
 import SocialFlipButton from './components/ui/social-flip-button.jsx';
 
 
-const HERO_SHOWCASE_PROJECT_IDS = ['clansure', 'gt-companion', 'sattam-ai'];
+const HERO_SHOWCASE_PROJECT_IDS = ['clansure', 'gt-companion', 'sattam-ai', 'srk-erp'];
 const PROJECTS_WITHOUT_GENERATED_IMAGES = new Set(['clansure', 'gt-companion', 'srk-erp', 'sattam-ai']);
 const heroShowcaseProjects = HERO_SHOWCASE_PROJECT_IDS
   .map(id => PROJECTS_DATA.find(project => project.id === id))
   .filter(Boolean);
+const heroPreviewConfigs = {
+  clansure: { status: 'FAMILY COVERAGE', headline: 'Policy workspace', modules: ['Health', 'Life', 'Motor', 'Policy vault'], layout: 'cards' },
+  'gt-companion': { status: 'KNOWLEDGE SHARING', headline: 'Learning workspace', modules: ['Roadmap', 'Sessions', 'Assignments', 'AI tutor'], layout: 'learning' },
+  'sattam-ai': { status: 'LEGAL KNOWLEDGE', headline: 'Acts & regulations', modules: ['Ask a question', 'Document retrieval', 'Web interface', 'Mobile app'], layout: 'legal' },
+  'srk-erp': { status: 'COCONUT OPERATIONS', headline: 'Operations workspace', modules: ['Land & lease', 'Harvest logs', 'Fleet', 'Sales & GRN'], layout: 'operations' }
+};
 const initialHeroProject = heroShowcaseProjects[0];
 const renderHeroProjectMonogram = (project) => {
   const words = String(project?.title || 'Project').trim().split(/\s+/);
   return html(words.map(word => word[0] || '').join('').slice(0, 2).toUpperCase());
 };
+const renderHeroProjectPreview = (project) => {
+  const config = heroPreviewConfigs[project?.id];
+  if (!project || !config) return '';
+  return '<div class="hero-preview-ui hero-preview-ui--' + html(project.id) + '" data-preview-layout="' + html(config.layout) + '">'
+    + '<div class="hero-preview-appbar">'
+    + '<span class="hero-preview-appmark" aria-hidden="true">' + renderHeroProjectMonogram(project) + '</span>'
+    + '<span class="hero-preview-apptitle">' + html(project.title) + '</span>'
+    + '<span class="hero-preview-appstatus">' + html(config.status) + '</span>'
+    + '</div>'
+    + '<div class="hero-preview-body">'
+    + '<aside class="hero-preview-sidebar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></aside>'
+    + '<div class="hero-preview-content">'
+    + '<div class="hero-preview-content-head"><span>' + html(config.status) + '</span><strong>' + html(config.headline) + '</strong></div>'
+    + '<div class="hero-preview-module-grid">'
+    + config.modules.map((module, index) => '<div class="hero-preview-module hero-preview-module-' + String(index + 1) + '">'
+      + '<span class="hero-preview-module-mark" aria-hidden="true">' + ['↗', '◈', '▤', '＋'][index] + '</span>'
+      + '<span class="hero-preview-module-label">' + html(module) + '</span>'
+      + '<span class="hero-preview-module-lines" aria-hidden="true"><i></i><i></i></span>'
+      + '</div>').join('')
+    + '</div>'
+    + '<div class="hero-preview-lower-row" aria-hidden="true"><i></i><i></i><i></i><i></i></div>'
+    + '</div></div>'
+    + '<div class="hero-preview-caption"><span>PROJECT PREVIEW</span><span>INTERACTIVE OVERVIEW</span></div>'
+    + '</div>';
+};
 const heroShowcaseMarkup = initialHeroProject ? (
-  '<aside class="hero-project-showcase hero-project-showcase-visual-only" data-hero-showcase aria-label="Visual project selector">'
-  + '<div class="hero-showcase-main">'
-  + '<figure class="hero-showcase-visual is-text-preview" aria-label="Selected project monogram">'
-  + '<div class="hero-showcase-placeholder" data-hero-project-fallback>'
-  + '<span class="hero-showcase-monogram" data-hero-project-monogram>' + renderHeroProjectMonogram(initialHeroProject) + '</span>'
-  + '</div>'
-  + '</figure>'
-  + '</div>'
+  '<aside class="hero-project-showcase hero-project-showcase-visual-only" data-hero-showcase aria-label="Interactive project previews">'
+  + '<div class="hero-preview-stage" data-hero-project-preview aria-live="polite">' + renderHeroProjectPreview(initialHeroProject) + '</div>'
   + '<div class="hero-project-choices" role="group" aria-label="Choose a project preview">'
-  + heroShowcaseProjects.map((project, index) => '<button class="hero-project-choice' + (index === 0 ? ' is-active' : '') + '" type="button" data-hero-project-choice="' + html(project.id) + '" aria-label="Show ' + html(project.title) + ' preview" title="' + html(project.title) + '" aria-pressed="' + String(index === 0) + '">'
+  + heroShowcaseProjects.map((project, index) => '<button class="hero-project-choice' + (index === 0 ? ' is-active' : '') + '" type="button" data-hero-project-choice="' + html(project.id) + '" aria-label="Preview ' + html(project.title) + '" title="' + html(project.title) + '" aria-pressed="' + String(index === 0) + '">'
       + '<span class="hero-project-choice-mark" aria-hidden="true">' + renderHeroProjectMonogram(project) + '</span>'
+      + '<span class="hero-project-choice-name">' + html(project.title) + '</span>'
       + '</button>').join('')
   + '</div></aside>'
 ) : '';
@@ -1017,24 +1043,16 @@ function chooseAnimationMode() {
   lenis.start();
 }
 
-// Visual-only hero selector: project names and full details live in the Projects section below.
+// Interactive, code-built previews: actual project details remain in the Projects section.
 const heroShowcaseRoot = root.querySelector('[data-hero-showcase]');
 if (heroShowcaseRoot) {
-  const heroVisualMonogram = heroShowcaseRoot.querySelector('[data-hero-project-monogram]');
+  const previewMount = heroShowcaseRoot.querySelector('[data-hero-project-preview]');
   const heroChoices = [...heroShowcaseRoot.querySelectorAll('[data-hero-project-choice]')];
 
   const activateHeroProject = (projectId) => {
     const project = heroShowcaseProjects.find(candidate => candidate.id === projectId);
-    if (!project || !heroVisualMonogram) return;
-
-    heroVisualMonogram.textContent = String(project.title || 'P')
-      .trim()
-      .split(/\s+/)
-      .map(word => word[0] || '')
-      .join('')
-      .slice(0, 2)
-      .toUpperCase();
-
+    if (!project || !previewMount) return;
+    previewMount.innerHTML = renderHeroProjectPreview(project);
     heroShowcaseRoot.dataset.activeProject = project.id;
     heroChoices.forEach(button => {
       const active = button.dataset.heroProjectChoice === project.id;
@@ -1042,7 +1060,6 @@ if (heroShowcaseRoot) {
       button.setAttribute('aria-pressed', String(active));
     });
   };
-
   heroChoices.forEach(button => on(button, 'click', () => activateHeroProject(button.dataset.heroProjectChoice)));
 }
 
@@ -1178,10 +1195,7 @@ function startPreloadWatchdog() {
 
     // The speedometer runs before the visitor chooses a mode, so don't wait
     // for cinematic video. Show the choice once the gauge sweep and page are ready.
-    const isReadyToDismiss = elapsed >= INTRO_MIN_VISIBLE_MS
-      && isPageLoaded
-      && isSpeedometerFrameReady
-      && isGaugeSweepDone;
+    const isReadyToDismiss = elapsed >= INTRO_MIN_VISIBLE_MS && isPageLoaded;
 
     if (elapsed >= INTRO_MAX_WAIT_MS || isReadyToDismiss) {
       clearInterval(preloadWatchdog);
