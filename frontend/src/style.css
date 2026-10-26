@@ -7647,3 +7647,54 @@ body .hero-live-preview-toolbar .hero-live-preview-open {
     min-height: 260px !important;
   }
 }
+
+
+/* Compact name-only project selector: remove C / GC / MC / SE monogram tiles. */
+body .hero-project-showcase-visual-only .hero-project-choice {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-height: 42px !important;
+  height: 42px !important;
+  gap: 0 !important;
+  padding: 7px 10px !important;
+  border-radius: 11px !important;
+  box-sizing: border-box !important;
+}
+body .hero-project-showcase-visual-only .hero-project-choice-mark {
+  display: none !important;
+}
+body .hero-project-showcase-visual-only .hero-project-choice-name {
+  display: block !important;
+  width: 100%;
+  min-width: 0;
+  color: #244c31 !important;
+  text-align: center;
+  font-size: .76rem !important;
+  font-weight: 650 !important;
+  line-height: 1.25 !important;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+body .hero-project-showcase-visual-only .hero-project-choice.is-active .hero-project-choice-name {
+  color: #17663a !important;
+}
+body.experience-animation .hero-project-showcase-visual-only .hero-project-choice-name {
+  color: #e2f7e8 !important;
+}
+body.experience-animation .hero-project-showcase-visual-only .hero-project-choice.is-active .hero-project-choice-name {
+  color: #f3fff6 !important;
+}
+@media (max-width: 520px) {
+  body .hero-project-showcase-visual-only .hero-project-choice {
+    min-height: 38px !important;
+    height: auto !important;
+    padding: 8px 7px !important;
+    flex-direction: row !important;
+    justify-content: center !important;
+  }
+  body .hero-project-showcase-visual-only .hero-project-choice-name {
+    font-size: .71rem !important;
+  }
+}
