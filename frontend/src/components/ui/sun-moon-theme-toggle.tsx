@@ -136,6 +136,24 @@ export function SunMoonThemeToggle({
     return () => observer.disconnect();
   }, [isControlled, storageKey, syncDocument]);
 
+  // Keep the control and document in sync when the preference changes in another tab.
+  React.useEffect(() => {
+    if (isControlled || !storageKey || typeof window === "undefined") return;
+
+    const handleStorage = (event: StorageEvent) => {
+      if (event.key !== storageKey) return;
+      const nextTheme: SunMoonTheme =
+        event.newValue === "light" || event.newValue === "dark"
+          ? event.newValue
+          : readDocumentTheme(defaultTheme);
+      setInternalTheme(nextTheme);
+      if (syncDocument) applyDocumentTheme(nextTheme, 0);
+    };
+
+    window.addEventListener("storage", handleStorage);
+    return () => window.removeEventListener("storage", handleStorage);
+  }, [defaultTheme, isControlled, storageKey, syncDocument]);
+
   const toggle = (event: React.MouseEvent<HTMLButtonElement>) => {
     onClick?.(event);
     if (event.defaultPrevented) return;
