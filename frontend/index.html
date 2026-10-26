@@ -3,6 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    // A browser refresh should reopen the portfolio from its landing page, not restore
+    // a section hash or the previous scroll position. Normal in-site navigation is untouched.
+    (() => {
+      const navigation = performance.getEntriesByType('navigation')[0];
+      if (!navigation || navigation.type !== 'reload') return;
+
+      try {
+        if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        if (location.hash) {
+          history.replaceState(null, document.title, location.pathname + location.search);
+        }
+      } catch (_) {}
+
+      const resetToLanding = () => {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        if (document.body) document.body.scrollTop = 0;
+      };
+
+      document.addEventListener('DOMContentLoaded', resetToLanding, { once: true });
+      window.addEventListener('pageshow', resetToLanding, { once: true });
+      requestAnimationFrame(() => requestAnimationFrame(resetToLanding));
+    })();
+  </script>
   <meta name="theme-color" content="#050b08" />
   <title>Pavithran S | Forward Deployed Engineer (FDE) & AI Systems Portfolio</title>
   
