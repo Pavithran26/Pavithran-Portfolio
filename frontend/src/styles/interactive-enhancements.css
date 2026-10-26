@@ -196,3 +196,78 @@ body:not(.experience-animation) .fd-compose textarea {
   .fd-fab-pulse { animation: none; }
   .fd-panel { animation: none; }
 }
+
+
+/* Solid, readable DAWN panel in Professional mode (no background bleed-through). */
+body:not(.experience-animation) #floating-dawn-root .fd-panel {
+  background: #ffffff !important;
+  background-image: none !important;
+  color: #183b28 !important;
+  border-color: #b9dec5 !important;
+  opacity: 1 !important;
+  filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+body:not(.experience-animation) #floating-dawn-root .fd-header {
+  background: #eff8f2 !important;
+  border-bottom-color: #d7eade !important;
+  opacity: 1 !important;
+}
+body:not(.experience-animation) #floating-dawn-root .fd-transcript {
+  background: #ffffff !important;
+  color: #243b2c !important;
+  opacity: 1 !important;
+}
+body:not(.experience-animation) #floating-dawn-root .fd-empty,
+body:not(.experience-animation) #floating-dawn-root .fd-empty p {
+  color: #405f49 !important;
+  -webkit-text-fill-color: #405f49 !important;
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+  font-weight: 450 !important;
+  line-height: 1.55 !important;
+}
+body:not(.experience-animation) #floating-dawn-root .fd-title {
+  color: #176b40 !important;
+  -webkit-text-fill-color: #176b40 !important;
+  text-shadow: none !important;
+}
+body:not(.experience-animation) #floating-dawn-root .fd-status {
+  color: #26794a !important;
+  -webkit-text-fill-color: #26794a !important;
+  text-shadow: none !important;
+}
+body:not(.experience-animation) #floating-dawn-root .fd-icon-btn {
+  color: #557561 !important;
+}
+body:not(.experience-animation) #floating-dawn-root .fd-compose {
+  background: #edf2ee !important;
+  border-top-color: #d1e2d6 !important;
+  opacity: 1 !important;
+}
+body:not(.experience-animation) #floating-dawn-root .fd-compose textarea {
+  background: #ffffff !important;
+  color: #183b28 !important;
+  border-color: #b9d8c2 !important;
+  box-shadow: none;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+body:not(.experience-animation) #floating-dawn-root .fd-compose textarea::placeholder {
+  color: #667b6d !important;
+  -webkit-text-fill-color: #667b6d !important;
+  opacity: 1 !important;
+}
+body:not(.experience-animation) #floating-dawn-root .fd-msg-role,
+body:not(.experience-animation) #floating-dawn-root .fd-sources {
+  color: #326848 !important;
+  text-shadow: none !important;
+}
+body:not(.experience-animation) #floating-dawn-root .fd-msg-body {
+  background: #f3f7f4 !important;
+  color: #273d2f !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
