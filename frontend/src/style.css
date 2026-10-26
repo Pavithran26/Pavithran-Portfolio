@@ -6379,3 +6379,81 @@ body.experience-normal .space-certifications .certification-preview-pdf .certifi
   body .space-certifications .certification-pdf-background,
   body .space-certifications .certification-preview-pdf::before { transition: none !important; }
 }
+
+
+/* Readability and width hardening for the Technology Index toolbar. */
+.world-section-tools,
+.world-section-tools .world-copy,
+.world-section-tools .reading-tools.staggered-grid-mount,
+.world-section-tools .staggered-tech-explorer,
+.world-section-tools .staggered-tech-toolbar {
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+.world-section-tools .reading-tools.staggered-grid-mount,
+.world-section-tools .staggered-tech-explorer,
+.world-section-tools .staggered-tech-toolbar {
+  width: 100% !important;
+}
+.world-section-tools .staggered-tech-toolbar {
+  overflow: visible !important;
+}
+.world-section-tools .staggered-tech-filters {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  align-items: center;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  overflow: visible !important;
+  box-sizing: border-box !important;
+  gap: 8px !important;
+}
+.world-section-tools .staggered-tech-filter {
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+.world-section-tools .staggered-tech-toolbar__summary p {
+  margin: 0 !important;
+  font-size: .88rem !important;
+  line-height: 1.6 !important;
+  font-weight: 450 !important;
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+body:not(.experience-animation) .world-section-tools .staggered-tech-toolbar__summary p {
+  color: #3f5e49 !important;
+  -webkit-text-fill-color: #3f5e49 !important;
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+body:not(.experience-animation) .world-section-tools .staggered-tech-toolbar__summary strong span {
+  color: #526f5b !important;
+  -webkit-text-fill-color: #526f5b !important;
+}
+body.experience-animation .world-section-tools .staggered-tech-toolbar__summary p {
+  color: #c0d8c7 !important;
+  -webkit-text-fill-color: #c0d8c7 !important;
+  text-shadow: none !important;
+  opacity: 1 !important;
+}
+@media (min-width: 760px) and (max-width: 1100px) {
+  .world-section-tools {
+    padding-left: clamp(18px, 3vw, 34px) !important;
+    padding-right: clamp(18px, 3vw, 34px) !important;
+  }
+  .world-section-tools .staggered-tech-toolbar { padding: 16px !important; }
+  .world-section-tools .staggered-tech-filter { gap: 7px !important; }
+}
+@media (max-width: 759px) {
+  .world-section-tools .staggered-tech-toolbar__summary p {
+    font-size: .82rem !important;
+    line-height: 1.55 !important;
+  }
+  .world-section-tools .staggered-tech-filters { gap: 7px !important; }
+}
