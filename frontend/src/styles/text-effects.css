@@ -430,65 +430,35 @@ html[data-appearance='light'] .intro-statement .vx-flip-fade-current {
 }
 
 
-/* FlipText: subtle, staggered 3D character turns for the hero name. */
+/* FlipText: gentle, readable character turns for the hero name. */
 .flip-text-wrapper {
-  display: inline-block;
-  line-height: inherit;
-  white-space: nowrap;
-  vertical-align: baseline;
+  display: inline-block; width: max-content; max-width: 100%; line-height: inherit;
+  white-space: nowrap; vertical-align: baseline; overflow: visible;
 }
-.flip-text-word {
-  display: inline-block;
-  white-space: nowrap;
-  transform-style: preserve-3d;
-}
-.flip-text-whitespace,
-.flip-text-separator {
-  display: inline-block;
-}
+.flip-text-word { display: inline-block; white-space: nowrap; transform-style: preserve-3d; vertical-align: baseline; }
+.flip-text-whitespace, .flip-text-separator { display: inline-block; }
 .flip-char {
-  position: relative;
-  display: inline-block;
-  transform-origin: 50% 58%;
+  position: relative; display: inline-block; transform-origin: 50% 58%;
   transform: perspective(700px) rotateX(0deg) translateY(0);
-  backface-visibility: hidden;
-  animation: intro-name-char-flip var(--flip-duration, 2.2s) cubic-bezier(.2,.75,.2,1) var(--flip-delay, 0s) var(--flip-iteration, infinite) both;
+  backface-visibility: visible;
+  animation: intro-name-char-flip var(--flip-duration, 2.6s) cubic-bezier(.2,.75,.2,1) var(--flip-delay, 0s) var(--flip-iteration, infinite) both;
   will-change: transform;
 }
-.flip-char[data-char="S"] {
-  color: #16834b;
-  -webkit-text-fill-color: #16834b;
-}
+.flip-char[data-char="S"] { color: #16834b; -webkit-text-fill-color: #16834b; }
 body.experience-animation .flip-char[data-char="S"] {
-  color: #8af0ad;
-  -webkit-text-fill-color: #8af0ad;
-  text-shadow: 0 0 28px rgba(112,223,161,.22);
+  color: #8af0ad; -webkit-text-fill-color: #8af0ad; text-shadow: 0 0 28px rgba(112,223,161,.22);
 }
 @keyframes intro-name-char-flip {
-  0%, 72%, 100% {
-    transform: perspective(700px) rotateX(0deg) translateY(0);
-  }
-  78% {
-    transform: perspective(700px) rotateX(86deg) translateY(-.035em);
-  }
-  84% {
-    transform: perspective(700px) rotateX(-16deg) translateY(.025em);
-  }
-  91% {
-    transform: perspective(700px) rotateX(4deg) translateY(0);
-  }
-  96% {
-    transform: perspective(700px) rotateX(0deg) translateY(0);
-  }
+  0%, 72%, 100% { transform: perspective(700px) rotateX(0deg) translateY(0); }
+  77% { transform: perspective(700px) rotateX(18deg) translateY(-.01em); }
+  83% { transform: perspective(700px) rotateX(-8deg) translateY(.01em); }
+  91% { transform: perspective(700px) rotateX(2deg) translateY(0); }
+  96% { transform: perspective(700px) rotateX(0deg) translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .flip-char {
-    animation: none !important;
-    transform: none !important;
-    will-change: auto;
-  }
+  .flip-char { animation: none !important; transform: none !important; will-change: auto; }
 }
 @media (max-width: 759px) {
-  .flip-text-wrapper { white-space: normal; }
+  .flip-text-wrapper { white-space: nowrap; }
   .flip-text-word { white-space: nowrap; }
 }
