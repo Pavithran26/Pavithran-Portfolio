@@ -25,6 +25,7 @@ import { PerspectiveGrid } from './components/ui/perspective-grid.jsx';
 import { LandingInteractiveParticles } from './components/LandingInteractiveParticles.jsx';
 import { LiquidMetalSurface } from './components/ui/liquid-metal.jsx';
 import ShinyButton from './components/ui/shiny-button.tsx';
+import { SunMoonThemeToggle } from './components/ui/sun-moon-theme-toggle.tsx';
 import { flushSync } from 'react-dom';
 import { TextEffectsController } from './components/TextEffectsController.js';
 import SocialFlipButton from './components/ui/social-flip-button.jsx';
@@ -75,6 +76,22 @@ const heroShowcaseMarkup = initialHeroProject ? (
 ) : '';
 
 const root = document.querySelector('#portfolio');
+
+const sunMoonThemeToggleMount = document.querySelector('#sun-moon-theme-toggle-mount');
+let sunMoonThemeToggleRoot = null;
+if (sunMoonThemeToggleMount) {
+  sunMoonThemeToggleRoot = createRoot(sunMoonThemeToggleMount);
+  sunMoonThemeToggleRoot.render(createElement(SunMoonThemeToggle, {
+    size: 40,
+    duration: 1740,
+    defaultTheme: 'light',
+    syncDocument: true,
+    storageKey: 'portfolio-universe-theme',
+    title: 'Toggle light or dark theme',
+    className: 'sun-moon-theme-toggle--header'
+  }));
+}
+
 root.innerHTML = `
   <section class="space-intro has-project-showcase" id="top" aria-labelledby="intro-title">
     <div class="intro-identity">
