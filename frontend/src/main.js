@@ -30,7 +30,7 @@ import { TextEffectsController } from './components/TextEffectsController.js';
 import SocialFlipButton from './components/ui/social-flip-button.jsx';
 
 
-const HERO_SHOWCASE_PROJECT_IDS = ['clansure', 'gt-companion', 'sattam-ai', 'srk-erp'];
+const HERO_SHOWCASE_PROJECT_IDS = ['clansure', 'gt-companion', 'my-cow', 'srk-erp'];
 const PROJECTS_WITHOUT_GENERATED_IMAGES = new Set(['clansure', 'gt-companion', 'srk-erp', 'sattam-ai']);
 const heroShowcaseProjects = HERO_SHOWCASE_PROJECT_IDS
   .map(id => PROJECTS_DATA.find(project => project.id === id))
