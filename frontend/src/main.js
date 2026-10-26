@@ -35,51 +35,24 @@ const PROJECTS_WITHOUT_GENERATED_IMAGES = new Set(['clansure', 'gt-companion', '
 const heroShowcaseProjects = HERO_SHOWCASE_PROJECT_IDS
   .map(id => PROJECTS_DATA.find(project => project.id === id))
   .filter(Boolean);
-const heroArchitectureByProject = {
-  clansure: ['React UI', 'ASP.NET Core API', 'FastAPI + Gemini RAG', 'PostgreSQL'],
-  'gt-companion': ['React UI', 'ASP.NET Core API', 'FastAPI + RAG', 'PostgreSQL + pgvector'],
-  'sattam-ai': ['Next.js web', 'FastAPI retrieval', 'ChromaDB', 'Gemini / compatible LLMs']
-};
-const renderHeroArchitecture = (projectId) => (heroArchitectureByProject[projectId] || [])
-  .map((step, index) => (index ? '<span class="hero-architecture-arrow" aria-hidden="true">→</span>' : '')
-    + '<span class="hero-architecture-node">' + html(step) + '</span>')
-  .join('');
 const initialHeroProject = heroShowcaseProjects[0];
 const renderHeroProjectMonogram = (project) => {
   const words = String(project?.title || 'Project').trim().split(/\s+/);
   return html(words.map(word => word[0] || '').join('').slice(0, 2).toUpperCase());
 };
-const renderHeroShowcaseTechnologies = (project) => (project?.technologies || [])
-  .slice(0, 3)
-  .map(technology => '<span class="hero-showcase-tech-chip">' + html(technology) + '</span>')
-  .join('');
 const heroShowcaseMarkup = initialHeroProject ? (
-  '<aside class="hero-project-showcase" data-hero-showcase aria-label="Interactive featured projects">'
-  + '<div class="hero-showcase-topline"><span><i class="hero-live-pulse" aria-hidden="true"></i> FEATURED BUILDS</span><span class="hero-showcase-counter" data-hero-project-counter>01 / ' + String(heroShowcaseProjects.length).padStart(2, '0') + '</span></div>'
+  '<aside class="hero-project-showcase hero-project-showcase-visual-only" data-hero-showcase aria-label="Visual project selector">'
   + '<div class="hero-showcase-main">'
-  + '<figure class="hero-showcase-visual is-text-preview">'
+  + '<figure class="hero-showcase-visual is-text-preview" aria-label="Selected project monogram">'
   + '<div class="hero-showcase-placeholder" data-hero-project-fallback>'
-  + '<span class="hero-showcase-placeholder-overline"><span class="hero-placeholder-pulse" aria-hidden="true"></span><span data-hero-project-visual-status>' + (initialHeroProject.liveUrl ? 'LIVE LINK AVAILABLE' : 'SOURCE REPOSITORY') + '</span></span>'
-  + '<div class="hero-showcase-visual-core">'
   + '<span class="hero-showcase-monogram" data-hero-project-monogram>' + renderHeroProjectMonogram(initialHeroProject) + '</span>'
-  + '<div class="hero-showcase-tech-stack" data-hero-project-visual-tech aria-label="Key technologies">' + renderHeroShowcaseTechnologies(initialHeroProject) + '</div>'
   + '</div>'
-  + '<span class="hero-showcase-placeholder-note">PROJECT PROFILE · NO GENERATED ARTWORK</span>'
-  + '</div>'
-  + '<figcaption><span data-hero-project-category>' + html(initialHeroProject.category) + '</span><span class="hero-visual-badge" data-hero-project-status>' + (initialHeroProject.liveUrl ? 'LIVE LINK' : 'SOURCE ONLY') + '</span></figcaption>'
   + '</figure>'
-  + '<div class="hero-showcase-copy">'
-  + '<div class="hero-copy-meta"><span>SELECTED SYSTEM</span><span data-hero-project-index>01 / 03</span></div>'
-  + '<h2 data-hero-project-title>' + html(initialHeroProject.title) + '</h2>'
-  + '<p class="hero-project-tagline" data-hero-project-tagline>' + html(initialHeroProject.tagline) + '</p>'
-  + '<div class="hero-architecture-wrap"><span class="hero-architecture-label">UNDER THE HOOD</span><div class="hero-architecture-flow" data-hero-project-architecture aria-label="Project architecture">' + renderHeroArchitecture(initialHeroProject.id) + '</div></div>'
-  + '<div class="hero-showcase-footer"><span class="hero-showcase-footer-note">PROJECT DETAILS</span><a class="hero-showcase-action" data-hero-project-action href="' + html(initialHeroProject.liveUrl || initialHeroProject.githubUrl || initialHeroProject.sourceUrl || '#work') + '" target="_blank" rel="noopener noreferrer">' + (initialHeroProject.liveUrl ? 'Explore live project' : 'View source repository') + '<span aria-hidden="true">↗</span></a></div>'
-  + '</div></div>'
-  + '<div class="hero-project-choices" role="group" aria-label="Choose a featured project">'
-  + heroShowcaseProjects.map((project, index) => '<button class="hero-project-choice' + (index === 0 ? ' is-active' : '') + '" type="button" data-hero-project-choice="' + html(project.id) + '" aria-pressed="' + String(index === 0) + '">'
+  + '</div>'
+  + '<div class="hero-project-choices" role="group" aria-label="Choose a project preview">'
+  + heroShowcaseProjects.map((project, index) => '<button class="hero-project-choice' + (index === 0 ? ' is-active' : '') + '" type="button" data-hero-project-choice="' + html(project.id) + '" aria-label="Show ' + html(project.title) + ' preview" title="' + html(project.title) + '" aria-pressed="' + String(index === 0) + '">'
       + '<span class="hero-project-choice-mark" aria-hidden="true">' + renderHeroProjectMonogram(project) + '</span>'
-      + '<span class="hero-project-choice-copy"><span class="hero-project-choice-overline">BUILD / ' + String(index + 1).padStart(2, '0') + '</span><strong>' + html(project.title) + '</strong><small>' + html(project.category) + '</small></span>'
-      + '<span class="hero-project-choice-arrow" aria-hidden="true">↗</span></button>').join('')
+      + '</button>').join('')
   + '</div></aside>'
 ) : '';
 
@@ -1044,76 +1017,25 @@ function chooseAnimationMode() {
   lenis.start();
 }
 
-// Interactive hero showcase: change project identity and verified stack without embedding app artwork.
+// Visual-only hero selector: project names and full details live in the Projects section below.
 const heroShowcaseRoot = root.querySelector('[data-hero-showcase]');
 if (heroShowcaseRoot) {
-  const heroFallback = heroShowcaseRoot.querySelector('[data-hero-project-fallback]');
-  const heroVisualStatus = heroShowcaseRoot.querySelector('[data-hero-project-visual-status]');
   const heroVisualMonogram = heroShowcaseRoot.querySelector('[data-hero-project-monogram]');
-  const heroVisualTech = heroShowcaseRoot.querySelector('[data-hero-project-visual-tech]');
-  const heroCategory = heroShowcaseRoot.querySelector('[data-hero-project-category]');
-  const heroStatus = heroShowcaseRoot.querySelector('[data-hero-project-status]');
-  const heroTitle = heroShowcaseRoot.querySelector('[data-hero-project-title]');
-  const heroTagline = heroShowcaseRoot.querySelector('[data-hero-project-tagline]');
-  const heroCounter = heroShowcaseRoot.querySelector('[data-hero-project-counter]');
-  const heroIndex = heroShowcaseRoot.querySelector('[data-hero-project-index]');
-  const heroArchitecture = heroShowcaseRoot.querySelector('[data-hero-project-architecture]');
-  const heroAction = heroShowcaseRoot.querySelector('[data-hero-project-action]');
   const heroChoices = [...heroShowcaseRoot.querySelectorAll('[data-hero-project-choice]')];
 
   const activateHeroProject = (projectId) => {
     const project = heroShowcaseProjects.find(candidate => candidate.id === projectId);
-    if (!project) return;
-    const index = heroShowcaseProjects.findIndex(candidate => candidate.id === projectId);
-    const monogram = String(project.title || 'P').trim().split(/\s+/).map(word => word[0] || '').join('').slice(0, 2).toUpperCase();
-    const hasLiveLink = Boolean(project.liveUrl);
+    if (!project || !heroVisualMonogram) return;
 
-    heroShowcaseRoot.classList.toggle('is-source-only', !hasLiveLink);
-    if (heroFallback) heroFallback.setAttribute('aria-label', project.title + ' project identity preview');
-    if (heroVisualStatus) heroVisualStatus.textContent = hasLiveLink ? 'LIVE LINK AVAILABLE' : 'SOURCE REPOSITORY';
-    if (heroVisualMonogram) heroVisualMonogram.textContent = monogram;
-    if (heroVisualTech) {
-      heroVisualTech.replaceChildren();
-      (project.technologies || []).slice(0, 3).forEach(technology => {
-        const chip = document.createElement('span');
-        chip.className = 'hero-showcase-tech-chip';
-        chip.textContent = technology;
-        heroVisualTech.append(chip);
-      });
-    }
-    heroCategory.textContent = project.category;
-    heroStatus.textContent = hasLiveLink ? 'LIVE LINK' : 'SOURCE ONLY';
-    heroTitle.textContent = project.title;
-    heroTagline.textContent = project.tagline;
-    heroCounter.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(heroShowcaseProjects.length).padStart(2, '0');
-    heroIndex.textContent = String(index + 1).padStart(2, '0') + ' / ' + String(heroShowcaseProjects.length).padStart(2, '0');
+    heroVisualMonogram.textContent = String(project.title || 'P')
+      .trim()
+      .split(/\s+/)
+      .map(word => word[0] || '')
+      .join('')
+      .slice(0, 2)
+      .toUpperCase();
 
-    if (heroArchitecture) {
-      heroArchitecture.replaceChildren();
-      (heroArchitectureByProject[project.id] || []).forEach((step, stepIndex) => {
-        if (stepIndex > 0) {
-          const arrow = document.createElement('span');
-          arrow.className = 'hero-architecture-arrow';
-          arrow.setAttribute('aria-hidden', 'true');
-          arrow.textContent = '→';
-          heroArchitecture.append(arrow);
-        }
-        const node = document.createElement('span');
-        node.className = 'hero-architecture-node';
-        node.textContent = step;
-        heroArchitecture.append(node);
-      });
-    }
-
-    const targetUrl = project.liveUrl || project.githubUrl || project.sourceUrl || '#work';
-    heroAction.href = targetUrl;
-    heroAction.textContent = hasLiveLink ? 'Explore live project' : 'View source repository';
-    const actionArrow = document.createElement('span');
-    actionArrow.setAttribute('aria-hidden', 'true');
-    actionArrow.textContent = '↗';
-    heroAction.append(actionArrow);
-    heroAction.setAttribute('aria-label', (hasLiveLink ? 'Open live project: ' : 'Open source repository: ') + project.title);
-
+    heroShowcaseRoot.dataset.activeProject = project.id;
     heroChoices.forEach(button => {
       const active = button.dataset.heroProjectChoice === project.id;
       button.classList.toggle('is-active', active);
