@@ -47,7 +47,6 @@ const renderHeroProjectPreview = (project) => {
   if (project.liveUrl) {
     return '<div class="hero-live-preview" data-live-preview="' + html(project.id) + '">'
       + '<div class="hero-live-preview-toolbar">'
-      + '<span class="hero-live-preview-status"><i aria-hidden="true"></i> LIVE WEBSITE</span>'
       + '<a class="hero-live-preview-open" href="' + html(project.liveUrl) + '" target="_blank" rel="noopener noreferrer" aria-label="Open ' + html(project.title) + ' live website in a new tab" title="Open live website">↗</a>'
       + '</div>'
       + '<iframe class="hero-live-preview-frame" src="' + html(project.liveUrl) + '" title="' + html(project.title) + ' live website preview" loading="eager" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-read; clipboard-write; fullscreen"></iframe>'
@@ -55,7 +54,7 @@ const renderHeroProjectPreview = (project) => {
   }
   const sourceUrl = project.githubUrl || project.sourceUrl || '#work';
   return '<div class="hero-live-preview hero-live-preview-source" data-live-preview="' + html(project.id) + '">'
-    + '<div class="hero-live-preview-toolbar"><span class="hero-live-preview-status"><i aria-hidden="true"></i> SOURCE AVAILABLE · NO LIVE URL</span></div>'
+    + '<div class="hero-live-preview-toolbar" aria-label="Open project source"><a class="hero-live-preview-open" href="' + html(sourceUrl) + '" target="_blank" rel="noopener noreferrer" aria-label="Open ' + html(project.title) + ' source repository in a new tab" title="Open source repository">↗</a></div>'
     + '<div class="hero-live-source-card">'
     + '<span class="hero-live-source-monogram" aria-hidden="true">' + renderHeroProjectMonogram(project) + '</span>'
     + '<strong>' + html(project.title) + '</strong>'
