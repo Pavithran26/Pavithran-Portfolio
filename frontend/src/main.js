@@ -35,47 +35,41 @@ const PROJECTS_WITHOUT_GENERATED_IMAGES = new Set(['clansure', 'gt-companion', '
 const heroShowcaseProjects = HERO_SHOWCASE_PROJECT_IDS
   .map(id => PROJECTS_DATA.find(project => project.id === id))
   .filter(Boolean);
-const heroPreviewConfigs = {
-  clansure: { status: 'FAMILY COVERAGE', headline: 'Policy workspace', modules: ['Health', 'Life', 'Motor', 'Policy vault'], layout: 'cards' },
-  'gt-companion': { status: 'KNOWLEDGE SHARING', headline: 'Learning workspace', modules: ['Roadmap', 'Sessions', 'Assignments', 'AI tutor'], layout: 'learning' },
-  'sattam-ai': { status: 'LEGAL KNOWLEDGE', headline: 'Acts & regulations', modules: ['Ask a question', 'Document retrieval', 'Web interface', 'Mobile app'], layout: 'legal' },
-  'srk-erp': { status: 'COCONUT OPERATIONS', headline: 'Operations workspace', modules: ['Land & lease', 'Harvest logs', 'Fleet', 'Sales & GRN'], layout: 'operations' }
-};
-const initialHeroProject = heroShowcaseProjects[0];
+
 const renderHeroProjectMonogram = (project) => {
   const words = String(project?.title || 'Project').trim().split(/\s+/);
   return html(words.map(word => word[0] || '').join('').slice(0, 2).toUpperCase());
 };
+
+// Show the actual deployed site wherever a live URL exists. Never substitute a generated mock.
 const renderHeroProjectPreview = (project) => {
-  const config = heroPreviewConfigs[project?.id];
-  if (!project || !config) return '';
-  return '<div class="hero-preview-ui hero-preview-ui--' + html(project.id) + '" data-preview-layout="' + html(config.layout) + '">'
-    + '<div class="hero-preview-appbar">'
-    + '<span class="hero-preview-appmark" aria-hidden="true">' + renderHeroProjectMonogram(project) + '</span>'
-    + '<span class="hero-preview-apptitle">' + html(project.title) + '</span>'
-    + '<span class="hero-preview-appstatus">' + html(config.status) + '</span>'
-    + '</div>'
-    + '<div class="hero-preview-body">'
-    + '<aside class="hero-preview-sidebar" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></aside>'
-    + '<div class="hero-preview-content">'
-    + '<div class="hero-preview-content-head"><span>' + html(config.status) + '</span><strong>' + html(config.headline) + '</strong></div>'
-    + '<div class="hero-preview-module-grid">'
-    + config.modules.map((module, index) => '<div class="hero-preview-module hero-preview-module-' + String(index + 1) + '">'
-      + '<span class="hero-preview-module-mark" aria-hidden="true">' + ['↗', '◈', '▤', '＋'][index] + '</span>'
-      + '<span class="hero-preview-module-label">' + html(module) + '</span>'
-      + '<span class="hero-preview-module-lines" aria-hidden="true"><i></i><i></i></span>'
-      + '</div>').join('')
-    + '</div>'
-    + '<div class="hero-preview-lower-row" aria-hidden="true"><i></i><i></i><i></i><i></i></div>'
-    + '</div></div>'
-    + '<div class="hero-preview-caption"><span>PROJECT PREVIEW</span><span>INTERACTIVE OVERVIEW</span></div>'
-    + '</div>';
+  if (!project) return '';
+  if (project.liveUrl) {
+    return '<div class="hero-live-preview" data-live-preview="' + html(project.id) + '">'
+      + '<div class="hero-live-preview-toolbar">'
+      + '<span class="hero-live-preview-status"><i aria-hidden="true"></i> LIVE WEBSITE</span>'
+      + '<a class="hero-live-preview-open" href="' + html(project.liveUrl) + '" target="_blank" rel="noopener noreferrer" aria-label="Open ' + html(project.title) + ' live website in a new tab" title="Open live website">↗</a>'
+      + '</div>'
+      + '<iframe class="hero-live-preview-frame" src="' + html(project.liveUrl) + '" title="' + html(project.title) + ' live website preview" loading="eager" referrerpolicy="strict-origin-when-cross-origin" allow="clipboard-read; clipboard-write; fullscreen"></iframe>'
+      + '</div>';
+  }
+  const sourceUrl = project.githubUrl || project.sourceUrl || '#work';
+  return '<div class="hero-live-preview hero-live-preview-source" data-live-preview="' + html(project.id) + '">'
+    + '<div class="hero-live-preview-toolbar"><span class="hero-live-preview-status"><i aria-hidden="true"></i> SOURCE AVAILABLE · NO LIVE URL</span></div>'
+    + '<div class="hero-live-source-card">'
+    + '<span class="hero-live-source-monogram" aria-hidden="true">' + renderHeroProjectMonogram(project) + '</span>'
+    + '<strong>' + html(project.title) + '</strong>'
+    + '<p>This project does not have a live deployment URL linked in the portfolio yet.</p>'
+    + '<a href="' + html(sourceUrl) + '" target="_blank" rel="noopener noreferrer">Open source repository <span aria-hidden="true">↗</span></a>'
+    + '</div></div>';
 };
+
+const initialHeroProject = heroShowcaseProjects[0];
 const heroShowcaseMarkup = initialHeroProject ? (
-  '<aside class="hero-project-showcase hero-project-showcase-visual-only" data-hero-showcase aria-label="Interactive project previews">'
+  '<aside class="hero-project-showcase hero-project-showcase-visual-only" data-hero-showcase aria-label="Interactive project live previews">'
   + '<div class="hero-preview-stage" data-hero-project-preview aria-live="polite">' + renderHeroProjectPreview(initialHeroProject) + '</div>'
-  + '<div class="hero-project-choices" role="group" aria-label="Choose a project preview">'
-  + heroShowcaseProjects.map((project, index) => '<button class="hero-project-choice' + (index === 0 ? ' is-active' : '') + '" type="button" data-hero-project-choice="' + html(project.id) + '" aria-label="Preview ' + html(project.title) + '" title="' + html(project.title) + '" aria-pressed="' + String(index === 0) + '">'
+  + '<div class="hero-project-choices" role="group" aria-label="Choose a project live preview">'
+  + heroShowcaseProjects.map((project, index) => '<button class="hero-project-choice' + (index === 0 ? ' is-active' : '') + '" type="button" data-hero-project-choice="' + html(project.id) + '" aria-label="Show ' + html(project.title) + ' live preview" title="' + html(project.title) + '" aria-pressed="' + String(index === 0) + '">'
       + '<span class="hero-project-choice-mark" aria-hidden="true">' + renderHeroProjectMonogram(project) + '</span>'
       + '<span class="hero-project-choice-name">' + html(project.title) + '</span>'
       + '</button>').join('')
@@ -1043,7 +1037,7 @@ function chooseAnimationMode() {
   lenis.start();
 }
 
-// Interactive, code-built previews: actual project details remain in the Projects section.
+// Live-site preview selector: switch the embedded page and keep project tabs in sync.
 const heroShowcaseRoot = root.querySelector('[data-hero-showcase]');
 if (heroShowcaseRoot) {
   const previewMount = heroShowcaseRoot.querySelector('[data-hero-project-preview]');
@@ -1060,6 +1054,7 @@ if (heroShowcaseRoot) {
       button.setAttribute('aria-pressed', String(active));
     });
   };
+
   heroChoices.forEach(button => on(button, 'click', () => activateHeroProject(button.dataset.heroProjectChoice)));
 }
 
