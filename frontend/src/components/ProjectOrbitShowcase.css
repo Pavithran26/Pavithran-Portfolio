@@ -141,10 +141,11 @@
   pointer-events: none;
 }
 
-.project-orbit-ring--1 { --orbit-radius: clamp(66px, 8.7vw, 104px); border-color: rgba(0, 229, 192, .19); }
-.project-orbit-ring--2 { --orbit-radius: clamp(96px, 15vw, 180px); }
-.project-orbit-ring--3 { --orbit-radius: clamp(128px, 23vw, 276px); }
-.project-orbit-ring--4 { --orbit-radius: clamp(155px, 34vw, 405px); }
+.project-orbit-ring--1, .project-orbit-path--1 { --orbit-radius: clamp(66px, 8.7vw, 104px); }
+.project-orbit-ring--2, .project-orbit-path--2 { --orbit-radius: clamp(96px, 15vw, 180px); }
+.project-orbit-ring--3, .project-orbit-path--3 { --orbit-radius: clamp(128px, 23vw, 276px); }
+.project-orbit-ring--4, .project-orbit-path--4 { --orbit-radius: clamp(155px, 34vw, 405px); }
+.project-orbit-ring--1 { border-color: rgba(0, 229, 192, .19); }
 
 .project-orbit-path {
   position: absolute;
@@ -159,18 +160,7 @@
   pointer-events: none;
 }
 
-.project-orbit-path::after {
-  position: absolute;
-  top: -2px;
-  left: calc(0px - var(--orbit-radius));
-  width: 4px;
-  height: 4px;
-  content: "";
-  border-radius: 50%;
-  background: var(--orbit-accent, #70dfa1);
-  box-shadow: 0 0 8px var(--orbit-accent, #70dfa1), 0 0 18px color-mix(in srgb, var(--orbit-accent, #70dfa1) 65%, transparent);
-  opacity: .8;
-}
+
 
 .project-orbit-node {
   position: absolute;
@@ -515,12 +505,10 @@
   .project-orbit-ring--2 { --orbit-radius: clamp(82px, 25vw, 117px); }
   .project-orbit-ring--3 { --orbit-radius: clamp(108px, 33vw, 154px); }
   .project-orbit-ring--4 { --orbit-radius: clamp(132px, 41vw, 192px); }
-  .project-orbit-path {
-    --orbit-radius: clamp(58px, 17vw, 80px);
-  }
-  .project-orbit-path:nth-of-type(4) { --orbit-radius: clamp(82px, 25vw, 117px); }
-  .project-orbit-path:nth-of-type(5) { --orbit-radius: clamp(108px, 33vw, 154px); }
-  .project-orbit-path:nth-of-type(6) { --orbit-radius: clamp(132px, 41vw, 192px); }
+  .project-orbit-ring--1, .project-orbit-path--1 { --orbit-radius: clamp(58px, 17vw, 80px); }
+  .project-orbit-ring--2, .project-orbit-path--2 { --orbit-radius: clamp(82px, 25vw, 117px); }
+  .project-orbit-ring--3, .project-orbit-path--3 { --orbit-radius: clamp(108px, 33vw, 154px); }
+  .project-orbit-ring--4, .project-orbit-path--4 { --orbit-radius: clamp(132px, 41vw, 192px); }
   .project-orbit-node {
     min-height: 36px;
     gap: 6px;
