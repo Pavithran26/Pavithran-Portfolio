@@ -1064,3 +1064,60 @@
   }
 }
 
+/* Compact FDE software-engineering core icon; keep the planets as the focal point. */
+#work .project-orbit-core {
+  width: clamp(56px, 5.5vw, 68px) !important;
+  border-color: rgba(0, 220, 180, .48) !important;
+  box-shadow:
+    0 0 0 1px rgba(0, 220, 180, .08),
+    0 0 24px rgba(0, 220, 180, .12),
+    inset 0 2px 8px rgba(255, 255, 255, .025) !important;
+}
+
+#work .project-orbit-core-mark {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #8ef7df !important;
+  font-size: 1rem !important;
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+}
+
+#work .project-orbit-core-halo {
+  inset: -8px !important;
+  border-color: rgba(0, 220, 180, .13) !important;
+  box-shadow: 0 0 16px rgba(0, 220, 180, .06) !important;
+}
+
+#work .project-orbit-core-label {
+  margin-top: 4px !important;
+  color: #75cbb8 !important;
+  font-size: .34rem !important;
+  letter-spacing: .08em !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 759px) {
+  #work .project-orbit-core {
+    width: 54px !important;
+  }
+  #work .project-orbit-core-mark svg {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+@media (max-width: 380px) {
+  #work .project-orbit-core {
+    width: 48px !important;
+  }
+  #work .project-orbit-core-mark svg {
+    width: 17px;
+    height: 17px;
+  }
+  #work .project-orbit-core-label {
+    font-size: .3rem !important;
+  }
+}
+
