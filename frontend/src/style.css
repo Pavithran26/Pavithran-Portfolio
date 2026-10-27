@@ -8280,256 +8280,49 @@ body .space-intro.has-project-showcase #intro-typing-keyboard-mount .tk-screen {
   }
 }
 
-
-
-/* Gooey search inside the 107-tool Technology Index card. */
-.staggered-tech-search {
+/* VengeanceUI GooeySearch placement inside the Technology Index card. */
+.staggered-tech-search-row {
   position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-  gap: 12px;
-  min-width: 0;
-}
-.staggered-tech-search__toggle {
-  position: relative;
-  z-index: 1;
-  display: inline-flex !important;
-  align-items: center;
-  justify-content: center;
-  gap: 9px;
-  min-height: 42px;
-  padding: 10px 15px !important;
-  border: 1px solid rgba(194, 249, 112, .42) !important;
-  border-radius: 999px !important;
-  color: #d9f5cc !important;
-  background: linear-gradient(135deg, rgba(39, 76, 43, .82), rgba(11, 26, 15, .88)) !important;
-  box-shadow: 0 0 0 1px rgba(194, 249, 112, .035), 0 7px 22px rgba(0, 0, 0, .14);
-  font: 650 .76rem/1.1 var(--font-body, sans-serif) !important;
-  transition: border-color .22s ease, color .22s ease, box-shadow .22s ease, transform .22s ease;
-}
-.staggered-tech-search__toggle svg {
-  width: 16px;
-  height: 16px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-.staggered-tech-search__toggle:hover,
-.staggered-tech-search__toggle:focus-visible,
-.staggered-tech-search.is-open .staggered-tech-search__toggle {
-  color: #10200f !important;
-  border-color: #c2f970 !important;
-  background: #c2f970 !important;
-  box-shadow: 0 0 0 4px rgba(194, 249, 112, .08), 0 0 26px rgba(194, 249, 112, .12);
-  transform: translateY(-1px);
-  outline: none;
-}
-.staggered-tech-search__panel {
-  position: relative;
-  flex: 1 1 300px;
-  width: min(100%, 560px);
-  min-width: min(100%, 250px);
-  max-width: 560px;
-  padding: 14px;
-  border: 1px solid rgba(194, 249, 112, .3);
-  border-radius: 17px;
-  background: linear-gradient(145deg, rgba(17, 33, 20, .98), rgba(6, 15, 9, .98));
-  box-shadow: 0 15px 36px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(239, 255, 228, .06);
-  animation: technology-search-pop .24s cubic-bezier(.2, .75, .2, 1) both;
-}
-.staggered-tech-search__label {
-  display: block;
-  margin-bottom: 8px;
-  color: #9bb49a;
-  font: 600 .61rem/1.25 var(--font-mono, monospace);
-  letter-spacing: .12em;
-  text-transform: uppercase;
-}
-.staggered-tech-search__input-wrap {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
+  z-index: 8;
   display: flex;
   align-items: center;
-  min-height: 48px;
-  padding: 0 13px;
-  border: 1px solid rgba(194, 249, 112, .34);
-  border-radius: 12px;
-  background: rgba(3, 10, 5, .82);
-  transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
-}
-.staggered-tech-search__input-wrap:focus-within {
-  border-color: rgba(194, 249, 112, .9);
-  background: rgba(8, 22, 11, .98);
-  box-shadow: 0 0 0 3px rgba(194, 249, 112, .08), 0 0 22px rgba(194, 249, 112, .08);
-}
-.staggered-tech-search__pulse {
-  position: absolute;
-  z-index: -1;
-  top: 50%;
-  right: 10px;
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: rgba(194, 249, 112, .11);
-  filter: blur(11px);
-  transform: translateY(-50%);
-  animation: technology-search-glow 3.5s ease-in-out infinite;
-  pointer-events: none;
-}
-.staggered-tech-search__input {
-  position: relative;
-  z-index: 1;
-  flex: 1 1 auto;
-  width: 100%;
+  justify-content: flex-start;
   min-width: 0;
   min-height: 46px;
-  padding: 0 !important;
-  border: 0 !important;
-  outline: 0 !important;
-  color: #f0f8ed !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  font: 500 .9rem/1.3 var(--font-body, sans-serif) !important;
+  margin-top: 2px;
 }
-.staggered-tech-search__input::placeholder { color: #849c83; opacity: 1; }
-.staggered-tech-search__input::-webkit-search-cancel-button { cursor: pointer; }
-.staggered-tech-search__suggestions {
-  display: grid;
-  gap: 6px;
-  margin-top: 10px;
-  filter: url(#technology-search-goo);
-}
-.staggered-tech-search__suggestion {
+.technology-index-gooey {
   position: relative;
-  display: flex !important;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-  width: 100% !important;
-  min-height: 38px;
-  padding: 9px 11px !important;
-  border: 1px solid rgba(139, 174, 120, .17) !important;
-  border-radius: 10px !important;
-  color: #e6f5e1 !important;
-  background: rgba(17, 39, 21, .92) !important;
-  text-align: left !important;
-  font: 600 .78rem/1.35 var(--font-body, sans-serif) !important;
-  transition: background .18s ease, border-color .18s ease, transform .18s ease;
-  animation: technology-search-suggestion .22s ease both;
+  z-index: 8;
+  flex: 0 1 auto;
+  width: max-content;
+  max-width: 100%;
+  overflow: visible;
 }
-.staggered-tech-search__suggestion:nth-child(2) { animation-delay: 25ms; }
-.staggered-tech-search__suggestion:nth-child(3) { animation-delay: 50ms; }
-.staggered-tech-search__suggestion:nth-child(4) { animation-delay: 75ms; }
-.staggered-tech-search__suggestion small {
-  flex: 0 0 auto;
-  color: #9bb49a;
-  font: 500 .58rem/1.25 var(--font-mono, monospace);
-  letter-spacing: .04em;
-  text-transform: uppercase;
+.technology-index-gooey .gooey-search-motion-stage {
+  isolation: isolate;
+  overflow: visible;
 }
-.staggered-tech-search__suggestion:hover,
-.staggered-tech-search__suggestion:focus-visible {
-  border-color: rgba(194, 249, 112, .75) !important;
-  color: #11220f !important;
-  background: #c2f970 !important;
-  transform: translateX(2px);
-  outline: none;
+.technology-index-gooey button {
+  touch-action: manipulation;
 }
-.staggered-tech-search__suggestion:hover small,
-.staggered-tech-search__suggestion:focus-visible small { color: #385b21; }
-.staggered-tech-search__empty,
-.staggered-tech-empty {
-  margin: 0;
-  padding: 14px;
-  border: 1px dashed rgba(139, 174, 120, .28);
-  border-radius: 12px;
-  color: #9bb49a;
-  font: 400 .78rem/1.55 var(--font-body, sans-serif);
+.technology-index-gooey button:focus-visible {
+  outline: 2px solid #efffe8 !important;
+  outline-offset: 3px !important;
 }
-.staggered-tech-empty { grid-column: 1 / -1; padding: 28px; }
-.staggered-tech-search__filter-defs {
-  position: absolute;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  pointer-events: none;
+.technology-index-gooey .gooey-search-input::placeholder {
+  color: #26432b;
+  opacity: .72;
 }
-@keyframes technology-search-pop {
-  from { opacity: 0; transform: translateY(7px) scale(.985); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-@keyframes technology-search-suggestion {
-  from { opacity: 0; transform: translateY(5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-@keyframes technology-search-glow {
-  0%, 100% { opacity: .45; transform: translate(0, -50%) scale(.84); }
-  50% { opacity: 1; transform: translate(-8px, -50%) scale(1.18); }
-}
-body.experience-normal .staggered-tech-search__toggle {
-  color: #28633b !important;
-  border-color: #c9e2cf !important;
-  background: linear-gradient(135deg, #fff, #edf7ef) !important;
-  box-shadow: 0 7px 20px rgba(24,80,44,.06);
-}
-body.experience-normal .staggered-tech-search__toggle:hover,
-body.experience-normal .staggered-tech-search__toggle:focus-visible,
-body.experience-normal .staggered-tech-search.is-open .staggered-tech-search__toggle {
-  color: #fff !important;
-  border-color: #16834b !important;
-  background: #16834b !important;
-}
-body.experience-normal .staggered-tech-search__panel {
-  border-color: #d1e5d5;
-  background: linear-gradient(145deg, #fff, #f0f8f2);
-  box-shadow: 0 15px 36px rgba(24,80,44,.09), inset 0 1px 0 #fff;
-}
-body.experience-normal .staggered-tech-search__label { color: #647c69; }
-body.experience-normal .staggered-tech-search__input-wrap {
-  border-color: #d1e5d5;
-  background: #f8fcf9;
-}
-body.experience-normal .staggered-tech-search__input-wrap:focus-within {
-  border-color: #16834b;
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(22,131,75,.08);
-}
-body.experience-normal .staggered-tech-search__input { color: #193b28 !important; }
-body.experience-normal .staggered-tech-search__input::placeholder { color: #729079; }
-body.experience-normal .staggered-tech-search__suggestion {
-  color: #193b28 !important;
-  border-color: #d9e9dc !important;
-  background: #fff !important;
-}
-body.experience-normal .staggered-tech-search__suggestion small { color: #64856c; }
-body.experience-normal .staggered-tech-search__suggestion:hover,
-body.experience-normal .staggered-tech-search__suggestion:focus-visible {
-  color: #fff !important;
-  border-color: #16834b !important;
-  background: #16834b !important;
-}
-body.experience-normal .staggered-tech-search__suggestion:hover small,
-body.experience-normal .staggered-tech-search__suggestion:focus-visible small { color: #e1f5e7; }
-body.experience-normal .staggered-tech-search__empty,
-body.experience-normal .staggered-tech-empty {
-  color: #647c69;
-  border-color: #c9e2cf;
+.technology-index-gooey .gooey-search-loading {
+  color: #10200f;
 }
 @media (max-width: 620px) {
-  .staggered-tech-search { align-items: stretch; gap: 9px; }
-  .staggered-tech-search__toggle { min-height: 40px; }
-  .staggered-tech-search__panel { flex-basis: 100%; width: 100%; max-width: none; }
-  .staggered-tech-toolbar { padding: 14px; }
+  .staggered-tech-search-row { min-height: 46px; }
+  .technology-index-gooey { max-width: 100%; }
+  .technology-index-gooey .gooey-search-motion-stage { max-width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .staggered-tech-search__panel,
-  .staggered-tech-search__suggestion { animation: none !important; }
-  .staggered-tech-search__pulse { animation: none !important; }
-  .staggered-tech-search__toggle,
-  .staggered-tech-search__suggestion,
-  .staggered-tech-search__input-wrap { transition: none !important; }
+  .technology-index-gooey .gooey-search-loading { animation-duration: 1.4s; }
 }
+
