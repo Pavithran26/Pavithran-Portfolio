@@ -5,11 +5,10 @@ import { GooeySearch } from './gooey-search.jsx';
 /** Filterable staggered technology explorer based on the VengeanceUI reference. */
 export function StaggeredGrid({ items = [], className = '' }) {
   const [activeCategory, setActiveCategory] = React.useState('All');
-  const [selectedTool, setSelectedTool] = React.useState('');
   const gridRef = React.useRef(null);
   const categories = ['All', ...new Set(items.map(item => item.category).filter(Boolean))];
   const categoryItems = activeCategory === 'All' ? items : items.filter(item => item.category === activeCategory);
-  const visibleItems = selectedTool ? categoryItems.filter(item => item.title === selectedTool) : categoryItems;
+  const visibleItems = categoryItems;
   const countFor = category => category === 'All' ? items.length : items.filter(item => item.category === category).length;
   const searchItems = React.useMemo(() => items.map(item => item.title), [items]);
   const searchTechnology = React.useCallback(query => {
@@ -25,11 +24,19 @@ export function StaggeredGrid({ items = [], className = '' }) {
       .map(item => item.title);
   }, [items]);
   const selectTechnology = React.useCallback(title => {
-    const selected = items.find(item => item.title === title);
-    if (!selected) return;
-    setActiveCategory(selected.category || 'All');
-    setSelectedTool(selected.title);
-  }, [items]);
+    // A search selection must not replace the original 107-card design with a
+    // one-card view. Restore the full index, then take the user to its tile.
+    setActiveCategory('All');
+    window.requestAnimationFrame(() => window.requestAnimationFrame(() => {
+      const card = [...(gridRef.current?.querySelectorAll('[data-tool-title]') || [])]
+        .find(element => element.dataset.toolTitle === title);
+      if (!card) return;
+      card.classList.add('is-search-target');
+      const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+      card.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
+      window.setTimeout(() => card.classList.remove('is-search-target'), 1800);
+    }));
+  }, []);
 
   // Reveal each row as it enters the real viewport instead of animating every
   // card at page load (the whole section sits far below the fold).
@@ -63,7 +70,7 @@ export function StaggeredGrid({ items = [], className = '' }) {
     });
 
     return () => observer.disconnect();
-  }, [activeCategory, items, selectedTool]);
+  }, [activeCategory, items]);
 
   return (
     <div className={`staggered-tech-explorer ${className}`.trim()}>
