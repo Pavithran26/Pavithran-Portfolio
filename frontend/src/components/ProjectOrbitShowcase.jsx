@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import {
   Activity,
   BarChart3,
@@ -204,7 +205,7 @@ export function ProjectOrbitShowcase({ projects = [] }) {
         </div>
       </section>
 
-      {openProject ? (
+      {openProject ? createPortal(
         <div
           className="project-orbit-modal-backdrop"
           role="presentation"
@@ -280,7 +281,8 @@ export function ProjectOrbitShowcase({ projects = [] }) {
               </div>
             </div>
           </section>
-        </div>
+        </div>,
+        document.body
       ) : null}
     </div>
   );
