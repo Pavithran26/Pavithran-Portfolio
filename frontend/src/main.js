@@ -30,6 +30,7 @@ import { flushSync } from 'react-dom';
 import { TextEffectsController } from './components/TextEffectsController.js';
 import SocialFlipButton from './components/ui/social-flip-button.jsx';
 import ProjectOrbitShowcase from './components/ProjectOrbitShowcase.jsx';
+import TypingKeyboard from './components/ui/typing-keyboard.jsx';
 
 
 const root = document.querySelector('#portfolio');
@@ -59,6 +60,7 @@ root.innerHTML = `
         <a class="intro-enter" href="#work">Explore my work <span aria-hidden="true">↓</span></a>
       </div>
     </div>
+    <div id="intro-typing-keyboard-mount" class="intro-typing-keyboard-mount" aria-label="Animated 3D typing keyboard"></div>
     <p class="intro-caption">A SMALL PART OF A MUCH BIGGER UNIVERSE</p>
   </section>
 
@@ -284,6 +286,20 @@ root.innerHTML = `
 `;
 
 // Render the interactive four-project solar system after the page skeleton exists.
+const typingKeyboardMount = document.getElementById('intro-typing-keyboard-mount');
+let typingKeyboardRoot = null;
+if (typingKeyboardMount) {
+  typingKeyboardRoot = createRoot(typingKeyboardMount);
+  typingKeyboardRoot.render(createElement(TypingKeyboard, {
+    className: 'typing-keyboard-hero',
+    autoTypeText: 'PAVITHRAN26 FDE SOFTWARE ENGINEERING APPLIED AI AND RAG      ',
+    typingSpeed: [52, 110],
+    scale: 0.68,
+    accentColor: '#16834b',
+    secondaryAccent: '#70dfa1'
+  }));
+}
+
 const projectOrbitMount = document.getElementById('project-orbit-showcase-mount');
 let projectOrbitRoot = null;
 if (projectOrbitMount) {
