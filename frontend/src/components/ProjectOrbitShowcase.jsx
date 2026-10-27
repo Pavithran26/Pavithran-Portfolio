@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   Activity,
   BarChart3,
   Mic,
-  Code2,
   Droplets,
   Globe,
   GraduationCap,
@@ -16,6 +15,7 @@ import {
   ShieldCheck,
   Sparkles,
   Sprout,
+  X,
 } from "lucide-react";
 import "./ProjectOrbitShowcase.css";
 
@@ -94,14 +94,40 @@ export function ProjectOrbitShowcase({ projects = [] }) {
   ];
 
   const [activeProjectId, setActiveProjectId] = useState("clansure");
+  const [openProjectId, setOpenProjectId] = useState(null);
+  const closeButtonRef = useRef(null);
   const activeIndex = Math.max(0, orderedProjects.findIndex((project) => project.id === activeProjectId));
   const activeProject = orderedProjects[activeIndex] || orderedProjects[0];
+  const openProject = orderedProjects.find((project) => project.id === openProjectId) || null;
+
+  useEffect(() => {
+    if (!openProject) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const frame = window.requestAnimationFrame(() => closeButtonRef.current?.focus({ preventScroll: true }));
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") setOpenProjectId(null);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.cancelAnimationFrame(frame);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [openProject]);
 
   if (!activeProject) return null;
 
-  const accent = PROJECT_ACCENTS[activeProject.id] || activeProject.accentColor || "#70dfa1";
-  const sourceUrl = activeProject.githubUrl || activeProject.sourceUrl;
-  const technologies = (activeProject.technologies || []).slice(0, 6);
+  const openProjectDetails = (project) => {
+    setActiveProjectId(project.id);
+    setOpenProjectId(project.id);
+  };
+
+  const sourceUrl = openProject?.githubUrl || openProject?.sourceUrl;
+  const technologies = (openProject?.technologies || []).slice(0, 8);
   const orbitGroups = ORBIT_CONFIGS.map((_, ringIndex) =>
     orderedProjects
       .map((project, index) => ({ project, index }))
@@ -109,11 +135,11 @@ export function ProjectOrbitShowcase({ projects = [] }) {
   );
 
   return (
-    <div className="project-orbit-showcase" style={{ "--active-project-accent": accent }}>
+    <div className="project-orbit-showcase" style={{ "--active-project-accent": PROJECT_ACCENTS[activeProject.id] || activeProject.accentColor || "#70dfa1" }}>
       <section className="project-orbit-universe" aria-label="Interactive solar system of all projects">
         <div className="project-orbit-heading">
-          <span className="project-orbit-eyebrow">PROJECT ORBIT / {orderedProjects.length} PROJECTS</span>
-          <span className="project-orbit-live"><i aria-hidden="true" /> SELECT A PLANET TO EXPLORE</span>
+          <span className="project-orbit-eyebrow">PROJECT ORBIT</span>
+          <span className="project-orbit-live"><i aria-hidden="true" /> CLICK A PLANET TO EXPLORE</span>
         </div>
 
         <div className="project-orbit-stage">
@@ -145,7 +171,6 @@ export function ProjectOrbitShowcase({ projects = [] }) {
                     key={project.id}
                     className={`project-orbit-path project-orbit-path--${ringIndex + 1}`}
                     style={{
-                      "--orbit-radius": orbit.radius,
                       "--orbit-duration": `${orbit.duration}s`,
                       "--orbit-delay": `${delay}s`,
                       "--orbit-accent": projectAccent,
@@ -154,9 +179,8 @@ export function ProjectOrbitShowcase({ projects = [] }) {
                     <button
                       type="button"
                       className={`project-orbit-node${selected ? " is-active" : ""}`}
-                      onClick={() => setActiveProjectId(project.id)}
-                      aria-pressed={selected}
-                      aria-label={`Show ${project.title} project details`}
+                      onClick={() => openProjectDetails(project)}
+                      aria-label={`Open ${project.title} project details`}
                       title={`Explore ${project.title}`}
                       style={{ "--node-accent": projectAccent }}
                     >
@@ -180,82 +204,84 @@ export function ProjectOrbitShowcase({ projects = [] }) {
         </div>
       </section>
 
-      <div className="project-orbit-index-header">
-        <span>EXPLORE EVERY PROJECT</span>
-        <span>{String(orderedProjects.length).padStart(2, "0")} AVAILABLE</span>
-      </div>
-
-      <div className="project-orbit-project-index" aria-label="All projects">
-        {orderedProjects.map((project, index) => (
-          <button
-            key={project.id}
-            type="button"
-            className={`project-orbit-index-item${activeProject.id === project.id ? " is-active" : ""}`}
-            onClick={() => setActiveProjectId(project.id)}
-            aria-pressed={activeProject.id === project.id}
-            style={{ "--node-accent": PROJECT_ACCENTS[project.id] || project.accentColor || "#70dfa1" }}
+      {openProject ? (
+        <div
+          className="project-orbit-modal-backdrop"
+          role="presentation"
+          onMouseDown={(event) => {
+            if (event.target === event.currentTarget) setOpenProjectId(null);
+          }}
+        >
+          <section
+            className="project-orbit-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="project-orbit-modal-title"
+            style={{ "--active-project-accent": PROJECT_ACCENTS[openProject.id] || openProject.accentColor || "#70dfa1" }}
           >
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <span className="project-orbit-index-title">{project.title}</span>
-          </button>
-        ))}
-      </div>
+            <header className="project-orbit-modal-header">
+              <div className="project-orbit-modal-eyebrow">
+                <span className="project-orbit-modal-dot" aria-hidden="true" />
+                SELECTED PROJECT / {String(orderedProjects.findIndex((project) => project.id === openProject.id) + 1).padStart(2, "0")} OF {String(orderedProjects.length).padStart(2, "0")}
+              </div>
+              <button ref={closeButtonRef} type="button" className="project-orbit-modal-close" onClick={() => setOpenProjectId(null)} aria-label="Close project details">
+                <span>Close</span><X size={18} />
+              </button>
+            </header>
 
-      <article className="project-orbit-detail" key={activeProject.id}>
-        <div className="project-orbit-detail-topline">
-          <span className="project-orbit-category"><i aria-hidden="true" />{activeProject.category}</span>
-          <span className="project-orbit-counter">{String(activeIndex + 1).padStart(2, "0")} / {String(orderedProjects.length).padStart(2, "0")}</span>
-        </div>
+            <div className="project-orbit-modal-scroll">
+              <p className="project-orbit-detail-badge">{openProject.badge || "SELECTED PROJECT"}</p>
+              <h2 id="project-orbit-modal-title">{openProject.title}</h2>
+              <p className="project-orbit-tagline">{openProject.tagline}</p>
+              <p className="project-orbit-overview">{openProject.overview}</p>
 
-        <p className="project-orbit-detail-badge">{activeProject.badge || "SELECTED PROJECT"}</p>
-        <h3>{activeProject.title}</h3>
-        <p className="project-orbit-tagline">{activeProject.tagline}</p>
-        <p className="project-orbit-overview">{activeProject.overview}</p>
+              <div className="project-orbit-detail-grid">
+                <section>
+                  <h3>THE CHALLENGE</h3>
+                  <p>{openProject.challenge}</p>
+                </section>
+                <section>
+                  <h3>THE APPROACH</h3>
+                  <p>{openProject.solution}</p>
+                </section>
+              </div>
 
-        <div className="project-orbit-detail-grid">
-          <section>
-            <h4>THE CHALLENGE</h4>
-            <p>{activeProject.challenge}</p>
+              {openProject.implementationNote ? (
+                <p className="project-orbit-scope-note">{openProject.implementationNote}</p>
+              ) : null}
+
+              {openProject.highlights?.length ? (
+                <div className="project-orbit-highlights">
+                  <h3>ENGINEERING HIGHLIGHTS</h3>
+                  <ul>
+                    {openProject.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+                  </ul>
+                </div>
+              ) : null}
+
+              <div className="project-orbit-tech-section">
+                <h3>BUILT WITH</h3>
+                <div className="project-orbit-tech-list">
+                  {technologies.map((technology) => <span key={technology}>{technology}</span>)}
+                </div>
+              </div>
+
+              <div className="project-orbit-actions">
+                {openProject.liveUrl ? (
+                  <a className="project-orbit-primary-action" href={openProject.liveUrl} target="_blank" rel="noopener noreferrer">
+                    Visit live app <span aria-hidden="true">↗</span>
+                  </a>
+                ) : null}
+                {sourceUrl ? (
+                  <a className="project-orbit-secondary-action" href={sourceUrl} target="_blank" rel="noopener noreferrer">
+                    Source code <span aria-hidden="true">↗</span>
+                  </a>
+                ) : null}
+              </div>
+            </div>
           </section>
-          <section>
-            <h4>THE APPROACH</h4>
-            <p>{activeProject.solution}</p>
-          </section>
         </div>
-
-        {activeProject.implementationNote ? (
-          <p className="project-orbit-scope-note">{activeProject.implementationNote}</p>
-        ) : null}
-
-        {activeProject.highlights?.length ? (
-          <div className="project-orbit-highlights">
-            <h4>ENGINEERING HIGHLIGHTS</h4>
-            <ul>
-              {activeProject.highlights.slice(0, 2).map((highlight) => <li key={highlight}>{highlight}</li>)}
-            </ul>
-          </div>
-        ) : null}
-
-        <div className="project-orbit-tech-section">
-          <h4>BUILT WITH / PROJECT FOCUS</h4>
-          <div className="project-orbit-tech-list">
-            {technologies.map((technology) => <span key={technology}>{technology}</span>)}
-          </div>
-        </div>
-
-        <div className="project-orbit-actions">
-          {activeProject.liveUrl ? (
-            <a className="project-orbit-primary-action" href={activeProject.liveUrl} target="_blank" rel="noopener noreferrer">
-              Visit live app <span aria-hidden="true">↗</span>
-            </a>
-          ) : null}
-          {sourceUrl ? (
-            <a className="project-orbit-secondary-action" href={sourceUrl} target="_blank" rel="noopener noreferrer">
-              Source code <span aria-hidden="true">↗</span>
-            </a>
-          ) : null}
-        </div>
-      </article>
+      ) : null}
     </div>
   );
 }
