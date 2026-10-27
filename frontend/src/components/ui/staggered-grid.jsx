@@ -1,33 +1,35 @@
 import React from 'react';
 import { technologyIcons } from '../TechnologyIcons.js';
+import { GooeySearch } from './gooey-search.jsx';
 
 /** Filterable staggered technology explorer based on the VengeanceUI reference. */
 export function StaggeredGrid({ items = [], className = '' }) {
   const [activeCategory, setActiveCategory] = React.useState('All');
-  const [searchOpen, setSearchOpen] = React.useState(false);
-  const [searchQuery, setSearchQuery] = React.useState('');
-  const [suggestionsDismissed, setSuggestionsDismissed] = React.useState(false);
+  const [selectedTool, setSelectedTool] = React.useState('');
   const gridRef = React.useRef(null);
-  const searchInputRef = React.useRef(null);
   const categories = ['All', ...new Set(items.map(item => item.category).filter(Boolean))];
-  const normalizedQuery = searchQuery.trim().toLowerCase();
-  const matchesQuery = item => !normalizedQuery || `${item.title} ${item.category} ${item.description}`.toLowerCase().includes(normalizedQuery);
   const categoryItems = activeCategory === 'All' ? items : items.filter(item => item.category === activeCategory);
-  const visibleItems = categoryItems.filter(matchesQuery);
-  const suggestions = normalizedQuery
-    ? items.filter(matchesQuery).slice(0, 4)
-    : [];
+  const visibleItems = selectedTool ? categoryItems.filter(item => item.title === selectedTool) : categoryItems;
   const countFor = category => category === 'All' ? items.length : items.filter(item => item.category === category).length;
-  const selectSuggestion = item => {
-    if (item.category && categories.includes(item.category)) setActiveCategory(item.category);
-    setSearchQuery(item.title);
-    setSearchOpen(true);
-    setSuggestionsDismissed(true);
-  };
-
-  React.useEffect(() => {
-    if (searchOpen) searchInputRef.current?.focus();
-  }, [searchOpen]);
+  const searchItems = React.useMemo(() => items.map(item => item.title), [items]);
+  const searchTechnology = React.useCallback(query => {
+    const normalizedQuery = query.trim().toLowerCase();
+    return items
+      .filter(item => `${item.title} ${item.category} ${item.description}`.toLowerCase().includes(normalizedQuery))
+      .sort((a, b) => {
+        const aName = a.title.toLowerCase();
+        const bName = b.title.toLowerCase();
+        return Number(!aName.startsWith(normalizedQuery)) - Number(!bName.startsWith(normalizedQuery)) || aName.localeCompare(bName);
+      })
+      .slice(0, 4)
+      .map(item => item.title);
+  }, [items]);
+  const selectTechnology = React.useCallback(title => {
+    const selected = items.find(item => item.title === title);
+    if (!selected) return;
+    setActiveCategory(selected.category || 'All');
+    setSelectedTool(selected.title);
+  }, [items]);
 
   // Reveal each row as it enters the real viewport instead of animating every
   // card at page load (the whole section sits far below the fold).
@@ -71,83 +73,16 @@ export function StaggeredGrid({ items = [], className = '' }) {
           <strong>{visibleItems.length}<span> / {items.length} tools</span></strong>
           <p>Filter the toolkit by domain, then select any tile to see its details.</p>
         </div>
-        <div className={`staggered-tech-search ${searchOpen ? 'is-open' : ''}`} role="search">
-          <button
-            className="staggered-tech-search__toggle"
-            type="button"
-            aria-expanded={searchOpen}
-            aria-label={searchOpen ? 'Close technology search' : 'Open technology search'}
-            onClick={() => {
-              if (searchOpen) {
-                setSearchOpen(false);
-                setSearchQuery('');
-                setSuggestionsDismissed(true);
-              } else {
-                setSearchOpen(true);
-                setSuggestionsDismissed(false);
-              }
-            }}
-          >
-            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8" /><path d="m16 16 5 5" /></svg>
-            <span>{searchOpen ? 'Close' : 'Search'}</span>
-          </button>
-          {searchOpen && (
-            <div className="staggered-tech-search__panel">
-              <label className="staggered-tech-search__label" htmlFor="technology-index-search">Find a tool</label>
-              <div className="staggered-tech-search__input-wrap">
-                <span className="staggered-tech-search__pulse" aria-hidden="true" />
-                <input
-                  ref={searchInputRef}
-                  id="technology-index-search"
-                  className="staggered-tech-search__input"
-                  type="search"
-                  autoComplete="off"
-                  placeholder="Search technologies..."
-                  value={searchQuery}
-                  onChange={event => {
-                    setSearchQuery(event.target.value);
-                    setSuggestionsDismissed(false);
-                  }}
-                  onKeyDown={event => {
-                    if (event.key === 'Escape') {
-                      setSuggestionsDismissed(true);
-                      event.currentTarget.blur();
-                    } else if (event.key === 'Enter' && suggestions[0]) {
-                      event.preventDefault();
-                      selectSuggestion(suggestions[0]);
-                    }
-                  }}
-                />
-              </div>
-              {normalizedQuery && !suggestionsDismissed && (
-                <div className="staggered-tech-search__suggestions" role="listbox" aria-label="Matching technologies">
-                  {suggestions.length ? suggestions.map(item => (
-                    <button
-                      key={item.title}
-                      type="button"
-                      className="staggered-tech-search__suggestion"
-                      role="option"
-                      aria-selected="false"
-                      onClick={() => selectSuggestion(item)}
-                    >
-                      <span>{item.title}</span><small>{item.category}</small>
-                    </button>
-                  )) : (
-                    <p className="staggered-tech-search__empty">No matching tools found.</p>
-                  )}
-                </div>
-              )}
-            </div>
-          )}
-          <svg className="staggered-tech-search__filter-defs" aria-hidden="true" focusable="false">
-            <defs>
-              <filter id="technology-search-goo">
-                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
-                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 18 -7" result="goo" />
-                <feComposite in="SourceGraphic" in2="goo" operator="atop" />
-              </filter>
-            </defs>
-          </svg>
+        <div className="staggered-tech-search-row">
+          <GooeySearch
+            items={searchItems}
+            onSearch={searchTechnology}
+            placeholder="Search technologies..."
+            buttonLabel="Search"
+            maxResults={4}
+            onSelect={selectTechnology}
+            className="technology-index-gooey"
+          />
         </div>
         <div className="staggered-tech-filters" role="group" aria-label="Filter technologies by domain">
           {categories.map(category => (
@@ -156,7 +91,7 @@ export function StaggeredGrid({ items = [], className = '' }) {
               type="button"
               className={`staggered-tech-filter ${activeCategory === category ? 'is-active' : ''}`}
               aria-pressed={activeCategory === category}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => { setActiveCategory(category); setSelectedTool(''); }}
             >
               <span>{category}</span><small>{countFor(category)}</small>
             </button>
@@ -166,7 +101,7 @@ export function StaggeredGrid({ items = [], className = '' }) {
 
       <div ref={gridRef} className="staggered-tech-grid" aria-live="polite">
         {!visibleItems.length && (
-          <p className="staggered-tech-empty">No tools match “{searchQuery.trim()}”. Try another search or choose a different domain.</p>
+          <p className="staggered-tech-empty">No tools found in this domain.</p>
         )}
         {visibleItems.map((item, index) => {
           const localIcon = technologyIcons(item.title, { eager: index < 10 });
