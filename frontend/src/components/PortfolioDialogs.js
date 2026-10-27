@@ -133,7 +133,7 @@ export class PortfolioDialogs {
     this.show('CAPABILITIES / TECHNICAL SKILLS', 'The tools behind the work.', `
       <div class="skill-controls">
         <div class="skill-search-column">
-          <label class="skill-gooey-label" for="skill-search-open">Search skills</label>
+          <span class="skill-gooey-label">Search skills</span>
           <div class="skill-gooey-search" id="skill-gooey-search">
             <svg class="skill-gooey-filter-defs" aria-hidden="true" focusable="false">
               <defs><filter id="skill-gooey-filter">
