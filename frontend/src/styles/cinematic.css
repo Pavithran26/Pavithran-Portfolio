@@ -393,3 +393,286 @@ svg { display: block; }
   .display-title, .contact-title { font-size: 2.5rem; }
   .section-top, .recognition, .footer-bottom { margin-top: 25px; margin-bottom: 25px; }
 }
+
+/* Gooey Search — animated skill lookup for the technical-skills dialog. */
+.skill-search-column {
+  position: relative;
+  min-width: 0;
+}
+
+.skill-gooey-label {
+  display: block;
+  margin-bottom: 9px;
+  color: #d8e9dc;
+  font-size: .875rem;
+}
+
+.skill-gooey-search {
+  position: relative;
+  z-index: 12;
+  width: 100%;
+  max-width: 460px;
+  min-width: 0;
+}
+
+.skill-gooey-filter-defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.skill-gooey-shell {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  filter: url(#skill-gooey-filter);
+}
+
+.skill-gooey-search [hidden] {
+  display: none !important;
+}
+
+.skill-gooey-open {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: 142px;
+  min-height: 50px;
+  padding: 0 18px;
+  border: 1px solid rgba(112, 223, 161, .45);
+  border-radius: 999px;
+  color: #e8fff0;
+  background: linear-gradient(135deg, #176b3d, #0c3b23);
+  box-shadow: 0 6px 20px rgba(4, 25, 12, .28), inset 0 1px 0 rgba(255, 255, 255, .11);
+  font: 650 .91rem/1 var(--font-sans, sans-serif);
+  cursor: pointer;
+  transition: width .46s cubic-bezier(.2,.9,.25,1), transform .3s ease, background .25s ease, box-shadow .25s ease;
+}
+
+.skill-gooey-open:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #208a4d, #10492b);
+  box-shadow: 0 9px 25px rgba(11, 93, 44, .26), inset 0 1px 0 rgba(255, 255, 255, .13);
+}
+
+.skill-gooey-open:focus-visible,
+.skill-gooey-input-wrap button:focus-visible,
+.skill-gooey-suggestion:focus-visible {
+  outline: 2px solid #8ef7b1;
+  outline-offset: 3px;
+}
+
+.skill-gooey-open svg {
+  flex: 0 0 auto;
+  color: #aaf6c3;
+}
+
+.skill-gooey-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 460px;
+  min-width: 0;
+  min-height: 50px;
+  padding: 4px 6px 4px 18px;
+  border: 1px solid rgba(112, 223, 161, .48);
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(13, 43, 25, .98), rgba(5, 21, 12, .98));
+  box-shadow: 0 8px 26px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .08), 0 0 19px rgba(44, 185, 96, .1);
+  animation: skillGooeyExpand .42s cubic-bezier(.2,.9,.25,1) both;
+}
+
+#detail-body .skill-controls .skill-gooey-input-wrap input#skill-search {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  padding: 8px 2px;
+  border: 0;
+  border-radius: 999px;
+  outline: none;
+  color: #f1fff5;
+  background: transparent;
+  box-shadow: none;
+  font-size: .94rem;
+}
+
+#detail-body .skill-controls .skill-gooey-input-wrap input#skill-search:focus {
+  border: 0;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
+}
+
+#detail-body .skill-gooey-input-wrap input#skill-search::placeholder {
+  color: #7c9b86;
+}
+
+.skill-gooey-input-wrap button {
+  display: inline-flex;
+  flex: 0 0 36px;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid rgba(112, 223, 161, .22);
+  border-radius: 50%;
+  color: #c9f8d8;
+  background: rgba(112, 223, 161, .08);
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.skill-gooey-input-wrap button:hover {
+  transform: rotate(90deg);
+  border-color: rgba(112, 223, 161, .65);
+  background: rgba(112, 223, 161, .17);
+}
+
+.skill-gooey-suggestions {
+  position: absolute;
+  z-index: 50;
+  top: calc(100% + 9px);
+  left: 0;
+  display: grid;
+  gap: 7px;
+  width: 100%;
+  max-width: 460px;
+  max-height: 280px;
+  overflow: auto;
+  padding: 5px;
+  border: 1px solid rgba(112, 223, 161, .15);
+  border-radius: 17px;
+  background: rgba(4, 13, 7, .96);
+  box-shadow: 0 24px 55px rgba(0, 0, 0, .48), inset 0 1px 0 rgba(255, 255, 255, .04);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+}
+
+.skill-gooey-suggestion {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  min-width: 0;
+  min-height: 54px;
+  padding: 8px 11px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  color: #e8f8ed;
+  background: rgba(19, 42, 26, .78);
+  text-align: left;
+  cursor: pointer;
+  opacity: 0;
+  animation: skillGooeySuggestionIn .4s cubic-bezier(.2,.9,.25,1) calc(var(--suggestion-index, 0) * 55ms) both;
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.skill-gooey-suggestion:hover {
+  transform: translateX(3px);
+  border-color: rgba(112, 223, 161, .38);
+  background: rgba(32, 85, 49, .92);
+}
+
+.skill-gooey-suggestion-icon {
+  display: inline-flex;
+  flex: 0 0 34px;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(112, 223, 161, .18);
+  border-radius: 11px;
+  color: #a2efbb;
+  background: rgba(112, 223, 161, .08);
+}
+
+.skill-gooey-suggestion-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.skill-gooey-suggestion-copy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.skill-gooey-suggestion-copy strong {
+  overflow: hidden;
+  color: #edfff2;
+  font-size: .86rem;
+  font-weight: 650;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.skill-gooey-suggestion-copy small {
+  overflow: hidden;
+  color: #8fae98;
+  font-size: .7rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.skill-gooey-suggestion-arrow {
+  display: inline-flex;
+  flex: 0 0 27px;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  color: #91e8ac;
+  background: rgba(112, 223, 161, .08);
+}
+
+@keyframes skillGooeyExpand {
+  from { opacity: .55; transform: translateY(4px) scaleX(.9); }
+  to { opacity: 1; transform: translateY(0) scaleX(1); }
+}
+
+@keyframes skillGooeySuggestionIn {
+  from { opacity: 0; filter: blur(8px); transform: translateY(-5px) scale(.96); }
+  to { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 720px) {
+  .skill-controls {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+
+  .skill-gooey-search,
+  .skill-gooey-shell,
+  .skill-gooey-input-wrap,
+  .skill-gooey-suggestions {
+    max-width: 100%;
+  }
+
+  .skill-gooey-suggestions {
+    position: relative;
+    top: 8px;
+    margin-bottom: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skill-gooey-open,
+  .skill-gooey-input-wrap,
+  .skill-gooey-suggestion,
+  .skill-gooey-input-wrap button {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
