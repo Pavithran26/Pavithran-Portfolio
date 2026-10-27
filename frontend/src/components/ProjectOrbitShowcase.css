@@ -592,3 +592,348 @@
     transition: none !important;
   }
 }
+
+/* Full-screen project universe: no embedded dashboard/list content below the planets. */
+#work.space-work.space-section {
+  display: block !important;
+  width: 100vw !important;
+  height: 100svh !important;
+  min-height: 100svh !important;
+  max-height: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+#work .work-wide-content,
+#work .space-content.work-wide-content {
+  display: block !important;
+  width: 100vw !important;
+  max-width: none !important;
+  height: 100% !important;
+  min-height: 100svh !important;
+  margin: 0 0 0 calc(50% - 50vw) !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+#work .space-content > .space-kicker,
+#work #work-title,
+#work .section-intro {
+  display: none !important;
+}
+
+#work .project-orbit-showcase-mount {
+  width: 100vw !important;
+  height: 100svh !important;
+  min-height: 100svh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+#work .project-orbit-showcase {
+  --project-orbit-radius-1: clamp(58px, min(7vw, 9svh), 90px);
+  --project-orbit-radius-2: clamp(94px, min(12vw, 15svh), 144px);
+  --project-orbit-radius-3: clamp(130px, min(17vw, 22svh), 205px);
+  --project-orbit-radius-4: clamp(166px, min(22vw, 28svh), 265px);
+  --project-orbit-radius-5: clamp(202px, min(26vw, 34svh), 324px);
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  height: 100svh !important;
+  min-height: 100svh !important;
+  max-height: 100svh !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+  box-shadow: none !important;
+}
+
+#work .project-orbit-universe {
+  display: flex !important;
+  flex: 1 1 auto !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  padding: max(18px, env(safe-area-inset-top)) clamp(12px, 2vw, 30px) max(14px, env(safe-area-inset-bottom)) !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+#work .project-orbit-heading {
+  flex: 0 0 auto !important;
+  width: 100% !important;
+  max-width: 1500px !important;
+  margin-inline: auto !important;
+}
+
+#work .project-orbit-stage {
+  flex: 1 1 auto !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  min-height: 0 !important;
+  margin: 0 auto !important;
+}
+
+#work .project-orbit-plane {
+  width: min(100%, 1120px, 76svh) !important;
+  max-width: none !important;
+}
+
+#work .project-orbit-nebula {
+  width: min(75vw, 76svh, 760px) !important;
+}
+
+.project-orbit-modal-backdrop {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483000 !important;
+  display: grid !important;
+  place-items: center !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  padding: clamp(12px, 2.5vw, 32px) !important;
+  overflow: auto !important;
+  box-sizing: border-box !important;
+  background: rgba(0, 5, 2, .78) !important;
+  -webkit-backdrop-filter: blur(15px) saturate(120%) !important;
+  backdrop-filter: blur(15px) saturate(120%) !important;
+}
+
+.project-orbit-modal {
+  position: relative !important;
+  z-index: 2147483001 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  width: min(100%, 1000px) !important;
+  max-width: 1000px !important;
+  max-height: min(90vh, 900px) !important;
+  max-height: min(90dvh, 900px) !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  border: 1px solid color-mix(in srgb, var(--active-project-accent, #70dfa1) 42%, rgba(255,255,255,.12)) !important;
+  border-radius: 24px !important;
+  color: #eaf8ef !important;
+  background:
+    radial-gradient(ellipse at 100% 0%, color-mix(in srgb, var(--active-project-accent, #70dfa1) 15%, transparent), transparent 50%),
+    linear-gradient(145deg, #0b1b12, #050a07 72%) !important;
+  box-shadow: 0 35px 110px rgba(0,0,0,.7), 0 0 45px color-mix(in srgb, var(--active-project-accent, #70dfa1) 10%, transparent) !important;
+  animation: project-orbit-modal-enter .22s ease-out both;
+}
+
+.project-orbit-modal-header {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 62px;
+  padding: 12px clamp(18px, 3vw, 34px);
+  border-bottom: 1px solid rgba(167, 211, 181, .13);
+  background: rgba(1, 8, 4, .42);
+}
+
+.project-orbit-modal-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  color: #9dc9ac;
+  font: 650 .67rem/1.6 var(--font-mono, ui-monospace, monospace);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.project-orbit-modal-dot {
+  flex: 0 0 7px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--active-project-accent, #70dfa1);
+  box-shadow: 0 0 13px var(--active-project-accent, #70dfa1);
+}
+
+.project-orbit-modal-close {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid rgba(190, 222, 199, .2);
+  border-radius: 10px;
+  color: #dcf0e2;
+  background: rgba(255,255,255,.04);
+  cursor: pointer;
+}
+
+.project-orbit-modal-close:hover,
+.project-orbit-modal-close:focus-visible {
+  outline: none;
+  border-color: var(--active-project-accent, #70dfa1);
+  background: color-mix(in srgb, var(--active-project-accent, #70dfa1) 10%, transparent);
+}
+
+.project-orbit-modal-scroll {
+  min-height: 0;
+  padding: clamp(22px, 3.2vw, 42px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-color: rgba(125, 194, 146, .5) rgba(255,255,255,.035);
+}
+
+.project-orbit-modal-scroll .project-orbit-detail-badge {
+  margin: 0 0 10px !important;
+  color: var(--active-project-accent, #70dfa1) !important;
+  font: 650 .68rem/1.6 var(--font-mono, ui-monospace, monospace) !important;
+  letter-spacing: .13em !important;
+  text-transform: uppercase !important;
+}
+
+.project-orbit-modal-scroll > h2 {
+  margin: 0 !important;
+  color: #f1fff5 !important;
+  font-size: clamp(2.35rem, 6vw, 4.4rem) !important;
+  font-weight: 800 !important;
+  line-height: 1.02 !important;
+  letter-spacing: -.055em !important;
+  text-shadow: none !important;
+  overflow-wrap: anywhere !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-tagline {
+  margin: 14px 0 18px !important;
+  color: color-mix(in srgb, var(--active-project-accent, #70dfa1) 88%, white) !important;
+  font-size: clamp(1.08rem, 2vw, 1.4rem) !important;
+  line-height: 1.5 !important;
+  font-weight: 650 !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-overview {
+  margin: 0 !important;
+  color: #cadbd0 !important;
+  font-size: clamp(.96rem, 1.3vw, 1.06rem) !important;
+  line-height: 1.8 !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-detail-grid {
+  margin-top: 28px !important;
+  padding-top: 24px !important;
+  gap: clamp(20px, 4vw, 46px) !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-detail-grid h3,
+.project-orbit-modal-scroll .project-orbit-highlights h3,
+.project-orbit-modal-scroll .project-orbit-tech-section h3 {
+  margin: 0 0 12px !important;
+  color: #a8e8bb !important;
+  font: 700 .68rem/1.6 var(--font-mono, ui-monospace, monospace) !important;
+  letter-spacing: .13em !important;
+  text-transform: uppercase !important;
+  text-shadow: none !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-detail-grid p {
+  margin: 0 !important;
+  color: #b6cdbd !important;
+  font-size: .92rem !important;
+  line-height: 1.8 !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-scope-note {
+  margin-top: 18px !important;
+  color: #bdcfc3 !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-highlights {
+  margin-top: 26px !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-highlights ul {
+  gap: 10px !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-highlights li {
+  color: #bdd2c4 !important;
+  font-size: .9rem !important;
+  line-height: 1.75 !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-tech-section {
+  margin-top: 26px !important;
+  padding-top: 22px !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-tech-list span {
+  color: #d4e8da !important;
+  font-size: .76rem !important;
+}
+
+.project-orbit-modal-scroll .project-orbit-actions {
+  margin-top: 30px !important;
+}
+
+@keyframes project-orbit-modal-enter {
+  from { opacity: 0; transform: translateY(10px) scale(.99); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 759px) {
+  #work .project-orbit-showcase {
+    --project-orbit-radius-1: 40px;
+    --project-orbit-radius-2: 61px;
+    --project-orbit-radius-3: 82px;
+    --project-orbit-radius-4: 103px;
+    --project-orbit-radius-5: 124px;
+  }
+
+  #work .project-orbit-universe {
+    padding: max(14px, env(safe-area-inset-top)) 8px max(10px, env(safe-area-inset-bottom)) !important;
+  }
+
+  #work .project-orbit-heading {
+    align-items: flex-start !important;
+    flex-wrap: wrap !important;
+    gap: 7px 12px !important;
+  }
+
+  #work .project-orbit-eyebrow { font-size: .66rem !important; }
+  #work .project-orbit-live { font-size: .52rem !important; }
+  #work .project-orbit-stage { min-height: 0 !important; }
+
+  #work .project-orbit-plane {
+    width: min(100%, 76svh) !important;
+    transform: translate(-50%, -50%) rotateX(65deg) rotateY(-8deg) scale(.98) !important;
+  }
+
+  .project-orbit-modal-backdrop {
+    place-items: center !important;
+    padding: 10px !important;
+  }
+
+  .project-orbit-modal {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 92vh !important;
+    max-height: 92dvh !important;
+    border-radius: 17px !important;
+  }
+
+  .project-orbit-modal-header { min-height: 56px; padding: 10px 13px; }
+  .project-orbit-modal-eyebrow { font-size: .55rem; letter-spacing: .08em; }
+  .project-orbit-modal-close { min-height: 38px; padding: 7px 9px; }
+  .project-orbit-modal-scroll { padding: 22px 18px 26px; }
+  .project-orbit-modal-scroll > h2 { font-size: clamp(2rem, 10vw, 3rem) !important; }
+  .project-orbit-modal-scroll .project-orbit-detail-grid { grid-template-columns: 1fr !important; gap: 20px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-orbit-modal,
+  .project-orbit-core-halo { animation: none !important; }
+}
+
