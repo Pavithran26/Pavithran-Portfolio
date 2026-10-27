@@ -152,7 +152,7 @@ export const PROJECTS_DATA = [
   },
   {
     "id": "my-cow",
-    "title": "My Cow",
+    "title": "Meet My Cow",
     "tagline": "A clearer picture of every cow, calf, and milestone.",
     "category": "Mobile & Agriculture",
     "badge": "Mobile Application",
@@ -178,6 +178,29 @@ export const PROJECTS_DATA = [
     "liveUrl": "https://mycow-pavithran26.web.app/",
     "githubUrl": null,
     "implementationNote": "The current web frontend uses preview-only herd data; its Firestore cow-data sync is pending model-mapping and security-rule verification. The existing React Native app includes Firestore integration. Source repositories are private."
+  },
+  {
+    "id": "prismiq",
+    "title": "PrismIQ",
+    "tagline": "Preserve What Matters. Empower What’s Next.",
+    "category": "Innovation Showcase · Mission Possible 2026",
+    "badge": "Team Winner · PrismIQ",
+    "accentColor": "#b7a2ff",
+    "overview": "An innovation showcase for Mission Possible 2026, presenting the PrismIQ team’s product ideations ClanSure and GT Companion in one public experience.",
+    "challenge": "Present the team’s innovation story and its two product concepts clearly in a single showcase.",
+    "solution": "A dedicated public showcase that introduces the PrismIQ team, its motto, and the ClanSure and GT Companion concepts.",
+    "technologies": [
+      "Innovation showcase",
+      "Product storytelling",
+      "Interactive web UI",
+      "Responsive presentation"
+    ],
+    "highlights": [
+      "Showcases the PrismIQ team and its Mission Possible 2026 recognition.",
+      "Presents ClanSure and GT Companion as the team’s two product ideations."
+    ],
+    "liveUrl": "https://prismiq26.vercel.app/",
+    "githubUrl": "https://github.com/Pavithran26/PrismIQ-Portfolio"
   },
   {
     "id": "product-demand-forecast",
