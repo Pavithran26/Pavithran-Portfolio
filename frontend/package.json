@@ -21,6 +21,7 @@
     "react-dom": "^19.3.0",
     "three": "^0.185.1",
     "@paper-design/shaders-react": "0.0.82",
-    "lucide-react": "^0.468.0"
+    "lucide-react": "^0.468.0",
+    "framer-motion": "^12.23.12"
   }
 }
