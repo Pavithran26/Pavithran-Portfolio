@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { GraduationCap, Scale, ShieldCheck, Sprout } from "lucide-react";
 import "./ProjectOrbitShowcase.css";
 
 const PROJECT_ORDER = ["clansure", "sattam-ai", "srk-erp", "gt-companion"];
@@ -11,13 +12,18 @@ const PROJECT_ACCENTS = {
 };
 
 const PROJECT_MARKS = {
-  clansure: "C",
-  "sattam-ai": "SA",
-  "srk-erp": "SRK",
-  "gt-companion": "GT",
+  clansure: ShieldCheck,
+  "sattam-ai": Scale,
+  "srk-erp": Sprout,
+  "gt-companion": GraduationCap,
 };
 
-const ORBIT_DURATIONS = [31, 39, 47, 57];
+const ORBITS = [
+  { radius: "clamp(82px, 10.5vw, 126px)", duration: 24, offset: 12 },
+  { radius: "clamp(116px, 16vw, 192px)", duration: 32, offset: 116 },
+  { radius: "clamp(150px, 22vw, 264px)", duration: 43, offset: 218 },
+  { radius: "clamp(184px, 28.5vw, 342px)", duration: 54, offset: 310 },
+];
 
 export function ProjectOrbitShowcase({ projects = [] }) {
   const orderedProjects = PROJECT_ORDER
@@ -36,75 +42,82 @@ export function ProjectOrbitShowcase({ projects = [] }) {
 
   return (
     <div className="project-orbit-showcase" style={{ "--active-project-accent": accent }}>
-      <div className="project-orbit-visual-column">
+      <section className="project-orbit-universe" aria-label="Interactive project solar system">
         <div className="project-orbit-heading">
           <span className="project-orbit-eyebrow">PROJECT ORBIT</span>
-          <span className="project-orbit-live"><i aria-hidden="true" /> INTERACTIVE SHOWCASE</span>
+          <span className="project-orbit-live"><i aria-hidden="true" /> SELECT A PLANET TO EXPLORE</span>
         </div>
 
-        <div className="project-orbit-stage" role="group" aria-label="Choose a project orbit">
+        <div className="project-orbit-stage">
           <div className="project-orbit-nebula" aria-hidden="true" />
-          <div className="project-orbit-core" aria-hidden="true">
+          <div className="project-orbit-stars" aria-hidden="true" />
+
+          <div className="project-orbit-plane" aria-hidden="true">
+            {ORBITS.map((orbit, index) => (
+              <div
+                key={index}
+                className={`project-orbit-ring project-orbit-ring--${index + 1}`}
+                style={{ "--orbit-radius": orbit.radius, "--orbit-accent": PROJECT_ACCENTS[orderedProjects[index]?.id] || "#70dfa1" }}
+              />
+            ))}
+            {orderedProjects.map((project, index) => {
+              const orbit = ORBITS[index];
+              const projectAccent = PROJECT_ACCENTS[project.id] || "#70dfa1";
+              const selected = activeProject.id === project.id;
+              const ProjectIcon = PROJECT_MARKS[project.id] || ShieldCheck;
+
+              return (
+                <div
+                  key={project.id}
+                  className="project-orbit-path"
+                  style={{
+                    "--orbit-radius": orbit.radius,
+                    "--orbit-duration": `${orbit.duration}s`,
+                    "--orbit-offset": `${orbit.offset}deg`,
+                    "--orbit-delay": `${-(orbit.duration * orbit.offset / 360)}s`,
+                    "--orbit-accent": projectAccent,
+                  }}
+                >
+                  <button
+                    type="button"
+                    className={`project-orbit-node${selected ? " is-active" : ""}`}
+                    onClick={() => setActiveProjectId(project.id)}
+                    aria-pressed={selected}
+                    aria-label={`Show ${project.title} project details`}
+                    title={`Explore ${project.title}`}
+                    style={{ "--node-accent": projectAccent }}
+                  >
+                    <span className="project-orbit-node-mark" aria-hidden="true"><ProjectIcon size={17} strokeWidth={2.1} /></span>
+                    <span className="project-orbit-node-name">{project.title}</span>
+                  </button>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="project-orbit-core" aria-label="Pavithran project core">
             <span className="project-orbit-core-halo" />
             <span className="project-orbit-core-mark">PS</span>
             <span className="project-orbit-core-rule" />
             <span className="project-orbit-core-label">PROJECT CORE</span>
           </div>
-
-          {orderedProjects.map((project, index) => {
-            const projectAccent = PROJECT_ACCENTS[project.id] || "#70dfa1";
-            const selected = activeProject.id === project.id;
-            const direction = index % 2 === 0 ? "normal" : "reverse";
-            const counterDirection = direction === "normal" ? "reverse" : "normal";
-
-            return (
-              <div
-                key={project.id}
-                className={`project-orbit-track project-orbit-track--${index + 1}`}
-                aria-hidden="false"
-                style={{
-                  "--orbit-duration": `${ORBIT_DURATIONS[index] || 45}s`,
-                  "--orbit-accent": projectAccent,
-                  "--orbit-direction": direction,
-                  "--orbit-counter-direction": counterDirection,
-                }}
-              >
-                <button
-                  type="button"
-                  className={`project-orbit-node${selected ? " is-active" : ""}`}
-                  onClick={() => setActiveProjectId(project.id)}
-                  aria-pressed={selected}
-                  aria-label={`Show ${project.title} project details`}
-                  title={`Explore ${project.title}`}
-                  style={{ "--node-accent": projectAccent }}
-                >
-                  <span className="project-orbit-node-mark" aria-hidden="true">{PROJECT_MARKS[project.id] || project.title.slice(0, 2)}</span>
-                  <span className="project-orbit-node-name">{project.title}</span>
-                </button>
-              </div>
-            );
-          })}
         </div>
+      </section>
 
-        <p className="project-orbit-instruction">
-          <span className="project-orbit-instruction-dot" aria-hidden="true" />
-          SELECT A PLANET TO EXPLORE
-        </p>
-        <div className="project-orbit-project-index" aria-label="Project selection">
-          {orderedProjects.map((project, index) => (
-            <button
-              key={project.id}
-              type="button"
-              className={`project-orbit-index-item${activeProject.id === project.id ? " is-active" : ""}`}
-              onClick={() => setActiveProjectId(project.id)}
-              aria-pressed={activeProject.id === project.id}
-              style={{ "--node-accent": PROJECT_ACCENTS[project.id] || "#70dfa1" }}
-            >
-              <span>{String(index + 1).padStart(2, "0")}</span>
-              {project.title}
-            </button>
-          ))}
-        </div>
+      <div className="project-orbit-project-index" aria-label="Project selection">
+        {orderedProjects.map((project, index) => (
+          <button
+            key={project.id}
+            type="button"
+            className={`project-orbit-index-item${activeProject.id === project.id ? " is-active" : ""}`}
+            onClick={() => setActiveProjectId(project.id)}
+            aria-pressed={activeProject.id === project.id}
+            style={{ "--node-accent": PROJECT_ACCENTS[project.id] || "#70dfa1" }}
+          >
+            <span>{String(index + 1).padStart(2, "0")}</span>
+            {project.title}
+          </button>
+        ))}
       </div>
 
       <article className="project-orbit-detail" key={activeProject.id}>
