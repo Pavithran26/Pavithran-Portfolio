@@ -205,7 +205,6 @@ export function ProjectOrbitShowcase({ projects = [] }) {
           <div className="project-orbit-core" aria-label="FDE software engineering core">
             <span className="project-orbit-core-halo" />
             <span className="project-orbit-core-mark" aria-hidden="true"><Code2 size={22} strokeWidth={2} /></span>
-            <span className="project-orbit-core-label">FDE / AI</span>
           </div>
         </div>
       </section>
