@@ -231,10 +231,10 @@ export function GooeySearch({
           >
             <AnimatePresence mode="popLayout">
               {results.map((item, index) => (
-                <motion.button
+                <motion.div
                   key={item}
-                  type="button"
                   role="option"
+                  tabIndex={0}
                   aria-selected="false"
                   onClick={() => onSelect?.(item)}
                   onKeyDown={event => event.key === 'Enter' && onSelect?.(item)}
@@ -245,9 +245,6 @@ export function GooeySearch({
                   exit="exit"
                   transition={getResultTransition(index)}
                   style={{
-                    appearance: 'none',
-                    border: 0,
-                    textAlign: 'left',
                     backgroundColor: 'var(--gooey-foreground)',
                     borderRadius: 40,
                     padding: resultPadding,
@@ -259,6 +256,7 @@ export function GooeySearch({
                     fontSize: 14,
                     cursor: 'pointer',
                     whiteSpace: 'normal',
+                    outlineOffset: 3,
                   }}
                 >
                   <span style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
@@ -272,14 +270,21 @@ export function GooeySearch({
                       {item}
                     </motion.span>
                   </span>
-                </motion.button>
+                </motion.div>
               ))}
             </AnimatePresence>
           </motion.div>
         </AnimatePresence>
 
-        <motion.button
-          type="button"
+        <motion.div
+          role={step === 1 ? 'button' : undefined}
+          tabIndex={step === 1 ? 0 : undefined}
+          onKeyDown={event => {
+            if (step === 1 && (event.key === 'Enter' || event.key === ' ')) {
+              event.preventDefault();
+              setStep(2);
+            }
+          }}
           variants={buttonMotionVariants}
           initial="step1"
           animate={step === 1 ? 'step1' : 'step2'}
@@ -346,7 +351,7 @@ export function GooeySearch({
               }}
             />
           )}
-        </motion.button>
+        </motion.div>
 
         <AnimatePresence mode="wait">
           {step === 2 && (
