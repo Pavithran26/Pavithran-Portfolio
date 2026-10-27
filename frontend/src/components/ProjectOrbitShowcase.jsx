@@ -81,11 +81,14 @@ const PROJECT_ICONS = {
 };
 
 const ORBIT_CONFIGS = [
-  { radius: "var(--project-orbit-radius-1)", duration: 25, baseOffset: 11 },
-  { radius: "var(--project-orbit-radius-2)", duration: 32, baseOffset: 49 },
-  { radius: "var(--project-orbit-radius-3)", duration: 40, baseOffset: 86 },
-  { radius: "var(--project-orbit-radius-4)", duration: 48, baseOffset: 127 },
-  { radius: "var(--project-orbit-radius-5)", duration: 56, baseOffset: 164 },
+  { radius: "var(--project-orbit-radius-1)", duration: 31, baseOffset: 11 },
+  { radius: "var(--project-orbit-radius-2)", duration: 37, baseOffset: 43 },
+  { radius: "var(--project-orbit-radius-3)", duration: 44, baseOffset: 82 },
+  { radius: "var(--project-orbit-radius-4)", duration: 52, baseOffset: 119 },
+  { radius: "var(--project-orbit-radius-5)", duration: 59, baseOffset: 157 },
+  { radius: "var(--project-orbit-radius-6)", duration: 67, baseOffset: 201 },
+  { radius: "var(--project-orbit-radius-7)", duration: 74, baseOffset: 244 },
+  { radius: "var(--project-orbit-radius-8)", duration: 83, baseOffset: 291 },
 ];
 
 export function ProjectOrbitShowcase({ projects = [] }) {
@@ -129,10 +132,12 @@ export function ProjectOrbitShowcase({ projects = [] }) {
 
   const sourceUrl = openProject?.githubUrl || openProject?.sourceUrl;
   const technologies = (openProject?.technologies || []).slice(0, 8);
+  // Spread two projects across each ring; place any remaining projects on the outermost ring.
+  // This avoids crowding the inner orbits when the project catalogue grows.
   const orbitGroups = ORBIT_CONFIGS.map((_, ringIndex) =>
     orderedProjects
       .map((project, index) => ({ project, index }))
-      .filter(({ index }) => index % ORBIT_CONFIGS.length === ringIndex)
+      .filter(({ index }) => (index < ORBIT_CONFIGS.length * 2 ? index % ORBIT_CONFIGS.length : ORBIT_CONFIGS.length - 1) === ringIndex)
   );
 
   return (
