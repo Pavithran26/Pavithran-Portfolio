@@ -131,11 +131,99 @@ export class PortfolioDialogs {
 
   openSkills(initialQuery = '') {
     this.show('CAPABILITIES / TECHNICAL SKILLS', 'The tools behind the work.', `
-      <div class="skill-controls"><div><label for="skill-search">Search skills</label><input id="skill-search" type="search" placeholder="React, FastAPI, Docker…" autocomplete="off"></div><div><label for="skill-category">Category</label><select id="skill-category"><option value="all" selected>All categories</option>${categories.map(category => `<option value="${category.id}">${html(category.name)}</option>`).join('')}</select></div></div><p id="skill-count" class="eyebrow" role="status"></p><div id="skills-results"></div>
+      <div class="skill-controls">
+        <div class="skill-search-column">
+          <label class="skill-gooey-label" for="skill-search-open">Search skills</label>
+          <div class="skill-gooey-search" id="skill-gooey-search">
+            <svg class="skill-gooey-filter-defs" aria-hidden="true" focusable="false">
+              <defs><filter id="skill-gooey-filter">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+                <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
+                <feComposite in="SourceGraphic" in2="goo" operator="atop" />
+              </filter></defs>
+            </svg>
+            <div class="skill-gooey-shell">
+              <button id="skill-search-open" class="skill-gooey-open" type="button" aria-label="Open skills search">
+                <span>Search</span>
+                <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 4.2 4.2"/></svg>
+              </button>
+              <div class="skill-gooey-input-wrap" hidden>
+                <input id="skill-search" type="search" placeholder="Search skills, frameworks, tools…" autocomplete="off" aria-label="Search skills, frameworks and tools" aria-controls="skill-search-suggestions" />
+                <button id="skill-search-clear" type="button" aria-label="Clear search" title="Clear search">×</button>
+                <button id="skill-search-collapse" type="button" aria-label="Close search" title="Close search">×</button>
+              </div>
+              <div id="skill-search-suggestions" class="skill-gooey-suggestions" role="listbox" aria-label="Matching skills" hidden></div>
+            </div>
+          </div>
+        </div>
+        <div><label for="skill-category">Category</label><select id="skill-category"><option value="all" selected>All categories</option>${categories.map(category => `<option value="${category.id}">${html(category.name)}</option>`).join('')}</select></div>
+      </div><p id="skill-count" class="eyebrow" role="status"></p><div id="skills-results"></div>
     `, 'skills');
     const search = this.body.querySelector('#skill-search');
-    search.value = initialQuery;
+    const searchRoot = this.body.querySelector('#skill-gooey-search');
+    const openSearchButton = this.body.querySelector('#skill-search-open');
+    const inputWrap = this.body.querySelector('.skill-gooey-input-wrap');
+    const clearSearchButton = this.body.querySelector('#skill-search-clear');
+    const collapseSearchButton = this.body.querySelector('#skill-search-collapse');
+    const suggestions = this.body.querySelector('#skill-search-suggestions');
     const categoryInput = this.body.querySelector('#skill-category');
+    let suggestionsDismissed = false;
+
+    const allSkillEntries = categories.flatMap(category =>
+      category.skills.map(skill => ({ skill, category }))
+    );
+
+    const showSearchInput = () => {
+      searchRoot.classList.add('is-open');
+      openSearchButton.hidden = true;
+      inputWrap.hidden = false;
+      search.focus({ preventScroll: true });
+    };
+
+    if (initialQuery) {
+      search.value = initialQuery;
+      showSearchInput();
+    }
+
+    const renderSuggestions = () => {
+      const query = search.value.trim().toLocaleLowerCase();
+      if (!query || suggestionsDismissed) {
+        suggestions.hidden = true;
+        suggestions.innerHTML = '';
+        return;
+      }
+
+      const matchedEntries = allSkillEntries
+        .filter(({ skill, category }) => [skill.name, skill.tag, skill.level, category.name].filter(Boolean).join(' ').toLocaleLowerCase().includes(query))
+        .sort((a, b) => {
+          const aName = a.skill.name.toLocaleLowerCase();
+          const bName = b.skill.name.toLocaleLowerCase();
+          return Number(!aName.startsWith(query)) - Number(!bName.startsWith(query)) || aName.localeCompare(bName);
+        })
+        .slice(0, 4);
+
+      suggestions.innerHTML = matchedEntries.map(({ skill, category }, index) => `
+        <button type="button" class="skill-gooey-suggestion" role="option" aria-selected="false"
+          data-skill-suggestion data-skill-name="${html(skill.name)}" data-skill-category="${html(category.id)}"
+          style="--suggestion-index: ${index}">
+          <span class="skill-gooey-suggestion-icon" aria-hidden="true">${technologyIcons(skill.name) || '<span>⌘</span>'}</span>
+          <span class="skill-gooey-suggestion-copy"><strong>${html(skill.name)}</strong><small>${html(category.name)}</small></span>
+          <span class="skill-gooey-suggestion-arrow" aria-hidden="true">↗</span>
+        </button>
+      `).join('');
+
+      suggestions.hidden = matchedEntries.length === 0;
+      suggestions.querySelectorAll('[data-skill-suggestion]').forEach(button => {
+        button.addEventListener('click', () => {
+          search.value = button.dataset.skillName;
+          categoryInput.value = button.dataset.skillCategory;
+          suggestionsDismissed = true;
+          render();
+          search.focus({ preventScroll: true });
+        });
+      });
+    };
+
     const render = () => {
       const query = search.value.toLocaleLowerCase().trim();
       let count = 0;
@@ -147,8 +235,44 @@ export class PortfolioDialogs {
       }).join('');
       this.body.querySelector('#skill-count').textContent = `${count} ${count === 1 ? 'skill' : 'skills'} found`;
       this.body.querySelector('#skills-results').innerHTML = content || '<p class="empty-result">No matching skills. Try another term or choose a different category.</p>';
+      renderSuggestions();
     };
-    search.addEventListener('input', render); categoryInput.addEventListener('change', render); render();
+    openSearchButton.addEventListener('click', showSearchInput);
+    search.addEventListener('input', () => {
+      suggestionsDismissed = false;
+      render();
+    });
+    search.addEventListener('keydown', event => {
+      if (event.key === 'Enter' && !suggestions.hidden) {
+        const first = suggestions.querySelector('[data-skill-suggestion]');
+        if (first) {
+          event.preventDefault();
+          first.click();
+        }
+      } else if (event.key === 'Escape') {
+        suggestions.hidden = true;
+      }
+    });
+    clearSearchButton.addEventListener('click', () => {
+      search.value = '';
+      suggestionsDismissed = false;
+      categoryInput.value = 'all';
+      render();
+      search.focus({ preventScroll: true });
+    });
+    collapseSearchButton.addEventListener('click', () => {
+      search.value = '';
+      suggestionsDismissed = false;
+      categoryInput.value = 'all';
+      suggestions.hidden = true;
+      searchRoot.classList.remove('is-open');
+      inputWrap.hidden = true;
+      openSearchButton.hidden = false;
+      render();
+      openSearchButton.focus({ preventScroll: true });
+    });
+    categoryInput.addEventListener('change', render);
+    render();
   }
 
   openDossier() {
