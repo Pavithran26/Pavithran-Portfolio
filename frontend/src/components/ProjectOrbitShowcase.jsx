@@ -57,7 +57,6 @@ export function ProjectOrbitShowcase({ projects = [] }) {
               <div
                 key={index}
                 className={`project-orbit-ring project-orbit-ring--${index + 1}`}
-                style={{ "--orbit-radius": orbit.radius, "--orbit-accent": PROJECT_ACCENTS[orderedProjects[index]?.id] || "#70dfa1" }}
               />
             ))}
             {orderedProjects.map((project, index) => {
