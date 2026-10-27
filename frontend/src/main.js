@@ -31,7 +31,7 @@ import { TextEffectsController } from './components/TextEffectsController.js';
 import SocialFlipButton from './components/ui/social-flip-button.jsx';
 
 
-const PROJECTS_WITHOUT_GENERATED_IMAGES = new Set(['clansure', 'gt-companion', 'srk-erp', 'sattam-ai']);
+const PROJECTS_WITHOUT_GENERATED_IMAGES = new Set(['gt-companion', 'srk-erp', 'sattam-ai']);
 const root = document.querySelector('#portfolio');
 
 const sunMoonThemeToggleMount = document.querySelector('#sun-moon-theme-toggle-mount');
