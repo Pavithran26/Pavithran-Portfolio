@@ -672,3 +672,11 @@
     transition: none !important;
   }
 }
+
+/* Let the orbit + detail panel use the full available width of the Work section. */
+#work .work-wide-content,
+#work .space-content {
+  width: 100% !important;
+  max-width: none !important;
+}
+
