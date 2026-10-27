@@ -98,7 +98,7 @@ export function StaggeredGrid({ items = [], className = '' }) {
               type="button"
               className={`staggered-tech-filter ${activeCategory === category ? 'is-active' : ''}`}
               aria-pressed={activeCategory === category}
-              onClick={() => { setActiveCategory(category); setSelectedTool(''); }}
+              onClick={() => setActiveCategory(category)}
             >
               <span>{category}</span><small>{countFor(category)}</small>
             </button>
