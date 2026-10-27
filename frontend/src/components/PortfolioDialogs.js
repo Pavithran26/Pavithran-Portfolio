@@ -149,7 +149,6 @@ export class PortfolioDialogs {
               </button>
               <div class="skill-gooey-input-wrap" hidden>
                 <input id="skill-search" type="search" placeholder="Search skills, frameworks, tools…" autocomplete="off" aria-label="Search skills, frameworks and tools" aria-controls="skill-search-suggestions" />
-                <button id="skill-search-clear" type="button" aria-label="Clear search" title="Clear search">×</button>
                 <button id="skill-search-collapse" type="button" aria-label="Close search" title="Close search">×</button>
               </div>
               <div id="skill-search-suggestions" class="skill-gooey-suggestions" role="listbox" aria-label="Matching skills" hidden></div>
@@ -163,7 +162,6 @@ export class PortfolioDialogs {
     const searchRoot = this.body.querySelector('#skill-gooey-search');
     const openSearchButton = this.body.querySelector('#skill-search-open');
     const inputWrap = this.body.querySelector('.skill-gooey-input-wrap');
-    const clearSearchButton = this.body.querySelector('#skill-search-clear');
     const collapseSearchButton = this.body.querySelector('#skill-search-collapse');
     const suggestions = this.body.querySelector('#skill-search-suggestions');
     const categoryInput = this.body.querySelector('#skill-category');
@@ -252,13 +250,6 @@ export class PortfolioDialogs {
       } else if (event.key === 'Escape') {
         suggestions.hidden = true;
       }
-    });
-    clearSearchButton.addEventListener('click', () => {
-      search.value = '';
-      suggestionsDismissed = false;
-      categoryInput.value = 'all';
-      render();
-      search.focus({ preventScroll: true });
     });
     collapseSearchButton.addEventListener('click', () => {
       search.value = '';
