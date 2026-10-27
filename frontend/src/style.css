@@ -8001,3 +8001,76 @@ html[data-appearance="light"] body.experience-animation .hero-project-choice-nam
   color: #173e29 !important;
   -webkit-text-fill-color: #173e29 !important;
 }
+
+/* Project and portfolio detail dialogs: restore readable contrast and remove inherited glow effects. */
+dialog.portfolio-dialog:not([data-view="terminal"]) {
+  color-scheme: light !important;
+  background: #fff !important;
+  color: #344b3d !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title,
+dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body,
+dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body *,
+dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-header,
+dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-header * {
+  text-shadow: none !important;
+  filter: none !important;
+  opacity: 1 !important;
+}
+dialog.portfolio-dialog:not([data-view="terminal"]) #detail-title {
+  color: #173d29 !important;
+  -webkit-text-fill-color: #173d29 !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: border-box !important;
+  background-clip: border-box !important;
+  font-size: clamp(2.5rem, 5.5vw, 4.5rem) !important;
+  font-weight: 750 !important;
+  line-height: 1.08 !important;
+  letter-spacing: -.045em !important;
+  margin: 0 0 24px !important;
+}
+dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body {
+  color: #43594a !important;
+  -webkit-text-fill-color: initial !important;
+  font-size: 1rem !important;
+  line-height: 1.75 !important;
+}
+dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body p {
+  color: #43594a !important;
+  -webkit-text-fill-color: #43594a !important;
+  background: none !important;
+  font-size: 1rem !important;
+  line-height: 1.8 !important;
+}
+dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-lead {
+  color: #23643e !important;
+  -webkit-text-fill-color: #23643e !important;
+  font-size: clamp(1.1rem, 1.8vw, 1.35rem) !important;
+  font-weight: 600 !important;
+  margin: 0 0 20px !important;
+}
+dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h3,
+dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body h4 {
+  color: #193d29 !important;
+  -webkit-text-fill-color: #193d29 !important;
+  text-shadow: none !important;
+  filter: none !important;
+}
+dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .detail-columns {
+  gap: clamp(24px, 5vw, 64px) !important;
+  margin-block: 28px !important;
+}
+dialog.portfolio-dialog:not([data-view="terminal"]) #detail-body .project-scope-note {
+  color: #526b5b !important;
+  background: #f3f8f4 !important;
+  border-left: 3px solid #16834b !important;
+  padding: 18px 22px !important;
+}
+dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close {
+  color: #193d29 !important;
+  text-shadow: none !important;
+}
+
