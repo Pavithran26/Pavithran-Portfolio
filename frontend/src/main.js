@@ -4,7 +4,7 @@ import './style.css';
 import Lenis from 'lenis';
 import 'lenis/dist/lenis.css';
 import { PORTFOLIO_DATA as profile } from './data/portfolioData.js';
-import { FEATURED_PROJECTS as featuredProjects, PROJECTS_DATA } from './data/projectsData.js';
+import { PROJECTS_DATA } from './data/projectsData.js';
 import { SPACE_CHAPTERS as chapters } from './data/spaceJourneyData.js';
 import { ALL_TECHNOLOGIES } from './data/allTechnologies.js';
 import { PortfolioDialogs } from './components/PortfolioDialogs.js';
@@ -32,7 +32,6 @@ import SocialFlipButton from './components/ui/social-flip-button.jsx';
 import ProjectOrbitShowcase from './components/ProjectOrbitShowcase.jsx';
 
 
-const PROJECTS_WITHOUT_GENERATED_IMAGES = new Set(['gt-companion', 'srk-erp', 'sattam-ai']);
 const root = document.querySelector('#portfolio');
 
 const sunMoonThemeToggleMount = document.querySelector('#sun-moon-theme-toggle-mount');
@@ -326,30 +325,6 @@ if (technologyMount) {
 // Load real project sites as their cards approach the viewport, keeping the page fast.
 // The project screenshot remains underneath the frame while it loads and for projects
 // that do not have a public live URL.
-function mountProjectCardFrame(frame) {
-  if (!frame || frame.dataset.projectFrameMounted === 'true') return;
-  const source = frame.dataset.projectFrameSrc;
-  if (!source) return;
-
-  frame.dataset.projectFrameMounted = 'true';
-  frame.addEventListener('load', () => frame.classList.add('is-loaded'), { once: true });
-  frame.src = source;
-}
-
-const projectCardFrames = [...root.querySelectorAll('.project-card-live-frame')];
-if ('IntersectionObserver' in window) {
-  const projectCardFrameObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      projectCardFrameObserver.unobserve(entry.target);
-      mountProjectCardFrame(entry.target);
-    });
-  }, { rootMargin: '320px 0px' });
-  projectCardFrames.forEach(frame => projectCardFrameObserver.observe(frame));
-} else {
-  projectCardFrames.forEach(mountProjectCardFrame);
-}
-
 // ─── INITIALIZE LENIS ULTRA-SMOOTH VIRTUAL SCROLL ENGINE ───────────
 const lenis = new Lenis({
   duration: 1.35,
