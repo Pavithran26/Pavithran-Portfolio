@@ -69,9 +69,8 @@ export function ProjectOrbitShowcase({ projects = [] }) {
               return (
                 <div
                   key={project.id}
-                  className="project-orbit-path"
+                  className={`project-orbit-path project-orbit-path--${index + 1}`}
                   style={{
-                    "--orbit-radius": orbit.radius,
                     "--orbit-duration": `${orbit.duration}s`,
                     "--orbit-offset": `${orbit.offset}deg`,
                     "--orbit-delay": `${-(orbit.duration * orbit.offset / 360)}s`,
