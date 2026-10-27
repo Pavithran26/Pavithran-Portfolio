@@ -8074,3 +8074,9 @@ dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close {
   text-shadow: none !important;
 }
 
+
+
+/* Keep the Work section focused on the project panels; hide its extra rail toolbar. */
+#work .horizontal-rail-toolbar {
+  display: none !important;
+}
