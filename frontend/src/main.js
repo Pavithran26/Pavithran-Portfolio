@@ -68,11 +68,6 @@ root.innerHTML = `
       <h2 id="work-title">Selected <em>work & projects.</em></h2>
       <p class="section-intro">Different problems. The same relentless curiosity. Every application below was architected, written, and deployed to solve tangible challenges.</p>
 
-      <nav class="project-index" aria-label="Browse featured projects">
-        ${featuredProjects.map(project => `<a href="#project-${project.id}">${html(project.title)}</a>`).join('')}
-        <button class="space-text-link" type="button" data-dialog="dossier" style="margin-left: 8px; color: var(--tf-energon); font-weight: 500;">All 16 Projects Dossier ↗</button>
-      </nav>
-
       <!-- Featured Flagship Showcase -->
       <div class="space-projects">
         ${featuredProjects.map(project => `
