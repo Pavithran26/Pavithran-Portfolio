@@ -7,6 +7,11 @@
 
 .project-orbit-showcase {
   --active-project-accent: #70dfa1;
+  --project-orbit-radius-1: clamp(64px, 7.5vw, 90px);
+  --project-orbit-radius-2: clamp(102px, 12.2vw, 146px);
+  --project-orbit-radius-3: clamp(140px, 17vw, 204px);
+  --project-orbit-radius-4: clamp(178px, 22vw, 264px);
+  --project-orbit-radius-5: clamp(216px, 27vw, 324px);
   color: #edf8f1;
   background: #050706;
   border: 1px solid rgba(112, 223, 161, .13);
@@ -141,11 +146,12 @@
   pointer-events: none;
 }
 
-.project-orbit-ring--1, .project-orbit-path--1 { --orbit-radius: clamp(66px, 8.7vw, 104px); }
-.project-orbit-ring--2, .project-orbit-path--2 { --orbit-radius: clamp(96px, 15vw, 180px); }
-.project-orbit-ring--3, .project-orbit-path--3 { --orbit-radius: clamp(128px, 23vw, 276px); }
-.project-orbit-ring--4, .project-orbit-path--4 { --orbit-radius: clamp(155px, 34vw, 405px); }
 .project-orbit-ring--1 { border-color: rgba(0, 229, 192, .19); }
+.project-orbit-ring--1, .project-orbit-path--1 { --orbit-radius: var(--project-orbit-radius-1); }
+.project-orbit-ring--2, .project-orbit-path--2 { --orbit-radius: var(--project-orbit-radius-2); }
+.project-orbit-ring--3, .project-orbit-path--3 { --orbit-radius: var(--project-orbit-radius-3); }
+.project-orbit-ring--4, .project-orbit-path--4 { --orbit-radius: var(--project-orbit-radius-4); }
+.project-orbit-ring--5, .project-orbit-path--5 { --orbit-radius: var(--project-orbit-radius-5); }
 
 .project-orbit-path {
   position: absolute;
@@ -272,6 +278,19 @@
   letter-spacing: .12em;
 }
 
+.project-orbit-index-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: min(100% - 48px, 1080px);
+  margin: 0 auto 12px;
+  color: #8fbea0;
+  font: 650 .62rem/1.4 var(--font-mono, ui-monospace, monospace);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
 .project-orbit-project-index {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -283,9 +302,9 @@
 .project-orbit-index-item {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   min-width: 0;
-  gap: 8px;
+  gap: 9px;
   padding: 11px 12px;
   border: 1px solid rgba(164, 205, 179, .14);
   border-radius: 10px;
@@ -297,9 +316,19 @@
   transition: color .2s ease, border-color .2s ease, background .2s ease;
 }
 
-.project-orbit-index-item > span {
+.project-orbit-index-item > span:first-child {
+  flex: 0 0 auto;
   color: var(--node-accent, #70dfa1);
   font: 700 .63rem/1 var(--font-mono, ui-monospace, monospace);
+}
+
+.project-orbit-index-title {
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  font: inherit;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .project-orbit-index-item.is-active {
@@ -495,32 +524,35 @@
 }
 
 @media (max-width: 759px) {
+  .project-orbit-showcase {
+    --project-orbit-radius-1: clamp(35px, 9.5vw, 48px);
+    --project-orbit-radius-2: clamp(53px, 14.5vw, 68px);
+    --project-orbit-radius-3: clamp(71px, 19.5vw, 88px);
+    --project-orbit-radius-4: clamp(89px, 24.5vw, 108px);
+    --project-orbit-radius-5: clamp(107px, 29.5vw, 128px);
+  }
   .project-orbit-universe { padding: 20px 8px 4px; }
   .project-orbit-stage { height: clamp(410px, 108vw, 510px); min-height: 390px; }
   .project-orbit-plane {
-    width: 96%;
-    transform: translate(-50%, -50%) rotateX(65deg) rotateY(-8deg) scale(.93);
+    width: 100%;
+    transform: translate(-50%, -50%) rotateX(65deg) rotateY(-8deg) scale(.98);
   }
-  .project-orbit-ring--1 { --orbit-radius: clamp(58px, 17vw, 80px); }
-  .project-orbit-ring--2 { --orbit-radius: clamp(82px, 25vw, 117px); }
-  .project-orbit-ring--3 { --orbit-radius: clamp(108px, 33vw, 154px); }
-  .project-orbit-ring--4 { --orbit-radius: clamp(132px, 41vw, 192px); }
-  .project-orbit-ring--1, .project-orbit-path--1 { --orbit-radius: clamp(58px, 17vw, 80px); }
-  .project-orbit-ring--2, .project-orbit-path--2 { --orbit-radius: clamp(82px, 25vw, 117px); }
-  .project-orbit-ring--3, .project-orbit-path--3 { --orbit-radius: clamp(108px, 33vw, 154px); }
-  .project-orbit-ring--4, .project-orbit-path--4 { --orbit-radius: clamp(132px, 41vw, 192px); }
   .project-orbit-node {
-    min-height: 36px;
-    gap: 6px;
-    padding: 5px 9px 5px 6px;
-    max-width: 42vw;
+    min-height: 34px;
+    gap: 5px;
+    padding: 4px 7px 4px 5px;
+    max-width: min(132px, 34vw);
   }
   .project-orbit-node-mark { flex-basis: 21px; width: 21px; height: 21px; }
   .project-orbit-node-name { font-size: .71rem; }
   .project-orbit-core { width: 77px; }
+  .project-orbit-index-header,
+  .project-orbit-project-index {
+    width: calc(100% - 24px);
+  }
+  .project-orbit-index-header { font-size: .56rem; }
   .project-orbit-project-index {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    width: calc(100% - 24px);
     margin-bottom: 20px;
   }
   .project-orbit-index-item { justify-content: flex-start; font-size: .72rem; padding: 10px; }
@@ -532,10 +564,19 @@
 @media (max-width: 380px) {
   .project-orbit-heading { align-items: flex-start; flex-wrap: wrap; }
   .project-orbit-live { font-size: .52rem; }
+  .project-orbit-showcase {
+    --project-orbit-radius-1: 34px;
+    --project-orbit-radius-2: 49px;
+    --project-orbit-radius-3: 64px;
+    --project-orbit-radius-4: 79px;
+    --project-orbit-radius-5: 94px;
+  }
   .project-orbit-stage { height: 395px; min-height: 395px; }
-  .project-orbit-plane { transform: translate(-50%, -50%) rotateX(65deg) rotateY(-8deg) scale(.84); }
-  .project-orbit-node { max-width: 44vw; min-height: 33px; gap: 5px; }
-  .project-orbit-node-name { font-size: .64rem; }
+  .project-orbit-plane { transform: translate(-50%, -50%) rotateX(65deg) rotateY(-8deg) scale(.98); }
+  .project-orbit-node { max-width: 31vw; min-height: 32px; gap: 4px; padding: 4px 6px 4px 4px; }
+  .project-orbit-node-mark { flex-basis: 18px; width: 18px; height: 18px; }
+  .project-orbit-node-name { font-size: .58rem; }
+  .project-orbit-index-item { gap: 6px; padding: 8px 7px; font-size: .64rem; }
   .project-orbit-core { width: 70px; }
   .project-orbit-core-mark { font-size: 1.4rem; }
   .project-orbit-core-label { font-size: .38rem; }
