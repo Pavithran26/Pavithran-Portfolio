@@ -29,6 +29,7 @@ import { SunMoonThemeToggle } from './components/ui/sun-moon-theme-toggle.tsx';
 import { flushSync } from 'react-dom';
 import { TextEffectsController } from './components/TextEffectsController.js';
 import SocialFlipButton from './components/ui/social-flip-button.jsx';
+import ProjectOrbitShowcase from './components/ProjectOrbitShowcase.jsx';
 
 
 const PROJECTS_WITHOUT_GENERATED_IMAGES = new Set(['gt-companion', 'srk-erp', 'sattam-ai']);
@@ -68,41 +69,7 @@ root.innerHTML = `
       <h2 id="work-title">Selected <em>work & projects.</em></h2>
       <p class="section-intro">Different problems. The same relentless curiosity. Every application below was architected, written, and deployed to solve tangible challenges.</p>
 
-      <!-- Featured Flagship Showcase -->
-      <div class="space-projects">
-        ${featuredProjects.map(project => `
-          <article id="project-${project.id}" class="project-destination has-project-screenshot project-card-background-preview" data-card-project="${project.id}">
-            <figure class="project-card-media project-card-media-live" aria-label="${html(project.title)} website background">
-              ${project.id !== 'my-cow' && !PROJECTS_WITHOUT_GENERATED_IMAGES.has(project.id) ? `<img
-                class="project-card-image project-card-fallback"
-                src="/images/projects/${project.id}-1440.webp"
-                alt=""
-                width="1440"
-                height="900"
-                loading="lazy"
-                decoding="async"
-              >` : ''}
-              ${PROJECTS_WITHOUT_GENERATED_IMAGES.has(project.id) ? `<div class="project-card-no-preview" aria-hidden="true"><span>${project.liveUrl ? 'LIVE LINK · NO EMBEDDED PREVIEW' : 'SOURCE REPOSITORY'}</span><strong>${html(project.title)}</strong><small>Explore the technical dossier for verified details.</small></div>` : ''}
-              ${project.liveUrl && !PROJECTS_WITHOUT_GENERATED_IMAGES.has(project.id) ? `<iframe class="project-card-live-frame" data-project-frame-src="${html(project.liveUrl)}" title="${html(project.title)} website background preview" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" aria-hidden="true"></iframe>` : ''}
-              <span class="project-card-preview-shade" aria-hidden="true"></span>
-            </figure>
-            <div class="project-copy">
-              <button class="space-project-title" type="button" data-project="${project.id}">
-                <span>${html(project.title)}</span><span aria-hidden="true">↗</span>
-              </button>
-              <p class="project-tagline">${html(project.tagline)}</p>
-              <p class="project-summary">${html(project.overview)}</p>
-              <div class="project-tech-tags" aria-label="Technologies used">
-                ${project.technologies.slice(0, 4).map(technology => `<span class="project-tech-tag">${html(technology)}</span>`).join('')}
-              </div>
-              <div class="project-links">
-                <button class="space-text-link" type="button" data-project="${project.id}">Explore technical dossier ↗</button>
-                ${project.liveUrl ? `<a class="space-text-link project-live-cta" href="${html(project.liveUrl)}" target="_blank" rel="noopener noreferrer">Visit live app ↗</a>` : ''}
-              </div>
-            </div>
-          </article>
-        `).join('')}
-      </div>
+      <div id="project-orbit-showcase-mount" class="project-orbit-showcase-mount" aria-label="Interactive project solar system"></div>
 
 
 
@@ -316,6 +283,21 @@ root.innerHTML = `
     </div>
   </footer>
 `;
+
+// Render the interactive four-project solar system after the page skeleton exists.
+const projectOrbitMount = document.getElementById('project-orbit-showcase-mount');
+let projectOrbitRoot = null;
+if (projectOrbitMount) {
+  projectOrbitRoot = createRoot(projectOrbitMount);
+  flushSync(() => {
+    const projectOrbitIds = ['clansure', 'sattam-ai', 'srk-erp', 'gt-companion'];
+    projectOrbitRoot.render(createElement(ProjectOrbitShowcase, {
+      projects: projectOrbitIds
+        .map(id => PROJECTS_DATA.find(project => project.id === id))
+        .filter(Boolean)
+    }));
+  });
+}
 
 // Render the SocialFlipButton with the real social and developer profile links.
 const socialFlipMount = document.getElementById('social-flip-mount');
@@ -585,7 +567,6 @@ if (certificationGrid) {
 // Build explicit horizontal story stages for Projects, Work, Studies, and recognition.
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const horizontalRailDefinitions = [
-  ['.space-projects', 'PROJECTS'],
   ['.space-experience', 'WORK EXPERIENCE'],
   ['.space-education', 'STUDIES'],
   ['.space-recognition', 'RECOGNITION & ACHIEVEMENTS'],
