@@ -8196,10 +8196,10 @@ dialog.portfolio-dialog:not([data-view="terminal"]) .dialog-close {
   }
 }
 
-/* Add a little breathing room from the left edge on the mobile Work section. */
+/* Move mobile Work content back toward the left edge. */
 @media (max-width: 759px) {
   #work .work-wide-content {
-    padding-left: clamp(10px, 2.8vw, 16px) !important;
+    padding-left: 0 !important;
     padding-right: 0 !important;
   }
 }
