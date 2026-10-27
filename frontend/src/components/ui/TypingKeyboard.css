@@ -1,0 +1,129 @@
+/* Isometric 3D typing keyboard for the empty right column of the portfolio hero. */
+.tk-container,
+.tk-container * {
+  transform-style: preserve-3d;
+  box-sizing: border-box;
+}
+.tk-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  overflow: visible;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-weight: 750;
+  color: rgba(255,255,251,.72);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+.tk-main {
+  position: relative;
+  display: flex;
+  flex: 0 0 800px;
+  align-items: center;
+  justify-content: center;
+  width: 800px;
+  height: 600px;
+  transform: scale(var(--tk-scale, .68));
+  transform-origin: center center;
+}
+.tk-flex { display: flex; align-items: center; justify-content: center; }
+.tk-face { position: absolute; }
+.tk-keyboard {
+  position: relative;
+  width: 500px;
+  height: 160px;
+  transform: perspective(10000px) rotateX(50deg) rotateZ(-25deg);
+}
+.tk-keyboard__front { width: 500px; height: 25px; transform: rotateX(-90deg) translateZ(80px); background: #929a94; }
+.tk-keyboard__back { width: 500px; height: 25px; transform: rotateX(90deg) translateZ(80px); background: #f3fff6; }
+.tk-keyboard__top {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 500px;
+  height: 160px;
+  padding: 9px 5px;
+  transform: rotateY(0deg) translateZ(12.5px);
+  border: 1px solid rgba(7,50,25,.38);
+  background-image: linear-gradient(to bottom, color-mix(in srgb, var(--tk-accent) 42%, white), color-mix(in srgb, #111a13 84%, white));
+  box-shadow: 0 15px 26px rgba(0,0,0,.22);
+}
+.tk-keyboard__bottom { width: 500px; height: 160px; transform: rotateY(180deg) translateZ(12.5px); background: #d9e6dc; }
+.tk-keyboard__right { width: 25px; height: 160px; transform: rotateY(90deg) translateZ(250px); background: #f3fff6; }
+.tk-keyboard__left { width: 25px; height: 160px; transform: rotateY(90deg) translateZ(-250px); background: #aab9ad; }
+.tk-screen {
+  z-index: 2;
+  width: 303px;
+  height: 240px;
+  transform: translateZ(100px) translateY(-200px) translateZ(50px) rotateX(270deg);
+  border: 1px solid color-mix(in srgb, var(--tk-accent) 74%, white);
+  border-radius: 10px;
+  padding: 16px;
+  background-color: var(--tk-accent);
+  font-size: 14px;
+  line-height: 1.6;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-transform: none;
+  letter-spacing: .7px;
+  color: #fff;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--tk-accent) 72%, transparent), 0 0 24px color-mix(in srgb, var(--tk-accent) 32%, transparent), 0 0 70px color-mix(in srgb, var(--tk-accent) 20%, transparent);
+  animation: tk-screen-flicker 1.2s ease-in alternate infinite;
+}
+@keyframes tk-screen-flicker {
+  0%, 90%, 96% { background-color: var(--tk-accent); }
+  93%, 100% { background-color: color-mix(in srgb, var(--tk-accent) 82%, black); }
+}
+.tk-keys { display: flex; justify-content: space-between; width: 100%; transform: translateZ(4px); padding: 0 2px; }
+.tk-key { position: relative; width: 30px; height: 27px; transition: transform .05s ease; }
+.tk-key--w2 { width: 60px; }
+.tk-key--w3 { width: 90px; }
+.tk-key--w6 { width: 195px; }
+.tk-key__front { width: 30px; height: 8px; transform: rotateX(-90deg) translateZ(13.5px); background: #737c75; }
+.tk-key__front--w2 { width: 60px; }
+.tk-key__front--w3 { width: 90px; }
+.tk-key__front--w6 { width: 195px; }
+.tk-key__back { width: 30px; height: 8px; transform: rotateX(90deg) translateZ(13.5px); background: #f5fff7; }
+.tk-key__back--w2 { width: 60px; }
+.tk-key__back--w3 { width: 90px; }
+.tk-key__back--w6 { width: 195px; }
+.tk-key__top {
+  width: 30px; height: 27px; transform: rotateY(0deg) translateZ(4px);
+  background-color: #f5fff7;
+  background-image: linear-gradient(to bottom, color-mix(in srgb, var(--tk-accent) 29%, white), #fff);
+  box-shadow: inset 0 0 0 .5px rgba(0,0,0,.13), 0 -1px 2px rgba(0,0,0,.08);
+}
+.tk-key__top--w2 { width: 60px; }
+.tk-key__top--w3 { width: 90px; }
+.tk-key__top--w6 { width: 195px; }
+.tk-key__bottom { width: 30px; height: 27px; transform: rotateY(180deg) translateZ(4px); background: #737c75; }
+.tk-key__bottom--w2 { width: 60px; }
+.tk-key__bottom--w3 { width: 90px; }
+.tk-key__bottom--w6 { width: 195px; }
+.tk-key__right { width: 8px; height: 27px; transform: rotateY(90deg) translateZ(15px); background: #737c75; }
+.tk-key__right--w2 { transform: rotateY(90deg) translateZ(30px); }
+.tk-key__right--w3 { transform: rotateY(90deg) translateZ(45px); }
+.tk-key__right--w6 { transform: rotateY(90deg) translateZ(97.5px); }
+.tk-key__left { width: 8px; height: 27px; transform: rotateY(90deg) translateZ(-15px); background-image: linear-gradient(to bottom, #dce8de, #b5c0b7); }
+.tk-key__left--w2 { transform: rotateY(90deg) translateZ(-30px); }
+.tk-key__left--w3 { transform: rotateY(90deg) translateZ(-45px); }
+.tk-key__left--w6 { transform: rotateY(90deg) translateZ(-97.5px); }
+.tk-face--b1 { background: var(--tk-accent); }
+.tk-face--b2 { background-image: linear-gradient(to bottom, color-mix(in srgb, var(--tk-accent) 80%, black), var(--tk-accent)); }
+.tk-face--b3 { background-color: color-mix(in srgb, var(--tk-accent) 58%, black); }
+.tk-face--o1 { background: var(--tk-secondary); }
+.tk-face--o2 { background-image: linear-gradient(to bottom, color-mix(in srgb, var(--tk-secondary) 80%, black), var(--tk-secondary)); }
+.tk-face--o3 { background-color: color-mix(in srgb, var(--tk-secondary) 58%, black); }
+.tk-key--down { display: flex; align-items: center; justify-content: center; transform: translateZ(-5px); }
+.tk-key--down > .tk-key__top { background: color-mix(in srgb, var(--tk-secondary) 80%, white) !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tk-screen, .tk-key, .tk-container * { animation: none !important; transition: none !important; }
+}
