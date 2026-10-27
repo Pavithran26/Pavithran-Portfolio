@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import {
   Activity,
   BarChart3,
+  Code2,
   Mic,
   Droplets,
   Globe,
@@ -201,11 +202,10 @@ export function ProjectOrbitShowcase({ projects = [] }) {
             })}
           </div>
 
-          <div className="project-orbit-core" aria-label="Pavithran project core">
+          <div className="project-orbit-core" aria-label="FDE software engineering core">
             <span className="project-orbit-core-halo" />
-            <span className="project-orbit-core-mark">PS</span>
-            <span className="project-orbit-core-rule" />
-            <span className="project-orbit-core-label">PROJECT CORE</span>
+            <span className="project-orbit-core-mark" aria-hidden="true"><Code2 size={22} strokeWidth={2} /></span>
+            <span className="project-orbit-core-label">FDE / AI</span>
           </div>
         </div>
       </section>
