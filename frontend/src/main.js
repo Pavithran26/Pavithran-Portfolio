@@ -289,11 +289,8 @@ let projectOrbitRoot = null;
 if (projectOrbitMount) {
   projectOrbitRoot = createRoot(projectOrbitMount);
   flushSync(() => {
-    const projectOrbitIds = ['clansure', 'sattam-ai', 'srk-erp', 'gt-companion'];
     projectOrbitRoot.render(createElement(ProjectOrbitShowcase, {
-      projects: projectOrbitIds
-        .map(id => PROJECTS_DATA.find(project => project.id === id))
-        .filter(Boolean)
+      projects: PROJECTS_DATA
     }));
   });
 }
