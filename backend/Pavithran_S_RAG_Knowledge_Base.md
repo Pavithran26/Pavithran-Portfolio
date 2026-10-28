@@ -88,7 +88,7 @@ Certification names should be refreshed from the current GitHub source later. Do
 
 ## Public Links
 - GitHub: https://github.com/Pavithran26
-- Portfolio: https://pavis.vercel.app/
+- Portfolio: https://www.pavithran26.net/
 - LinkedIn: https://linkedin.com/in/pavithran-s-ab85a9235
 - LeetCode: https://leetcode.com/u/pavithran26s/
 - HackerRank: https://www.hackerrank.com/profile/pavithran2004cs

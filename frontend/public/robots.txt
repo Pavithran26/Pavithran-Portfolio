@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pavithran26.vercel.app/sitemap.xml
+Sitemap: https://www.pavithran26.net/sitemap.xml
