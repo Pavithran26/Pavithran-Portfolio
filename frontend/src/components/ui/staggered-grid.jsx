@@ -7,8 +7,12 @@ export function StaggeredGrid({ items = [], className = '' }) {
   const [activeCategory, setActiveCategory] = React.useState('All');
   const gridRef = React.useRef(null);
   const categories = ['All', ...new Set(items.map(item => item.category).filter(Boolean))];
+  const [searchQuery, setSearchQuery] = React.useState('');
   const categoryItems = activeCategory === 'All' ? items : items.filter(item => item.category === activeCategory);
-  const visibleItems = categoryItems;
+  const normalizedSearch = searchQuery.trim().toLowerCase();
+  const visibleItems = normalizedSearch
+    ? categoryItems.filter(item => `${item.title} ${item.category} ${item.description}`.toLowerCase().includes(normalizedSearch))
+    : categoryItems;
   const countFor = category => category === 'All' ? items.length : items.filter(item => item.category === category).length;
   const searchItems = React.useMemo(() => items.map(item => item.title), [items]);
   const searchTechnology = React.useCallback(query => {
@@ -88,6 +92,7 @@ export function StaggeredGrid({ items = [], className = '' }) {
             buttonLabel="Search"
             maxResults={4}
             onSelect={selectTechnology}
+            onQueryChange={setSearchQuery}
             className="technology-index-gooey"
           />
         </div>
@@ -108,7 +113,7 @@ export function StaggeredGrid({ items = [], className = '' }) {
 
       <div ref={gridRef} className="staggered-tech-grid" aria-live="polite">
         {!visibleItems.length && (
-          <p className="staggered-tech-empty">No tools found in this domain.</p>
+          <p className="staggered-tech-empty">{normalizedSearch ? `No technologies match “${searchQuery.trim()}”.` : 'No tools found in this domain.'}</p>
         )}
         {visibleItems.map((item, index) => {
           const localIcon = technologyIcons(item.title, { eager: index < 10 });
