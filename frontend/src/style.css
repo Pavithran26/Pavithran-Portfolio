@@ -8345,3 +8345,40 @@ body .space-intro.has-project-showcase #intro-typing-keyboard-mount .tk-screen {
 @media (prefers-reduced-motion: reduce) {
   .staggered-tech-card.is-search-target { animation: none !important; }
 }
+
+/* Keep the Technology Index search beside its summary instead of on a separate row. */
+.world-section-tools .staggered-tech-toolbar {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  grid-template-areas:
+    "summary search"
+    "filters filters";
+  align-items: center !important;
+  column-gap: clamp(14px, 2.4vw, 28px) !important;
+  row-gap: 16px !important;
+}
+.world-section-tools .staggered-tech-toolbar__summary {
+  grid-area: summary;
+  min-width: 0 !important;
+}
+.world-section-tools .staggered-tech-search-row {
+  grid-area: search;
+  justify-self: end;
+  align-self: center;
+  margin-top: 0 !important;
+}
+.world-section-tools .staggered-tech-filters {
+  grid-area: filters;
+}
+@media (max-width: 440px) {
+  .world-section-tools .staggered-tech-toolbar {
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas:
+      "summary"
+      "search"
+      "filters";
+  }
+  .world-section-tools .staggered-tech-search-row {
+    justify-self: start;
+  }
+}
