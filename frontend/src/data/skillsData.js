@@ -571,12 +571,21 @@ export const SKILLS_CATEGORIES = [
         "isCore": true
       },
       {
-        "name": "AWS & Azure Exposure",
+        "name": "Microsoft Azure",
         "level": "Familiar",
         "percentage": 70,
         "bars": 2,
         "icon": "☁️",
-        "tag": "Cloud Infrastructure",
+        "tag": "Cloud Platform & Services",
+        "isCore": false
+      },
+      {
+        "name": "Azure DevOps (ADO)",
+        "level": "Familiar",
+        "percentage": 70,
+        "bars": 2,
+        "icon": "🔁",
+        "tag": "Repos, Boards & CI/CD Pipelines",
         "isCore": false
       },
       {
