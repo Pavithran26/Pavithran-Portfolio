@@ -625,11 +625,18 @@ export const ALL_TECHNOLOGIES = [
     "iconId": "aws"
   },
   {
-    "title": "Azure",
+    "title": "Microsoft Azure",
     "category": "Cloud & DevOps",
-    "description": "Cloud services and deployment familiarity.",
-    "search": "Azure",
+    "description": "Cloud platform services and application deployment fundamentals.",
+    "search": "Microsoft Azure",
     "iconId": "azure"
+  },
+  {
+    "title": "Azure DevOps",
+    "category": "Cloud & DevOps",
+    "description": "Work tracking, Git repositories, and CI/CD build and release pipelines.",
+    "search": "Azure DevOps",
+    "iconId": null
   },
   {
     "title": "Vercel",
