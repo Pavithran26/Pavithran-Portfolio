@@ -112,12 +112,6 @@ root.innerHTML = `
 
   ${chapters.map((chapter, index) => `
     <section class="world-section world-section-${chapter.side} world-section-tools" id="stack-${chapter.id}" data-world-section="${index + 1}" aria-labelledby="world-title-${chapter.id}">
-      <nav class="spotlight-stack-nav" aria-label="Tools and technologies navigation">
-        <a class="spotlight-stack-brand" href="#top" aria-label="Pavithran home">PS<span> / FDE</span></a>
-        <div class="spotlight-stack-links">
-          <a href="#stack-tools" data-spotlight-nav>Tools &amp; Technologies</a>
-        </div>
-      </nav>
       <div class="world-copy">
         <p class="space-kicker">${chapter.orbit}</p>
         <h2 id="world-title-${chapter.id}">${chapter.headline}</h2>
