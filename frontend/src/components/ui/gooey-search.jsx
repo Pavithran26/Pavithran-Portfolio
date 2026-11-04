@@ -127,6 +127,7 @@ export function GooeySearch({
   placeholder = 'Type to search...',
   buttonLabel = 'Search',
   onSelect,
+  onQueryChange,
   className = '',
   debounceMs = 500,
   maxResults = 4,
@@ -325,12 +326,17 @@ export function GooeySearch({
               placeholder={placeholder}
               aria-label="Search technologies"
               value={searchText}
-              onChange={event => setSearchText(event.target.value)}
+              onChange={event => {
+                const nextValue = event.target.value;
+                setSearchText(nextValue);
+                onQueryChange?.(nextValue);
+              }}
               onClick={event => event.stopPropagation()}
               onKeyDown={event => {
                 if (event.key === 'Escape') {
                   setStep(1);
                   setSearchText('');
+                  onQueryChange?.('');
                   setResults([]);
                 }
                 if (event.key === 'Enter' && results[0]) {
