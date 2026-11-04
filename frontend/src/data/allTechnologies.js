@@ -72,6 +72,13 @@ export const ALL_TECHNOLOGIES = [
     "iconId": null
   },
   {
+    "title": "Scratch",
+    "category": "Languages",
+    "description": "Block-based visual programming for learning programming concepts and building interactive projects.",
+    "search": "Scratch",
+    "iconId": null
+  },
+  {
     "title": "SQL",
     "category": "Languages",
     "description": "Relational querying, joins, filtering and data manipulation.",
@@ -581,6 +588,27 @@ export const ALL_TECHNOLOGIES = [
     "description": "Event streaming and asynchronous messaging.",
     "search": "Apache Kafka",
     "iconId": "kafka"
+  },
+  {
+    "title": "Apache Hadoop",
+    "category": "Data & Storage",
+    "description": "Distributed storage and batch processing across clusters using the Hadoop ecosystem.",
+    "search": "Apache Hadoop",
+    "iconId": null
+  },
+  {
+    "title": "Apache ZooKeeper",
+    "category": "Data & Storage",
+    "description": "Coordination service for distributed applications, including configuration, naming and synchronization.",
+    "search": "Apache ZooKeeper",
+    "iconId": null
+  },
+  {
+    "title": "HDFS",
+    "category": "Data & Storage",
+    "description": "Hadoop Distributed File System for fault-tolerant storage of large datasets across cluster nodes.",
+    "search": "HDFS Hadoop Distributed File System",
+    "iconId": null
   },
   {
     "title": "Git",
