@@ -329,6 +329,12 @@ export const SKILLS_CATEGORIES = [
         "level": "Listed in profile",
         "tag": "GitHub profile & Sattam AI",
         "isCore": false
+      },
+      {
+        "name": "Runta",
+        "level": "Listed in profile",
+        "tag": "AI Agent Execution & Runtime Controls",
+        "isCore": false
       }
     ]
   },
@@ -513,6 +519,12 @@ export const SKILLS_CATEGORIES = [
         "level": "Project experience",
         "tag": "SRK ERP",
         "isCore": false
+      },
+      {
+        "name": "Snowflake",
+        "level": "Listed in profile",
+        "tag": "Cloud Data Warehouse",
+        "isCore": false
       }
     ]
   },
@@ -642,6 +654,12 @@ export const SKILLS_CATEGORIES = [
         "tag": "GitHub profile & Sattam AI",
         "isCore": false
       },
+      {
+        "name": "Grafana",
+        "level": "Listed in profile",
+        "tag": "Monitoring & Observability",
+        "isCore": false
+      }
       {
         "name": "Axios",
         "level": "Project experience",
