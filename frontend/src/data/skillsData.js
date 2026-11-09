@@ -130,6 +130,18 @@ export const SKILLS_CATEGORIES = [
         "icon": "📊",
         "tag": "Data Analysis / Stats",
         "isCore": false
+      },
+      {
+        "name": "Assembly Language",
+        "level": "Listed in profile",
+        "tag": "Low-Level Programming",
+        "isCore": false
+      },
+      {
+        "name": "Scratch",
+        "level": "Listed in profile",
+        "tag": "Visual Programming",
+        "isCore": false
       }
     ]
   },
@@ -525,6 +537,18 @@ export const SKILLS_CATEGORIES = [
         "level": "Listed in profile",
         "tag": "Cloud Data Warehouse",
         "isCore": false
+      },
+      {
+        "name": "Apache Hadoop",
+        "level": "Listed in profile",
+        "tag": "Distributed Data Processing",
+        "isCore": false
+      },
+      {
+        "name": "HDFS",
+        "level": "Listed in profile",
+        "tag": "Distributed File System",
+        "isCore": false
       }
     ]
   },
@@ -649,6 +673,12 @@ export const SKILLS_CATEGORIES = [
         "isCore": false
       },
       {
+        "name": "Apache ZooKeeper",
+        "level": "Listed in profile",
+        "tag": "Distributed Coordination",
+        "isCore": false
+      },
+      {
         "name": "Cloudflare",
         "level": "Listed in profile",
         "tag": "GitHub profile & Sattam AI",
@@ -659,7 +689,7 @@ export const SKILLS_CATEGORIES = [
         "level": "Listed in profile",
         "tag": "Monitoring & Observability",
         "isCore": false
-      }
+      },
       {
         "name": "Axios",
         "level": "Project experience",
