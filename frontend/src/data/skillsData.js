@@ -231,6 +231,18 @@ export const SKILLS_CATEGORIES = [
         "level": "Listed in profile",
         "tag": "GitHub profile & Sattam AI",
         "isCore": false
+      },
+      {
+        "name": "RESTful APIs",
+        "level": "Listed in profile",
+        "tag": "HTTP API Design",
+        "isCore": false
+      },
+      {
+        "name": "Microservices",
+        "level": "Listed in profile",
+        "tag": "Distributed Service Architecture",
+        "isCore": false
       }
     ]
   },
@@ -549,6 +561,12 @@ export const SKILLS_CATEGORIES = [
         "level": "Listed in profile",
         "tag": "Distributed File System",
         "isCore": false
+      },
+      {
+        "name": "MongoDB Atlas",
+        "level": "Listed in profile",
+        "tag": "Managed NoSQL Document Database",
+        "isCore": false
       }
     ]
   },
@@ -634,6 +652,30 @@ export const SKILLS_CATEGORIES = [
         "isCore": false
       },
       {
+        "name": "AWS EKS",
+        "level": "Listed in profile",
+        "tag": "Managed Kubernetes",
+        "isCore": false
+      },
+      {
+        "name": "AWS Application Load Balancer (ALB)",
+        "level": "Listed in profile",
+        "tag": "Application Load Balancing",
+        "isCore": false
+      },
+      {
+        "name": "AWS EC2",
+        "level": "Listed in profile",
+        "tag": "Cloud Compute",
+        "isCore": false
+      },
+      {
+        "name": "AWS RDS",
+        "level": "Listed in profile",
+        "tag": "Managed Relational Database",
+        "isCore": false
+      },
+      {
         "name": "Figma UI Prototyping",
         "level": "Proficient",
         "percentage": 82,
@@ -676,6 +718,30 @@ export const SKILLS_CATEGORIES = [
         "name": "Apache ZooKeeper",
         "level": "Listed in profile",
         "tag": "Distributed Coordination",
+        "isCore": false
+      },
+      {
+        "name": "Jenkins",
+        "level": "Listed in profile",
+        "tag": "CI/CD Automation",
+        "isCore": false
+      },
+      {
+        "name": "Argo CD",
+        "level": "Listed in profile",
+        "tag": "GitOps Continuous Delivery",
+        "isCore": false
+      },
+      {
+        "name": "SonarQube",
+        "level": "Listed in profile",
+        "tag": "Code Quality & Static Analysis",
+        "isCore": false
+      },
+      {
+        "name": "JUnit",
+        "level": "Listed in profile",
+        "tag": "Java Unit Testing",
         "isCore": false
       },
       {
