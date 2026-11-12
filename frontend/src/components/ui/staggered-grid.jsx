@@ -74,7 +74,7 @@ export function StaggeredGrid({ items = [], className = '' }) {
     });
 
     return () => observer.disconnect();
-  }, [activeCategory, items]);
+  }, [activeCategory, searchQuery, items]);
 
   return (
     <div className={`staggered-tech-explorer ${className}`.trim()}>
