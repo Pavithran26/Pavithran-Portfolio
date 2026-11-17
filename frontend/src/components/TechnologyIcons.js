@@ -21,7 +21,7 @@ const definitions = [
   ['react', /\breact\b/i, '#61dafb'],
   ['typescript', /\btypescript\b|\bts\b/i, '#3178c6'],
   ['javascript', /\bjavascript\b|\bes6\b/i, '#f7df1e'],
-  ['python', /\bpython\b/i, '#ffd343'],
+  ['python', /\bpython\b|\bpyjnius\b/i, '#ffd343'],
   ['java', /\bjava\b/i, '#ea2d2e'],
   ['csharp', /c#/i, '#b07bda'],
   ['cplusplus', /c\+\+/i, '#659ad2'],
