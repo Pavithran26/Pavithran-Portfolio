@@ -296,6 +296,14 @@ export const ALL_TECHNOLOGIES = [
     "iconId": "spring"
   },
   {
+    "title": "PyJNIus",
+    "category": "Backend & APIs",
+    "description": "Python-to-Java interoperability through the Java Native Interface (JNI).",
+    "search": "PyJNIus",
+    "iconId": "py",
+    "repository": "https://github.com/kivy/pyjnius"
+  },
+  {
     "title": "ASP.NET Core 8",
     "category": "Backend & APIs",
     "description": "Modern .NET web APIs and application services.",
