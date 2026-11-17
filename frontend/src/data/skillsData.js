@@ -209,6 +209,13 @@ export const SKILLS_CATEGORIES = [
         "isCore": false
       },
       {
+        "name": "PyJNIus",
+        "level": "Listed in profile",
+        "icon": "🐍",
+        "tag": "Python–Java interoperability (JNI) · https://github.com/kivy/pyjnius",
+        "isCore": false
+      },
+      {
         "name": "Entity Framework Core",
         "level": "Advanced",
         "percentage": 92,
